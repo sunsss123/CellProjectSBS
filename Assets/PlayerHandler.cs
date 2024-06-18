@@ -122,10 +122,16 @@ public class PlayerHandler : MonoBehaviour
             CurrentPlayer.Move();
         }
 
-        if(PlayerStat.instance.jumpCount <= PlayerStat.instance.jumpCountMax && Input.GetKey(KeyCode.C) && !CurrentPlayer.downAttack)
+        /*if(PlayerStat.instance.jumpCount <= PlayerStat.instance.jumpCountMax && !CurrentPlayer.downAttack)
         {
             CurrentPlayer.Jump();
+        }*/
+
+        if (Input.GetKeyDown(KeyCode.C) && PlayerStat.instance.jumpCount < PlayerStat.instance.jumpCountMax && !CurrentPlayer.downAttack)
+        {
+            CurrentPlayer.KeyDownJump();
         }
+
         if (Input.GetKeyDown(KeyCode.E))
         {
             CurrentPlayer. SwapAttackType();
@@ -154,20 +160,25 @@ public class PlayerHandler : MonoBehaviour
             else
                 transformed(TransformType.Default);
         }
-        if (Input.GetKeyDown(KeyCode.LeftControl))
+
+        if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D))
         {
-            Debug.Log("특수 공격 입력함수");
-            CurrentPlayer.SpecialAttack();
+            if (CurrentType != TransformType.Default)
+            {
+                if (CurrentPower <= 0)
+                {
+                    Debug.Log("에너지가 없습니다");
+                }
+                else
+                {
+                    CurrentPlayer.SpecialAttack();
+                }
+            }
         }
-        if (Input.GetKeyDown(KeyCode.Z))
+        /*if (Input.GetKeyDown(KeyCode.Z))
         {
-            Debug.Log("대쉬 입력 함수");
-            //CurrentPlayer.Dash();
-        }
-        /*else if(!Input.GetKey(KeyCode.LeftShift))
-        {
-            CurrentPlayer.BigDash();
-        }*/
+            Debug.Log("대쉬 입력 함수");            
+        }*/        
     }
     #endregion
 

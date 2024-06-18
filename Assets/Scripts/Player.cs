@@ -13,10 +13,13 @@ public class Player : Character
     [Header("근접 및 원거리 공격 관련")]
     public GameObject meleeCollider; // 근접 공격 콜라이더
     public GameObject flyCollider; // 공중 공격 콜라이더
-    public Transform firePoint; //원거리 생성 위치
-    public GameObject rangePrefab; // 원거리 프리팹 오브젝트
-    public GameObject sAttackPrefab; // 특수공격 파티클
-    public GameObject IronDash; // 다리미 특수공격 대쉬 테스트를 위한 오브젝트 (추후 개선 사항)
+    public Transform firePoint; // 원거리 및 특수공격? 생성 위치
+    public GameObject downAttackCollider; // 내려찍기 콜라이더
+    //public GameObject rangePrefab; // 원거리 프리팹 오브젝트
+    //public GameObject sAttackPrefab; // 특수공격 파티클
+    //public GameObject IronDash; // 다리미 특수공격 대쉬 테스트를 위한 오브젝트 (추후 개선 사항)
+    public MeshRenderer hitCheckMat; // 피격 시 무적 테스트 작업을 위한 임시 변수
+    public Color hitColor;
 
     public float moveValue; // 움직임 유무를 결정하기 위한 변수
     public float hori, vert; // 플레이어의 움직임 변수
@@ -67,11 +70,13 @@ public class Player : Character
     // Start is called before the first frame update
     void Start()
     {
-        //meleeCollider.GetComponent<MeleeCollider>().SetDamage(PlayerStat.instance.atk);
+        meleeCollider.GetComponent<MeleeCollider>().SetDamage(PlayerStat.instance.atk);
         meleeCollider.SetActive(false);
         flyCollider.SetActive(false);
         canAttack = true;
         onDash = true;
+
+        hitColor = hitCheckMat.material.color;
     }
 
     private void FixedUpdate()
@@ -132,8 +137,8 @@ public class Player : Character
             else if(transform.eulerAngles.y > 5f  && transform.eulerAngles.y <= 185f)
             {
                 //StartCoroutine(Rotation());
-                transform.Rotate(0, PlayerStat.instance.rotationValue * 180f * PlayerStat.instance.rotationSpeed * Time.deltaTime, 0);
-                //transform.rotation = Quaternion.Euler(0, 0, 0);
+                //transform.Rotate(0, PlayerStat.instance.rotationValue * 180f * PlayerStat.instance.rotationSpeed * Time.deltaTime, 0);
+                transform.rotation = Quaternion.Euler(0, 0, 0);
             }
 
             Debug.Log($"전진 방향키 시 y 앵글 값: {transform.eulerAngles.y}");
@@ -148,9 +153,9 @@ public class Player : Character
             }
             else
             {
-                //transform.rotation = Quaternion.Euler(0, 180, 0);
+                transform.rotation = Quaternion.Euler(0, 180, 0);
                 //StartCoroutine(Rotation());
-                transform.Rotate(0, PlayerStat.instance.rotationValue * 180f * PlayerStat.instance.rotationSpeed * Time.deltaTime, 0);
+                //transform.Rotate(0, PlayerStat.instance.rotationValue * 180f * PlayerStat.instance.rotationSpeed * Time.deltaTime, 0);
             }
 
             Debug.Log($"후진 방향키 시 y 앵글 값: {transform.eulerAngles.y}");
@@ -438,26 +443,49 @@ public class Player : Character
 
             StartCoroutine(TestMeleeAttack());
         }
-        else if (PlayerStat.instance.attackType == AttackType.range && canAttack)
+        /*else if (PlayerStat.instance.attackType == AttackType.range && canAttack)
         {
             RangeAttack();
-        }
+        }*/
     }
     #endregion
     #region 피격
     public override void Damaged(float damage, GameObject obj)
     {
-        PlayerStat.instance.cState = CharacterState.hit;
+        gameObject.layer = 9;
 
-        PlayerStat.instance.hp -= damage;
-        Debug.Log($"{gameObject}가 {obj}에 의해 데미지를 받음:{damage}, 남은 체력:{PlayerStat.instance.hp}/{PlayerStat.instance.hpMax}");
-
-        if (PlayerStat.instance.hp <= 0)
+        if (!onInvincible)
         {
-            //Dead()
-            PlayerStat.instance.hp = 0;
-            Dead();
+            onInvincible = true;
+
+            PlayerStat.instance.cState = CharacterState.hit;
+
+            PlayerStat.instance.hp -= damage;
+            Debug.Log($"{gameObject}가 {obj}에 의해 데미지를 받음:{damage}, 남은 체력:{PlayerStat.instance.hp}/{PlayerStat.instance.hpMax}");
+
+            playerRb.AddForce(Vector3.back * PlayerStat.instance.hitForce, ForceMode.Impulse);
+
+            if (PlayerStat.instance.hp <= 0)
+            {
+                //Dead()
+                PlayerStat.instance.hp = 0;
+                Dead();
+            }
+            StartCoroutine(HitAndWaitIdle());
         }
+    }
+
+    IEnumerator HitAndWaitIdle()
+    {
+        hitCheckMat.material.color = Color.red;
+
+        yield return new WaitForSeconds(2f);
+
+        PlayerStat.instance.cState = CharacterState.idle;
+        onInvincible = false;
+
+        hitCheckMat.material.color = hitColor;
+        gameObject.layer = 0;
     }
     #endregion
     #region 사망
@@ -470,42 +498,37 @@ public class Player : Character
     #endregion
 
     #region 점프동작
-    public void Jump()
+    /*public void Jump()
     {
-        if (!isJump || isJump)
-        {
-            //플랫폼에 닿았을 때 점프 가능(바닥,천장, 벽에 닿아도 점프 되지만 신경쓰지말기)
-            onGround = false;
-            //jumpAnim = true;
-            //moveSpeed = ;
-            if (PlayerStat.instance.jumpCount < PlayerStat.instance.jumpCountMax)
-            {
-                //animator.JumpAnimation(jumpAnim);
-                //playerRb.velocity = Vector3.zero;
-                //addforce
-
-                //YMove 
-                PlayerStat.instance.jumpValueTime += Time.deltaTime;
-                playerRb.AddForce(Vector3.up * PlayerStat.instance.jumpForce, ForceMode.Impulse);
-                if (Input.GetKeyUp(KeyCode.C) || PlayerStat.instance.jumpValueTime >= PlayerStat.instance.jumpValueMax)
-                {
-                    playerRb.velocity = Vector3.zero;
-                    PlayerStat.instance.jumpValueTime = 0;
-                    PlayerStat.instance.jumpCount++;
-                }
-            }
-        }
-    }
-
-    /*public void KeyDownJump()
-    {
+        //플랫폼에 닿았을 때 점프 가능(바닥,천장, 벽에 닿아도 점프 되지만 신경쓰지말기)
+        onGround = false;
+        //jumpAnim = true;
+        //moveSpeed = ;
         if (PlayerStat.instance.jumpCount < PlayerStat.instance.jumpCountMax)
         {
-            playerRb.velocity = Vector3.zero;
+            //animator.JumpAnimation(jumpAnim);
+            //playerRb.velocity = Vector3.zero;
+            //addforce
+
+            //YMove 
+            PlayerStat.instance.jumpValueTime += Time.deltaTime;
             playerRb.AddForce(Vector3.up * PlayerStat.instance.jumpForce, ForceMode.Impulse);
-            PlayerStat.instance.jumpCount++;
+            if (Input.GetKeyUp(KeyCode.C) || PlayerStat.instance.jumpValueTime >= PlayerStat.instance.jumpValueMax)
+            {
+                playerRb.velocity = Vector3.zero;
+                PlayerStat.instance.jumpValueTime = 0;
+                PlayerStat.instance.jumpCount++;
+            }
         }
     }*/
+
+    public void KeyDownJump()
+    {
+        onGround = false;
+        playerRb.velocity = Vector3.zero;
+        playerRb.AddForce(Vector3.up * PlayerStat.instance.shotJumpForce, ForceMode.Impulse);
+        PlayerStat.instance.jumpCount++;
+    }
     #endregion
 
     #region Attack
@@ -566,12 +589,12 @@ public class Player : Character
     }
 
     // 원거리 공격 함수
-    void RangeAttack()
+    /*void RangeAttack()
     {
         //Collision prefab instaiate 시키는 걸로?
         GameObject rangeObj = Instantiate(rangePrefab, firePoint.position, Quaternion.identity);
         rangeObj.GetComponent<RangeObject>().SetDamage(PlayerStat.instance.atk);
-    }
+    }*/
 
     //근접 공격 애니메이션
     public IEnumerator ActiveMeleeAttack()
@@ -589,7 +612,7 @@ public class Player : Character
     private void OnCollisionEnter(Collision collision)
     {
         #region 바닥 상호작용
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("Platform"))
         {
             //animator.ContinueAnimation();
             Debug.Log("바닥 체크");
@@ -601,7 +624,7 @@ public class Player : Character
         #endregion
 
         #region 적 상호작용
-        if (collision.gameObject.CompareTag("Enemy"))
+        /*if (collision.gameObject.CompareTag("Enemy"))
         {
             if (onInvincible)
             {
@@ -618,7 +641,7 @@ public class Player : Character
                     Dead();
                 }
             }
-        }
+        }*/
         #endregion
     }
 
@@ -656,8 +679,9 @@ public class Player : Character
         }
     }*/
 
-    public void SpecialAttack()
+    public virtual void SpecialAttack()
     {
-        sAttackPrefab.SetActive(true);
+        //sAttackPrefab.SetActive(true);
+        Debug.Log("기본 상태에서는 특수공격이 없습니다!");
     }        
 }

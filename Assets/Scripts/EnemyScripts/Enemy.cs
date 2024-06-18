@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Net.Http.Headers;
 using UnityEngine;
 
 public class Enemy : Character
@@ -6,12 +8,30 @@ public class Enemy : Character
 
     public GameObject attackCollider;
 
+    public float searchRange; // 플레이어 인지 범위
+    public float attackRange; // 공격 실행 범위
+    //public float moveRagne; // 이동 범위?
+
+    bool activeAttack;
+    bool checkPlayer;
+    public float attackTimer;
+    public float attackInitCoolTime;
+
+    public Rigidbody enemyRb;
+
     private void Awake()
     {
         eStat = gameObject.AddComponent<EnemyStat>();
-        attackCollider.SetActive(false);
-        attackTimer = attackInitCoolTime;
         attackCollider.GetComponent<EnemyMeleeAttack>().SetDamage(eStat.atk);
+        attackCollider.SetActive(false);
+
+        enemyRb = GetComponent<Rigidbody>();
+    }
+
+    private void Start()
+    {
+        attackInitCoolTime = 2f;
+        attackTimer = attackInitCoolTime;
     }
 
     // 부모인 Enemy에서 사용?
@@ -56,15 +76,11 @@ public class Enemy : Character
         gameObject.SetActive(false);
     }
 
-    bool activeAttack;
-    bool checkPlayer;
-    public float attackTimer;
-    public float attackInitCoolTime;
-
     public override void Attack()
     {
         attackCollider.SetActive(true);
-        attackCollider.GetComponent<EnemyMeleeAttack>().AttackReady(this, attackInitCoolTime);
+        enemyRb.AddForce(transform.forward * 1, ForceMode.Impulse);
+        attackCollider.GetComponent<EnemyMeleeAttack>().AttackReady(this, eStat.attackCoolTime);
 
     }
 
@@ -86,9 +102,17 @@ public class Enemy : Character
     private void OnTriggerExit(Collider other)
     {
         activeAttack = false;
-        attackTimer = attackInitCoolTime;
-        attackCollider.SetActive(false);     
+        //attackTimer = attackInitCoolTime;
+        //attackCollider.SetActive(false);     
     }
+
+    /*IEnumerator PlayerExitRange()
+    {
+        yield return new WaitUntil(() => !checkPlayer)
+        {
+
+        };
+    }*/
 
     public void InitAttackCoolTime()
     {

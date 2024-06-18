@@ -14,6 +14,7 @@ public class PowerText : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        text.text = "충전에너지:" + PlayerHandler.instance.CurrentPower +"/"+ PlayerHandler.instance.MaxPower;
+        //text.text = "충전에너지:" + PlayerHandler.instance.CurrentPower +"/"+ PlayerHandler.instance.MaxPower;
+        text.text = "Power:" + PlayerHandler.instance.CurrentPower + "/" + PlayerHandler.instance.MaxPower;
     }
 }
