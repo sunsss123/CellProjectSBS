@@ -1,8 +1,8 @@
-using System.Linq;
-
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class HouseholdIron : Enemy
+public class TrackingTest : MonoBehaviour
 {
     public Transform pos; // 자신의 위치 변수
     public Vector3 target; // 추적할 타겟
@@ -12,7 +12,7 @@ public class HouseholdIron : Enemy
 
     public float playerRange = 1.2f; // 플레이어 인지할 범위 지정할 변수
     public float attackRange = 0.5f; // 공격 실행 범위
-    public float moveRange =1.8f; // 정찰 범위
+    public float moveRange = 1.8f; // 정찰 범위
 
 
     public bool playerCheck; //플레이어 발견 시 true 반환    
@@ -96,35 +96,35 @@ public class HouseholdIron : Enemy
     }
 
     //정찰 함수
-   /* public void PointPatrol()
-    {
-        Debug.Log("정찰중");
-        //정찰할 때 현재 자신의 위치를 기준으로 목적지 탐색
-        //목적지는 transform.position.x 값을 기준으로 오차 범위 지정
-        if (done)
-        {
-            nma.isStopped = true;
-            done = false;
-            Debug.Log("목적지 재탐색");
-            float posX = Random.Range(-2.5f, 2.5f);
-            target = transform.position + new Vector3(posX, 0, 0);
-            nma.isStopped = false;
-        }
+    /* public void PointPatrol()
+     {
+         Debug.Log("정찰중");
+         //정찰할 때 현재 자신의 위치를 기준으로 목적지 탐색
+         //목적지는 transform.position.x 값을 기준으로 오차 범위 지정
+         if (done)
+         {
+             nma.isStopped = true;
+             done = false;
+             Debug.Log("목적지 재탐색");
+             float posX = Random.Range(-2.5f, 2.5f);
+             target = transform.position + new Vector3(posX, 0, 0);
+             nma.isStopped = false;
+         }
 
-        nma.SetDestination(target);
+         nma.SetDestination(target);
 
-        //Debug.Log(Vector3.Distance(transform.position, target));
+         //Debug.Log(Vector3.Distance(transform.position, target));
 
-        if (Vector3.Distance(transform.position, target) < 1.8f)
-        {
-            done = true;
-            Debug.Log("도착");
-        }
+         if (Vector3.Distance(transform.position, target) < 1.8f)
+         {
+             done = true;
+             Debug.Log("도착");
+         }
 
-        //NavMeshAgent.SetDestination(target);
-    }*/
+         //NavMeshAgent.SetDestination(target);
+     }*/
 
-    bool PlayerTarget()
+    /*bool PlayerTarget()
     {
         bool find = false;
 
@@ -139,10 +139,9 @@ public class HouseholdIron : Enemy
             }
         }
         return find;
-    }
+    }*/
 
-    
-    private void OnDrawGizmos()
+    /*private void OnDrawGizmos()
     {
         Gizmos.color = Color.white;
         Gizmos.DrawWireSphere(transform.position, moveRange);
@@ -152,5 +151,5 @@ public class HouseholdIron : Enemy
 
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
-    }
+    }*/
 }
