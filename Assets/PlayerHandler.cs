@@ -43,7 +43,8 @@ public class PlayerHandler : MonoBehaviour
     {
         if (CurrentType != TransformType.Default)
         {
-            CurrentPower -= Time.deltaTime;
+            //CurrentPower -= Time.deltaTime;
+            
             if (CurrentPower == 0)
                 transformed(TransformType.Default);
         }
@@ -122,15 +123,21 @@ public class PlayerHandler : MonoBehaviour
             CurrentPlayer.Move();
         }
 
-        /*if(PlayerStat.instance.jumpCount <= PlayerStat.instance.jumpCountMax && !CurrentPlayer.downAttack)
+        if (Input.GetKey(KeyCode.C) && PlayerStat.instance.jumpCount <= PlayerStat.instance.jumpCountMax && !CurrentPlayer.downAttack)
         {
             CurrentPlayer.Jump();
+        }
+
+        /*if (Input.GetKeyDown(KeyCode.C) && !CurrentPlayer.isJump)
+        {
+
+            CurrentPlayer.getKeyJumpLimit = false;
         }*/
 
-        if (Input.GetKeyDown(KeyCode.C) && PlayerStat.instance.jumpCount < PlayerStat.instance.jumpCountMax && !CurrentPlayer.downAttack)
+        /*if (Input.GetKeyDown(KeyCode.C) && PlayerStat.instance.jumpCount < PlayerStat.instance.jumpCountMax && !CurrentPlayer.downAttack)
         {
             CurrentPlayer.KeyDownJump();
-        }
+        }*/
 
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -139,7 +146,7 @@ public class PlayerHandler : MonoBehaviour
 
         if (Input.GetKey(KeyCode.DownArrow))
         {
-            if (Input.GetKeyDown(KeyCode.X) && !CurrentPlayer.onGround)
+            if (Input.GetKeyDown(KeyCode.X) && CurrentPlayer.isJump)
             {
                 Debug.Log("내려찍기 작동합니다");
                 CurrentPlayer.playerRb.velocity = Vector3.zero;
@@ -175,10 +182,31 @@ public class PlayerHandler : MonoBehaviour
                 }
             }
         }
+        #region 변신 해제
+        if (Input.GetKey(KeyCode.UpArrow) && CurrentType != TransformType.Default )
+        {
+            HudTest.instance.gameObject.SetActive(true);
+
+            PlayerStat.instance.transformGauge += Time.deltaTime;
+            if (PlayerStat.instance.transformGauge >= PlayerStat.instance.transformMaxGauge)
+            {
+                transformed(TransformType.Default);
+                PlayerStat.instance.transformGauge = 0;
+                HudTest.instance.gameObject.SetActive(false);
+            }
+            HudTest.instance.GaugeCheck(PlayerStat.instance.transformGauge / PlayerStat.instance.transformMaxGauge);
+        }
+        else
+        {
+            PlayerStat.instance.transformGauge = 0;
+            HudTest.instance.GaugeCheck(PlayerStat.instance.transformGauge / PlayerStat.instance.transformMaxGauge);
+            HudTest.instance.gameObject.SetActive(false);
+        }
+        #endregion
         /*if (Input.GetKeyDown(KeyCode.Z))
         {
             Debug.Log("대쉬 입력 함수");            
-        }*/        
+        }*/
     }
     #endregion
 

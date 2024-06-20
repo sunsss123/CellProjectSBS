@@ -79,7 +79,7 @@ public class Enemy : Character
     public override void Attack()
     {
         attackCollider.SetActive(true);
-        enemyRb.AddForce(transform.forward * 1, ForceMode.Impulse);
+        enemyRb.AddForce(transform.forward, ForceMode.Impulse);
         attackCollider.GetComponent<EnemyMeleeAttack>().AttackReady(this, eStat.attackCoolTime);
 
     }

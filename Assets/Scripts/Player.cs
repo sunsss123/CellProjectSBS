@@ -1,9 +1,14 @@
 using System.Collections;
+using System.Security.Cryptography;
 using UnityEditor.Rendering;
 using UnityEngine;
+using UnityEngine.UIElements;
+
+public enum Direction { left =-1, none=0, right=1 }
 
 public class Player : Character
 {
+    public Direction dir= Direction.left;
     //public static Player instance;
     #region 변수
     public Rigidbody playerRb;
@@ -33,7 +38,10 @@ public class Player : Character
 
     public bool onGround; // 지상 판정 유무
     public bool downAttack; // 내려찍기 공격 확인
+    public bool getKeyJumpLimit; // 계속 누른 상태에서 점프 반복되는 것 방지 테스트
     public float jumpLimit; // 점프 높이 제한하는 변수 velocity의 y값을 제한
+
+    public float rotationValue; // 방향키 입력 시 받을 방향 변수
 
     public bool attackSky; // 공중 공격
     public bool attackGround; // 지상 공격
@@ -46,6 +54,10 @@ public class Player : Character
     
     public bool canAttack; // 공격 가능
 
+    bool co; //코루틴 테스트 bool 변수
+    
+    RaycastHit rayHit;
+
     /*bool currentUp; // 뒤로 보게 만들기
     bool currentDown; // 앞으로 보게 만들기
     bool currentLeft; // 좌측 보게 만들기
@@ -53,7 +65,7 @@ public class Player : Character
 
     #endregion
 
-  
+    #region 싱글톤
     /*private void Awake()
     {
         if (instance == null)
@@ -66,6 +78,7 @@ public class Player : Character
         }
         DontDestroyOnLoad(gameObject);
     }*/
+    #endregion
 
     // Start is called before the first frame update
     void Start()
@@ -79,7 +92,12 @@ public class Player : Character
         hitColor = hitCheckMat.material.color;
     }
 
-    private void FixedUpdate()
+    private void Update()
+    {
+        Debug.DrawRay(transform.position, transform.forward * 10, Color.red);
+    }
+
+    /*private void FixedUpdate()
     {
         if (!onGround)
         {
@@ -89,7 +107,7 @@ public class Player : Character
         {
             isJump = false;
         }
-    }
+    }*/
 
     Vector3 translateFix;
 
@@ -97,6 +115,9 @@ public class Player : Character
     #region 이동
     public override void Move()
     {
+        //bool hit = Physics.Raycast(transform.position, transform.forward * 10, out rayHit);
+
+
         //translate우선
         //rigidbody 건
         //ZMove도 구현해놓기
@@ -111,7 +132,8 @@ public class Player : Character
 
         //Vector3 posFix = new(hori, 0, vert);
 
-        translateFix = new(hori, 0, vert);
+        //translateFix = new(hori, 0, 0);
+        translateFix = new(0, 0, hori);
 
         if (!isJump)
         {
@@ -128,37 +150,47 @@ public class Player : Character
 
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            PlayerStat.instance.rotationValue = -1;
-            if (transform.eulerAngles.y >= -20f && transform.eulerAngles.y <= 5f)
+            rotationValue = -1;
+            if (/*transform.eulerAngles.y >= -20f && transform.eulerAngles.y <= 5f*/transform.eulerAngles.y > 270f && transform.eulerAngles.y <= 360f || transform.eulerAngles.y >= -20f && transform.eulerAngles.y <= 40f)
             {
                 transform.rotation = Quaternion.Euler(0, 0, 0);
-                transform.Translate(transform.forward * PlayerStat.instance.moveSpeed * Time.deltaTime, Space.World);
+                //transform.Translate(transform.forward * PlayerStat.instance.moveSpeed * Time.deltaTime, Space.World);
+                playerRb.MovePosition(transform.position + translateFix * PlayerStat.instance.moveSpeed * Time.deltaTime);
             }
-            else if(transform.eulerAngles.y > 5f  && transform.eulerAngles.y <= 185f)
+            else /*(transform.eulerAngles.y > 5f && transform.eulerAngles.y <= 185f)*/
             {
-                //StartCoroutine(Rotation());
-                //transform.Rotate(0, PlayerStat.instance.rotationValue * 180f * PlayerStat.instance.rotationSpeed * Time.deltaTime, 0);
+                /*if (!co)
+                {
+                    StartCoroutine(Rotation());
+                }*/
+                //transform.Rotate(0, rotationValue * 180f * PlayerStat.instance.rotationSpeed * Time.deltaTime, 0);
                 transform.rotation = Quaternion.Euler(0, 0, 0);
             }
 
-            Debug.Log($"전진 방향키 시 y 앵글 값: {transform.eulerAngles.y}");
+            /*transform.Rotate(0, rotationValue * 90f * PlayerStat.instance.rotationSpeed * Time.deltaTime, 0);
+            Debug.Log($"전진 방향키 시 y 앵글 값: {transform.eulerAngles.y}")*/;
         }
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            PlayerStat.instance.rotationValue = 1;
-            if (transform.eulerAngles.y >= 178f && transform.eulerAngles.y <= 185f)
+            rotationValue = 1;
+            if (/*transform.eulerAngles.y >= 178f && transform.eulerAngles.y <= 185f*/(transform.eulerAngles.y >= 170f && transform.eulerAngles.y <= 270f))
             {
-                transform.rotation = Quaternion.Euler(0, 180, 0);
-                transform.Translate(transform.forward * PlayerStat.instance.moveSpeed * Time.deltaTime, Space.World);
+                //transform.rotation = Quaternion.Euler(0, 180, 0);
+                //transform.Translate(transform.forward * PlayerStat.instance.moveSpeed * Time.deltaTime, Space.World);
+                playerRb.MovePosition(transform.position + translateFix * PlayerStat.instance.moveSpeed * Time.deltaTime);
             }
             else
             {
                 transform.rotation = Quaternion.Euler(0, 180, 0);
-                //StartCoroutine(Rotation());
-                //transform.Rotate(0, PlayerStat.instance.rotationValue * 180f * PlayerStat.instance.rotationSpeed * Time.deltaTime, 0);
+                /*if (!co)
+                {
+                    StartCoroutine(Rotation());
+                }*/
+                //transform.Rotate(0, rotationValue * 180f * PlayerStat.instance.rotationSpeed * Time.deltaTime, 0);
             }
 
-            Debug.Log($"후진 방향키 시 y 앵글 값: {transform.eulerAngles.y}");
+            /*transform.Rotate(0, rotationValue * 90f * PlayerStat.instance.rotationSpeed * Time.deltaTime, 0);
+            Debug.Log($"후진 방향키 시 y 앵글 값: {transform.eulerAngles.y}");*/
         }
 
         #region 이동 함수 작성 중
@@ -376,35 +408,33 @@ public class Player : Character
         //Debug.Log(transfomr.)
     }
 
-    /*IEnumerator Rotation()
+    #region 방향 회전
+    IEnumerator Rotation()
     {
-        bool com = false;
+        co = true;
+        Debug.Log("회전 코루틴 실행 중");
         
-        while (!com)
+        while (!co)
         {
-            if (PlayerStat.instance.rotationValue < 0)
-            {
-                if (transform.eulerAngles.y >= -20f && transform.eulerAngles.y <= 5f)
-                {
-                    com = true;
-                }
-            }
-            else if(PlayerStat.instance.rotationValue > 0)
-            {
-                if (transform.eulerAngles.y >= 178f && transform.eulerAngles.y <= 185f)
-                {
-                    com = true;
-                }
-            }
-            yield return new WaitForSeconds(0.01f);
-            transform.Rotate(0, PlayerStat.instance.rotationValue * 180f * PlayerStat.instance.rotationSpeed * Time.deltaTime, 0);
+            yield return new WaitForSeconds(1f);
+            transform.Rotate(0, rotationValue * 10f * PlayerStat.instance.rotationSpeed * Time.deltaTime, 0);
         }
 
-        yield return new WaitUntil(() => com == true);
+        yield return new WaitUntil(() => transform.eulerAngles.y >= 170f && transform.eulerAngles.y <= 180f || transform.eulerAngles.y >-20f && transform.eulerAngles.y <= 40f);
+
+
+        if (rotationValue < 0)
+        {
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+        else
+        {
+            transform.rotation = Quaternion.Euler(0, 180, 0);
+        }
 
         Debug.Log("회전 완료");
-    }*/
-
+    }
+    #endregion
     bool MoveCheck(float hori, float vert)
     {
         bool moveResult = false;
@@ -432,7 +462,7 @@ public class Player : Character
     {
         if (PlayerStat.instance.attackType == AttackType.melee && canAttack)
         {
-            if (!onGround)
+            if (isJump)
             {
                 attackSky = true;
             }
@@ -452,11 +482,11 @@ public class Player : Character
     #region 피격
     public override void Damaged(float damage, GameObject obj)
     {
-        gameObject.layer = 9;
-
         if (!onInvincible)
         {
+            gameObject.layer = 9;
             onInvincible = true;
+            
 
             PlayerStat.instance.cState = CharacterState.hit;
 
@@ -471,6 +501,7 @@ public class Player : Character
                 PlayerStat.instance.hp = 0;
                 Dead();
             }
+            HudTest.instance.InitHpState(PlayerStat.instance.hp);
             StartCoroutine(HitAndWaitIdle());
         }
     }
@@ -479,7 +510,7 @@ public class Player : Character
     {
         hitCheckMat.material.color = Color.red;
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(PlayerStat.instance.hitInvincible);
 
         PlayerStat.instance.cState = CharacterState.idle;
         onInvincible = false;
@@ -498,29 +529,33 @@ public class Player : Character
     #endregion
 
     #region 점프동작
-    /*public void Jump()
+    public void Jump()
     {
-        //플랫폼에 닿았을 때 점프 가능(바닥,천장, 벽에 닿아도 점프 되지만 신경쓰지말기)
-        onGround = false;
-        //jumpAnim = true;
-        //moveSpeed = ;
-        if (PlayerStat.instance.jumpCount < PlayerStat.instance.jumpCountMax)
+        if (!isJump)
         {
-            //animator.JumpAnimation(jumpAnim);
-            //playerRb.velocity = Vector3.zero;
-            //addforce
-
-            //YMove 
-            PlayerStat.instance.jumpValueTime += Time.deltaTime;
-            playerRb.AddForce(Vector3.up * PlayerStat.instance.jumpForce, ForceMode.Impulse);
-            if (Input.GetKeyUp(KeyCode.C) || PlayerStat.instance.jumpValueTime >= PlayerStat.instance.jumpValueMax)
+            isJump = true;
+            
+            playerRb.AddForce(Vector3.up * PlayerStat.instance.shotJumpForce, ForceMode.Impulse);
+            //jumpAnim = true;        
+            if (PlayerStat.instance.jumpCount < PlayerStat.instance.jumpCountMax)
             {
-                playerRb.velocity = Vector3.zero;
-                PlayerStat.instance.jumpValueTime = 0;
-                PlayerStat.instance.jumpCount++;
+                //animator.JumpAnimation(jumpAnim);
+                //playerRb.velocity = Vector3.zero;
+                //addforce
+
+                //YMove 
+                PlayerStat.instance.jumpValueTime += Time.deltaTime;
+                playerRb.AddForce(Vector3.up * PlayerStat.instance.jumpForce, ForceMode.Impulse);
+
+                if (PlayerStat.instance.jumpValueTime >= PlayerStat.instance.jumpValueMax)
+                {
+                    playerRb.velocity = Vector3.zero;
+                    PlayerStat.instance.jumpValueTime = 0;
+                    PlayerStat.instance.jumpCount++;
+                }
             }
         }
-    }*/
+    }
 
     public void KeyDownJump()
     {
@@ -616,10 +651,11 @@ public class Player : Character
         {
             //animator.ContinueAnimation();
             Debug.Log("바닥 체크");
-            onGround = true;
+            playerRb.velocity = Vector3.zero;
+            isJump = false;
+            downAttack = false;
             PlayerStat.instance.jumpCount = 0;
             PlayerStat.instance.jumpValueTime = 0;
-            downAttack = false;
         }
         #endregion
 
@@ -679,9 +715,31 @@ public class Player : Character
         }
     }*/
 
+    #region 변신 관련 함수
     public virtual void SpecialAttack()
     {
         //sAttackPrefab.SetActive(true);
         Debug.Log("기본 상태에서는 특수공격이 없습니다!");
-    }        
+    }
+    
+    /*public void TransformOff()
+    {
+        PlayerStat.instance.transformGauge += Time.deltaTime;
+        if (PlayerStat.instance.transformGauge <= PlayerStat.instance.transformMaxGauge)
+        {
+            PlayerHandler.instance.transformed(PlayerHandler.)
+        }
+    }*/
+    #endregion
+
+    public void TimeScaleChange()
+    {
+        Time.timeScale = 0.2f;
+        //Time.fixedDeltaTime = Time.timeScale * 0.02f;
+    }
+
+    public void TimeScaleBack()
+    {
+        Time.timeScale = 1f;
+    }
 }

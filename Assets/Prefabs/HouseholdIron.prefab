@@ -88,7 +88,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &-904017558845184542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -101,12 +101,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6232934ec9eb7c4e845fc8f5ffb5c5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dir: -1
   playerRb: {fileID: 7131755222147023032}
   capsuleCollider: {fileID: 1247431362628203828}
   animator: {fileID: 0}
   meleeCollider: {fileID: 8507198303819379530}
   flyCollider: {fileID: 9171000345435964922}
   firePoint: {fileID: 6540623200535829702}
+  downAttackCollider: {fileID: 0}
   hitCheckMat: {fileID: 2966415644254764220}
   hitColor: {r: 0, g: 0, b: 0, a: 0}
   moveValue: 0
@@ -119,7 +121,9 @@ MonoBehaviour:
   isAttack: 0
   onGround: 0
   downAttack: 0
+  getKeyJumpLimit: 0
   jumpLimit: 0
+  rotationValue: 0
   attackSky: 0
   attackGround: 0
   velocityValue: {x: 0, y: 0, z: 0}
