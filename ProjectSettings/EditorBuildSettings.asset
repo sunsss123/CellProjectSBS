@@ -8,4 +8,11 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: d1c3109bdb54ad54c8a2b2838528e640
+  - enabled: 1
+    path: Assets/Scenes/ridingMokup.unity
+    guid: c327d956d72cb7248813f3772f59ef07
+  - enabled: 1
+    path: Assets/Scenes/ridingMokup2.unity
+    guid: 7d5ce9de76b4ff8458d35f2581750230
   m_configObjects: {}
+  m_UseUCBPForAssetBundles: 0

@@ -110,7 +110,7 @@ public class Player : Character
         if(animator!=null)
         animator.SetBool("run", isRun);
 
-        wallRayCastCheck();
+        //wallRayCastCheck();
        
 
     }
@@ -359,13 +359,13 @@ public class Player : Character
         #endregion
     }
     
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("EnemyAttack"))
-        {
-            Damaged(other.GetComponent<EnemyMeleeAttack>().GetDamage(), other.gameObject);
-        }
-    }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.CompareTag("EnemyAttack"))
+    //    {
+    //        Damaged(other.GetComponent<EnemyMeleeAttack>().GetDamage(), other.gameObject);
+    //    }
+    //}
 
     #region ³»·ÁÂï±â
     public void DownAttack()
