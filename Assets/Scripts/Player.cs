@@ -14,7 +14,7 @@ public class Player : Character
     [Header("근접 및 원거리 공격 관련")]
     public GameObject meleeCollider; // 근접 공격 콜라이더
     public GameObject flyCollider; // 공중 공격 콜라이더
-
+    public Transform firePoint; // 원거리 및 특수공격 생성위치
 
     public Animator animator;
    
@@ -107,10 +107,10 @@ public class Player : Character
     private void FixedUpdate()
     {
         
-        if(animator!=null)
-        animator.SetBool("run", isRun);
+        /*if(animator!=null)
+        animator.SetBool("run", isRun);*/
 
-        wallRayCastCheck();
+        //wallRayCastCheck();
        
 
     }
@@ -378,12 +378,15 @@ public class Player : Character
 
     public virtual void Skill1()
     {
-
+        Debug.Log("s키를 이용한 스킬");
     }
     public virtual void Skill2()
     {
 
     }
 
-
+    /*public virtual void SpecialAttack()
+    {
+        Debug.Log("기본상태는 특수공격 없음");
+    }*/
 }

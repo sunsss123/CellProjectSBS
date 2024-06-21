@@ -8,7 +8,7 @@ public class DoorSetting : MonoBehaviour
 
     void Update()
     {
-        bool b = false;
+        /*bool b = false;
         foreach(Enemy e in enemylist)
         {
             if(e.gameObject.activeSelf)
@@ -18,6 +18,6 @@ public class DoorSetting : MonoBehaviour
             }
            
         }
-        this.gameObject.SetActive(b);
+        this.gameObject.SetActive(b);*/
     }
 }

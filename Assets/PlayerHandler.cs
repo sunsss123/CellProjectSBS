@@ -154,7 +154,9 @@ public class PlayerHandler : MonoBehaviour
             else
                 transformed(TransformType.Default);
         }
-       
+
+        CurrentPlayer.Skill1();
+        //CurrentPlayer.Skill2();
       
     }
     #endregion
@@ -163,5 +165,5 @@ public class PlayerHandler : MonoBehaviour
 }
 
 
-public enum TransformType { Default, transform0,transform1,testtransform }
+public enum TransformType { Default, remoteform, transform0,transform1,testtransform}
 

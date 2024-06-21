@@ -22,7 +22,7 @@ public class RemoteObject : MonoBehaviour
     public void Active()
     {
         Frontrenderer.material= ActiveMaterial;
-        onActive = true;
+        onActive = true;        
     }
     void Update()
     {

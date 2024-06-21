@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 16797501091728470}
   - component: {fileID: 4624427198449429677}
   m_Layer: 0
-  m_Name: BatteryForm1
+  m_Name: Remocon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

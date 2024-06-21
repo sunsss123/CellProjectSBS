@@ -1312,6 +1312,7 @@ MonoBehaviour:
   capsuleCollider: {fileID: 2012848794722345922}
   meleeCollider: {fileID: 0}
   flyCollider: {fileID: 0}
+  firePoint: {fileID: 0}
   animator: {fileID: 2004389713774185228}
   moveValue: 0
   hori: 0

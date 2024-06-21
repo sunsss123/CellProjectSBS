@@ -1,5 +1,6 @@
 
 using UnityEditor;
+using UnityEngine;
 
 public enum CurrentAttack { ground, sky }
 
@@ -7,6 +8,7 @@ public class PlayerStat : CharacterStat
 {
     public static PlayerStat instance;
 
+    [Header("PlayerStat에서 작성된 부분")]
     public CurrentAttack currentAttack;
 
     public float jumpCount;
