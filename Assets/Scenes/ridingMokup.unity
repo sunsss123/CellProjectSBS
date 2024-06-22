@@ -2231,7 +2231,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 504678db07c80574f8574d766943c615, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isVert: 1
   speed: 50
   Terrain: {fileID: 888929509}
   DebugPos: {x: 0, y: 0, z: 0}
