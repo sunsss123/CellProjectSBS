@@ -7,38 +7,42 @@ public class Enemy : Character
 {
     public EnemyStat eStat;
 
+    public Rigidbody enemyRb; // 적 리지드바디
     public GameObject attackCollider; // 적의 공격 콜라이더 오브젝트
 
-    public float searchRange; // 플레이어 인지 범위
-    public float attackRange; // 공격 실행 범위
-    //public float moveRagne; // 이동 범위?
+    //public float searchRange; // 플레이어 인지 범위
+    //public float attackRange; // 공격 실행 범위
+    [Header("플레이어 탐색 큐브 조정")]
+    public Vector3 searchCubeRange; // 플레이어 인지 범위를 Cube 사이즈로 설정
+    public Vector3 searchCubePos; // Cube 위치 조정
 
+    [Header("플레이어 추격 관련")]
+    public float attackTimer; // 공격 대기시간
+    public float attackInitCoolTime; // 공격 대기시간 초기화 변수
+    public float attackDelay; // 공격 후 딜레이
     bool onAttack; // 공격 활성화 여부 (공격 범위 내에 플레이어를 인식했을 때 true 변환)
     bool activeAttack; // 공격 가능한 상태인지 체크
     bool checkPlayer; // 범위 내 플레이어 체크
-    public float attackTimer; // 공격 대기시간
-    public float attackInitCoolTime; // 공격 딜레이
-
-    public Rigidbody enemyRb;
-
-    public Transform target; // 추적할 타겟
-    bool tracking; // 추적 활성화 체크
+    bool hitByPlayer; // Tv 오브젝트 활성화 중에 플레이어에게 공격 당했을 때 적용
 
     [Header("목표 회전을 테스트하기 위한 변수")]
+    public Transform target; // 추적할 타겟
+    bool tracking; // 추적 활성화 체크
     public Vector3 testTarget; // 타겟을 바라보는 시점을 테스트하기 위한 임시 변수
     public float rotationY; // 로테이션 값을 이해하기 위한 테스트 변수
     public float notMinusRotation;
     public float eulerAnglesY; // 오일러값 확인 테스트
     public float rotationSpeed; // 자연스러운 회전을 찾기 위한 테스트 
 
+    [Header("Tv 오브젝트 관련")]
     bool checkTv; // Tv오브젝트를 추격하고 근접했을 때 true(Tv 인식 이후 목표 지점으로 도달했을 때)
     bool activeTv; // Tv 오브젝트가 활성화 되었을 때 true (활성화 시점)
-    bool hitByPlayer; // Tv 오브젝트 활성화 중에 플레이어에게 공격 당했을 때 적용
     public float rayRange; // 레이캐스트 길이 조절
     public float rayHeight; // 레이캐스트 높이 조절
 
     [Header("돌진 캐릭터 테스트 변수")]
     public float rushForce; // 돌진 속도
+    public BoxCollider attackRange; // 공격 범위 콜라이더
 
 
     private void Awake()
@@ -52,8 +56,9 @@ public class Enemy : Character
 
     private void Start()
     {
-        attackInitCoolTime = 2f;
+        attackInitCoolTime = 3.5f;
         attackTimer = attackInitCoolTime;
+        attackDelay = 2f;
     }
 
     // 부모인 Enemy에서 사용?
@@ -63,17 +68,18 @@ public class Enemy : Character
         Move();
 
         TrackingCheck();
+        
     }
 
     public void TrackingCheck()
     {
         RaycastHit hit;
-        Debug.DrawRay(transform.position + Vector3.up * rayHeight, Vector3.forward * rayRange, Color.magenta, 0.1f);
-        if (Physics.Raycast(transform.position + Vector3.up * rayHeight, Vector3.forward, out hit,rayRange))
+        Debug.DrawRay(transform.position + Vector3.up * rayHeight, transform.forward * rayRange, Color.magenta, 0.1f);
+        if (Physics.Raycast(transform.position + Vector3.up * rayHeight, transform.forward, out hit,rayRange))
         {
             if (hit.collider.CompareTag("GameController"))
             {
-                if (hit.collider.gameObject.GetComponent<RemoteObject>().rType == RemoteType.tv && !activeTv)
+                if (hit.collider.gameObject.GetComponent<RemoteObject>().rType == RemoteType.tv && activeTv)
                 {
                     checkTv = true;
                 }
@@ -85,7 +91,8 @@ public class Enemy : Character
         }
 
     }
-   
+
+    #region 피격함수
     public override void Damaged(float damage, GameObject obj)
     {
         eStat.hp -= damage;
@@ -95,27 +102,28 @@ public class Enemy : Character
 
             Dead();
         }
+        enemyRb.AddForce(Vector3.back * 1.5f, ForceMode.Impulse);
+        InitAttackCoolTime();
     }
+    #endregion
 
     #region 이동함수
     public override void Move()
     {
         if (tracking)
         {
-            if (!activeAttack && !checkTv)
+            if (!activeAttack && !checkTv && !onAttack)
             {
                 TrackingMove();
             }
         }
-        else
-        {
-            PatorlMove();
-        }
+
+        Patorl();
     }
 
     // 추격 함수
     public void TrackingMove()
-    {
+    {       
         testTarget = target.position - transform.position;
         testTarget.y = 0;
 
@@ -130,39 +138,62 @@ public class Enemy : Character
             enemyRb.MovePosition(transform.position + transform.forward * Time.deltaTime * eStat.moveSpeed);
         }
     }
-    
+
     // 정찰 함수
-    public void PatorlMove()
+    public void Patorl()
     {
-        Debug.Log("추적할 대상이 없습니다.");
+        Debug.Log("추적하고있지 않다면 주변을 정찰합니다");
+        //Collider[] colliders = Physics.OverlapSphere(transform.position, searchRange);
+        Collider[] colliders = Physics.OverlapBox(transform.position + searchCubePos, searchCubeRange);
+
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            if (colliders[i].CompareTag("Player"))
+            {
+                Debug.Log("플레이어 추적해라");
+                target = colliders[i].transform;
+                checkPlayer = true;
+                tracking = true;
+            }
+            else
+            {
+                Debug.Log("플레이어 추적하지마라");
+                target = null;
+                checkPlayer = false;
+                tracking = false;
+            }
+        }
     }
-    #endregion
 
     public bool SetRotation()
     {
         bool completeRot = false;
 
         if (transform.eulerAngles.y >= -10 && transform.eulerAngles.y <= 10)
-        {
-            //transform.rotation = Quaternion.Euler(0, 0, 0);
-            //StartCoroutine(WaitSetRotate());
+        {            
             completeRot = true;
         }
         else if (transform.eulerAngles.y >= 175 && transform.eulerAngles.y <= 190 ||
             transform.eulerAngles.y >= 350 && transform.eulerAngles.y <= 360)
-        {
-            //transform.rotation = Quaternion.Euler(0, 180, 0);
-            //StartCoroutine(WaitSetRotate());
+        {            
             completeRot = true;
         }
         return completeRot;
     }
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube(transform.position + searchCubePos, searchCubeRange * 2f);
+        //Gizmos.DrawWireSphere(transform.position, searchRange);
+    }
+    #endregion
+
     public override void Dead()
     {
         gameObject.SetActive(false);
     }
-
+    #region 공격함수
     public override void Attack()
     {
         //공격 콜라이더 오브젝트 활성화
@@ -174,13 +205,25 @@ public class Enemy : Character
          * activeAttack 부울 변수를 false변환 및 공격 타이머 초기화      
         */
         attackCollider.GetComponent<EnemyMeleeAttack>().AttackReady(this, eStat.attackCoolTime);
-
     }
+
+    public void InitAttackCoolTime()
+    {
+        activeAttack = false;
+        attackTimer = attackInitCoolTime;
+        onAttack = false;
+    }
+    #endregion
 
     private void OnTriggerStay(Collider other)
     {
         Debug.Log($"트리거 감지 중 {other.gameObject}");
-        if (other.CompareTag("Player") && !checkTv)
+        if (other.CompareTag("Player") && !checkTv && !onAttack)
+        {
+            onAttack = true;
+        }   
+        
+        if (onAttack)
         {
             if (attackTimer > 0 && !activeAttack)
             {
@@ -189,6 +232,7 @@ public class Enemy : Character
             else if (attackTimer <= 0)
             {
                 activeAttack = true;
+                attackTimer = attackInitCoolTime;
                 Attack();
             }
         }
@@ -198,7 +242,7 @@ public class Enemy : Character
     {
         if (other.CompareTag("GameController"))
         {
-            if (other.GetComponent<RemoteObject>().rType == RemoteType.tv && !hitByPlayer)
+            if (other.GetComponent<RemoteObject>().rType == RemoteType.tv && !hitByPlayer && activeTv)
             {
                 target = other.transform;
                 tracking = true;
@@ -222,24 +266,10 @@ public class Enemy : Character
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    /*private void OnTriggerExit(Collider other)
     {
         activeAttack = false;
         //attackTimer = attackInitCoolTime;
         //attackCollider.SetActive(false);     
-    }
-
-    /*IEnumerator PlayerExitRange()
-    {
-        yield return new WaitUntil(() => !checkPlayer)
-        {
-
-        };
     }*/
-
-    public void InitAttackCoolTime()
-    {
-        activeAttack = false;
-        attackTimer = attackInitCoolTime;
-    }
 }

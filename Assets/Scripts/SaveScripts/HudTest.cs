@@ -24,7 +24,7 @@ public class HudTest : MonoBehaviour
 
     private void Start()
     {        
-        PlayerHpSetting();
+        //PlayerHpSetting();
         gaugeBar.localScale = new Vector3(0, 1, 1);
         gameObject.SetActive(false);
     }    
@@ -34,20 +34,20 @@ public class HudTest : MonoBehaviour
         gaugeBar.localScale = new Vector3(value, 1, 1);
     }
 
-    public void PlayerHpSetting()
+    /*public void PlayerHpSetting()
     {
         for (int i = 0; i < PlayerStat.instance.hpMax; i++)
         {
             Instantiate(hpPrefab, hpSettingGroup);
             hpGroup.Add(hpPrefab);
         }
-    }
+    }*/
 
-    public void InitHpState(float currentHP)
+    /*public void InitHpState(float currentHP)
     {
         for (int i = (int)PlayerStat.instance.hpMax; i > (int)currentHP; i--)
         {
             hpSettingGroup.GetChild(i - 1).gameObject.SetActive(false);
         }
-    }
+    }*/
 }

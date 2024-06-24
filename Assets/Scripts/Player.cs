@@ -108,7 +108,13 @@ public class Player : Character
     {
 
         if (animator != null)
+        {
             animator.SetBool("run", isRun);
+        }
+        else
+        {
+            Debug.Log("달리기 애니메이션 무응답");
+        }
 
         wallRayCastCheck();
 
