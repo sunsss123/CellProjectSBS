@@ -106,12 +106,12 @@ public class Player : Character
     bool wallcheck;
     private void FixedUpdate()
     {
-        
-        /*if(animator!=null)
-        animator.SetBool("run", isRun);*/
 
-        //wallRayCastCheck();
-       
+        if (animator != null)
+            animator.SetBool("run", isRun);
+
+        wallRayCastCheck();
+
 
     }
 

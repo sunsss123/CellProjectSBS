@@ -799,6 +799,7 @@ MonoBehaviour:
   holdSpeed: 0
   remoteObj: []
   timeScale: 0
+  chargeSpeed: 2.5
 --- !u!1 &5177394821882809430
 GameObject:
   m_ObjectHideFlags: 0

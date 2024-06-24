@@ -18,7 +18,8 @@ public class RemoteForm : Player
     public float holdSpeed; // 충전 속도
     public List<GameObject> remoteObj;
 
-    public float timeScale;
+    public float timeScale; // 차징 범위 증가 받을 변수
+    public float chargeSpeed; // 차징 속도 변수    
 
     private void Awake()
     {
@@ -62,7 +63,7 @@ public class RemoteForm : Player
                 else
                 {
                     timeScale += Time.deltaTime;
-                    handlerange.transform.localScale = new Vector3(0, timeScale, timeScale);
+                    handlerange.transform.localScale = new Vector3(0, chargeSpeed * timeScale, chargeSpeed * timeScale);
                 }
             }
         }
@@ -130,7 +131,7 @@ public class RemoteForm : Player
         }
 
         remoteObj.Clear();
-
+        handlerange.transform.localScale = new Vector3(0, 0, 0);
     }
 
     IEnumerator ElectricPower()

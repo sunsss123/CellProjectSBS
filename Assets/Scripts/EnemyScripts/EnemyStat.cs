@@ -22,7 +22,7 @@ public class EnemyStat : CharacterStat
         hpMax = 5;
         hp = hpMax;
         atk = 1;
-        moveSpeed = 10f;
+        moveSpeed = 2f;
         attackCoolTime = 0.2f;
         //jumpLimit = 24f;
     }
