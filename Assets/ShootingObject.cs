@@ -9,9 +9,9 @@ public class ShootingObject : MonoBehaviour
     public float AttackDelay;
     public GameObject Bullet;
     public float bulletspeed;
-    protected Vector3 TargetVector;
+    protected Vector2 TargetVector;
     public bool Player;
-    WaitForSeconds corutineseconds;
+   protected WaitForSeconds corutineseconds;
   protected  bool onshoot;
     public virtual void Start()
     {

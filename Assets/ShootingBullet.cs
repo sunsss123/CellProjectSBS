@@ -7,16 +7,17 @@ public class ShootingBullet : MonoBehaviour
 {
     public bool Player;
     public float speed;
-    Vector3 Vector;
+    Vector2 Vector;
     public void Setbullet(float speed,Vector3 vector,bool Player)
     {
         this.speed = speed;
         this.Vector = vector;
         this.Player = Player;
     }
+    
     private void FixedUpdate()
     {
-        this.transform.position = new Vector3(transform.position.x, transform.position.y, ShootingPlayer.instance.transform.position.z);
+        //this.transform.position = new Vector3(transform.position.x, transform.position.y, ShootingPlayer.instance.transform.position.z);
         transform.Translate(Vector * speed * Time.deltaTime);
        
     }

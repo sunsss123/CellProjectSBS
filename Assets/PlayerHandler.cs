@@ -126,6 +126,11 @@ public class PlayerHandler : MonoBehaviour
         {
             CurrentPlayer.Jump();
         }
+
+        if (!Input.GetKey(KeyCode.C))
+        {
+            CurrentPlayer.jumpHold();
+        }
         if (Input.GetKeyDown(KeyCode.E))
         {
             CurrentPlayer. SwapAttackType();

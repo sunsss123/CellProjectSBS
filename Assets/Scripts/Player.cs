@@ -2,6 +2,8 @@ using System.Collections;
 using Unity.Burst.CompilerServices;
 using UnityEditor.Rendering;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.RenderGraphModule;
+
 public enum direction {Left=-1,none=0,Right=1 }
 public class Player : Character
 {
@@ -9,7 +11,7 @@ public class Player : Character
     #region 변수
     public Rigidbody playerRb;
     public CapsuleCollider capsuleCollider;
-
+   
     direction direction=direction.Right;
     [Header("근접 및 원거리 공격 관련")]
     public GameObject meleeCollider; // 근접 공격 콜라이더
@@ -52,7 +54,6 @@ public class Player : Character
 
     public float SizeX;
     public float SizeY;
-   
 
     // Start is called before the first frame update
     void Start()
@@ -60,7 +61,11 @@ public class Player : Character
         animator=transform.GetChild(0). GetComponent<Animator>();
         canAttack = true;
         onDash = true;
+
+       
+   
     }
+
     void jumpRaycastCheck()
     {
         if (!onGround)
@@ -84,6 +89,14 @@ public class Player : Character
 
         }
     }
+    public float jumpholdLevel = 0.85f;
+    public void jumpHold()
+    {
+        if (playerRb.velocity.y > 0)
+        {
+            playerRb.velocity = new Vector3(playerRb.velocity.x, playerRb.velocity.y * jumpholdLevel, playerRb.velocity.z);
+        }
+    }
     void wallRayCastCheck()
     {
         RaycastHit hit;
@@ -104,6 +117,7 @@ public class Player : Character
         }
     }
     bool wallcheck;
+
     private void FixedUpdate()
     {
         
@@ -114,7 +128,7 @@ public class Player : Character
        
 
     }
-
+  
     Vector3 translateFix;
 
     #region 추상화 오버라이드 함수
