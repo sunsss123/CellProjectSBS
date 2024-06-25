@@ -11,13 +11,19 @@ public class Player : Character
     public CapsuleCollider capsuleCollider;
 
     direction direction=direction.Right;
+
+    [Header("애니메이션 이펙트 테스트")]
+    public GameObject hitEffect; // 공격 적중 시 이펙트
+    
     [Header("근접 및 원거리 공격 관련")]
     public GameObject meleeCollider; // 근접 공격 콜라이더
     public GameObject flyCollider; // 공중 공격 콜라이더
     public Transform firePoint; // 원거리 및 특수공격 생성위치
 
-    public Animator animator;
-   
+    public Animator animator; // 애니메이션
+    public ParticleSystem invincibleEffect; // 무적 이펙트
+
+    [Header("플레이어 이동 관련")]
     public float moveValue; // 움직임 유무를 결정하기 위한 변수
     public float hori, vert; // 플레이어의 움직임 변수
 
@@ -39,9 +45,8 @@ public class Player : Character
 
     public bool onInvincible; // 무적 유무
     public bool onDash; // 대시 사용 가능 상태
-    public bool isMove; // 이동 가능 상태
-    
-    public bool canAttack; // 공격 가능
+    public bool isMove; // 이동 가능 상태    
+    public bool canAttack; // 공격 가능    
 
     /*bool currentUp; // 뒤로 보게 만들기
     bool currentDown; // 앞으로 보게 만들기
@@ -51,12 +56,12 @@ public class Player : Character
     #endregion
 
     public float SizeX;
-    public float SizeY;
-   
+    public float SizeY;    
 
     // Start is called before the first frame update
     void Start()
     {
+        invincibleEffect.Stop();
         animator=transform.GetChild(0). GetComponent<Animator>();
         canAttack = true;
         onDash = true;
@@ -202,7 +207,7 @@ public class Player : Character
                 attackGround = true;
             }
             Debug.Log("공격키");
-            //StartCoroutine(TestMeleeAttack());
+            StartCoroutine(TestMeleeAttack());
         }
       
     }
@@ -221,8 +226,25 @@ public class Player : Character
             PlayerStat.instance.hp = 0;
             Dead();
         }
+        #region 피격 시 무적 및 넉백 테스트
+        StartCoroutine(HitAndInvincible());
+        #endregion
+    }
+
+    IEnumerator HitAndInvincible()
+    {
+        invincibleEffect.Play();
+
+        playerRb.AddForce(Vector3.back * 8, ForceMode.Impulse);
+        onInvincible = true;
+
+        yield return new WaitForSeconds(PlayerStat.instance.invincibleCoolTime);
+
+        onInvincible = false;
+        invincibleEffect.Stop();
     }
     #endregion
+
     #region 사망
     public override void Dead()
     {
@@ -283,7 +305,7 @@ public class Player : Character
         {
             meleeCollider.SetActive(true);
             meleeCollider.GetComponent<SphereCollider>().enabled = true;
-            playerRb.AddForce(transform.forward * 3, ForceMode.Impulse);
+            playerRb.AddForce(transform.right * 3, ForceMode.Impulse);
         }
 
         yield return new WaitForSeconds(PlayerStat.instance.attackDelay);
@@ -350,7 +372,7 @@ public class Player : Character
             {
                 Debug.Log("무적 상태입니다");
             }
-            else
+            /*else
             {
                 //피해를 받음
                 Damaged(collision.gameObject.GetComponent<Enemy>().eStat.atk, collision.gameObject);
@@ -360,7 +382,7 @@ public class Player : Character
                     PlayerStat.instance.hp = 0;
                     Dead();
                 }
-            }
+            }*/
         }
         #endregion
     }
@@ -382,15 +404,16 @@ public class Player : Character
     }
     #endregion
 
+    #region 특수공격
     public virtual void Skill1()
     {
-        Debug.Log("s키를 이용한 스킬");
+        // s키
     }
     public virtual void Skill2()
     {
-
+        // d키
     }
-
+    #endregion
     /*public virtual void SpecialAttack()
     {
         Debug.Log("기본상태는 특수공격 없음");

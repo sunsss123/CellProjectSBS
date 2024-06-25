@@ -35,7 +35,7 @@ public class Enemy : Character
     public float rotationSpeed; // 자연스러운 회전을 찾기 위한 테스트 
 
     [Header("Tv 오브젝트 관련")]
-    bool checkTv; // Tv오브젝트를 추격하고 근접했을 때 true(Tv 인식 이후 목표 지점으로 도달했을 때)
+    public bool checkTv; // Tv오브젝트를 추격하고 근접했을 때 true(Tv 인식 이후 목표 지점으로 도달했을 때)
     bool activeTv; // Tv 오브젝트가 활성화 되었을 때 true (활성화 시점)
     public float rayRange; // 레이캐스트 길이 조절
     public float rayHeight; // 레이캐스트 높이 조절
@@ -58,7 +58,14 @@ public class Enemy : Character
     {
         attackInitCoolTime = 3.5f;
         attackTimer = attackInitCoolTime;
-        attackDelay = 2f;
+        attackDelay = 1.5f;
+    }
+
+    private void Update()
+    {
+        ReadyAttackTime();
+
+        Debug.Log($"추적대상: {target}");
     }
 
     // 부모인 Enemy에서 사용?
@@ -68,29 +75,40 @@ public class Enemy : Character
         Move();
 
         TrackingCheck();
-        
     }
 
+    #region 추적 대상 확인
     public void TrackingCheck()
     {
         RaycastHit hit;
         Debug.DrawRay(transform.position + Vector3.up * rayHeight, transform.forward * rayRange, Color.magenta, 0.1f);
-        if (Physics.Raycast(transform.position + Vector3.up * rayHeight, transform.forward, out hit,rayRange))
+
+        RaycastHit[] hits = Physics.RaycastAll(transform.position + Vector3.up * rayHeight, transform.forward, rayRange);
+
+        for (int i = 0; i < hits.Length; i++)
+        {
+            if (hits[i].collider.CompareTag("GameController"))
+            {
+                if (hits[i].collider == hits[i].collider.GetComponent<BoxCollider>() && hits[i].collider.GetComponent<RemoteObject>().rType == RemoteType.tv)
+                {
+                    checkTv = true;
+                }
+            }
+        }
+
+        /*if (Physics.Raycast(transform.position + Vector3.up * rayHeight, transform.forward, out hit, rayRange))
         {
             if (hit.collider.CompareTag("GameController"))
             {
+                Debug.Log($"Hit collider>> {hit.collider}");
                 if (hit.collider.gameObject.GetComponent<RemoteObject>().rType == RemoteType.tv && activeTv)
                 {
                     checkTv = true;
                 }
             }
-            else if (hit.collider.CompareTag("Player"))
-            {
-
-            }
-        }
-
+        }*/
     }
+    #endregion
 
     #region 피격함수
     public override void Damaged(float damage, GameObject obj)
@@ -118,7 +136,7 @@ public class Enemy : Character
             }
         }
 
-        Patorl();
+        Patrol();
     }
 
     // 추격 함수
@@ -140,9 +158,9 @@ public class Enemy : Character
     }
 
     // 정찰 함수
-    public void Patorl()
+    public void Patrol()
     {
-        Debug.Log("추적하고있지 않다면 주변을 정찰합니다");
+        //Debug.Log("추적하고있지 않다면 주변을 정찰합니다");
         //Collider[] colliders = Physics.OverlapSphere(transform.position, searchRange);
         Collider[] colliders = Physics.OverlapBox(transform.position + searchCubePos, searchCubeRange);
 
@@ -150,19 +168,20 @@ public class Enemy : Character
         {
             if (colliders[i].CompareTag("Player"))
             {
-                Debug.Log("플레이어 추적해라");
+                Debug.Log($"{target} 추적해라");
                 target = colliders[i].transform;
                 checkPlayer = true;
                 tracking = true;
             }
-            else
+            /*else
             {
-                Debug.Log("플레이어 추적하지마라");
-                target = null;
-                checkPlayer = false;
+                //Debug.Log("플레이어 추적하지마라");
                 tracking = false;
-            }
+                checkPlayer = false;                
+            }*/
         }
+
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(testTarget), rotationSpeed * Time.deltaTime);
     }
 
     public bool SetRotation()
@@ -189,10 +208,13 @@ public class Enemy : Character
     }
     #endregion
 
+    #region 사망함수
     public override void Dead()
     {
         gameObject.SetActive(false);
     }
+    #endregion
+
     #region 공격함수
     public override void Attack()
     {
@@ -204,25 +226,12 @@ public class Enemy : Character
          * 공격 콜라이더 오브젝트를 0.2초 후에 비활성화한 다음
          * activeAttack 부울 변수를 false변환 및 공격 타이머 초기화      
         */
-        attackCollider.GetComponent<EnemyMeleeAttack>().AttackReady(this, eStat.attackCoolTime);
+        attackCollider.GetComponent<EnemyMeleeAttack>().AttackReady(this, attackDelay);
     }
 
-    public void InitAttackCoolTime()
+    // 공격 준비
+    public void ReadyAttackTime()
     {
-        activeAttack = false;
-        attackTimer = attackInitCoolTime;
-        onAttack = false;
-    }
-    #endregion
-
-    private void OnTriggerStay(Collider other)
-    {
-        Debug.Log($"트리거 감지 중 {other.gameObject}");
-        if (other.CompareTag("Player") && !checkTv && !onAttack)
-        {
-            onAttack = true;
-        }   
-        
         if (onAttack)
         {
             if (attackTimer > 0 && !activeAttack)
@@ -236,16 +245,56 @@ public class Enemy : Character
                 Attack();
             }
         }
+        /*else
+        {
+            InitAttackCoolTime();
+        }*/
+    }
+
+    // 공격 초기화
+    public void InitAttackCoolTime()
+    {
+        activeAttack = false;
+        attackTimer = attackInitCoolTime;
+        onAttack = false;
+    }
+    #endregion
+
+    private void OnTriggerStay(Collider other)
+    {
+        //ebug.Log($"트리거 감지 중 {other.gameObject}");
+        if (other.CompareTag("Player") && !activeTv && !onAttack)
+        {
+            onAttack = true;
+        }   
+
+        if (other.CompareTag("GameController"))
+        {
+            if (other.GetComponent<RemoteObject>().rType == RemoteType.tv && !hitByPlayer)
+            {
+                if (other.GetComponent<RemoteObject>().onActive)
+                {
+                    target = other.transform;
+                    tracking = true;
+                }
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("GameController"))
         {
-            if (other.GetComponent<RemoteObject>().rType == RemoteType.tv && !hitByPlayer && activeTv)
+            if (other.GetComponent<RemoteObject>().rType == RemoteType.tv && !hitByPlayer)
             {
-                target = other.transform;
-                tracking = true;
+                RemoteObject tv = other.GetComponent<RemoteObject>();
+
+                if (tv.onActive)
+                {
+                    target = other.transform;
+                    activeTv = true;
+                    tracking = true;
+                }
             }
         }
 
@@ -260,8 +309,12 @@ public class Enemy : Character
 
         if (other.CompareTag("PlayerAttack"))
         {
+            if (activeTv)
+            {
+                hitByPlayer = true;
+            }
             activeTv = false;
-            hitByPlayer = true;
+            checkTv = false;
             // 플레이어를 타겟으로 지정하도록 구현 예정
         }
     }

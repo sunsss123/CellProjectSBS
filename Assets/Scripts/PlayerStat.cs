@@ -32,12 +32,19 @@ public class PlayerStat : CharacterStat
 
     }
 
+    private void Start()
+    {
+        hpMax = 5;
+        hp = hpMax;
+        invincibleCoolTime = 2f;
+    }
+
     // Start is called before the first frame update
     /*void Start()
     {
         InitStatus();
     }*/
- 
+
     //void InitStatus()
     //{
     //    hpMax = 200;
