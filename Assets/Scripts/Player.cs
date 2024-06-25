@@ -117,7 +117,7 @@ public class Player : Character
         }
 
         wallRayCastCheck();
-
+        InteractivePlatformrayCheck();
 
     }
 
@@ -343,6 +343,21 @@ public class Player : Character
         }
         //#endregion
 
+        if (collision.gameObject.CompareTag("InteractivePlatform"))
+        {
+            Debug.Log("checkplaatform");
+            jumpRaycastCheck();
+
+            downAttack = false;
+            if (Input.GetKey(KeyCode.DownArrow))
+            {
+                Debug.Log("DownArrowChk");
+                CullingPlatform = true;
+                Physics.IgnoreLayerCollision(6, 11, true);
+            }
+        }
+
+
         #region 적 상호작용
         if (collision.gameObject.CompareTag("Enemy"))
         {
@@ -364,6 +379,56 @@ public class Player : Character
         }
         #endregion
     }
+    public bool CullingPlatform;
+    public void InteractivePlatformrayCheck2()
+    {
+        Debug.DrawRay(transform.position + Vector3.up * 0.2f, Vector3.up * 0.2f, Color.yellow);
+
+        RaycastHit hit;
+        //if (playerRb.velocity.y <=0)
+        //{
+
+        if (Physics.Raycast(this.transform.position + Vector3.up * 0.2f, Vector3.up, out hit, 0.2f))
+        {
+
+            if (hit.collider.CompareTag("InteractivePlatform"))
+            {
+                
+                    CullingPlatform = true;
+                    Physics.IgnoreLayerCollision(6, 11, true);
+                    Debug.Log("rayCheck");
+               
+            }
+           
+        }
+
+        //}
+    }
+    public void InteractivePlatformrayCheck()
+    {
+        Debug.DrawRay(transform.position + Vector3.up * 0.3f, Vector3.up * 0.1f, Color.yellow);
+
+        RaycastHit hit;
+        //if (playerRb.velocity.y <=0)
+        //{
+        if (CullingPlatform)
+        {
+            if (Physics.Raycast(this.transform.position + Vector3.up * 0.3f, Vector3.up, out hit, 0.1f))
+            {
+
+                if (hit.collider.CompareTag("InteractivePlatform"))
+                {
+
+                    CullingPlatform = false;
+                    Physics.IgnoreLayerCollision(6, 11, false);
+                    Debug.Log("rayCheck");
+                }
+
+            }
+
+        }
+    }
+        //}
     
     private void OnTriggerEnter(Collider other)
     {
