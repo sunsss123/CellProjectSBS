@@ -2,8 +2,6 @@ using System.Collections;
 using Unity.Burst.CompilerServices;
 using UnityEditor.Rendering;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering.RenderGraphModule;
-
 public enum direction {Left=-1,none=0,Right=1 }
 public class Player : Character
 {
@@ -11,12 +9,12 @@ public class Player : Character
     #region 변수
     public Rigidbody playerRb;
     public CapsuleCollider capsuleCollider;
-   
+
     direction direction=direction.Right;
     [Header("근접 및 원거리 공격 관련")]
     public GameObject meleeCollider; // 근접 공격 콜라이더
     public GameObject flyCollider; // 공중 공격 콜라이더
-
+    public Transform firePoint; // 원거리 및 특수공격 생성위치
 
     public Animator animator;
    
@@ -54,6 +52,7 @@ public class Player : Character
 
     public float SizeX;
     public float SizeY;
+   
 
     // Start is called before the first frame update
     void Start()
@@ -61,11 +60,7 @@ public class Player : Character
         animator=transform.GetChild(0). GetComponent<Animator>();
         canAttack = true;
         onDash = true;
-
-       
-   
     }
-
     void jumpRaycastCheck()
     {
         if (!onGround)
@@ -89,14 +84,6 @@ public class Player : Character
 
         }
     }
-    public float jumpholdLevel = 0.85f;
-    public void jumpHold()
-    {
-        if (playerRb.velocity.y > 0)
-        {
-            playerRb.velocity = new Vector3(playerRb.velocity.x, playerRb.velocity.y * jumpholdLevel, playerRb.velocity.z);
-        }
-    }
     void wallRayCastCheck()
     {
         RaycastHit hit;
@@ -117,18 +104,23 @@ public class Player : Character
         }
     }
     bool wallcheck;
-
     private void FixedUpdate()
     {
-        
-        if(animator!=null)
-        animator.SetBool("run", isRun);
 
-        //wallRayCastCheck();
-       
+        if (animator != null)
+        {
+            animator.SetBool("run", isRun);
+        }
+        else
+        {
+            Debug.Log("달리기 애니메이션 무응답");
+        }
+
+        wallRayCastCheck();
+
 
     }
-  
+
     Vector3 translateFix;
 
     #region 추상화 오버라이드 함수
@@ -373,13 +365,13 @@ public class Player : Character
         #endregion
     }
     
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (other.CompareTag("EnemyAttack"))
-    //    {
-    //        Damaged(other.GetComponent<EnemyMeleeAttack>().GetDamage(), other.gameObject);
-    //    }
-    //}
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("EnemyAttack"))
+        {
+            Damaged(other.GetComponent<EnemyMeleeAttack>().GetDamage(), other.gameObject);
+        }
+    }
 
     #region 내려찍기
     public void DownAttack()
@@ -392,12 +384,15 @@ public class Player : Character
 
     public virtual void Skill1()
     {
-
+        Debug.Log("s키를 이용한 스킬");
     }
     public virtual void Skill2()
     {
 
     }
 
-
+    /*public virtual void SpecialAttack()
+    {
+        Debug.Log("기본상태는 특수공격 없음");
+    }*/
 }

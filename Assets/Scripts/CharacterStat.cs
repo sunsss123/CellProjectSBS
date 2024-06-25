@@ -15,7 +15,11 @@ public class CharacterStat : MonoBehaviour
     public float atk; // 공격력
     public float moveSpeed; // 이동속도
     public float atkSpeed; // 공격속도
-    public float attackCoolTime;
+    public float attackCoolTime; // 공격 딜레이
 
     public float rotationSpeed; // 캐릭터의 방향 전환 속도
+
+    [Header("행동 제어용 bool값(일단 정의만)")]
+    public bool canMove; // 이동 가능 여부 체크
+    public bool canAttack; // 공격 가능 여부 체크
 }
