@@ -122,9 +122,14 @@ public class PlayerHandler : MonoBehaviour
             CurrentPlayer.Move();
         }
 
-        if(PlayerStat.instance.jumpCount <= PlayerStat.instance.jumpCountMax && Input.GetKey(KeyCode.C) && !CurrentPlayer.downAttack)
+        if(PlayerStat.instance.jumpCount <= PlayerStat.instance.jumpCountMax && Input.GetKeyDown(KeyCode.C) && !CurrentPlayer.downAttack)
         {
             CurrentPlayer.Jump();
+        }
+
+        if (!Input.GetKey(KeyCode.C))
+        {
+            CurrentPlayer.jumpHold();
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -154,20 +159,8 @@ public class PlayerHandler : MonoBehaviour
             else
                 transformed(TransformType.Default);
         }
-        if (Input.GetKeyDown(KeyCode.LeftControl))
-        {
-            Debug.Log("특수 공격 입력함수");
-            CurrentPlayer.SpecialAttack();
-        }
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            Debug.Log("대쉬 입력 함수");
-            //CurrentPlayer.Dash();
-        }
-        /*else if(!Input.GetKey(KeyCode.LeftShift))
-        {
-            CurrentPlayer.BigDash();
-        }*/
+       
+      
     }
     #endregion
 
