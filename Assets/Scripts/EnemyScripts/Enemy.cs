@@ -20,10 +20,11 @@ public class Enemy : Character
     public float attackTimer; // 공격 대기시간
     public float attackInitCoolTime; // 공격 대기시간 초기화 변수
     public float attackDelay; // 공격 후 딜레이
-    bool onAttack; // 공격 활성화 여부 (공격 범위 내에 플레이어를 인식했을 때 true 변환)
-    bool activeAttack; // 공격 가능한 상태인지 체크
-    bool checkPlayer; // 범위 내 플레이어 체크
-    bool hitByPlayer; // Tv 오브젝트 활성화 중에 플레이어에게 공격 당했을 때 적용
+    [Header("하위 오브젝트 공격 범위 콜라이더에서 변경중")]
+    public bool onAttack; // 공격 활성화 여부 (공격 범위 내에 플레이어를 인식했을 때 true 변환)
+    public bool activeAttack; // 공격 가능한 상태인지 체크
+    public bool checkPlayer; // 범위 내 플레이어 체크
+    public bool hitByPlayer; // Tv 오브젝트 활성화 중에 플레이어에게 공격 당했을 때 적용
 
     [Header("목표 회전을 테스트하기 위한 변수")]
     public Transform target; // 추적할 타겟
@@ -36,7 +37,7 @@ public class Enemy : Character
 
     [Header("Tv 오브젝트 관련")]
     public bool checkTv; // Tv오브젝트를 추격하고 근접했을 때 true(Tv 인식 이후 목표 지점으로 도달했을 때)
-    bool activeTv; // Tv 오브젝트가 활성화 되었을 때 true (활성화 시점)
+    public bool activeTv; // Tv 오브젝트가 활성화 되었을 때 true (활성화 시점)
     public float rayRange; // 레이캐스트 길이 조절
     public float rayHeight; // 레이캐스트 높이 조절
 
@@ -80,7 +81,6 @@ public class Enemy : Character
     #region 추적 대상 확인
     public void TrackingCheck()
     {
-        RaycastHit hit;
         Debug.DrawRay(transform.position + Vector3.up * rayHeight, transform.forward * rayRange, Color.magenta, 0.1f);
 
         RaycastHit[] hits = Physics.RaycastAll(transform.position + Vector3.up * rayHeight, transform.forward, rayRange);
@@ -262,11 +262,11 @@ public class Enemy : Character
 
     private void OnTriggerStay(Collider other)
     {
-        //ebug.Log($"트리거 감지 중 {other.gameObject}");
-        if (other.CompareTag("Player") && !activeTv && !onAttack)
+        //ebug.Log($"트리거 감지 중 {other.gameObject}");   
+        /*if (other.CompareTag("Player") && !activeTv && !onAttack)
         {
             onAttack = true;
-        }   
+        }*/
 
         if (other.CompareTag("GameController"))
         {

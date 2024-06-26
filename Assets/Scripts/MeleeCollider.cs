@@ -10,8 +10,7 @@ public class MeleeCollider : MonoBehaviour
 
     private void Awake()
     {
-        saveEffect = Instantiate(hitEffect).GetComponent<ParticleSystem>();
-        gameObject.SetActive(false);        
+        saveEffect = Instantiate(hitEffect).GetComponent<ParticleSystem>();        
     }
 
     public void SetDamage(float damageValue)
@@ -26,6 +25,7 @@ public class MeleeCollider : MonoBehaviour
             saveEffect.transform.position = other.transform.position;
             saveEffect.Play();
             other.GetComponent<Enemy>().Damaged(damage, gameObject);
+            gameObject.SetActive(false);
         }
     }
 }
