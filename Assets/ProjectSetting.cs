@@ -71,9 +71,9 @@ public class ProjectSetting :MonoBehaviour
 
     void Update()
     {
-
-        PlayerStat.instance.jumpForce = jumpforce;
-        PlayerStat.instance.moveSpeed = movespeed;
-        //SavePref();
+    
+            PlayerStat.instance.jumpForce = jumpforce;
+            PlayerStat.instance.moveSpeed = movespeed;
+        SavePref();
     }
 }
