@@ -10,7 +10,8 @@ public class MeleeCollider : MonoBehaviour
 
     private void Awake()
     {
-        saveEffect = Instantiate(hitEffect).GetComponent<ParticleSystem>();        
+        saveEffect = Instantiate(hitEffect).GetComponent<ParticleSystem>();      
+        gameObject.SetActive(false);
     }
 
     public void SetDamage(float damageValue)
