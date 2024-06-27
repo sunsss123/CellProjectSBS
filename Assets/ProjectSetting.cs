@@ -5,13 +5,13 @@ using System;
 
 public class ProjectSetting :MonoBehaviour
 {
-    //Vector3 GravityValue;
-    //[Header("중력의 X값 조절(X값 물리 연산 가중치)")]
-    //public float GravityX;
-    //[Header("중력의 Y값 조절(Y값 물리 연산 가중치)")]
-    //public float GravityY;
-    //[Header("중력의 Z값 조절(Y값 물리 연산 가중치)")]
-    //public float GravityZ;
+    Vector3 GravityValue;
+    [Header("중력의 X값 조절(X값 물리 연산 가중치)")]
+    public float GravityX;
+    [Header("중력의 Y값 조절(Y값 물리 연산 가중치)")]
+    public float GravityY;
+    [Header("중력의 Z값 조절(Y값 물리 연산 가중치)")]
+    public float GravityZ;
 
     [Header("플레이어 점프 높이 조절")]
     public float jumpforce;
@@ -48,11 +48,11 @@ public class ProjectSetting :MonoBehaviour
     }
     void Start()
     {
-        //GravityValue = Physics.gravity;
-        //GravityX = Physics.gravity.x;
-        //GravityY = Physics.gravity.y;
-        //GravityZ = Physics.gravity.z;
-        if(jumpforce==0)
+        GravityValue = Physics.gravity;
+        GravityX = Physics.gravity.x;
+        GravityY = Physics.gravity.y;
+        GravityZ = Physics.gravity.z;
+        if (jumpforce==0)
             jumpforce = PlayerStat.instance.jumpForce;
         if(movespeed==0)
              movespeed = PlayerStat.instance.moveSpeed;
@@ -71,7 +71,8 @@ public class ProjectSetting :MonoBehaviour
 
     void Update()
     {
-    
+        GravityValue=new Vector3 (GravityX, GravityY, GravityZ);
+        Physics.gravity = GravityValue;
             PlayerStat.instance.jumpForce = jumpforce;
             PlayerStat.instance.moveSpeed = movespeed;
         SavePref();
