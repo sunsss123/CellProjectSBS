@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - EnemyAttack
   - PlayerAttack
+  - InteractivePlatform
   layers:
   - Default
   - TransparentFX
@@ -15,12 +16,12 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Player
   - 
   - EyesHL
   - Character
   - CharacterHead
-  - 
+  - InteractivePlatform
   - 
   - 
   - 
