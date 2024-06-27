@@ -80,17 +80,17 @@ public class ShootingPlayer : ShootingObject
         rotateSprite(movedirection);
         transform.Translate(movedirection * Time.deltaTime* movespeed);
     }
-    public IEnumerator AttackPlayer()
-    {
-        var bullet = Instantiate(Bullet, ShootPos.position, ShootPos.rotation);
-        bullet.GetComponent<ShootingBullet>().Setbullet(bulletspeed, TargetVector, Player);
-        onshoot = true;
-        yield return corutineseconds;
-        onshoot = false;
-    }
+    //public IEnumerator AttackPlayer()
+    //{
+    //    var bullet = Instantiate(Bullet, ShootPos.position, ShootPos.rotation);
+    //    bullet.GetComponent<ShootingBullet>().Setbullet(bulletspeed, TargetVector, Player);
+    //    onshoot = true;
+    //    yield return new WaitForSeconds(AttackDelay);
+    //    onshoot = false;
+    //}
     private void FixedUpdate()
     {
-
+        //corutineseconds =new WaitForSeconds( AttackDelay);
         Debug.Log((int)direction);
 
         //if (movedirection != Vector3.zero)
@@ -98,8 +98,9 @@ public class ShootingPlayer : ShootingObject
         //else
         ////TargetVector= Sprite.transform.forward.normalized;
         Move();
-        if (Input.GetKey(KeyCode.X))
+        if (Input.GetKey(KeyCode.X)&&!onshoot)
         {
+           
             StartCoroutine(Attack());
         }
 
