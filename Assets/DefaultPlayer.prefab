@@ -51,6 +51,8 @@ MonoBehaviour:
   capsuleCollider: {fileID: 5367685463245717601}
   meleeCollider: {fileID: 0}
   flyCollider: {fileID: 0}
+  firePoint: {fileID: 0}
+  animator: {fileID: 0}
   moveValue: 0
   hori: 0
   vert: 0
@@ -69,6 +71,9 @@ MonoBehaviour:
   onDash: 0
   isMove: 0
   canAttack: 0
+  SizeX: 0
+  SizeY: 0
+  DownAttackForce: 20
 --- !u!136 &5367685463245717601
 CapsuleCollider:
   m_ObjectHideFlags: 0

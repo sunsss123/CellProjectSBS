@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyMeleeAttack : MonoBehaviour
 {
+    public Enemy enemy;
     float damage;
 
     public void SetDamage(float value)
@@ -27,4 +28,12 @@ public class EnemyMeleeAttack : MonoBehaviour
         this.gameObject.SetActive(false);
         enemy.InitAttackCoolTime();
     }
+
+    /*private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player") && !enemy.activeTv && !onAttack)
+        {
+            onAttack = true;
+        }
+    }*/
 }
