@@ -13,14 +13,16 @@ public class RemoteForm : Player
     public SphereCollider handlerange;
     //public float searchRange;
 
-    [Header("차징 스킬 테스트 변수")]
+    [Header("차징 스킬 변수")]
     public RectTransform electricCharge;
     public float holdSpeed; // 충전 속도
     public List<GameObject> remoteObj;
-
     public float timeScale; // 차징 범위 증가 받을 변수
-    public float chargeSpeed; // 차징 속도 변수    
+    public float chargeSpeed; // 차징 속도 변수
 
+    [Header("빔 관련 변수")]
+    public GameObject laserPrefab;
+    
     private void Awake()
     {
         //handlerange.
@@ -81,6 +83,11 @@ public class RemoteForm : Player
             handlerange.gameObject.SetActive(true);
             ActiveRemoteObject();
         }
+    }
+
+    public override void Skill2()
+    {
+        
     }
 
     #region 오버랩스피어 시도

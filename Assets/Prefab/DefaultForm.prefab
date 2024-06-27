@@ -433,7 +433,7 @@ GameObject:
   - component: {fileID: 3179644685151751000}
   m_Layer: 0
   m_Name: FlyMelee
-  m_TagString: Untagged
+  m_TagString: PlayerAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1013,9 +1013,10 @@ GameObject:
   - component: {fileID: 6498511433752190845}
   - component: {fileID: 2179229526773503781}
   - component: {fileID: 4837596211920048625}
+  - component: {fileID: 1069457030496990354}
   m_Layer: 0
   m_Name: GroundMelee
-  m_TagString: Untagged
+  m_TagString: PlayerAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1106,6 +1107,22 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1069457030496990354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6048188335793587283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b9b3a7948616774fab3a00cc4531b3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 0
+  hitEffect: {fileID: 5024009746357069194, guid: ec3f674830402cc45bce805cf6493db7,
+    type: 3}
+  saveEffect: {fileID: 0}
 --- !u!1 &6102767617080961591
 GameObject:
   m_ObjectHideFlags: 0
@@ -1506,6 +1523,7 @@ Transform:
   - {fileID: 7092967739684043758}
   - {fileID: 8847444851996054492}
   - {fileID: 4863386676415930159}
+  - {fileID: 723040828355119019}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &9062072390100992529
@@ -1546,6 +1564,7 @@ MonoBehaviour:
   canAttack: 0
   SizeX: 0
   SizeY: 0
+  runEffect: {fileID: 7756572666751904677}
 --- !u!136 &2012848794722345922
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1693,6 +1712,73 @@ Transform:
   - {fileID: 3324724901994578588}
   m_Father: {fileID: 8299462828925818936}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &9015857227144581947
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 723040828355119019}
+  - component: {fileID: 5340516792295615351}
+  - component: {fileID: 7258997773045772183}
+  m_Layer: 0
+  m_Name: DownAttackCollider
+  m_TagString: PlayerAttack
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &723040828355119019
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9015857227144581947}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5054776862415383332}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &5340516792295615351
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9015857227144581947}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.3, y: 0.1, z: 0.3}
+  m_Center: {x: 0.05, y: 0.05, z: 0}
+--- !u!114 &7258997773045772183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9015857227144581947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35f932d9c0159db42bddfe8a9717e4a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 0
 --- !u!1001 &2265814040265406831
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1786,6 +1872,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 69b92891381de2d4785a25572f46c697, type: 3}
+--- !u!198 &7756572666751904677 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 8418679488021058250, guid: 69b92891381de2d4785a25572f46c697,
+    type: 3}
+  m_PrefabInstance: {fileID: 2265814040265406831}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8847444851996054492 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7330094287222860467, guid: 69b92891381de2d4785a25572f46c697,

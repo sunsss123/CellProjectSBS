@@ -34,6 +34,15 @@ public class HudTest : MonoBehaviour
         gaugeBar.localScale = new Vector3(value, 1, 1);
     }
 
+
+    public void ActiveGauge(Vector3 pos)
+    {
+        Vector3 fixPos = Camera.main.WorldToViewportPoint(pos);
+        transform.position = Camera.main.ViewportToScreenPoint(fixPos);
+
+        gameObject.SetActive(true);
+    }
+
     /*public void PlayerHpSetting()
     {
         for (int i = 0; i < PlayerStat.instance.hpMax; i++)
