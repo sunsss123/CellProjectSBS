@@ -39,6 +39,20 @@ public class PlayerHandler : MonoBehaviour
         #endregion
    
     }
+    [Header("플레이어 낙사 높이?")]
+    public float characterFallLimit;
+    void PlayerFallOut()
+    {
+        if (CurrentPlayer != null && CurrentPlayer.transform.position.y < -1 * characterFallLimit)
+        {
+            Rigidbody rb = null;
+            if (CurrentPlayer.TryGetComponent<Rigidbody>(out rb))
+            {
+                rb.velocity = Vector3.zero;
+            }
+            CurrentPlayer.transform.position = Player.transform.position;
+        }
+    }
     private void FixedUpdate()
     {
         if (CurrentType != TransformType.Default)
@@ -47,8 +61,8 @@ public class PlayerHandler : MonoBehaviour
             if (CurrentPower == 0)
                 transformed(TransformType.Default);
         }
-       
-            
+        PlayerFallOut();
+
         #region 캐릭터 조작
         charactermove();
         #endregion
