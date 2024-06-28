@@ -45,7 +45,11 @@ public class Enemy : Character
     [Header("돌진 캐릭터 테스트 변수")]
     public float rushForce; // 돌진 속도
 
-
+    [Header("상자에서 나올때 기절상태?")]
+    public bool onStun;
+    public Material regular;
+    public Material stun;
+    public MeshRenderer testMesh;
     private void Awake()
     {
         eStat = gameObject.AddComponent<EnemyStat>();
@@ -60,6 +64,11 @@ public class Enemy : Character
         attackInitCoolTime = 3.5f;
         attackTimer = attackInitCoolTime;
         attackDelay = 1.5f;
+        if (onStun)
+        {
+            Debug.Log("행동 불능");
+            StartCoroutine(WaitStunTime());
+        }
     }
 
     private void Update()
@@ -73,9 +82,25 @@ public class Enemy : Character
     // 자식인 다양한 적 오브젝트 스크립트에서 사용? 
     private void FixedUpdate()
     {
-        Move();
+        if (!onStun)
+        {
+            Move();
 
-        TrackingCheck();
+            TrackingCheck();
+        }
+    }
+
+    IEnumerator WaitStunTime()
+    {
+        eStat.onInvincible = true;
+        enemyRb.AddForce(-((transform.forward + transform.up)*5f), ForceMode.Impulse);
+        //testMesh.materials[0] = stun;
+
+        yield return new WaitForSeconds(5f);
+
+        onStun = false;
+        eStat.onInvincible = false;
+        //testMesh.materials[0] = regular;
     }
 
     #region 추적 대상 확인
@@ -139,7 +164,7 @@ public class Enemy : Character
         Patrol();
     }
 
-    // 추격 함수
+    #region 추격
     public void TrackingMove()
     {
         testTarget = target.position - transform.position;
@@ -157,7 +182,24 @@ public class Enemy : Character
         }
     }
 
-    // 정찰 함수
+    public bool SetRotation()
+    {
+        bool completeRot = false;
+
+        if (transform.eulerAngles.y >= -10 && transform.eulerAngles.y <= 10)
+        {
+            completeRot = true;
+        }
+        else if (transform.eulerAngles.y >= 175 && transform.eulerAngles.y <= 190 ||
+            transform.eulerAngles.y >= 350 && transform.eulerAngles.y <= 360)
+        {
+            completeRot = true;
+        }
+        return completeRot;
+    }
+    #endregion
+
+    #region 정찰
     public void Patrol()
     {
         //Debug.Log("추적하고있지 않다면 주변을 정찰합니다");
@@ -184,28 +226,15 @@ public class Enemy : Character
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(testTarget), rotationSpeed * Time.deltaTime);
     }
 
-    public bool SetRotation()
-    {
-        bool completeRot = false;
-
-        if (transform.eulerAngles.y >= -10 && transform.eulerAngles.y <= 10)
-        {
-            completeRot = true;
-        }
-        else if (transform.eulerAngles.y >= 175 && transform.eulerAngles.y <= 190 ||
-            transform.eulerAngles.y >= 350 && transform.eulerAngles.y <= 360)
-        {
-            completeRot = true;
-        }
-        return completeRot;
-    }
-
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireCube(transform.position + searchCubePos, searchCubeRange * 2f);
         //Gizmos.DrawWireSphere(transform.position, searchRange);
     }
+
+    #endregion
+
     #endregion
 
     #region 사망함수
@@ -262,12 +291,6 @@ public class Enemy : Character
 
     private void OnTriggerStay(Collider other)
     {
-        //ebug.Log($"트리거 감지 중 {other.gameObject}");   
-        /*if (other.CompareTag("Player") && !activeTv && !onAttack)
-        {
-            onAttack = true;
-        }*/
-
         if (other.CompareTag("GameController"))
         {
             if (other.GetComponent<RemoteObject>().rType == RemoteType.tv && !hitByPlayer)
