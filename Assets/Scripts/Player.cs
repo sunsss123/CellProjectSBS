@@ -10,7 +10,7 @@ public class Player : Character
     public Rigidbody playerRb;
     public CapsuleCollider capsuleCollider;
 
-    direction direction=direction.Right;
+   public direction direction=direction.Right;
     [Header("근접 및 원거리 공격 관련")]
     public GameObject meleeCollider; // 근접 공격 콜라이더
     public GameObject flyCollider; // 공중 공격 콜라이더
@@ -72,13 +72,15 @@ public class Player : Character
                 if (Physics.Raycast(this.transform.position, Vector3.down, out hit, 0.1f))
                 {
                     
-                    if (hit.collider.CompareTag("Ground"))
+                    if (hit.collider.CompareTag("Ground")|| hit.collider.CompareTag("InteractivePlatform"))
                     {
                         onGround = true;
                         isJump = false;
                         PlayerStat.instance.jumpCount = 0;
                         Debug.Log("BottomRayCheck");
-                    }
+                  
+   
+                }
                 }
             //}
 
@@ -87,7 +89,7 @@ public class Player : Character
     void wallRayCastCheck()
     {
         RaycastHit hit;
-        Debug.DrawRay(transform.position + Vector3.up * 0.1f + Vector3.forward * 0.1f * (int)direction, Vector3.forward * 0.1f * (int)direction, Color.blue);
+       
         if (Physics.Raycast(this.transform.position + Vector3.up * 0.1f + Vector3.forward * 0.1f * (int)direction, Vector3.forward*(int)direction, out hit, 0.1f))
         {
             if (hit.collider.CompareTag("Ground"))
@@ -103,24 +105,58 @@ public class Player : Character
             wallcheck = false;
         }
     }
+    public void HittedTest()
+    {
+        animator.SetTrigger("Damaged");
+    }
     bool wallcheck;
     private void FixedUpdate()
     {
+        if(Input.GetKeyDown(KeyCode.Tab)) { HittedTest(); }
 
         if (animator != null)
         {
             animator.SetBool("run", isRun);
+            animator.SetBool("Onground", onGround);
+
         }
         else
         {
             Debug.Log("달리기 애니메이션 무응답");
         }
-
+        
         wallRayCastCheck();
         InteractivePlatformrayCheck();
+        InteractivePlatformrayCheck2();
+        var a = RunEffect.main;
+        if (isRun&&onGround)
+        {
+            a.maxParticles = 100;
+            if(!RunEffect.isPlaying)
+            RunEffect.Play();
+            Debug.Log("활성");
+        }
+        else
+        {
+         
+            a.maxParticles = 0;
+            if((RunEffect.isPlaying&&RunEffect.particleCount==0))
+            RunEffect.Stop();
+   
+        }
 
+        if (CullingPlatform)
+        {
+            platformDisableTimer += Time.deltaTime;
+            if (PlatformDisableTime <= platformDisableTimer)
+            {
+                platformDisableTimer = 0;
+                CullingPlatform = false;
+                Physics.IgnoreLayerCollision(6, 11, false);
+            }
+        }
     }
-
+    public ParticleSystem RunEffect;
     Vector3 translateFix;
 
     #region 추상화 오버라이드 함수
@@ -148,7 +184,7 @@ public class Player : Character
         rotate(hori);
        
 
-        translateFix = new(Mathf.Abs(hori), 0, 0);
+        translateFix = new(0, 0, Mathf.Abs(hori));
 
 
         if (wallcheck)
@@ -204,7 +240,7 @@ public class Player : Character
             Debug.Log("공격키");
             //StartCoroutine(TestMeleeAttack());
         }
-      
+        animator.Play("Attack");
     }
     #endregion
     #region 피격
@@ -314,14 +350,14 @@ public class Player : Character
         yield return new WaitForSeconds(0.5f);
 
         isAttack = false;
-        //animator.AttackAnimation(isAttack);
+        animator.SetTrigger("Attack");
         meleeCollider.GetComponent<BoxCollider>().enabled = false;
     }
     #endregion
     private void OnCollisionExit(Collision collision)
     {
         #region 바닥 상호작용
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("Ground")|| collision.gameObject.CompareTag("InteractivePlatform"))
         {
             //animator.ContinueAnimation();
 
@@ -338,7 +374,7 @@ public class Player : Character
         if (collision.gameObject.CompareTag("Ground")&&onGround==false)
         {
             jumpRaycastCheck();
-
+        
             downAttack = false;
         }
         //#endregion
@@ -349,7 +385,7 @@ public class Player : Character
             jumpRaycastCheck();
 
             downAttack = false;
-            if (Input.GetKey(KeyCode.DownArrow))
+            if (Input.GetKey(KeyCode.DownArrow)&&!CullingPlatform)
             {
                 Debug.Log("DownArrowChk");
                 CullingPlatform = true;
@@ -380,39 +416,46 @@ public class Player : Character
         #endregion
     }
     public bool CullingPlatform;
+    public float PlatformDisableTime;
+    float platformDisableTimer;
     public void InteractivePlatformrayCheck2()
     {
-        Debug.DrawRay(transform.position + Vector3.up * 0.2f, Vector3.up * 0.2f, Color.yellow);
 
         RaycastHit hit;
         //if (playerRb.velocity.y <=0)
         //{
-
-        if (Physics.Raycast(this.transform.position + Vector3.up * 0.2f, Vector3.up, out hit, 0.2f))
+        if (!CullingPlatform && playerRb.velocity.y > 0)
         {
+            Debug.DrawRay(transform.position + Vector3.up * 0.3f, Vector3.up * 0.1f, Color.green);
 
-            if (hit.collider.CompareTag("InteractivePlatform"))
+            if (Physics.Raycast(this.transform.position + Vector3.up * 0.3f, Vector3.up, out hit, 0.1f))
             {
-                
+
+                if (hit.collider.CompareTag("InteractivePlatform"))
+                {
+
                     CullingPlatform = true;
                     Physics.IgnoreLayerCollision(6, 11, true);
-                    Debug.Log("rayCheck");
-               
+                    Debug.Log("rayCheck1");
+
+                }
+
             }
-           
+
         }
 
-        //}
+     
     }
     public void InteractivePlatformrayCheck()
     {
-        Debug.DrawRay(transform.position + Vector3.up * 0.3f, Vector3.up * 0.1f, Color.yellow);
+
 
         RaycastHit hit;
-        //if (playerRb.velocity.y <=0)
+        //if ()
         //{
-        if (CullingPlatform)
+        if (CullingPlatform && playerRb.velocity.y <= 0)
         {
+            Debug.DrawRay(transform.position + Vector3.up * 0.3f, Vector3.up * 0.1f, Color.yellow);
             if (Physics.Raycast(this.transform.position + Vector3.up * 0.3f, Vector3.up, out hit, 0.1f))
             {
 
@@ -421,6 +464,7 @@ public class Player : Character
 
                     CullingPlatform = false;
                     Physics.IgnoreLayerCollision(6, 11, false);
+                    platformDisableTimer = 0;
                     Debug.Log("rayCheck");
                 }
 
@@ -428,8 +472,14 @@ public class Player : Character
 
         }
     }
-        //}
-    
+ public void jumphold()
+    {
+        if (playerRb.velocity.y > 0)
+        {
+            playerRb.velocity = new Vector3(playerRb.velocity.x, playerRb.velocity.y * 0.85f, playerRb.velocity.z);
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("EnemyAttack"))
@@ -437,19 +487,19 @@ public class Player : Character
             Damaged(other.GetComponent<EnemyMeleeAttack>().GetDamage(), other.gameObject);
         }
     }
-
+    public float DownAttackForce;
     #region 내려찍기
     public void DownAttack()
     {
         downAttack = true;
 
-        playerRb.AddForce(Vector3.down * 20,ForceMode.Impulse);
+        playerRb.AddForce(Vector3.down * DownAttackForce);
     }
     #endregion
 
     public virtual void Skill1()
     {
-        Debug.Log("s키를 이용한 스킬");
+ 
     }
     public virtual void Skill2()
     {
