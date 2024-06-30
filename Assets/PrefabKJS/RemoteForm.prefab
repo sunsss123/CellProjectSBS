@@ -389,7 +389,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!95 &6260121153774104106
 Animator:
-  serializedVersion: 7
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -403,7 +403,6 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -771,6 +770,7 @@ MonoBehaviour:
   capsuleCollider: {fileID: 72345340884091965}
   meleeCollider: {fileID: 5173999664967193956}
   flyCollider: {fileID: 8148534602792143199}
+  downAttackCollider: {fileID: 0}
   firePoint: {fileID: 0}
   animator: {fileID: 0}
   moveValue: 0
@@ -793,6 +793,9 @@ MonoBehaviour:
   canAttack: 0
   SizeX: 0
   SizeY: 0
+  RunEffect: {fileID: 0}
+  CullingPlatform: 0
+  PlatformDisableTime: 0
   handleMaxTime: 5
   handlediameterrangemax: 5
   handlediameterrangemin: 3
@@ -802,6 +805,7 @@ MonoBehaviour:
   remoteObj: []
   timeScale: 0
   chargeSpeed: 2.5
+  laserPrefab: {fileID: 0}
 --- !u!1 &5173999664967193956
 GameObject:
   m_ObjectHideFlags: 0

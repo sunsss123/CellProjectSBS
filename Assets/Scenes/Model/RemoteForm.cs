@@ -6,22 +6,23 @@ using UnityEngine;
 
 public class RemoteForm : Player
 {
-    public float handleMaxTime;
-    float handletimer;
-    public float handlediameterrangemax;
-    public float handlediameterrangemin;
-    public SphereCollider handlerange;
     //public float searchRange;
 
     [Header("차징 스킬 변수")]
+    public float handleMaxTime; // 최대 차징 시간
+    float handletimer; // 차징 타이머 (시간이 증가하는 만큼 범위 증가)
+    public float handlediameterrangemax; // 차징 최대 범위
+    public float handlediameterrangemin; // 차징 최소 범위
+    public SphereCollider handlerange; // 차징 범위 콜라이더
+
     public RectTransform electricCharge;
     public float holdSpeed; // 충전 속도
-    public List<GameObject> remoteObj;
+    public List<GameObject> remoteObj; // 탐지 범위에 저장될 상호작용 오브젝트 정보
     public float timeScale; // 차징 범위 증가 받을 변수
     public float chargeSpeed; // 차징 속도 변수
 
     [Header("빔 관련 변수")]
-    public GameObject laserPrefab;
+    public GameObject laserPrefab; // 빔 스킬 프리팹
     
     private void Awake()
     {
@@ -87,7 +88,10 @@ public class RemoteForm : Player
 
     public override void Skill2()
     {
-        
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            Instantiate(laserPrefab, firePoint.position, Quaternion.identity);
+        }
     }
 
     #region 오버랩스피어 시도

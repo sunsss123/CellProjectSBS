@@ -29,7 +29,8 @@ public class DownAttackCollider : MonoBehaviour
                 gameObject.SetActive(false);
             }            
         }
-        else
+        
+        if (other.CompareTag("Ground"))
         {
             gameObject.SetActive(false);
         }

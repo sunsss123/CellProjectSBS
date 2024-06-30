@@ -159,7 +159,7 @@ public class PlayerHandler : MonoBehaviour
         }
 
         CurrentPlayer.Skill1();
-        //CurrentPlayer.Skill2();
+        CurrentPlayer.Skill2();
 
         if (Input.GetKey(KeyCode.UpArrow) && CurrentType != TransformType.Default)
         {
