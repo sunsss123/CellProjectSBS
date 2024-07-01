@@ -1302,6 +1302,7 @@ GameObject:
   - component: {fileID: 2012848794722345922}
   - component: {fileID: 1855926169923719911}
   - component: {fileID: 7390080442552347909}
+  - component: {fileID: 745289941222913913}
   m_Layer: 6
   m_Name: DefaultForm
   m_TagString: Player
@@ -1344,6 +1345,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerRb: {fileID: 1855926169923719911}
   capsuleCollider: {fileID: 2012848794722345922}
+  direction: 1
   meleeCollider: {fileID: 6048188335793587283}
   flyCollider: {fileID: 2594398033960754939}
   downAttackCollider: {fileID: 94381748056349935}
@@ -1370,6 +1372,7 @@ MonoBehaviour:
   SizeX: 0
   SizeY: 0
   RunEffect: {fileID: 7756572666751904677}
+  DownAttackForce: 0
   CullingPlatform: 0
   PlatformDisableTime: 0.3
 --- !u!136 &2012848794722345922
@@ -1492,6 +1495,18 @@ MonoBehaviour:
   m_ReferenceObject: {fileID: 0}
   m_DistanceToObject: 20
   m_Multithread: 1
+--- !u!114 &745289941222913913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7664586703414084814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32177de85efdfc943b70253b78ba038e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8049350588821692103
 GameObject:
   m_ObjectHideFlags: 0
