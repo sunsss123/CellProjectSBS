@@ -9,6 +9,7 @@ TagManager:
   - EnemyAttack
   - PlayerAttack
   - InteractivePlatform
+  - InteractiveObject
   layers:
   - Default
   - TransparentFX

@@ -20,7 +20,8 @@ public class PlayerStat : CharacterStat
     public float invincibleCoolTime; // 무적 지속시간
     public float attackDelay; // 공격 딜레이 타이머
     public float rotationValue; // 방향키 입력 시 받을 방향 변수
- 
+    public float downForce; // 내려찍는 힘
+    public float attackForce; // 근접 공격 시 addforce에 적용할 값
     private void Awake()
     {
         if (instance == null)

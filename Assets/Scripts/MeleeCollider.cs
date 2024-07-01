@@ -11,6 +11,7 @@ public class MeleeCollider : MonoBehaviour
     private void Awake()
     {
         saveEffect = Instantiate(hitEffect).GetComponent<ParticleSystem>();
+        damage = PlayerStat.instance.atk;
         gameObject.SetActive(false);
     }
 
@@ -23,10 +24,15 @@ public class MeleeCollider : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            saveEffect.transform.position = other.transform.position;
-            saveEffect.Play();
-            other.GetComponent<Enemy>().Damaged(damage, gameObject);
-            gameObject.SetActive(false);
+            Enemy enemy = other.GetComponent<Enemy>();
+
+            if (!enemy.eStat.onInvincible)
+            {
+                enemy.Damaged(damage, gameObject);
+                saveEffect.transform.position = other.transform.position;
+                saveEffect.Play();
+                gameObject.SetActive(false);
+            }
         }
     }
 }

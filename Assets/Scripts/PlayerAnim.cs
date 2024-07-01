@@ -59,9 +59,9 @@ public class PlayerAnim : MonoBehaviour
     }
 
     // 근접 공격 콜라이더 활성화 함수
-    public void MeleeCollider()
+    /*public void MeleeCollider()
     {
         // 플레이어의 코루틴 함수 호출
         StartCoroutine(player.ActiveMeleeAttack());
-    }
+    }*/
 }
