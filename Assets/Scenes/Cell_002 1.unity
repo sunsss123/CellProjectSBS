@@ -1102,6 +1102,8 @@ MonoBehaviour:
   invincibleCoolTime: 0
   attackDelay: 0
   rotationValue: 0
+  downForce: 0
+  attackForce: 0
 --- !u!4 &650167059
 Transform:
   m_ObjectHideFlags: 0
@@ -1148,6 +1150,7 @@ MonoBehaviour:
   retoretype: 1
   CurrentPlayer: {fileID: 0}
   pStat: {fileID: 0}
+  characterFallLimit: 0
   CurrentType: 0
 --- !u!114 &650167062
 MonoBehaviour:
@@ -5266,8 +5269,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerRb: {fileID: 0}
   capsuleCollider: {fileID: 0}
+  direction: 1
   meleeCollider: {fileID: 0}
   flyCollider: {fileID: 0}
+  downAttackCollider: {fileID: 0}
   firePoint: {fileID: 0}
   animator: {fileID: 0}
   moveValue: 0
@@ -5291,9 +5296,9 @@ MonoBehaviour:
   SizeX: 0
   SizeY: 0
   RunEffect: {fileID: 0}
+  DownAttackForce: 20
   CullingPlatform: 0
   PlatformDisableTime: 0
-  DownAttackForce: 20
   handleMaxTime: 0
   handlediameterrangemax: 0
   handlediameterrangemin: 0
@@ -5303,6 +5308,7 @@ MonoBehaviour:
   remoteObj: []
   timeScale: 0
   chargeSpeed: 0
+  laserPrefab: {fileID: 0}
 --- !u!1 &5441911734851482424
 GameObject:
   m_ObjectHideFlags: 0
@@ -6278,7 +6284,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8372316423297523716
 Transform:
   m_ObjectHideFlags: 0
