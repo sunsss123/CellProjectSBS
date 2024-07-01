@@ -140,6 +140,10 @@ public class PlayerHandler : MonoBehaviour
         {
             CurrentPlayer.Jump();
         }
+        if (!Input.GetKey(KeyCode.C))
+        {
+            CurrentPlayer.jumphold();
+        }
         if (Input.GetKeyDown(KeyCode.E))
         {
             CurrentPlayer. SwapAttackType();
@@ -149,8 +153,7 @@ public class PlayerHandler : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.X) && !CurrentPlayer.onGround)
             {
-                Debug.Log("내려찍기 작동합니다");
-                CurrentPlayer.playerRb.velocity = Vector3.zero;
+                Debug.Log("내려찍기 작동합니다");                
 
                 CurrentPlayer.DownAttack();
             }
@@ -170,8 +173,12 @@ public class PlayerHandler : MonoBehaviour
         }
 
         CurrentPlayer.Skill1();
-        //CurrentPlayer.Skill2();
-      
+        CurrentPlayer.Skill2();
+
+        if (Input.GetKey(KeyCode.UpArrow) && CurrentType != TransformType.Default)
+        {
+            HudTest.instance.ActiveGauge(CurrentPlayer.transform.position);
+        }
     }
     #endregion
 

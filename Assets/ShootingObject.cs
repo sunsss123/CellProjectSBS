@@ -28,7 +28,7 @@ public class ShootingObject : MonoBehaviour
       var bullet=  Instantiate(Bullet, this.transform.position, Quaternion.identity);
         bullet.GetComponent<ShootingBullet>().Setbullet(bulletspeed, TargetVector, Player);
         onshoot = true;
-        yield return corutineseconds;
+        yield return new WaitForSeconds(AttackDelay);
         onshoot = false;
     }
 }

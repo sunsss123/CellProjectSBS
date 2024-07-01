@@ -38,7 +38,50 @@ BoxCollider:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<<< HEAD:Assets/Platform/yangbanghyang.prefab
   m_GameObject: {fileID: 4832832628054234903}
+========
+  m_GameObject: {fileID: 2683188444592462891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b2aa03d4ee064b4091e03c1f9744edd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerRb: {fileID: 847632005702500462}
+  capsuleCollider: {fileID: 5367685463245717601}
+  meleeCollider: {fileID: 0}
+  flyCollider: {fileID: 0}
+  firePoint: {fileID: 0}
+  animator: {fileID: 0}
+  moveValue: 0
+  hori: 0
+  vert: 0
+  isJump: 0
+  jumpAnim: 0
+  isRun: 0
+  isIdle: 0
+  isAttack: 0
+  onGround: 0
+  downAttack: 0
+  jumpLimit: 0
+  attackSky: 0
+  attackGround: 0
+  velocityValue: {x: 0, y: 0, z: 0}
+  onInvincible: 0
+  onDash: 0
+  isMove: 0
+  canAttack: 0
+  SizeX: 0
+  SizeY: 0
+  DownAttackForce: 20
+--- !u!136 &5367685463245717601
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2683188444592462891}
+>>>>>>>> origin/KjsSecondBranch:Assets/DefaultPlayer.prefab
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2

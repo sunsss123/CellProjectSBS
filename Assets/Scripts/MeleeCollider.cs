@@ -5,7 +5,16 @@ using UnityEngine;
 public class MeleeCollider : MonoBehaviour
 {
     public float damage;
-    
+    public GameObject hitEffect; // 이펙트 프리팹
+    public ParticleSystem saveEffect; // 파티클 저장
+
+    private void Awake()
+    {
+        saveEffect = Instantiate(hitEffect).GetComponent<ParticleSystem>();
+        damage = PlayerStat.instance.atk;
+        gameObject.SetActive(false);
+    }
+
     public void SetDamage(float damageValue)
     {
         damage = damageValue;
@@ -15,7 +24,15 @@ public class MeleeCollider : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            other.GetComponent<Enemy>().Damaged(damage, gameObject);
+            Enemy enemy = other.GetComponent<Enemy>();
+
+            if (!enemy.eStat.onInvincible)
+            {
+                enemy.Damaged(damage, gameObject);
+                saveEffect.transform.position = other.transform.position;
+                saveEffect.Play();
+                gameObject.SetActive(false);
+            }
         }
     }
 }
