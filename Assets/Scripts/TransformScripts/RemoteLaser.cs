@@ -32,14 +32,10 @@ public class RemoteLaser : MonoBehaviour
             if (!enemy.eStat.onInvincible)
             {
                 enemy.Damaged(damage, gameObject);
-                saveEffect.transform.position = other.transform.position;
-                saveEffect.Play();
+                /*saveEffect.transform.position = other.transform.position;
+                saveEffect.Play();*/
                 gameObject.SetActive(false);
             }
-        }
-        else
-        {
-            gameObject.SetActive(false);
         }
     }
 }
