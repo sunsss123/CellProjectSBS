@@ -438,6 +438,7 @@ GameObject:
   - component: {fileID: 5726148373904509238}
   - component: {fileID: 2634876339367589972}
   - component: {fileID: 9113076900370860584}
+  - component: {fileID: 8475398869899518372}
   m_Layer: 0
   m_Name: defaultBattery
   m_TagString: Player
@@ -479,13 +480,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerRb: {fileID: 9113076900370860584}
   capsuleCollider: {fileID: 2634876339367589972}
-  animator: {fileID: 0}
+  direction: 1
   meleeCollider: {fileID: 4419611858300775733}
   flyCollider: {fileID: 6292320525787659859}
   firePoint: {fileID: 0}
-  downAttackCollider: {fileID: 0}
-  hitCheckMat: {fileID: 7454074723732883621}
-  hitColor: {r: 0, g: 0, b: 0, a: 0}
+  animator: {fileID: 0}
   moveValue: 0
   hori: 0
   vert: 0
@@ -504,6 +503,12 @@ MonoBehaviour:
   onDash: 0
   isMove: 0
   canAttack: 0
+  SizeX: 0
+  SizeY: 0
+  RunEffect: {fileID: 0}
+  CullingPlatform: 0
+  PlatformDisableTime: 0
+  DownAttackForce: 0
 --- !u!136 &2634876339367589972
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -554,6 +559,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 1
+--- !u!114 &8475398869899518372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8210891568864174633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32177de85efdfc943b70253b78ba038e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8567765651378372894
 GameObject:
   m_ObjectHideFlags: 0

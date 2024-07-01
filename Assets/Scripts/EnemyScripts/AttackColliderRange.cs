@@ -14,7 +14,7 @@ public class AttackColliderRange : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         //ebug.Log($"트리거 감지 중 {other.gameObject}");   
-        if (other.CompareTag("Player") && !enemy.activeTv && !enemy.onAttack)
+        if (other.CompareTag("Player") && !enemy.activeTv && !enemy.onAttack && !enemy.onStun)
         {
             enemy.onAttack = true;
         }

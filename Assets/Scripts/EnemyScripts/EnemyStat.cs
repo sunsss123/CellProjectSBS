@@ -11,6 +11,7 @@ public class Drop
 public class EnemyStat : CharacterStat
 {
     public Drop dropGroup; // 사망 시, 드랍할 재화에 대한 클래스 변수
+    public bool onInvincible;
 
     private void Awake()
     {
