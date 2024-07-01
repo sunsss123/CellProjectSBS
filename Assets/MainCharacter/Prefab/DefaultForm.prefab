@@ -1344,6 +1344,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerRb: {fileID: 1855926169923719911}
   capsuleCollider: {fileID: 2012848794722345922}
+  direction: 1
   meleeCollider: {fileID: 6048188335793587283}
   flyCollider: {fileID: 2594398033960754939}
   downAttackCollider: {fileID: 94381748056349935}
@@ -1370,6 +1371,7 @@ MonoBehaviour:
   SizeX: 0
   SizeY: 0
   RunEffect: {fileID: 7756572666751904677}
+  DownAttackForce: 0
   CullingPlatform: 0
   PlatformDisableTime: 0.3
 --- !u!136 &2012848794722345922

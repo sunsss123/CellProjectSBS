@@ -10,6 +10,7 @@ public class Enemy : Character
 
     public Rigidbody enemyRb; // 적 리지드바디
     public GameObject attackCollider; // 적의 공격 콜라이더 오브젝트
+    public GameObject rangeCollider; // 공격 범위 콜라이더 오브젝트
 
     //public float searchRange; // 플레이어 인지 범위
     //public float attackRange; // 공격 실행 범위
@@ -96,7 +97,7 @@ public class Enemy : Character
         enemyRb.AddForce(-((transform.forward + transform.up)*5f), ForceMode.Impulse);
         //testMesh.materials[0] = stun;
 
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(3f);
 
         onStun = false;
         eStat.onInvincible = false;
@@ -153,15 +154,18 @@ public class Enemy : Character
     #region 이동함수
     public override void Move()
     {
-        if (tracking)
+        if (eStat.cState != CharacterState.dead)
         {
-            if (!activeAttack && !checkTv && !onAttack)
+            if (tracking)
             {
-                TrackingMove();
+                if (!activeAttack && !checkTv && !onAttack)
+                {
+                    TrackingMove();
+                }
             }
-        }
 
-        Patrol();
+            Patrol();
+        }
     }
 
     #region 추격
@@ -240,6 +244,7 @@ public class Enemy : Character
     #region 사망함수
     public override void Dead()
     {
+        //rangeCollider.SetActive(false);
         gameObject.SetActive(false);
     }
     #endregion
@@ -261,7 +266,7 @@ public class Enemy : Character
     // 공격 준비
     public void ReadyAttackTime()
     {
-        if (onAttack)
+        if (onAttack && eStat.cState != CharacterState.dead)
         {
             if (attackTimer > 0 && !activeAttack)
             {

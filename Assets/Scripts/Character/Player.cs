@@ -350,7 +350,10 @@ public class Player : Character
         {
             //플랫폼에 닿았을 때 점프 가능(바닥,천장, 벽에 닿아도 점프 되지만 신경쓰지말기)
             isJump = true;
-            animator.SetTrigger("jump");
+            if (animator != null)
+            {
+                animator.SetTrigger("jump");
+            }
             isRun = false;
             if (PlayerStat.instance.jumpCount < PlayerStat.instance.jumpCountMax)
             {
@@ -500,7 +503,7 @@ public class Player : Character
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("EnemyAttack"))
+        if (other.CompareTag("EnemyAttack") && !onInvincible)
         {
             Damaged(other.GetComponent<EnemyMeleeAttack>().GetDamage(), other.gameObject);
         }

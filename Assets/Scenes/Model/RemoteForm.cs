@@ -21,6 +21,8 @@ public class RemoteForm : Player
     public float timeScale; // 차징 범위 증가 받을 변수
     public float chargeSpeed; // 차징 속도 변수
 
+    public bool Charging;
+
     [Header("빔 관련 변수")]
     public GameObject laserPrefab; // 빔 스킬 프리팹
     
@@ -44,6 +46,7 @@ public class RemoteForm : Player
 
         if (Input.GetKey(KeyCode.S))
         {
+            Charging = true;
             handletimer += Time.deltaTime;
             if (handletimer >= handleMaxTime)
             {
@@ -71,12 +74,14 @@ public class RemoteForm : Player
             }
         }
 
-        if(Input.GetKeyUp(KeyCode.S))
+        if(!Input.GetKey(KeyCode.S) && Charging)
         {
             /*if (handlerange.radius < handlediameterrangemin)
             {
                 handlerange.radius = handlediameterrangemin;
             }*/
+            Charging = false;
+
             if (timeScale < handlediameterrangemin)
             {
                 handlerange.transform.localScale = new Vector3(0, handlediameterrangemin, handlediameterrangemin);
