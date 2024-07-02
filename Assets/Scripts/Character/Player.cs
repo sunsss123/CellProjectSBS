@@ -61,7 +61,7 @@ public class Player : Character
     // Start is called before the first frame update
     void Start()
     {
-     
+        ChrRenderer.material.SetColor("EmissionColor", Color.red);
         canAttack = true;
         onDash = true;
     }
@@ -243,7 +243,6 @@ public class Player : Character
     {
         if (PlayerStat.instance.attackType == AttackType.melee && canAttack && !downAttack)
         {
-            //Humonoidanimator.Play("Attack");
             if (!onGround)
             {
                 attackSky = true;
@@ -252,7 +251,7 @@ public class Player : Character
             {
                 attackGround = true;
             }
-       
+            Debug.Log("°ø°ÝÅ°");
             StartCoroutine(TestMeleeAttack());
         }
     }

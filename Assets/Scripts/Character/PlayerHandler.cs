@@ -43,7 +43,7 @@ public class PlayerHandler : MonoBehaviour
     public float characterFallLimit;
     void PlayerFallOut()
     {
-        if (CurrentPlayer != null && CurrentPlayer.transform.position.y < -1 * Mathf.Abs( characterFallLimit))
+        if (CurrentPlayer != null && CurrentPlayer.transform.position.y < -1 * characterFallLimit)
         {
             Rigidbody rb=null;
           if(CurrentPlayer.TryGetComponent<Rigidbody>(out rb))
