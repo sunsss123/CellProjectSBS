@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class TransformPlace : MonoBehaviour
 {
@@ -26,6 +23,8 @@ public class TransformPlace : MonoBehaviour
             other.transform.position = this.transform.position;
             PlayerHandler.instance.transformed(type);
             PlayerHandler.instance.CurrentPower = PlayerHandler.instance.MaxPower;
+
+            gameObject.SetActive(false);
         }
     }
 }

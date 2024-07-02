@@ -1,6 +1,4 @@
 using System.Collections;
-using Unity.Burst.CompilerServices;
-using UnityEditor.Rendering;
 using UnityEngine;
 public enum direction { Left = -1, none = 0, Right = 1 }
 public class Player : Character
@@ -324,7 +322,11 @@ public class Player : Character
 
     IEnumerator WaitEndDamaged()
     {
-        animator.SetTrigger("Damaged");
+        if (animator != null)
+        {
+            animator.SetTrigger("Damaged");
+        }
+
         playerRb.AddForce(-transform.forward * 1.2f, ForceMode.Impulse);
 
         yield return new WaitForSeconds(1f);
@@ -404,6 +406,7 @@ public class Player : Character
         }
         else if(attackGround)
         {
+            animator.SetTrigger("Attack");
             meleeCollider.SetActive(true);
             meleeCollider.GetComponent<SphereCollider>().enabled = true;
             playerRb.AddForce(transform.forward * 3, ForceMode.Impulse);

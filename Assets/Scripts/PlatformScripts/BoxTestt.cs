@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BoxTestt : MonoBehaviour
@@ -11,7 +9,8 @@ public class BoxTestt : MonoBehaviour
     public Rigidbody enemyRb; // 적 리지드바디
     public GameObject attackCollider; // 적의 공격 콜라이더 오브젝트
     public GameObject rangeCollider; // 공격 범위 콜라이더 오브젝트
-    public GameObject enemy;
+    public GameObject enemy; // 생성될 적 프리팹
+    public GameObject breakBox; // 부서진 박스 파티클 오브젝트
 
     //public float searchRange; // 플레이어 인지 범위
     //public float attackRange; // 공격 실행 범위
@@ -312,19 +311,20 @@ public class BoxTestt : MonoBehaviour
             rangeCollider.SetActive(false);
             //gameObject.SetActive(false);
             GetComponent<BoxCollider>().enabled = false;
-            StartCoroutine(Broken());
+            Instantiate(breakBox, transform.position, Quaternion.identity);
             Instantiate(enemy, transform.position, Quaternion.identity).GetComponent<Enemy>().onStun = true;
+            gameObject.SetActive(false);
         }
     }
 
-    IEnumerator Broken()
+    /*IEnumerator Broken()
     {
         animator.SetTrigger("Broken");
 
         yield return new WaitForSeconds(4f);
 
         gameObject.SetActive(false);
-    }
+    }*/
 
     private void OnCollisionEnter(Collision collision)
     {

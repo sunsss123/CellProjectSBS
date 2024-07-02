@@ -115,9 +115,12 @@ public class Enemy : Character
         {
             if (hits[i].collider.CompareTag("GameController"))
             {
-                if (hits[i].collider == hits[i].collider.GetComponent<BoxCollider>() && hits[i].collider.GetComponent<RemoteObject>().rType == RemoteType.tv)
+                if (!hitByPlayer && hits[i].collider == hits[i].collider.GetComponent<BoxCollider>() && hits[i].collider.GetComponent<RemoteObject>().rType == RemoteType.tv)
                 {
-                    checkTv = true;
+                    if (hits[i].collider.GetComponent<RemoteObject>().onActive)
+                    {
+                        checkTv = true;
+                    }
                 }
             }
         }
@@ -223,7 +226,7 @@ public class Enemy : Character
             {
                 //Debug.Log("플레이어 추적하지마라");
                 tracking = false;
-                checkPlayer = false;                
+                checkPlayer = false;
             }*/
         }
 
@@ -335,7 +338,7 @@ public class Enemy : Character
             }
         }
 
-        if (other.CompareTag("PlayerAttack"))
+        if (other.CompareTag("PlayerAttack") && !eStat.onInvincible)
         {
             if (activeTv)
             {
