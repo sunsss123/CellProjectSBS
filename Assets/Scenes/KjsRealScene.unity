@@ -1291,7 +1291,6 @@ GameObject:
   - component: {fileID: 650167061}
   - component: {fileID: 650167060}
   - component: {fileID: 650167062}
-  - component: {fileID: 650167063}
   m_Layer: 0
   m_Name: SIngleton
   m_TagString: Untagged
@@ -1383,6 +1382,7 @@ MonoBehaviour:
   retoretype: 1
   CurrentPlayer: {fileID: 0}
   pStat: {fileID: 0}
+  characterFallLimit: 0
   CurrentType: 0
 --- !u!114 &650167062
 MonoBehaviour:
@@ -1402,23 +1402,6 @@ MonoBehaviour:
   jumpforce: 3.5
   movespeed: 5
   CameraTrackingTime: 2
---- !u!114 &650167063
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 650167057}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b93bd66d97b4f4c40a4158c8799e55f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gaugeBar: {fileID: 0}
-  hpSettingGroup: {fileID: 0}
-  hpGroup: []
-  hpPrefab: {fileID: 0}
-  currentPlayer: {fileID: 0}
 --- !u!4 &655609321 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1731335098809276273, guid: ac650ad5a738cd94f92e9992fe8f5a0a,
@@ -2618,7 +2601,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1367305887
 Transform:
   m_ObjectHideFlags: 0

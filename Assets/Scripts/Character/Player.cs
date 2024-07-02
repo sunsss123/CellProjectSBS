@@ -18,7 +18,9 @@ public class Player : Character
     public GameObject downAttackCollider; // 내려찍기 콜라이더
     public Transform firePoint; // 원거리 및 특수공격 생성위치
 
-    public Animator animator;
+    public Animator ModelAnimator;
+    public Animator Humonoidanimator;
+    public Renderer ChrRenderer;
 
     public float moveValue; // 움직임 유무를 결정하기 위한 변수
     public float hori, vert; // 플레이어의 움직임 변수
@@ -59,7 +61,7 @@ public class Player : Character
     // Start is called before the first frame update
     void Start()
     {
-        animator = transform.GetChild(0).GetComponent<Animator>();
+        ChrRenderer.material.SetColor("EmissionColor", Color.red);
         canAttack = true;
         onDash = true;
     }
@@ -72,8 +74,8 @@ public class Player : Character
             RaycastHit hit;
             //if (playerRb.velocity.y <=0)
             //{
-            Debug.DrawRay(transform.position, Vector3.down * 0.1f, Color.red);
-            if (Physics.Raycast(this.transform.position, Vector3.down, out hit, 0.1f))
+            Debug.DrawRay(transform.position, Vector3.down * 0.15f, Color.red);
+            if (Physics.Raycast(this.transform.position, Vector3.down, out hit, 0.15f))
             {
 
                 if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform"))
@@ -118,7 +120,7 @@ public class Player : Character
 
     public void HittedTest()
     {
-        animator.SetTrigger("Damaged");
+        Humonoidanimator.SetTrigger("Damaged");
     }
     bool wallcheck;
     private void FixedUpdate()
@@ -126,11 +128,12 @@ public class Player : Character
         if(Input.GetKeyDown(KeyCode.Tab)) { HittedTest(); }
 
 
-        if (animator != null)
+        if (Humonoidanimator != null)
         {
-            animator.SetBool("run", isRun);
-            animator.SetBool("Onground", onGround);
-
+            Humonoidanimator.SetBool("run", isRun);
+            Humonoidanimator.SetBool("Onground", onGround);
+            ModelAnimator.SetBool("Rolling", downAttack);
+            Humonoidanimator.SetBool("DownAttack", downAttack);
         }
         else
         {
@@ -216,7 +219,7 @@ public class Player : Character
             {
                 isRun = false;
             }
-            //animator.RunAnimation(isRun);
+            //Humonoidanimator.RunAnimation(isRun);
         }
     }
 
@@ -278,11 +281,12 @@ public class Player : Character
         playerRb.velocity = Vector3.zero;
 
         playerRb.AddForce(transform.up * 3f, ForceMode.Impulse);
+    
         yield return new WaitForSeconds(0.2f);
         playerRb.velocity = Vector3.zero;
-
+       
         yield return new WaitForSeconds(0.5f);
-
+       
         downAttackCollider.SetActive(true);
         playerRb.useGravity = true;
         playerRb.AddForce(Vector3.down * PlayerStat.instance.downForce);
@@ -292,7 +296,7 @@ public class Player : Character
     #region 특수공격
     public virtual void Skill1()
     {
-        Debug.Log("s키를 이용한 스킬");
+
     }
     public virtual void Skill2()
     {
@@ -324,7 +328,7 @@ public class Player : Character
 
     IEnumerator WaitEndDamaged()
     {
-        animator.SetTrigger("Damaged");
+        Humonoidanimator.SetTrigger("Damaged");
         playerRb.AddForce(-transform.forward * 1.2f, ForceMode.Impulse);
 
         yield return new WaitForSeconds(1f);
@@ -350,7 +354,7 @@ public class Player : Character
         {
             //플랫폼에 닿았을 때 점프 가능(바닥,천장, 벽에 닿아도 점프 되지만 신경쓰지말기)
             isJump = true;
-            animator.SetTrigger("jump");
+            Humonoidanimator.SetTrigger("jump");
             isRun = false;
             if (PlayerStat.instance.jumpCount < PlayerStat.instance.jumpCountMax)
             {
@@ -434,7 +438,7 @@ public class Player : Character
         yield return new WaitForSeconds(0.5f);
 
         isAttack = false;
-        animator.SetTrigger("Attack");
+        Humonoidanimator.SetTrigger("Attack");
         meleeCollider.GetComponent<BoxCollider>().enabled = false;
     }
     #endregion

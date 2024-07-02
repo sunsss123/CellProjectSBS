@@ -16,11 +16,22 @@ public class PlayerCam : MonoBehaviour
     public Transform target;
     float rotationValue;
 
+
+    [Header("플레이어 X위치 가중치")]
+    public float PlayerXVaule;
+
+
    public float CameraTrakingTime;
     public float CameraMoveSpeed;
     float cameraspeed;
     float cameraVector;
     Vector3 PlayerPos;
+
+    public static PlayerCam instance;
+    private void Awake()
+    {
+        instance = this;
+    }
     void Start()
     {
         //target = GameObject.Find("Player").transform;
@@ -41,7 +52,7 @@ public class PlayerCam : MonoBehaviour
         cameraVector = ((target.position + camPos) - transform.position).magnitude;
         cameraspeed = cameraVector / CameraTrakingTime;
         //transform.Translate(((target.position + camPos) - transform.position).normalized * cameraspeed * Time.deltaTime);
-        transform.position = Vector3.Lerp(transform.position, target.position+camPos, Time.deltaTime * cameraspeed);
+        transform.position = Vector3.Lerp(transform.position, target.position+camPos+Vector3.right*PlayerXVaule, Time.deltaTime * cameraspeed);
         //if(transform.position!= target.position + camPos)
         //     transform.Translate((target.position + camPos).normalized * CameraSpeed*Time.deltaTime);
     }
