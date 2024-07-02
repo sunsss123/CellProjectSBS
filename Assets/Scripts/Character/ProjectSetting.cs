@@ -20,27 +20,27 @@ public class ProjectSetting :MonoBehaviour
     [Header("카메라 추격 시간")]
     public float CameraTrackingTime;
 
-    [MenuItem("Playerprefs/모든 저장 값 지우기")]
-    static void RemovePref()
-    {
-        PlayerPrefs.DeleteAll();
-    }
-    [MenuItem("Playerprefs/저장 값 불려오기")]
-    static void LoadPref()
-    {
-        if (PlayerPrefs.HasKey("jumpforce"))
-        {
-            ProjectSetting.instance.jumpforce = PlayerPrefs.GetFloat("jumpforce");
-        }
-        if (PlayerPrefs.HasKey("movespeed"))
-        {
-            ProjectSetting.instance.movespeed = PlayerPrefs.GetFloat("movespeed");
-        }
-        if (PlayerPrefs.HasKey("CameraTrackingTime"))
-        {
-            ProjectSetting.instance.CameraTrackingTime = PlayerPrefs.GetFloat("CameraTrackingTime");
-        }
-    }
+    //[MenuItem("Playerprefs/모든 저장 값 지우기")]
+    //static void RemovePref()
+    //{
+    //    PlayerPrefs.DeleteAll();
+    //}
+    //[MenuItem("Playerprefs/저장 값 불려오기")]
+    //static void LoadPref()
+    //{
+    //    if (PlayerPrefs.HasKey("jumpforce"))
+    //    {
+    //        ProjectSetting.instance.jumpforce = PlayerPrefs.GetFloat("jumpforce");
+    //    }
+    //    if (PlayerPrefs.HasKey("movespeed"))
+    //    {
+    //        ProjectSetting.instance.movespeed = PlayerPrefs.GetFloat("movespeed");
+    //    }
+    //    if (PlayerPrefs.HasKey("CameraTrackingTime"))
+    //    {
+    //        ProjectSetting.instance.CameraTrackingTime = PlayerPrefs.GetFloat("CameraTrackingTime");
+    //    }
+    //}
     public static ProjectSetting instance;
     private void Awake()
     {
