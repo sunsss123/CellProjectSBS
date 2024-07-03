@@ -292,6 +292,7 @@ public class Player : Character
                 attackGround = true;
             }
             Debug.Log("°ø°ÝÅ°");
+            Humonoidanimator.Play("Attack");
             StartCoroutine(TestMeleeAttack());
         }
     }
@@ -449,7 +450,7 @@ public class Player : Character
         }
         else if(attackGround)
         {
-            Humonoidanimator.SetTrigger("Attack");
+         
             meleeCollider.SetActive(true);
             meleeCollider.GetComponent<SphereCollider>().enabled = true;
             playerRb.AddForce(transform.forward * 3, ForceMode.Impulse);
