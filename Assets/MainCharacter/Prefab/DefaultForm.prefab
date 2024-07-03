@@ -1385,6 +1385,8 @@ MonoBehaviour:
   ModelAnimator: {fileID: 3131483708985094839}
   Humonoidanimator: {fileID: 3970937810120809593}
   ChrRenderer: {fileID: 1979360752492490871}
+  chrmat: {fileID: 0}
+  color: {r: 0, g: 0, b: 0, a: 0}
   moveValue: 0
   hori: 0
   vert: 0
@@ -1403,8 +1405,11 @@ MonoBehaviour:
   onDash: 0
   isMove: 0
   canAttack: 0
+  velocityMove: {x: 0, y: 0, z: 0}
+  rigidbodyPos: {x: 0, y: 0, z: 0}
   SizeX: 0
   SizeY: 0
+  flyTime: 0.3
   RunEffect: {fileID: 7756572666751904677}
   DownAttackForce: 0
   CullingPlatform: 0

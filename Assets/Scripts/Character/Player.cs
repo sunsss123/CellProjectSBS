@@ -458,7 +458,6 @@ public class Player : Character
 
         yield return new WaitForSeconds(PlayerStat.instance.attackDelay);
 
-        playerRb.velocity = Vector3.zero;
         if (attackSky)
         {
             flyCollider.SetActive(false);
@@ -470,6 +469,8 @@ public class Player : Character
             meleeCollider.SetActive(false);
             meleeCollider.GetComponent<SphereCollider>().enabled = false;
             attackGround = false;
+
+            playerRb.velocity = Vector3.zero;
         }
         canAttack = true;
     }
