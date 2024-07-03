@@ -25,6 +25,8 @@ public class TransformPlace : MonoBehaviour
             PlayerHandler.instance.CurrentPower = PlayerHandler.instance.MaxPower;
 
             gameObject.SetActive(false);
+
+            //other.GetComponent<Player>().FormChange(type);
         }
     }
 }

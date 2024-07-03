@@ -2583,9 +2583,9 @@ MonoBehaviour:
   dashTimer: 0
   dashCoolTime: 0
   invincibleCoolTime: 0
-  attackDelay: 0
+  attackDelay: 0.5
   rotationValue: 0
-  downForce: 0
+  downForce: 0.5
   attackForce: 0
 --- !u!4 &650167059
 Transform:
@@ -2652,7 +2652,7 @@ MonoBehaviour:
   GravityY: -9
   GravityZ: 0
   jumpforce: 4.5
-  movespeed: 120
+  movespeed: 5
   CameraTrackingTime: 0.1
 --- !u!1001 &658103892
 PrefabInstance:
@@ -14304,6 +14304,7 @@ MonoBehaviour:
   rigidbodyPos: {x: 0, y: 0, z: 0}
   SizeX: 0
   SizeY: 0
+  flyTime: 0
   RunEffect: {fileID: 0}
   DownAttackForce: 20
   CullingPlatform: 0
