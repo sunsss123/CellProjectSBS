@@ -22,15 +22,15 @@ public class Switch :  signalSender
             Send(active);
         }
     }
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            Debug.Log("Switch DeActive");
-            active = false;
-            Send(active);
-        }
-    }
+    //private void OnCollisionExit(Collision collision)
+    //{
+    //    if (collision.gameObject.CompareTag("Player"))
+    //    {
+    //        Debug.Log("Switch DeActive");
+    //        active = false;
+    //        Send(active);
+    //    }
+    //}
     signalReceiver Receiver;
     int signalnumber;
     public override void Send(bool signal)
