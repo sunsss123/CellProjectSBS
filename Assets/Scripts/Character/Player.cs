@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -27,6 +28,8 @@ public class Player : Character
     public float moveValue; // 움직임 유무를 결정하기 위한 변수
     public float hori, vert; // 플레이어의 움직임 변수
 
+    [Header("점프 홀딩 조절")]
+    public float jumpholdLevel = 0.85f;
     [Header("애니메이션 관련 변수")]
     public bool isJump, jumpAnim;
     public bool isRun;
@@ -62,9 +65,6 @@ public class Player : Character
     public Vector3 rigidbodyPos; // 리지드바디 포지션 확인용
 
 
-    public float SizeX;
-    public float SizeY;
-
     [Header("내려찍기 체공 시간")]
     public float flyTime;
     // Start is called before the first frame update
@@ -98,7 +98,8 @@ public class Player : Character
                         isJump = false;
                         PlayerStat.instance.jumpCount = 0;
                         Debug.Log("BottomRayCheck");
-                  
+                        if(LandingEffect!=null)
+                        LandingEffect.SetActive(true);
    
                 }
 
@@ -132,6 +133,8 @@ public class Player : Character
     public void HittedTest()
     {
         Humonoidanimator.SetTrigger("Damaged");
+        if(HittedEffect!=null)
+        HittedEffect.gameObject.SetActive(true);
     }
     bool wallcheck;
     private void FixedUpdate()
@@ -189,6 +192,15 @@ public class Player : Character
         }
     }
     public ParticleSystem RunEffect;
+    public GameObject HittedEffect;
+    public GameObject AttackEffect;
+    public GameObject LandingEffect;
+    public GameObject JumpEffect;
+    
+
+
+
+
     Vector3 translateFix;
 
     #region 추상화 오버라이드 함수
@@ -352,7 +364,7 @@ public class Player : Character
     public override void Damaged(float damage, GameObject obj)
     {
         PlayerStat.instance.cState = CharacterState.hit;
-        
+        HittedEffect.gameObject.SetActive(true);
         PlayerStat.instance.hp -= damage;
         Debug.Log($"{gameObject}가 {obj}에 의해 데미지를 받음:{damage}, 남은 체력:{PlayerStat.instance.hp}/{PlayerStat.instance.hpMax}");
 
@@ -399,13 +411,14 @@ public class Player : Character
             isJump = true;
 
             Humonoidanimator.SetTrigger("jump");
-
+            if(JumpEffect!=null)
+            JumpEffect.SetActive(true);
             isRun = false;
             if (PlayerStat.instance.jumpCount < PlayerStat.instance.jumpCountMax)
             {
 
                 //YMove 
-
+           
                 playerRb.AddForce(Vector3.up * PlayerStat.instance.jumpForce, ForceMode.Impulse);
                 PlayerStat.instance.jumpCount++;
             }
@@ -416,7 +429,7 @@ public class Player : Character
     {
         if (playerRb.velocity.y > 0)
         {
-            playerRb.velocity = new Vector3(playerRb.velocity.x, playerRb.velocity.y * 0.85f, playerRb.velocity.z);
+            playerRb.velocity = new Vector3(playerRb.velocity.x, playerRb.velocity.y * jumpholdLevel, playerRb.velocity.z);
         }
     }
 
@@ -455,10 +468,11 @@ public class Player : Character
             meleeCollider.GetComponent<SphereCollider>().enabled = true;
             playerRb.AddForce(transform.forward * 3, ForceMode.Impulse);
         }
-
+        if(AttackEffect!=null)
+        AttackEffect.SetActive(true);
         yield return new WaitForSeconds(PlayerStat.instance.attackDelay);
 
-        playerRb.velocity = Vector3.zero;
+
         if (attackSky)
         {
             flyCollider.SetActive(false);
@@ -470,6 +484,7 @@ public class Player : Character
             meleeCollider.SetActive(false);
             meleeCollider.GetComponent<SphereCollider>().enabled = false;
             attackGround = false;
+            playerRb.velocity = Vector3.zero;
         }
         canAttack = true;
     }
