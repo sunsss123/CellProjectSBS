@@ -21,6 +21,8 @@ public class Player : Character
     public Animator ModelAnimator;
     public Animator Humonoidanimator;
     public Renderer ChrRenderer;
+    public Material chrmat;
+    public Color color;
 
     public float moveValue; // 움직임 유무를 결정하기 위한 변수
     public float hori, vert; // 플레이어의 움직임 변수
@@ -47,21 +49,20 @@ public class Player : Character
 
     public bool canAttack; // 공격 가능
 
-    /*bool currentUp; // 뒤로 보게 만들기
-    bool currentDown; // 앞으로 보게 만들기
-    bool currentLeft; // 좌측 보게 만들기
-    bool currentRight; // 우측 보게 만들기*/
+
+
 
     #endregion
 
-    public float SizeX;
-    public float SizeY;
-
+  
 
     // Start is called before the first frame update
     void Start()
     {
-        ChrRenderer.material.SetColor("EmissionColor", Color.red);
+        chrmat = ChrRenderer.material;
+        color = Color.red;
+
+        
         canAttack = true;
         onDash = true;
     }
@@ -72,8 +73,7 @@ public class Player : Character
         if (!onGround)
         {
             RaycastHit hit;
-            //if (playerRb.velocity.y <=0)
-            //{
+    
             Debug.DrawRay(transform.position, Vector3.down * 0.15f, Color.red);
             if (Physics.Raycast(this.transform.position, Vector3.down, out hit, 0.15f))
             {
@@ -125,6 +125,9 @@ public class Player : Character
     bool wallcheck;
     private void FixedUpdate()
     {
+
+
+       /* chrmat.SetColor("_Emissive_Color", color);*///emission 건들기
         if(Input.GetKeyDown(KeyCode.Tab)) { HittedTest(); }
 
 
@@ -515,10 +518,7 @@ public class Player : Character
 
   
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        //playerRb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY;
-    }
+ 
     #endregion
 
     #region 양방향 플랫폼
@@ -581,8 +581,5 @@ public class Player : Character
     }
     #endregion
 
-    /*public virtual void SpecialAttack()
-    {
-        Debug.Log("기본상태는 특수공격 없음");
-    }*/
+    
 }
