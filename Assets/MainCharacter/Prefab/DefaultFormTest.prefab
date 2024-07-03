@@ -1316,7 +1316,7 @@ GameObject:
   - component: {fileID: 7390080442552347909}
   - component: {fileID: 745289941222913913}
   m_Layer: 6
-  m_Name: DefaultForm
+  m_Name: DefaultFormTest
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
