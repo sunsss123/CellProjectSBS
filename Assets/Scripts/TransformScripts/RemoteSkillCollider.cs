@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class RemoteSkillCollider : MonoBehaviour
@@ -11,6 +8,7 @@ public class RemoteSkillCollider : MonoBehaviour
     {
         if (other.CompareTag("GameController"))
         {
+            Debug.Log("Å½Áö");
             remocon.remoteObj.Add(other.gameObject);
         }
     }

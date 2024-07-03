@@ -24,8 +24,7 @@ namespace TravisGameAssets
 		public Image rotationIcon;
 		public Image floorIcon;
 		public Image slowMotionIcon;
-		
-		public GameObject light;
+
 		
 		private GameObject[] hitEffects;
 
@@ -179,7 +178,6 @@ namespace TravisGameAssets
 		public void ToggleLighting()
 		{
 			lighting = !lighting;
-			light.SetActive(lighting);
 		}
 		
 		

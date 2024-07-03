@@ -1,7 +1,5 @@
-using NUnit.Framework.Constraints;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Rendering;
 using UnityEngine;
 
 public class RemoteForm : Player
@@ -21,6 +19,8 @@ public class RemoteForm : Player
     public float timeScale; // 차징 범위 증가 받을 변수
     public float chargeSpeed; // 차징 속도 변수
 
+    public bool Charging;
+
     [Header("빔 관련 변수")]
     public GameObject laserPrefab; // 빔 스킬 프리팹
     
@@ -37,13 +37,14 @@ public class RemoteForm : Player
 
     public override void Skill1()
     {
-        if (!handlerange.gameObject.activeSelf)
-        {
-            handlerange.gameObject.SetActive(true);
-        }
-
         if (Input.GetKey(KeyCode.S))
         {
+            if (!handlerange.gameObject.activeSelf)
+            {
+                handlerange.gameObject.SetActive(true);
+            }
+
+            Charging = true;
             handletimer += Time.deltaTime;
             if (handletimer >= handleMaxTime)
             {
@@ -66,22 +67,25 @@ public class RemoteForm : Player
                 else
                 {
                     timeScale += Time.deltaTime;
-                    handlerange.transform.localScale = new Vector3(0, chargeSpeed * timeScale, chargeSpeed * timeScale);
+                    handlerange.transform.localScale = new Vector3(chargeSpeed * timeScale, chargeSpeed * timeScale, 0);
                 }
             }
         }
 
-        if(Input.GetKeyUp(KeyCode.S))
+        if(!Input.GetKey(KeyCode.S) && Charging)
         {
             /*if (handlerange.radius < handlediameterrangemin)
             {
                 handlerange.radius = handlediameterrangemin;
             }*/
+            Charging = false;
+
             if (timeScale < handlediameterrangemin)
             {
-                handlerange.transform.localScale = new Vector3(0, handlediameterrangemin, handlediameterrangemin);
+                handlerange.transform.localScale = new Vector3(handlediameterrangemin, handlediameterrangemin, 0);
             }
-            handlerange.gameObject.SetActive(true);
+            //handlerange.gameObject.SetActive(true);
+            handlerange.enabled = true;
             ActiveRemoteObject();
         }
     }
@@ -90,7 +94,7 @@ public class RemoteForm : Player
     {
         if (Input.GetKeyDown(KeyCode.D))
         {
-            Instantiate(laserPrefab, firePoint.position, Quaternion.identity);
+            Instantiate(laserPrefab, firePoint.position, transform.rotation);
         }
     }
 
@@ -141,8 +145,11 @@ public class RemoteForm : Player
             remoteObj[i].GetComponent<RemoteObject>().Active();
         }
 
-        remoteObj.Clear();
+        remoteObj.Clear();        
         handlerange.transform.localScale = new Vector3(0, 0, 0);
+        handletimer = 0;
+        timeScale = 0;
+        handlerange.enabled = false;
     }
 
     IEnumerator ElectricPower()

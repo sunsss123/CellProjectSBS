@@ -1,7 +1,7 @@
 using System.Collections;
-using Unity.Burst.CompilerServices;
-using UnityEditor.Rendering;
 using UnityEngine;
+using UnityEngine.UIElements;
+
 public enum direction { Left = -1, none = 0, Right = 1 }
 public class Player : Character
 {
@@ -18,7 +18,11 @@ public class Player : Character
     public GameObject downAttackCollider; // 내려찍기 콜라이더
     public Transform firePoint; // 원거리 및 특수공격 생성위치
 
-    public Animator animator;
+    public Animator ModelAnimator;
+    public Animator Humonoidanimator;
+    public Renderer ChrRenderer;
+    public Material chrmat;
+    public Color color;
 
     public float moveValue; // 움직임 유무를 결정하기 위한 변수
     public float hori, vert; // 플레이어의 움직임 변수
@@ -45,21 +49,31 @@ public class Player : Character
 
     public bool canAttack; // 공격 가능
 
-    /*bool currentUp; // 뒤로 보게 만들기
-    bool currentDown; // 앞으로 보게 만들기
-    bool currentLeft; // 좌측 보게 만들기
-    bool currentRight; // 우측 보게 만들기*/
+
+
+
 
     #endregion
+
+  
+
+  
+    public Vector3 velocityMove; // 벨로시티 이동 테스트
+    public Vector3 rigidbodyPos; // 리지드바디 포지션 확인용
+
 
     public float SizeX;
     public float SizeY;
 
-
+    [Header("내려찍기 체공 시간")]
+    public float flyTime;
     // Start is called before the first frame update
     void Start()
     {
-        animator = transform.GetChild(0).GetComponent<Animator>();
+        chrmat = ChrRenderer.material;
+        color = Color.red;
+
+        
         canAttack = true;
         onDash = true;
     }
@@ -70,10 +84,9 @@ public class Player : Character
         if (!onGround)
         {
             RaycastHit hit;
-            //if (playerRb.velocity.y <=0)
-            //{
-            Debug.DrawRay(transform.position, Vector3.down * 0.1f, Color.red);
-            if (Physics.Raycast(this.transform.position, Vector3.down, out hit, 0.1f))
+    
+            Debug.DrawRay(transform.position, Vector3.down * 0.15f, Color.red);
+            if (Physics.Raycast(this.transform.position, Vector3.down, out hit, 0.15f))
             {
 
                 if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform"))
@@ -118,19 +131,23 @@ public class Player : Character
 
     public void HittedTest()
     {
-        animator.SetTrigger("Damaged");
+        Humonoidanimator.SetTrigger("Damaged");
     }
     bool wallcheck;
     private void FixedUpdate()
     {
+
+
+       /* chrmat.SetColor("_Emissive_Color", color);*///emission 건들기
         if(Input.GetKeyDown(KeyCode.Tab)) { HittedTest(); }
 
 
-        if (animator != null)
+        if (Humonoidanimator != null)
         {
-            animator.SetBool("run", isRun);
-            animator.SetBool("Onground", onGround);
-
+            Humonoidanimator.SetBool("run", isRun);
+            Humonoidanimator.SetBool("Onground", onGround);
+            ModelAnimator.SetBool("Rolling", downAttack);
+            Humonoidanimator.SetBool("DownAttack", downAttack);
         }
         else
         {
@@ -199,13 +216,36 @@ public class Player : Character
         rotate(hori);
 
 
-        translateFix = new(0, 0, Mathf.Abs(hori));
+        translateFix = new(0, 0, Mathf.Abs(hori));        
 
-
-        if (wallcheck)
-            transform.Translate(translateFix * PlayerStat.instance.moveSpeed * 0.05f * Time.deltaTime);
+        //playerRb.AddForce(translateFix * PlayerStat.instance.moveSpeed);
+        playerRb.velocity = new Vector3(playerRb.velocity.x, playerRb.velocity.y, hori * PlayerStat.instance.moveSpeed);
+        /*if (wallcheck)
+        {
+            playerRb.velocity = Vector3.zero;
+        }
         else
-            transform.Translate(translateFix * PlayerStat.instance.moveSpeed * Time.deltaTime);
+        {
+            playerRb.velocity = new Vector3(playerRb.velocity.x, playerRb.velocity.y, Mathf.Abs(hori)*PlayerStat.instance.moveSpeed * Time.deltaTime);
+        }*/
+
+        /*if (wallcheck)
+        {
+            playerRb.AddForce(translateFix * PlayerStat.instance.moveSpeed);
+        }*/
+        //playerRb.AddForce(translateFix * PlayerStat.instance.moveSpeed);
+        //playerRb.velocity = translateFix * PlayerStat.instance.moveSpeed * 0.05f * Time.deltaTime;
+        //transform.Translate(translateFix * PlayerStat.instance.moveSpeed * 0.05f * Time.deltaTime);
+        //playerRb.MovePosition( + translateFix * PlayerStat.instance.moveSpeed * 0.05f * Time.deltaTime);
+        /*else
+        {
+            playerRb.AddForce(translateFix * PlayerStat.instance.moveSpeed);
+        }*/
+        //playerRb.AddForce(translateFix * PlayerStat.instance.moveSpeed);
+        //playerRb.velocity = translateFix * PlayerStat.instance.moveSpeed * Time.deltaTime;
+        //transform.Translate(translateFix * PlayerStat.instance.moveSpeed * Time.deltaTime);
+        //playerRb.MovePosition(translateFix * PlayerStat.instance.moveSpeed * Time.deltaTime);
+
         if (!isJump)
         {
             if (MoveCheck(hori, vert))
@@ -216,8 +256,11 @@ public class Player : Character
             {
                 isRun = false;
             }
-            //animator.RunAnimation(isRun);
+            //Humonoidanimator.RunAnimation(isRun);
         }
+
+        velocityMove = playerRb.velocity;
+        rigidbodyPos = playerRb.position;
     }
 
 
@@ -278,10 +321,12 @@ public class Player : Character
         playerRb.velocity = Vector3.zero;
 
         playerRb.AddForce(transform.up * 3f, ForceMode.Impulse);
+    
         yield return new WaitForSeconds(0.2f);
         playerRb.velocity = Vector3.zero;
 
-        yield return new WaitForSeconds(0.5f);
+
+        yield return new WaitForSeconds(flyTime);
 
         downAttackCollider.SetActive(true);
         playerRb.useGravity = true;
@@ -292,7 +337,7 @@ public class Player : Character
     #region 특수공격
     public virtual void Skill1()
     {
-        Debug.Log("s키를 이용한 스킬");
+
     }
     public virtual void Skill2()
     {
@@ -324,7 +369,8 @@ public class Player : Character
 
     IEnumerator WaitEndDamaged()
     {
-        animator.SetTrigger("Damaged");
+        Humonoidanimator.SetTrigger("Damaged");
+
         playerRb.AddForce(-transform.forward * 1.2f, ForceMode.Impulse);
 
         yield return new WaitForSeconds(1f);
@@ -350,7 +396,9 @@ public class Player : Character
         {
             //플랫폼에 닿았을 때 점프 가능(바닥,천장, 벽에 닿아도 점프 되지만 신경쓰지말기)
             isJump = true;
-            animator.SetTrigger("jump");
+
+            Humonoidanimator.SetTrigger("jump");
+
             isRun = false;
             if (PlayerStat.instance.jumpCount < PlayerStat.instance.jumpCountMax)
             {
@@ -401,6 +449,7 @@ public class Player : Character
         }
         else if(attackGround)
         {
+            Humonoidanimator.SetTrigger("Attack");
             meleeCollider.SetActive(true);
             meleeCollider.GetComponent<SphereCollider>().enabled = true;
             playerRb.AddForce(transform.forward * 3, ForceMode.Impulse);
@@ -434,7 +483,7 @@ public class Player : Character
         yield return new WaitForSeconds(0.5f);
 
         isAttack = false;
-        animator.SetTrigger("Attack");
+        Humonoidanimator.SetTrigger("Attack");
         meleeCollider.GetComponent<BoxCollider>().enabled = false;
     }
     #endregion
@@ -500,7 +549,7 @@ public class Player : Character
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("EnemyAttack"))
+        if (other.CompareTag("EnemyAttack") && !onInvincible)
         {
             Damaged(other.GetComponent<EnemyMeleeAttack>().GetDamage(), other.gameObject);
         }
@@ -511,10 +560,7 @@ public class Player : Character
 
   
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        //playerRb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY;
-    }
+ 
     #endregion
 
     #region 양방향 플랫폼
@@ -577,8 +623,5 @@ public class Player : Character
     }
     #endregion
 
-    /*public virtual void SpecialAttack()
-    {
-        Debug.Log("기본상태는 특수공격 없음");
-    }*/
+    
 }

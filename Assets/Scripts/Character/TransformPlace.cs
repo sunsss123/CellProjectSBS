@@ -1,18 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class TransformPlace : MonoBehaviour
 {
     public TransformType type;
-
-    public GameObject transformUi;
-
-    private void Start()
-    {
-        transformUi.SetActive(false);
-    }
 
     private void OnTriggerStay(Collider other)
     {
@@ -33,22 +23,8 @@ public class TransformPlace : MonoBehaviour
             other.transform.position = this.transform.position;
             PlayerHandler.instance.transformed(type);
             PlayerHandler.instance.CurrentPower = PlayerHandler.instance.MaxPower;
-        }
-    }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            transformUi.SetActive(true);
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            transformUi.SetActive(false);
+            gameObject.SetActive(false);
         }
     }
 }
