@@ -1,7 +1,7 @@
 using System.Collections;
-using Unity.Burst.CompilerServices;
-using UnityEditor.Rendering;
 using UnityEngine;
+using UnityEngine.UIElements;
+
 public enum direction { Left = -1, none = 0, Right = 1 }
 public class Player : Character
 {
@@ -52,10 +52,24 @@ public class Player : Character
 
 
 
+
     #endregion
 
   
 
+    /*bool currentUp; // 뒤로 보게 만들기
+    bool currentDown; // 앞으로 보게 만들기
+    bool currentLeft; // 좌측 보게 만들기
+    bool currentRight; // 우측 보게 만들기*/
+    public Vector3 velocityMove; // 벨로시티 이동 테스트
+    public Vector3 rigidbodyPos; // 리지드바디 포지션 확인용
+    #endregion
+
+    public float SizeX;
+    public float SizeY;
+
+    [Header("내려찍기 체공 시간")]
+    public float flyTime;
     // Start is called before the first frame update
     void Start()
     {
@@ -205,13 +219,36 @@ public class Player : Character
         rotate(hori);
 
 
-        translateFix = new(0, 0, Mathf.Abs(hori));
+        translateFix = new(0, 0, Mathf.Abs(hori));        
 
-
-        if (wallcheck)
-            transform.Translate(translateFix * PlayerStat.instance.moveSpeed * 0.05f * Time.deltaTime);
+        //playerRb.AddForce(translateFix * PlayerStat.instance.moveSpeed);
+        playerRb.velocity = new Vector3(playerRb.velocity.x, playerRb.velocity.y, hori * PlayerStat.instance.moveSpeed);
+        /*if (wallcheck)
+        {
+            playerRb.velocity = Vector3.zero;
+        }
         else
-            transform.Translate(translateFix * PlayerStat.instance.moveSpeed * Time.deltaTime);
+        {
+            playerRb.velocity = new Vector3(playerRb.velocity.x, playerRb.velocity.y, Mathf.Abs(hori)*PlayerStat.instance.moveSpeed * Time.deltaTime);
+        }*/
+
+        /*if (wallcheck)
+        {
+            playerRb.AddForce(translateFix * PlayerStat.instance.moveSpeed);
+        }*/
+        //playerRb.AddForce(translateFix * PlayerStat.instance.moveSpeed);
+        //playerRb.velocity = translateFix * PlayerStat.instance.moveSpeed * 0.05f * Time.deltaTime;
+        //transform.Translate(translateFix * PlayerStat.instance.moveSpeed * 0.05f * Time.deltaTime);
+        //playerRb.MovePosition( + translateFix * PlayerStat.instance.moveSpeed * 0.05f * Time.deltaTime);
+        /*else
+        {
+            playerRb.AddForce(translateFix * PlayerStat.instance.moveSpeed);
+        }*/
+        //playerRb.AddForce(translateFix * PlayerStat.instance.moveSpeed);
+        //playerRb.velocity = translateFix * PlayerStat.instance.moveSpeed * Time.deltaTime;
+        //transform.Translate(translateFix * PlayerStat.instance.moveSpeed * Time.deltaTime);
+        //playerRb.MovePosition(translateFix * PlayerStat.instance.moveSpeed * Time.deltaTime);
+
         if (!isJump)
         {
             if (MoveCheck(hori, vert))
@@ -224,6 +261,9 @@ public class Player : Character
             }
             //Humonoidanimator.RunAnimation(isRun);
         }
+
+        velocityMove = playerRb.velocity;
+        rigidbodyPos = playerRb.position;
     }
 
 
@@ -287,9 +327,10 @@ public class Player : Character
     
         yield return new WaitForSeconds(0.2f);
         playerRb.velocity = Vector3.zero;
-       
-        yield return new WaitForSeconds(0.5f);
-       
+
+
+        yield return new WaitForSeconds(flyTime);
+
         downAttackCollider.SetActive(true);
         playerRb.useGravity = true;
         playerRb.AddForce(Vector3.down * PlayerStat.instance.downForce);
@@ -332,6 +373,7 @@ public class Player : Character
     IEnumerator WaitEndDamaged()
     {
         Humonoidanimator.SetTrigger("Damaged");
+
         playerRb.AddForce(-transform.forward * 1.2f, ForceMode.Impulse);
 
         yield return new WaitForSeconds(1f);
@@ -357,7 +399,9 @@ public class Player : Character
         {
             //플랫폼에 닿았을 때 점프 가능(바닥,천장, 벽에 닿아도 점프 되지만 신경쓰지말기)
             isJump = true;
+
             Humonoidanimator.SetTrigger("jump");
+
             isRun = false;
             if (PlayerStat.instance.jumpCount < PlayerStat.instance.jumpCountMax)
             {
@@ -408,6 +452,7 @@ public class Player : Character
         }
         else if(attackGround)
         {
+            animator.SetTrigger("Attack");
             meleeCollider.SetActive(true);
             meleeCollider.GetComponent<SphereCollider>().enabled = true;
             playerRb.AddForce(transform.forward * 3, ForceMode.Impulse);
@@ -507,7 +552,7 @@ public class Player : Character
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("EnemyAttack"))
+        if (other.CompareTag("EnemyAttack") && !onInvincible)
         {
             Damaged(other.GetComponent<EnemyMeleeAttack>().GetDamage(), other.gameObject);
         }

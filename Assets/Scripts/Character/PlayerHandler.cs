@@ -131,7 +131,7 @@ public class PlayerHandler : MonoBehaviour
     #region 플레이어 기본 조작
     void charactermove()
     {
-        if (!CurrentPlayer.downAttack || PlayerStat.instance.cState == CharacterState.idle)
+        if (!CurrentPlayer.downAttack && PlayerStat.instance.cState == CharacterState.idle)
         {
             CurrentPlayer.Move();
         }
