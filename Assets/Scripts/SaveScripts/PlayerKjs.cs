@@ -1,16 +1,14 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
-public enum direction { Left = -1, none = 0, Right = 1 }
-public class Player : Character
+public class PlayerKjs : Character
 {
-
     #region 변수
     public Rigidbody playerRb;
     public CapsuleCollider capsuleCollider;
 
-   public direction direction=direction.Right;
+    public direction direction = direction.Right;
 
     [Header("근접 및 원거리 공격 관련")]
     public GameObject meleeCollider; // 근접 공격 콜라이더
@@ -49,15 +47,12 @@ public class Player : Character
     bool currentDown; // 앞으로 보게 만들기
     bool currentLeft; // 좌측 보게 만들기
     bool currentRight; // 우측 보게 만들기*/
-    public Vector3 velocityMove; // 벨로시티 이동 테스트
-    public Vector3 rigidbodyPos; // 리지드바디 포지션 확인용
+
     #endregion
 
     public float SizeX;
     public float SizeY;
 
-    [Header("내려찍기 체공 시간")]
-    public float flyTime;
 
     // Start is called before the first frame update
     void Start()
@@ -81,16 +76,16 @@ public class Player : Character
 
                 if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform"))
                 {
-    
-                    if (hit.collider.CompareTag("Ground")|| hit.collider.CompareTag("InteractivePlatform"))
+
+                    if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform"))
                     {
                         onGround = true;
                         isJump = false;
                         PlayerStat.instance.jumpCount = 0;
                         Debug.Log("BottomRayCheck");
-                  
-   
-                }
+
+
+                    }
 
                 }
             }
@@ -101,7 +96,7 @@ public class Player : Character
     void wallRayCastCheck()
     {
         RaycastHit hit;
-        if (Physics.Raycast(this.transform.position + Vector3.up * 0.1f + Vector3.forward * 0.1f * (int)direction, Vector3.forward*(int)direction, out hit, 0.1f))
+        if (Physics.Raycast(this.transform.position + Vector3.up * 0.1f + Vector3.forward * 0.1f * (int)direction, Vector3.forward * (int)direction, out hit, 0.1f))
         {
             if (hit.collider.CompareTag("Ground"))
             {
@@ -126,7 +121,7 @@ public class Player : Character
     bool wallcheck;
     private void FixedUpdate()
     {
-        if(Input.GetKeyDown(KeyCode.Tab)) { HittedTest(); }
+        if (Input.GetKeyDown(KeyCode.Tab)) { HittedTest(); }
 
 
         if (animator != null)
@@ -139,7 +134,7 @@ public class Player : Character
         {
             Debug.Log("달리기 애니메이션 무응답");
         }
-        
+
         wallRayCastCheck();
         InteractivePlatformrayCheck();
         InteractivePlatformrayCheck2();
@@ -156,11 +151,11 @@ public class Player : Character
         else
         {
 
-         
+
             a.maxParticles = 0;
-            if((RunEffect.isPlaying&&RunEffect.particleCount==0))
-            RunEffect.Stop();
-   
+            if ((RunEffect.isPlaying && RunEffect.particleCount == 0))
+                RunEffect.Stop();
+
         }
 
         if (CullingPlatform)
@@ -202,36 +197,13 @@ public class Player : Character
         rotate(hori);
 
 
-        translateFix = new(0, 0, Mathf.Abs(hori));        
+        translateFix = new(0, 0, Mathf.Abs(hori));
 
-        //playerRb.AddForce(translateFix * PlayerStat.instance.moveSpeed);
-        playerRb.velocity = new Vector3(playerRb.velocity.x, playerRb.velocity.y, hori * PlayerStat.instance.moveSpeed);
-        /*if (wallcheck)
-        {
-            playerRb.velocity = Vector3.zero;
-        }
+
+        if (wallcheck)
+            transform.Translate(translateFix * PlayerStat.instance.moveSpeed * 0.05f * Time.deltaTime);
         else
-        {
-            playerRb.velocity = new Vector3(playerRb.velocity.x, playerRb.velocity.y, Mathf.Abs(hori)*PlayerStat.instance.moveSpeed * Time.deltaTime);
-        }*/
-
-        /*if (wallcheck)
-        {
-            playerRb.AddForce(translateFix * PlayerStat.instance.moveSpeed);
-        }*/
-        //playerRb.AddForce(translateFix * PlayerStat.instance.moveSpeed);
-        //playerRb.velocity = translateFix * PlayerStat.instance.moveSpeed * 0.05f * Time.deltaTime;
-        //transform.Translate(translateFix * PlayerStat.instance.moveSpeed * 0.05f * Time.deltaTime);
-        //playerRb.MovePosition( + translateFix * PlayerStat.instance.moveSpeed * 0.05f * Time.deltaTime);
-        /*else
-        {
-            playerRb.AddForce(translateFix * PlayerStat.instance.moveSpeed);
-        }*/
-        //playerRb.AddForce(translateFix * PlayerStat.instance.moveSpeed);
-        //playerRb.velocity = translateFix * PlayerStat.instance.moveSpeed * Time.deltaTime;
-        //transform.Translate(translateFix * PlayerStat.instance.moveSpeed * Time.deltaTime);
-        //playerRb.MovePosition(translateFix * PlayerStat.instance.moveSpeed * Time.deltaTime);
-
+            transform.Translate(translateFix * PlayerStat.instance.moveSpeed * Time.deltaTime);
         if (!isJump)
         {
             if (MoveCheck(hori, vert))
@@ -244,9 +216,6 @@ public class Player : Character
             }
             //animator.RunAnimation(isRun);
         }
-
-        velocityMove = playerRb.velocity;
-        rigidbodyPos = playerRb.position;
     }
 
 
@@ -281,11 +250,11 @@ public class Player : Character
             StartCoroutine(TestMeleeAttack());
         }
     }
-  
 
-  
 
-  
+
+
+
 
     #region 내려찍기
 
@@ -310,7 +279,7 @@ public class Player : Character
         yield return new WaitForSeconds(0.2f);
         playerRb.velocity = Vector3.zero;
 
-        yield return new WaitForSeconds(flyTime);
+        yield return new WaitForSeconds(0.5f);
 
         downAttackCollider.SetActive(true);
         playerRb.useGravity = true;
@@ -335,7 +304,7 @@ public class Player : Character
     public override void Damaged(float damage, GameObject obj)
     {
         PlayerStat.instance.cState = CharacterState.hit;
-        
+
         PlayerStat.instance.hp -= damage;
         Debug.Log($"{gameObject}가 {obj}에 의해 데미지를 받음:{damage}, 남은 체력:{PlayerStat.instance.hp}/{PlayerStat.instance.hpMax}");
 
@@ -435,7 +404,7 @@ public class Player : Character
             flyCollider.SetActive(true);
             flyCollider.GetComponent<SphereCollider>().enabled = true;
         }
-        else if(attackGround)
+        else if (attackGround)
         {
             animator.SetTrigger("Attack");
             meleeCollider.SetActive(true);
@@ -452,7 +421,7 @@ public class Player : Character
             flyCollider.GetComponent<SphereCollider>().enabled = false;
             attackSky = false;
         }
-        else if(attackGround)
+        else if (attackGround)
         {
             meleeCollider.SetActive(false);
             meleeCollider.GetComponent<SphereCollider>().enabled = false;
@@ -462,7 +431,7 @@ public class Player : Character
     }
 
     // 원거리 공격 함수
-   
+
     //근접 공격 애니메이션
     public IEnumerator ActiveMeleeAttack()
     {
@@ -475,7 +444,7 @@ public class Player : Character
         meleeCollider.GetComponent<BoxCollider>().enabled = false;
     }
     #endregion
-   
+
     #region 콜라이더 트리거
     private void OnCollisionExit(Collision collision)
     {
@@ -483,9 +452,9 @@ public class Player : Character
         if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("InteractivePlatform"))
 
         {
-           
+
             onGround = false;
-            
+
         }
         #endregion
     }
@@ -495,7 +464,7 @@ public class Player : Character
         if (collision.gameObject.CompareTag("Ground") && onGround == false)
         {
             jumpRaycastCheck();
-        
+
             downAttack = false;
         }
         //#endregion
@@ -529,8 +498,8 @@ public class Player : Character
 
 
 
- 
-    
+
+
 
 
 
@@ -546,7 +515,7 @@ public class Player : Character
     public float DownAttackForce;
 
 
-  
+
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -613,9 +582,4 @@ public class Player : Character
         }
     }
     #endregion
-
-    /*public virtual void SpecialAttack()
-    {
-        Debug.Log("기본상태는 특수공격 없음");
-    }*/
 }

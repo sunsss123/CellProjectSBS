@@ -1267,7 +1267,7 @@ MonoBehaviour:
   GravityX: 0
   GravityY: 0
   GravityZ: 0
-  jumpforce: 3.5
+  jumpforce: 5
   movespeed: 5
   CameraTrackingTime: 2
 --- !u!4 &655609321 stripped
