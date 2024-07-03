@@ -57,9 +57,6 @@ public class Player : Character
 
 
     #endregion
-
-  
-
   
     public Vector3 velocityMove; // 벨로시티 이동 테스트
     public Vector3 rigidbodyPos; // 리지드바디 포지션 확인용
@@ -133,8 +130,10 @@ public class Player : Character
     public void HittedTest()
     {
         Humonoidanimator.SetTrigger("Damaged");
+
         if(HittedEffect!=null)
         HittedEffect.gameObject.SetActive(true);
+
     }
     bool wallcheck;
     private void FixedUpdate()
@@ -411,8 +410,10 @@ public class Player : Character
             isJump = true;
 
             Humonoidanimator.SetTrigger("jump");
+
             if(JumpEffect!=null)
             JumpEffect.SetActive(true);
+
             isRun = false;
             if (PlayerStat.instance.jumpCount < PlayerStat.instance.jumpCountMax)
             {
