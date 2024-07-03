@@ -57,13 +57,10 @@ public class Player : Character
 
   
 
-    /*bool currentUp; // 뒤로 보게 만들기
-    bool currentDown; // 앞으로 보게 만들기
-    bool currentLeft; // 좌측 보게 만들기
-    bool currentRight; // 우측 보게 만들기*/
+  
     public Vector3 velocityMove; // 벨로시티 이동 테스트
     public Vector3 rigidbodyPos; // 리지드바디 포지션 확인용
-    #endregion
+
 
     public float SizeX;
     public float SizeY;
@@ -452,7 +449,7 @@ public class Player : Character
         }
         else if(attackGround)
         {
-            animator.SetTrigger("Attack");
+            Humonoidanimator.SetTrigger("Attack");
             meleeCollider.SetActive(true);
             meleeCollider.GetComponent<SphereCollider>().enabled = true;
             playerRb.AddForce(transform.forward * 3, ForceMode.Impulse);
