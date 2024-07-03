@@ -1201,8 +1201,9 @@ MonoBehaviour:
   invincibleCoolTime: 0
   attackDelay: 0.5
   rotationValue: 0
-  downForce: 300
+  downForce: 150
   attackForce: 2
+  flyTime: 0
 --- !u!4 &650167059
 Transform:
   m_ObjectHideFlags: 0
@@ -1231,7 +1232,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerformlist:
-  - {fileID: 9062072390100992529, guid: 9f306f58622658d42925f46ab95cb53e, type: 3}
+  - {fileID: 9062072390100992529, guid: adab39cdc59ea234aa9ec9dbf410dc93, type: 3}
   - {fileID: 3941867754303291840, guid: ea32b7d32a0187347a6ad5c144d9b1b0, type: 3}
 --- !u!114 &650167061
 MonoBehaviour:
@@ -3176,6 +3177,7 @@ MonoBehaviour:
   camPos: {x: 3, y: 1, z: 0.5}
   camrot: {x: 0, y: 0, z: 0}
   target: {fileID: 0}
+  PlayerXVaule: 0
   CameraTrakingTime: 2
   CameraMoveSpeed: 0
 --- !u!1 &1711092848

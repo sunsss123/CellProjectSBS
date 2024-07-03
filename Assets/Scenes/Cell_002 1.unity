@@ -2514,6 +2514,7 @@ MonoBehaviour:
   rotationValue: 0
   downForce: 0
   attackForce: 0
+  flyTime: 0.5
 --- !u!4 &650167059
 Transform:
   m_ObjectHideFlags: 0
@@ -5729,6 +5730,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rType: 0
   onActive: 0
+  tvMaterials: []
   ActiveMaterial: {fileID: 2100000, guid: b03d970f65924a9408a3a432141cdb5f, type: 2}
   DeactiveMaterial: {fileID: 2100000, guid: 09b9c3bf0166b844b9dd4be8608ffc6a, type: 2}
   FrontOBj: {fileID: 1772796512}
@@ -9264,9 +9266,12 @@ MonoBehaviour:
   ModelAnimator: {fileID: 0}
   Humonoidanimator: {fileID: 0}
   ChrRenderer: {fileID: 0}
+  chrmat: {fileID: 0}
+  color: {r: 0, g: 0, b: 0, a: 0}
   moveValue: 0
   hori: 0
   vert: 0
+  jumpholdLevel: 0.85
   isJump: 0
   jumpAnim: 0
   isRun: 0
@@ -9282,9 +9287,14 @@ MonoBehaviour:
   onDash: 0
   isMove: 0
   canAttack: 0
-  SizeX: 0
-  SizeY: 0
+  velocityMove: {x: 0, y: 0, z: 0}
+  rigidbodyPos: {x: 0, y: 0, z: 0}
+  flyTime: 0
   RunEffect: {fileID: 0}
+  HittedEffect: {fileID: 0}
+  AttackEffect: {fileID: 0}
+  LandingEffect: {fileID: 0}
+  JumpEffect: {fileID: 0}
   DownAttackForce: 20
   CullingPlatform: 0
   PlatformDisableTime: 0
@@ -9297,6 +9307,7 @@ MonoBehaviour:
   remoteObj: []
   timeScale: 0
   chargeSpeed: 0
+  Charging: 0
   laserPrefab: {fileID: 0}
 --- !u!1 &5441911734851482424
 GameObject:
