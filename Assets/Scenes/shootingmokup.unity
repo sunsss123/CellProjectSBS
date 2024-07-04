@@ -1866,8 +1866,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b708289b786a7164e9552e5e0b044c97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sizeX: 0
-  sizeY: 0
+  FieldSize: {x: 15.5, y: 8.5}
+  Center: {x: 0, y: 1.5}
 --- !u!1001 &1145268452
 PrefabInstance:
   m_ObjectHideFlags: 0

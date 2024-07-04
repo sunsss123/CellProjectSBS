@@ -104,4 +104,5 @@ public class ShootingPlayer : ShootingObject
             StartCoroutine(Attack());
         }
     }
+
 }
