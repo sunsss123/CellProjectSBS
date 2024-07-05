@@ -8,7 +8,7 @@ public class AttackColliderRange : MonoBehaviour
 
     private void Awake()
     {
-        enemy = transform.root.GetComponent<Enemy>();
+        enemy = transform.parent.GetComponent<Enemy>();
     }
 
     private void OnTriggerStay(Collider other)

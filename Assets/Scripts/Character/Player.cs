@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UIElements;
 
 public enum direction { Left = -1, none = 0, Right = 1 }
@@ -36,7 +37,13 @@ public class Player : Character
     public bool isIdle;
     public bool isAttack;
 
+    [Header("변신 애니메이션 테스트용 변수")]
+    public float animationSpeed; // 애니메이터 모션의 속도 조절
+    public float waitTime; // 코루틴 yield return 시간 조절
+    public bool formChange; // 오브젝트 변신 중인지 체크    
+    public GameObject changeEffect; // 변신 완료 이펙트
 
+    [Space(15f)]
     public bool onGround; // 지상 판정 유무
     public bool downAttack; // 내려찍기 공격 확인
     public float jumpLimit; // 점프 높이 제한하는 변수 velocity의 y값을 제한
@@ -57,9 +64,6 @@ public class Player : Character
 
 
     #endregion
-
-  
-
   
     public Vector3 velocityMove; // 벨로시티 이동 테스트
     public Vector3 rigidbodyPos; // 리지드바디 포지션 확인용
@@ -69,7 +73,12 @@ public class Player : Character
     public float flyTime;
     // Start is called before the first frame update
     void Start()
-    {
+    {        
+        if (PlayerStat.instance.formInvincible)
+        {
+            StartCoroutine(FormInvincible());
+        }
+
         chrmat = ChrRenderer.material;
         color = Color.red;
 
@@ -77,6 +86,18 @@ public class Player : Character
         canAttack = true;
         onDash = true;
     }
+
+    #region 변신 후 무적
+    IEnumerator FormInvincible()
+    {
+        onInvincible = true;
+
+        yield return new WaitForSeconds(PlayerStat.instance.invincibleCoolTime);
+
+        PlayerStat.instance.formInvincible = false;
+        onInvincible = false;
+    }
+    #endregion
 
     #region 레이 체크
     void jumpRaycastCheck()
@@ -132,9 +153,15 @@ public class Player : Character
 
     public void HittedTest()
     {
-        Humonoidanimator.SetTrigger("Damaged");
+
+        if (Humonoidanimator != null)
+        {
+            Humonoidanimator.SetTrigger("Damaged");
+        }
+
         if(HittedEffect!=null)
         HittedEffect.gameObject.SetActive(true);
+
     }
     bool wallcheck;
     private void FixedUpdate()
@@ -204,6 +231,7 @@ public class Player : Character
     Vector3 translateFix;
 
     #region 추상화 오버라이드 함수
+
     #region 이동
     public void rotate(float f)
     {
@@ -228,35 +256,9 @@ public class Player : Character
         rotate(hori);
 
 
-        translateFix = new(0, 0, Mathf.Abs(hori));        
+        translateFix = new(0, 0, Mathf.Abs(hori));
 
-        //playerRb.AddForce(translateFix * PlayerStat.instance.moveSpeed);
-        playerRb.velocity = new Vector3(playerRb.velocity.x, playerRb.velocity.y, hori * PlayerStat.instance.moveSpeed);
-        /*if (wallcheck)
-        {
-            playerRb.velocity = Vector3.zero;
-        }
-        else
-        {
-            playerRb.velocity = new Vector3(playerRb.velocity.x, playerRb.velocity.y, Mathf.Abs(hori)*PlayerStat.instance.moveSpeed * Time.deltaTime);
-        }*/
-
-        /*if (wallcheck)
-        {
-            playerRb.AddForce(translateFix * PlayerStat.instance.moveSpeed);
-        }*/
-        //playerRb.AddForce(translateFix * PlayerStat.instance.moveSpeed);
-        //playerRb.velocity = translateFix * PlayerStat.instance.moveSpeed * 0.05f * Time.deltaTime;
-        //transform.Translate(translateFix * PlayerStat.instance.moveSpeed * 0.05f * Time.deltaTime);
-        //playerRb.MovePosition( + translateFix * PlayerStat.instance.moveSpeed * 0.05f * Time.deltaTime);
-        /*else
-        {
-            playerRb.AddForce(translateFix * PlayerStat.instance.moveSpeed);
-        }*/
-        //playerRb.AddForce(translateFix * PlayerStat.instance.moveSpeed);
-        //playerRb.velocity = translateFix * PlayerStat.instance.moveSpeed * Time.deltaTime;
-        //transform.Translate(translateFix * PlayerStat.instance.moveSpeed * Time.deltaTime);
-        //playerRb.MovePosition(translateFix * PlayerStat.instance.moveSpeed * Time.deltaTime);
+        playerRb.velocity = new Vector3(playerRb.velocity.x, playerRb.velocity.y, hori * PlayerStat.instance.moveSpeed);        
 
         if (!isJump)
         {
@@ -304,7 +306,8 @@ public class Player : Character
                 attackGround = true;
             }
             Debug.Log("공격키");
-            Humonoidanimator.Play("Attack");
+            if (Humonoidanimator != null)
+                Humonoidanimator.Play("Attack");
             StartCoroutine(TestMeleeAttack());
         }
     }
@@ -339,7 +342,7 @@ public class Player : Character
         playerRb.velocity = Vector3.zero;
 
 
-        yield return new WaitForSeconds(flyTime);
+        yield return new WaitForSeconds(PlayerStat.instance.flyTime);
 
         downAttackCollider.SetActive(true);
         playerRb.useGravity = true;
@@ -382,7 +385,10 @@ public class Player : Character
 
     IEnumerator WaitEndDamaged()
     {
-        Humonoidanimator.SetTrigger("Damaged");
+        if (Humonoidanimator != null)
+        {
+            Humonoidanimator.SetTrigger("Damaged");
+        }
 
         playerRb.AddForce(-transform.forward * 1.2f, ForceMode.Impulse);
 
@@ -400,6 +406,7 @@ public class Player : Character
         gameObject.SetActive(false);
     }
     #endregion
+
     #endregion
 
     #region 점프동작
@@ -410,9 +417,15 @@ public class Player : Character
             //플랫폼에 닿았을 때 점프 가능(바닥,천장, 벽에 닿아도 점프 되지만 신경쓰지말기)
             isJump = true;
 
-            Humonoidanimator.SetTrigger("jump");
+
+            if (Humonoidanimator != null)
+            {
+                Humonoidanimator.SetTrigger("jump");
+            }
+
             if(JumpEffect!=null)
             JumpEffect.SetActive(true);
+
             isRun = false;
             if (PlayerStat.instance.jumpCount < PlayerStat.instance.jumpCountMax)
             {
@@ -499,11 +512,37 @@ public class Player : Character
         yield return new WaitForSeconds(0.5f);
 
         isAttack = false;
-        Humonoidanimator.SetTrigger("Attack");
+        if (Humonoidanimator != null)
+            Humonoidanimator.SetTrigger("Attack");
         meleeCollider.GetComponent<BoxCollider>().enabled = false;
     }
     #endregion
-   
+
+    #region 변신
+    public void FormChange(TransformType type)
+    {
+        StartCoroutine(EndFormChange(type));
+    }
+
+    IEnumerator EndFormChange(TransformType type)
+    {
+        PlayerStat.instance.formInvincible = true;
+        formChange = true;
+        onInvincible = true;
+        Time.timeScale = 0.2f;
+        ModelAnimator.SetTrigger("FormChange");
+        ModelAnimator.SetFloat("Speed", animationSpeed);
+
+        yield return new WaitForSeconds(waitTime);
+
+        PlayerHandler.instance.CurrentPower = PlayerHandler.instance.MaxPower;
+        Instantiate(changeEffect, transform.position, Quaternion.identity);
+        PlayerHandler.instance.transformed(type);
+        formChange = false;
+        Time.timeScale = 1f;
+    }
+    #endregion
+
     #region 콜라이더 트리거
     private void OnCollisionExit(Collision collision)
     {

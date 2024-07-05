@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class RemoteSkillCollider : MonoBehaviour
 {
-    public RemoteForm remocon;
+    public RemoteTransform remocon;    
 
     private void OnTriggerEnter(Collider other)
     {

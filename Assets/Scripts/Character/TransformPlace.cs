@@ -19,12 +19,17 @@ public class TransformPlace : MonoBehaviour
 
         if (other.CompareTag("Player") && Input.GetKeyDown(KeyCode.F) || other.CompareTag("Player") && PlayerHandler.instance.CurrentPlayer.downAttack)
         {
-            PlayerHandler.instance.CurrentPlayer.downAttack = false;
+            /*PlayerHandler.instance.CurrentPlayer.downAttack = false;
             other.transform.position = this.transform.position;
             PlayerHandler.instance.transformed(type);
-            PlayerHandler.instance.CurrentPower = PlayerHandler.instance.MaxPower;
+            PlayerHandler.instance.CurrentPower = PlayerHandler.instance.MaxPower;*/
+            if (PlayerHandler.instance.CurrentType == TransformType.Default)
+            {
+                other.transform.position = this.transform.position;
+                gameObject.SetActive(false);
 
-            gameObject.SetActive(false);
+                other.GetComponent<Player>().FormChange(type);
+            }
         }
     }
 }

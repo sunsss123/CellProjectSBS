@@ -22,6 +22,10 @@ public class PlayerStat : CharacterStat
     public float rotationValue; // 방향키 입력 시 받을 방향 변수
     public float downForce; // 내려찍는 힘
     public float attackForce; // 근접 공격 시 addforce에 적용할 값
+    public float flyTime;
+
+    public bool formInvincible; // 변신 무적
+
     private void Awake()
     {
         if (instance == null)
