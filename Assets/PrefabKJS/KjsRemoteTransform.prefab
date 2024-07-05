@@ -828,7 +828,7 @@ GameObject:
   - component: {fileID: 2166734876067594961}
   - component: {fileID: 7086418212037067646}
   m_Layer: 0
-  m_Name: RemoteTransform
+  m_Name: KjsRemoteTransform
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
