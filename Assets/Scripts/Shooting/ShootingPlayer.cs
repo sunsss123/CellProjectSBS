@@ -23,15 +23,15 @@ public class ShootingPlayer : ShootingObject
     {
         if (vec.x == 1)
         {
-            Sprite.rotation = Quaternion.Euler(0, 0, 90);
+            Sprite.rotation = Quaternion.Euler(0, 0, -90);
             direction = ShootingDirection.right;
-            TargetVector = Vector2.left;
+            TargetVector = Vector2.right;
         }
         else if (vec.x == -1)
         {
-            Sprite.rotation = Quaternion.Euler(0, 0, -90);
+            Sprite.rotation = Quaternion.Euler(0, 0, 90);
             direction = ShootingDirection.left;
-            TargetVector= Vector2.right;
+            TargetVector= Vector2.left;
         }
         else if (vec.y == -1)
         {
@@ -41,27 +41,27 @@ public class ShootingPlayer : ShootingObject
         }
         else if (vec.x > 0 && vec.y > 0)
         {
-            Sprite.rotation = Quaternion.Euler(0, 0, 45);
+            Sprite.rotation = Quaternion.Euler(0, 0, -45);
             direction = ShootingDirection.right_up;
-            TargetVector = (Vector2.left + Vector2.up) * 0.5f;
+            TargetVector = (Vector2.right + Vector2.up) * 0.5f;
         }
         else if (vec.x > 0 && vec.y < 0)
         {
-            Sprite.rotation = Quaternion.Euler(0, 0, 135);
+            Sprite.rotation = Quaternion.Euler(0, 0, -135);
             direction = ShootingDirection.right_down;
-            TargetVector = (Vector2.left + Vector2.down) * 0.5f;
+            TargetVector = (Vector2.right + Vector2.down) * 0.5f;
         }
         else if (vec.x < 0 && vec.y > 0)
         {
-            Sprite.rotation = Quaternion.Euler(0, 0, -45);
+            Sprite.rotation = Quaternion.Euler(0, 0, 45);
             direction = ShootingDirection.Left_up;
-            TargetVector = (Vector2.right + Vector2.up) * 0.5f;
+            TargetVector = (Vector2.left + Vector2.up) * 0.5f;
         }
         else if (vec.x < 0 && vec.y < 0)
         {
-            Sprite.rotation = Quaternion.Euler(0, 0, -135);
+            Sprite.rotation = Quaternion.Euler(0, 0, 135);
             direction = ShootingDirection.Left_down;
-            TargetVector = (Vector2.right + Vector2.down) * 0.5f;
+            TargetVector = (Vector2.left + Vector2.down) * 0.5f;
         }
         else if (vec.y == 1)
         {
@@ -76,7 +76,7 @@ public class ShootingPlayer : ShootingObject
      
         float hori = Input.GetAxisRaw("Horizontal");
         float vert = Input.GetAxisRaw("Vertical");
-        movedirection = new Vector3(hori, vert, 0).normalized;
+        movedirection = new Vector3(-1*hori, vert, 0).normalized;
         rotateSprite(movedirection);
         transform.Translate(movedirection * Time.deltaTime* movespeed);
     }
@@ -88,15 +88,34 @@ public class ShootingPlayer : ShootingObject
     //    yield return new WaitForSeconds(AttackDelay);
     //    onshoot = false;
     //}
+
+
+    void snapFieldPosition()
+    {
+        if (this.transform.localPosition.x > ShootingFIeld.instance.MaxSizeX) 
+            this.transform.localPosition = new Vector3( ShootingFIeld.instance.MaxSizeX,transform.localPosition.y,transform.localPosition.z);
+        else if (this.transform.localPosition.x < ShootingFIeld.instance.MinSizeX)
+            this.transform.localPosition = new Vector3(ShootingFIeld.instance.MinSizeX, transform.localPosition.y, transform.localPosition.z);
+       if (this.transform.localPosition.y > ShootingFIeld.instance.MaxSizeY)
+            this.transform.localPosition = new Vector3(transform.localPosition.x, ShootingFIeld.instance.MaxSizeY, transform.localPosition.z);
+        else if (this.transform.localPosition.y < ShootingFIeld.instance.MinSizeY)
+            this.transform.localPosition = new Vector3(transform.localPosition.x, ShootingFIeld.instance.MinSizeY, transform.localPosition.z);
+
+     
+    }
     private void FixedUpdate()
     {
         //corutineseconds =new WaitForSeconds( AttackDelay);
-        Debug.Log((int)direction);
+        //Debug.Log((int)direction);
+
+        snapFieldPosition();
 
         //if (movedirection != Vector3.zero)
         //    TargetVector = movedirection*Vector2.left;
         //else
         ////TargetVector= Sprite.transform.forward.normalized;
+        ///
+        
         Move();
         if (Input.GetKey(KeyCode.X)&&!onshoot)
         {
@@ -104,4 +123,5 @@ public class ShootingPlayer : ShootingObject
             StartCoroutine(Attack());
         }
     }
+
 }

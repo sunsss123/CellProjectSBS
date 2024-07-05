@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -67,6 +66,9 @@ LightmapSettings:
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
     m_TextureCompression: 1
+    m_FinalGather: 0
+    m_FinalGatherFiltering: 1
+    m_FinalGatherRayCount: 256
     m_ReflectionCompression: 2
     m_MixedBakeMode: 2
     m_BakeBackend: 1
@@ -296,6 +298,8 @@ MonoBehaviour:
   atkSpeed: 0
   attackCoolTime: 0
   rotationSpeed: 0
+  canMove: 0
+  canAttack: 0
   currentAttack: 0
   jumpCount: 0
   jumpCountMax: 0
@@ -307,6 +311,10 @@ MonoBehaviour:
   invincibleCoolTime: 0
   attackDelay: 0
   rotationValue: 0
+  downForce: 0
+  attackForce: 0
+  flyTime: 0
+  formInvincible: 0
 --- !u!1 &370859110
 GameObject:
   m_ObjectHideFlags: 0
@@ -768,8 +776,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf8bb0cddd40bbe489503ac2b56b15d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  breakCount: 0
+  eStat: {fileID: 0}
+  animator: {fileID: 0}
+  enemyRb: {fileID: 0}
+  attackCollider: {fileID: 0}
+  rangeCollider: {fileID: 0}
   enemy: {fileID: 9170890536492931732, guid: 1d9e74abbdd4dce47af257afbc349757, type: 3}
+  breakBox: {fileID: 0}
+  searchCubeRange: {x: 0, y: 0, z: 0}
+  searchCubePos: {x: 0, y: 0, z: 0}
+  attackTimer: 0
+  attackInitCoolTime: 0
+  attackDelay: 0
+  onAttack: 0
+  activeAttack: 0
+  checkPlayer: 0
+  hitByPlayer: 0
+  target: {fileID: 0}
+  tracking: 0
+  testTarget: {x: 0, y: 0, z: 0}
+  rotationY: 0
+  notMinusRotation: 0
+  eulerAnglesY: 0
+  rotationSpeed: 0
+  rotPos: {x: 0, y: 0, z: 0}
 --- !u!4 &680446559 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2707117788579810087, guid: fc8a9d5433ead384da2d1fa08257cf2b,
@@ -1433,7 +1463,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1527,12 +1557,12 @@ MonoBehaviour:
   m_RequiresColorTexture: 0
   m_Version: 2
   m_TaaSettings:
-    quality: 3
-    frameInfluence: 0.1
-    jitterScale: 1
-    mipBias: 0
-    varianceClampScale: 0.9
-    contrastAdaptiveSharpening: 0
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
 --- !u!114 &1422395254
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1550,6 +1580,7 @@ MonoBehaviour:
   camPos: {x: 0, y: 0, z: 0}
   camrot: {x: 0, y: 0, z: 0}
   target: {fileID: 0}
+  PlayerXVaule: 0
   CameraTrakingTime: 0
   CameraMoveSpeed: 0
 --- !u!1 &1471587569
@@ -1596,6 +1627,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e741bdc490717c4fb7cd1b18220388e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GravityX: 0
+  GravityY: 0
+  GravityZ: 0
   jumpforce: 0
   movespeed: 0
   CameraTrackingTime: 0
@@ -1844,6 +1878,7 @@ MonoBehaviour:
   retoretype: 1
   CurrentPlayer: {fileID: 0}
   pStat: {fileID: 288180044}
+  characterFallLimit: 0
   CurrentType: 0
 --- !u!1 &1740833870
 GameObject:
@@ -2270,6 +2305,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be2861a1e273cc04eab691bbbac98118, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemy: {fileID: 0}
 --- !u!65 &795187917552169312
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2386,12 +2422,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eStat: {fileID: 0}
+  enemyRb: {fileID: 0}
   attackCollider: {fileID: 1107109496933300808}
-  searchRange: 0
-  attackRange: 0
+  rangeCollider: {fileID: 0}
+  searchCubeRange: {x: 0, y: 0, z: 0}
+  searchCubePos: {x: 0, y: 0, z: 0}
   attackTimer: 0
   attackInitCoolTime: 0
-  enemyRb: {fileID: 0}
+  attackDelay: 0
+  onAttack: 0
+  activeAttack: 0
+  checkPlayer: 0
+  hitByPlayer: 0
+  target: {fileID: 0}
+  testTarget: {x: 0, y: 0, z: 0}
+  rotationY: 0
+  notMinusRotation: 0
+  eulerAnglesY: 0
+  rotationSpeed: 0
+  checkTv: 0
+  activeTv: 0
+  rayRange: 0
+  rayHeight: 0
+  rushForce: 0
+  onStun: 0
+  regular: {fileID: 0}
+  stun: {fileID: 0}
+  testMesh: {fileID: 0}
 --- !u!23 &5021729145765930893
 MeshRenderer:
   m_ObjectHideFlags: 0

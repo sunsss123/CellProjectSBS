@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -67,6 +66,9 @@ LightmapSettings:
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
     m_TextureCompression: 1
+    m_FinalGather: 0
+    m_FinalGatherFiltering: 1
+    m_FinalGatherRayCount: 256
     m_ReflectionCompression: 2
     m_MixedBakeMode: 2
     m_BakeBackend: 1
@@ -712,12 +714,12 @@ MonoBehaviour:
   m_RequiresColorTexture: 0
   m_Version: 2
   m_TaaSettings:
-    quality: 3
-    frameInfluence: 0.1
-    jitterScale: 1
-    mipBias: 0
-    varianceClampScale: 0.9
-    contrastAdaptiveSharpening: 0
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
 --- !u!20 &530406324
 Camera:
   m_ObjectHideFlags: 0
@@ -728,7 +730,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1211,6 +1213,8 @@ MonoBehaviour:
   atkSpeed: 0
   attackCoolTime: 0
   rotationSpeed: 0
+  canMove: 0
+  canAttack: 0
   currentAttack: 0
   jumpCount: 0
   jumpCountMax: 0
@@ -1222,6 +1226,10 @@ MonoBehaviour:
   invincibleCoolTime: 0
   attackDelay: 0
   rotationValue: 0
+  downForce: 0
+  attackForce: 0
+  flyTime: 0
+  formInvincible: 0
 --- !u!4 &650167059
 Transform:
   m_ObjectHideFlags: 0
@@ -1268,6 +1276,7 @@ MonoBehaviour:
   retoretype: 1
   CurrentPlayer: {fileID: 0}
   pStat: {fileID: 0}
+  characterFallLimit: 0
   CurrentType: 0
 --- !u!114 &650167062
 MonoBehaviour:
@@ -1281,6 +1290,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e741bdc490717c4fb7cd1b18220388e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GravityX: 0
+  GravityY: 0
+  GravityZ: 0
   jumpforce: 6
   movespeed: 5
   CameraTrackingTime: 2
@@ -2686,7 +2698,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34cde9e09ef7a864bb9aa606f5ed0c1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rType: 0
   onActive: 0
+  tvMaterials: []
   ActiveMaterial: {fileID: 2100000, guid: b03d970f65924a9408a3a432141cdb5f, type: 2}
   DeactiveMaterial: {fileID: 2100000, guid: 09b9c3bf0166b844b9dd4be8608ffc6a, type: 2}
   FrontOBj: {fileID: 1772796512}
@@ -4501,7 +4515,7 @@ GameObject:
   m_IsActive: 1
 --- !u!95 &2004389714352745176
 Animator:
-  serializedVersion: 7
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -4515,7 +4529,6 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -5499,7 +5512,7 @@ Rigidbody:
   m_CollisionDetection: 0
 --- !u!95 &5405453330780575584
 Animator:
-  serializedVersion: 7
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -5513,7 +5526,6 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -5556,17 +5568,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerRb: {fileID: 0}
   capsuleCollider: {fileID: 0}
+  direction: 1
   meleeCollider: {fileID: 0}
   flyCollider: {fileID: 0}
-  animator: {fileID: 0}
+  downAttackCollider: {fileID: 0}
+  firePoint: {fileID: 0}
+  ModelAnimator: {fileID: 0}
+  Humonoidanimator: {fileID: 0}
+  ChrRenderer: {fileID: 0}
+  chrmat: {fileID: 0}
+  color: {r: 0, g: 0, b: 0, a: 0}
   moveValue: 0
   hori: 0
   vert: 0
+  jumpholdLevel: 0.85
   isJump: 0
   jumpAnim: 0
   isRun: 0
   isIdle: 0
   isAttack: 0
+  animationSpeed: 0
+  waitTime: 0
+  formChange: 0
+  changeEffect: {fileID: 0}
   onGround: 0
   downAttack: 0
   jumpLimit: 0
@@ -5577,12 +5601,29 @@ MonoBehaviour:
   onDash: 0
   isMove: 0
   canAttack: 0
-  SizeX: 0
-  SizeY: 0
+  velocityMove: {x: 0, y: 0, z: 0}
+  rigidbodyPos: {x: 0, y: 0, z: 0}
+  sizeX: 0
+  sizeY: 0
+  flyTime: 0
+  RunEffect: {fileID: 0}
+  HittedEffect: {fileID: 0}
+  AttackEffect: {fileID: 0}
+  LandingEffect: {fileID: 0}
+  JumpEffect: {fileID: 0}
+  DownAttackForce: 0
+  CullingPlatform: 0
   handleMaxTime: 0
   handlediameterrangemax: 0
   handlediameterrangemin: 0
   handlerange: {fileID: 0}
+  electricCharge: {fileID: 0}
+  holdSpeed: 0
+  remoteObj: []
+  timeScale: 0
+  chargeSpeed: 0
+  Charging: 0
+  laserPrefab: {fileID: 0}
 --- !u!1 &5441911734851482424
 GameObject:
   m_ObjectHideFlags: 0

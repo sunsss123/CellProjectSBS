@@ -67,7 +67,8 @@ public class Player : Character
   
     public Vector3 velocityMove; // 벨로시티 이동 테스트
     public Vector3 rigidbodyPos; // 리지드바디 포지션 확인용
-
+    public float sizeX;
+    public float sizeY;
 
     [Header("내려찍기 체공 시간")]
     public float flyTime;
@@ -79,8 +80,8 @@ public class Player : Character
             StartCoroutine(FormInvincible());
         }
 
-        chrmat = ChrRenderer.material;
-        color = Color.red;
+        //chrmat = ChrRenderer.material;
+        //color = Color.red;
 
         
         canAttack = true;
@@ -153,6 +154,7 @@ public class Player : Character
 
     public void HittedTest()
     {
+
         if (Humonoidanimator != null)
         {
             Humonoidanimator.SetTrigger("Damaged");
@@ -166,7 +168,7 @@ public class Player : Character
     private void FixedUpdate()
     {
 
-
+     
        /* chrmat.SetColor("_Emissive_Color", color);*///emission 건들기
         if(Input.GetKeyDown(KeyCode.Tab)) { HittedTest(); }
 
@@ -416,6 +418,7 @@ public class Player : Character
             //플랫폼에 닿았을 때 점프 가능(바닥,천장, 벽에 닿아도 점프 되지만 신경쓰지말기)
             isJump = true;
 
+
             if (Humonoidanimator != null)
             {
                 Humonoidanimator.SetTrigger("jump");
@@ -618,7 +621,7 @@ public class Player : Character
 
     #region 양방향 플랫폼
     public bool CullingPlatform;
-    public float PlatformDisableTime;
+    float PlatformDisableTime=0.3f;
     float platformDisableTimer;
     public void InteractivePlatformrayCheck2()
     {
@@ -628,9 +631,9 @@ public class Player : Character
         //{
         if (!CullingPlatform && playerRb.velocity.y > 0)
         {
-            Debug.DrawRay(transform.position + Vector3.up * 0.3f, Vector3.up * 0.1f, Color.green);
+            Debug.DrawRay(transform.position + Vector3.up * 0.3f, Vector3.up * sizeY * 0.1f, Color.green);
 
-            if (Physics.Raycast(this.transform.position + Vector3.up * 0.3f, Vector3.up, out hit, 0.1f))
+            if (Physics.Raycast(this.transform.position + Vector3.up * 0.3f, Vector3.up, out hit, sizeY * 0.1f))
             {
 
                 if (hit.collider.CompareTag("InteractivePlatform"))
@@ -655,10 +658,11 @@ public class Player : Character
         RaycastHit hit;
         //if ()
         //{
+        Debug.DrawRay(transform.position + Vector3.up * 0.3f, Vector3.up *sizeY* 0.1f, Color.yellow);
         if (CullingPlatform && playerRb.velocity.y <= 0)
         {
-            Debug.DrawRay(transform.position + Vector3.up * 0.3f, Vector3.up * 0.1f, Color.yellow);
-            if (Physics.Raycast(this.transform.position + Vector3.up * 0.3f, Vector3.up, out hit, 0.1f))
+           
+            if (Physics.Raycast(this.transform.position + Vector3.up * 0.3f, Vector3.up, out hit, sizeY*0.1f))
             {
 
                 if (hit.collider.CompareTag("InteractivePlatform"))
