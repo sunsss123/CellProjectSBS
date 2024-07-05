@@ -35,10 +35,12 @@ public class RemoteTransform : Player
     public Vector3 searchCubePos; // Cube 위치 조정
     public bool onChain; // 스킬 사용 시 true변환
 
+    
+
     private void Awake()
     {
         //handlerange.
-        handlerange = transform.Find("Sphere").GetComponent<SphereCollider>();        
+        handlerange = transform.Find("SKillChargeRadius").GetComponent<SphereCollider>();        
     }
 
     /*private void Update()

@@ -2122,6 +2122,80 @@ Transform:
   - {fileID: 1937907100}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &559059580
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1888291535}
+    m_Modifications:
+    - target: {fileID: 1837209401506650897, guid: 27d43a75952ae564db023b0474c2bb5b,
+        type: 3}
+      propertyPath: m_Name
+      value: TransformPlace_Remote
+      objectReference: {fileID: 0}
+    - target: {fileID: 7774432933691627993, guid: 27d43a75952ae564db023b0474c2bb5b,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7774432933691627993, guid: 27d43a75952ae564db023b0474c2bb5b,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.87
+      objectReference: {fileID: 0}
+    - target: {fileID: 7774432933691627993, guid: 27d43a75952ae564db023b0474c2bb5b,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7774432933691627993, guid: 27d43a75952ae564db023b0474c2bb5b,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7774432933691627993, guid: 27d43a75952ae564db023b0474c2bb5b,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7774432933691627993, guid: 27d43a75952ae564db023b0474c2bb5b,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7774432933691627993, guid: 27d43a75952ae564db023b0474c2bb5b,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7774432933691627993, guid: 27d43a75952ae564db023b0474c2bb5b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7774432933691627993, guid: 27d43a75952ae564db023b0474c2bb5b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7774432933691627993, guid: 27d43a75952ae564db023b0474c2bb5b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 27d43a75952ae564db023b0474c2bb5b, type: 3}
+--- !u!4 &559059581 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7774432933691627993, guid: 27d43a75952ae564db023b0474c2bb5b,
+    type: 3}
+  m_PrefabInstance: {fileID: 559059580}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &560366011
 GameObject:
   m_ObjectHideFlags: 0
@@ -2514,6 +2588,8 @@ MonoBehaviour:
   rotationValue: 0
   downForce: 0
   attackForce: 0
+  flyTime: 0
+  formInvincible: 0
 --- !u!4 &650167059
 Transform:
   m_ObjectHideFlags: 0
@@ -2542,7 +2618,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerformlist:
-  - {fileID: 9062072390100992529, guid: 9f306f58622658d42925f46ab95cb53e, type: 3}
+  - {fileID: 9062072390100992529, guid: adab39cdc59ea234aa9ec9dbf410dc93, type: 3}
+  - {fileID: 2166734876067594961, guid: ea32b7d32a0187347a6ad5c144d9b1b0, type: 3}
 --- !u!114 &650167061
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6543,6 +6620,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6891322059165301218}
+  - {fileID: 559059581}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1892541777 stripped
@@ -9660,11 +9738,16 @@ MonoBehaviour:
   moveValue: 0
   hori: 0
   vert: 0
+  jumpholdLevel: 0.85
   isJump: 0
   jumpAnim: 0
   isRun: 0
   isIdle: 0
   isAttack: 0
+  animationSpeed: 0
+  waitTime: 0
+  formChange: 0
+  changeEffect: {fileID: 0}
   onGround: 0
   downAttack: 0
   jumpLimit: 0
@@ -9677,14 +9760,16 @@ MonoBehaviour:
   canAttack: 0
   velocityMove: {x: 0, y: 0, z: 0}
   rigidbodyPos: {x: 0, y: 0, z: 0}
+  sizeX: 0
+  sizeY: 0
   flyTime: 0
   RunEffect: {fileID: 0}
   HittedEffect: {fileID: 0}
   AttackEffect: {fileID: 0}
   LandingEffect: {fileID: 0}
+  JumpEffect: {fileID: 0}
   DownAttackForce: 20
   CullingPlatform: 0
-  PlatformDisableTime: 0
   handleMaxTime: 0
   handlediameterrangemax: 0
   handlediameterrangemin: 0

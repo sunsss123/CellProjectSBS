@@ -1416,6 +1416,8 @@ MonoBehaviour:
   canAttack: 0
   velocityMove: {x: 0, y: 0, z: 0}
   rigidbodyPos: {x: 0, y: 0, z: 0}
+  sizeX: 1
+  sizeY: 1
   flyTime: 0.5
   RunEffect: {fileID: 7756572666751904677}
   HittedEffect: {fileID: 3359610123080102011}
