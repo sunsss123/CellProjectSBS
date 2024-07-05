@@ -9,6 +9,7 @@ public class ShootingObject : MonoBehaviour
     public float AttackDelay;
     public GameObject Bullet;
     public float bulletspeed;
+    public float bulletlifetime;
     protected Vector2 TargetVector;
     public bool Player;
    protected WaitForSeconds corutineseconds;
@@ -23,12 +24,5 @@ public class ShootingObject : MonoBehaviour
         if (Hp <= 0)
             Destroy(gameObject);
     }
-    public IEnumerator Attack()
-    {
-      var bullet=  Instantiate(Bullet, this.transform.position, Quaternion.identity);
-        bullet.GetComponent<ShootingBullet>().Setbullet(bulletspeed, TargetVector, Player);
-        onshoot = true;
-        yield return new WaitForSeconds(AttackDelay);
-        onshoot = false;
-    }
+   
 }

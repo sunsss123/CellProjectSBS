@@ -5,7 +5,7 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class PlayerFormList : MonoBehaviour
 {
-    public List<Player> playerformlist = new List<Player>();
+    public List<GameObject> playerformlist = new List<GameObject>();
     public void CheckList()
     {
         //if (playerformlist.Count > 0)
@@ -20,4 +20,8 @@ public class PlayerFormList : MonoBehaviour
         CheckList();
     }
    
+}
+public interface FormInterface
+{
+
 }

@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -257,9 +258,9 @@ public class Player : Character
         rotate(hori);
 
 
-        translateFix = new(0, 0, Mathf.Abs(hori));
+        //translateFix = new(0, 0, Mathf.Abs(hori));
 
-        playerRb.velocity = new Vector3(playerRb.velocity.x, playerRb.velocity.y, hori * PlayerStat.instance.moveSpeed);        
+        playerRb.velocity = new Vector3(hori * PlayerStat.instance.moveSpeed, playerRb.velocity.y,playerRb.velocity.z);        
 
         if (!isJump)
         {
@@ -520,13 +521,15 @@ public class Player : Character
     #endregion
 
     #region º¯½Å
-    public void FormChange(TransformType type)
+    public void FormChange(TransformType type,Action event_=null)
     {
-        StartCoroutine(EndFormChange(type));
+        
+        StartCoroutine(EndFormChange(type,event_));
     }
 
-    IEnumerator EndFormChange(TransformType type)
+    IEnumerator EndFormChange(TransformType type, Action event_ )
     {
+
         PlayerStat.instance.formInvincible = true;
         formChange = true;
         onInvincible = true;
@@ -538,7 +541,7 @@ public class Player : Character
 
         PlayerHandler.instance.CurrentPower = PlayerHandler.instance.MaxPower;
         Instantiate(changeEffect, transform.position, Quaternion.identity);
-        PlayerHandler.instance.transformed(type);
+        PlayerHandler.instance.transformed(type,event_);
         formChange = false;
         Time.timeScale = 1f;
     }
