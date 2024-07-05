@@ -87,6 +87,7 @@ public class Player : Character
         onDash = true;
     }
 
+    #region 변신 후 무적
     IEnumerator FormInvincible()
     {
         onInvincible = true;
@@ -96,6 +97,7 @@ public class Player : Character
         PlayerStat.instance.formInvincible = false;
         onInvincible = false;
     }
+    #endregion
 
     #region 레이 체크
     void jumpRaycastCheck()
@@ -151,7 +153,10 @@ public class Player : Character
 
     public void HittedTest()
     {
-        Humonoidanimator.SetTrigger("Damaged");
+        if (Humonoidanimator != null)
+        {
+            Humonoidanimator.SetTrigger("Damaged");
+        }
 
         if(HittedEffect!=null)
         HittedEffect.gameObject.SetActive(true);
@@ -300,7 +305,8 @@ public class Player : Character
                 attackGround = true;
             }
             Debug.Log("공격키");
-            Humonoidanimator.Play("Attack");
+            if (Humonoidanimator != null)
+                Humonoidanimator.Play("Attack");
             StartCoroutine(TestMeleeAttack());
         }
     }
@@ -504,7 +510,8 @@ public class Player : Character
         yield return new WaitForSeconds(0.5f);
 
         isAttack = false;
-        Humonoidanimator.SetTrigger("Attack");
+        if (Humonoidanimator != null)
+            Humonoidanimator.SetTrigger("Attack");
         meleeCollider.GetComponent<BoxCollider>().enabled = false;
     }
     #endregion
@@ -518,6 +525,7 @@ public class Player : Character
     IEnumerator EndFormChange(TransformType type)
     {
         PlayerStat.instance.formInvincible = true;
+        formChange = true;
         onInvincible = true;
         Time.timeScale = 0.2f;
         ModelAnimator.SetTrigger("FormChange");
@@ -528,7 +536,7 @@ public class Player : Character
         PlayerHandler.instance.CurrentPower = PlayerHandler.instance.MaxPower;
         Instantiate(changeEffect, transform.position, Quaternion.identity);
         PlayerHandler.instance.transformed(type);
-        
+        formChange = false;
         Time.timeScale = 1f;
     }
     #endregion

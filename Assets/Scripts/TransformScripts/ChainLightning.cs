@@ -31,7 +31,7 @@ public class ChainLightning : MonoBehaviour
 
     private void Awake()
     {
-        damage = 1;
+        damage = PlayerStat.instance.atk*2f;
         searchGroup = new List<SearchObject>();
         lineRenderer = GetComponent<LineRenderer>();
     }
@@ -89,7 +89,7 @@ public class ChainLightning : MonoBehaviour
         }
         else
         {
-            Destroy(gameObject, 0.5f);
+            Destroy(gameObject, 0.2f);
         }
     }
 

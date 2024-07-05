@@ -24,6 +24,7 @@ public class RemoteTransform : Player
 
     [Header("빔 관련 변수")]
     public GameObject laserPrefab; // 빔 스킬 프리팹
+    public GameObject laserEffect; // 빔 이펙트 오브젝트
 
     [Header("체인 라이트닝 변수")]
     public List<GameObject> enemies; 
@@ -109,6 +110,7 @@ public class RemoteTransform : Player
     public override void Attack()
     {
         Instantiate(laserPrefab, firePoint.position, transform.rotation);
+
     }
 
     public override void Skill2()

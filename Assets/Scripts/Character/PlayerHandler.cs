@@ -64,6 +64,7 @@ public class PlayerHandler : MonoBehaviour
         PlayerFallOut();
 
         #region 캐릭터 조작
+        if(!CurrentPlayer.formChange)
         charactermove();
         #endregion
     }
