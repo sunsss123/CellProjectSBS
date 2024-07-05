@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UIElements;
 
 public enum direction { Left = -1, none = 0, Right = 1 }
@@ -72,13 +73,28 @@ public class Player : Character
     public float flyTime;
     // Start is called before the first frame update
     void Start()
-    {
+    {        
+        if (PlayerStat.instance.formInvincible)
+        {
+            StartCoroutine(FormInvincible());
+        }
+
         chrmat = ChrRenderer.material;
         color = Color.red;
 
         
         canAttack = true;
         onDash = true;
+    }
+
+    IEnumerator FormInvincible()
+    {
+        onInvincible = true;
+
+        yield return new WaitForSeconds(PlayerStat.instance.invincibleCoolTime);
+
+        PlayerStat.instance.formInvincible = false;
+        onInvincible = false;
     }
 
     #region 레이 체크
@@ -394,7 +410,10 @@ public class Player : Character
             //플랫폼에 닿았을 때 점프 가능(바닥,천장, 벽에 닿아도 점프 되지만 신경쓰지말기)
             isJump = true;
 
-            Humonoidanimator.SetTrigger("jump");
+            if (Humonoidanimator != null)
+            {
+                Humonoidanimator.SetTrigger("jump");
+            }
 
             if(JumpEffect!=null)
             JumpEffect.SetActive(true);
@@ -490,24 +509,26 @@ public class Player : Character
     }
     #endregion
 
-    #region
+    #region 변신
     public void FormChange(TransformType type)
-    {        
+    {
         StartCoroutine(EndFormChange(type));
     }
 
     IEnumerator EndFormChange(TransformType type)
     {
+        PlayerStat.instance.formInvincible = true;
+        onInvincible = true;
         Time.timeScale = 0.2f;
-        Humonoidanimator.SetTrigger("FormChange");
-        Humonoidanimator.SetFloat("Speed", animationSpeed);
+        ModelAnimator.SetTrigger("FormChange");
+        ModelAnimator.SetFloat("Speed", animationSpeed);
 
         yield return new WaitForSeconds(waitTime);
 
         PlayerHandler.instance.CurrentPower = PlayerHandler.instance.MaxPower;
         Instantiate(changeEffect, transform.position, Quaternion.identity);
         PlayerHandler.instance.transformed(type);
-
+        
         Time.timeScale = 1f;
     }
     #endregion
