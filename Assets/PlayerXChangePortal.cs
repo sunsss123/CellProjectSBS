@@ -20,5 +20,7 @@ public class PlayerXChangePortal : InteractiveObject
     {
         PlayerHandler.instance.CurrentPlayer.transform.position = Destination.PlayerTeleportPosition.position;
         PlayerCam.instance.PlayerZVaule += ZchangeVaule;
+        if(PlayerCam.instance.PlayerZVaule!=0)
+             PlayerCam.instance.ZPin=true;
     }
 }
