@@ -106,7 +106,7 @@ public class Player : Character
     {
 
 
-        Debug.DrawRay(transform.position + Vector3.down * (sizeY - 1) * 0.01f, Vector3.down * 0.05f , Color.blue );
+        //Debug.DrawRay(transform.position + Vector3.down * (sizeY - 1) * 0.01f, Vector3.down * 0.05f , Color.blue );
         if (!onGround)
         {
             RaycastHit hit;

@@ -20,8 +20,13 @@ public class PlayerInteract : MonoBehaviour
             {
                 if (!hit.collider.TryGetComponent<InteractiveObject>(out CurrentInteract))
                 {
-
+                   
                     Debug.Log("Fatal Error? Can't Find Script instance");
+                }
+                else
+                {
+                    if (CurrentInteract.InteractOption != InteractOption.ray)
+                        CurrentInteract = null;
                 }
             }
 
@@ -67,8 +72,13 @@ public class PlayerInteract : MonoBehaviour
         {
             if (!other.TryGetComponent<InteractiveObject>(out CurrentInteract))
             {
-
+                
                 Debug.Log("Fatal Error? Can't Find Script instance");
+            }
+            else
+            {
+                if (CurrentInteract.InteractOption != InteractOption.collider)
+                    CurrentInteract = null;
             }
         }
     }
