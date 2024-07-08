@@ -176,7 +176,6 @@ public class PlayerHandler : MonoBehaviour
         CurrentPlayer.Skill1();
         CurrentPlayer.Skill2();
 
-       
     }
     #endregion
 

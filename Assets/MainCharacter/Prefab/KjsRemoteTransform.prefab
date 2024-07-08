@@ -219,7 +219,7 @@ Transform:
   m_GameObject: {fileID: 1451015873961866783}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.032, z: 0}
   m_LocalScale: {x: 0.15, y: 0.050000004, z: 0.20000002}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -904,6 +904,7 @@ MonoBehaviour:
   rigidbodyPos: {x: 0, y: 0, z: 0}
   sizeX: 1
   sizeY: 2
+  raySize: 0
   flyTime: 0
   RunEffect: {fileID: 8908631264578808313}
   HittedEffect: {fileID: 7911526485466602651}
