@@ -8,7 +8,7 @@ public class PlayerInteract : MonoBehaviour
 {
     Player p;
     InteractiveObject CurrentInteract;
-    public float InteractDelay;
+
    float InteractTimer;
     void InteractrayCast()
     {
@@ -52,7 +52,7 @@ public class PlayerInteract : MonoBehaviour
                 CurrentInteract.Active(p.direction);
                 CurrentInteract = null;
                 Debug.Log("しししし");
-                InteractTimer = InteractDelay;
+                InteractTimer = PlayerStat.instance. InteractDelay;
             }
         }
     }
