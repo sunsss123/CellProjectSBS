@@ -1279,8 +1279,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerformlist:
-  - {fileID: 2166734876067594961, guid: ea32b7d32a0187347a6ad5c144d9b1b0, type: 3}
-  - {fileID: 9062072390100992529, guid: adab39cdc59ea234aa9ec9dbf410dc93, type: 3}
+  - {fileID: 7664586703414084814, guid: adab39cdc59ea234aa9ec9dbf410dc93, type: 3}
+  - {fileID: 5892187899129608376, guid: ea32b7d32a0187347a6ad5c144d9b1b0, type: 3}
 --- !u!114 &650167061
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5051,7 +5051,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1907341897
 BoxCollider:
   m_ObjectHideFlags: 0

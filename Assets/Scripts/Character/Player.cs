@@ -136,6 +136,7 @@ public class Player : Character
 
     void wallRayCastCheck()
     {
+        //wallcheck = false;
         RaycastHit hit;
         //Debug.DrawRay(this.transform.position + Vector3.up * 0.1f + Vector3.forward * 0.1f * (int)direction, Vector3.forward * (int)direction, Color.red, 0.1f);
         if (Physics.Raycast(this.transform.position + Vector3.up * 0.1f + Vector3.forward * 0.1f * (int)direction, Vector3.forward*(int)direction, out hit, 0.1f))
@@ -146,13 +147,11 @@ public class Player : Character
                 Debug.Log("Blue Ray:" + hit.collider.name);
                 Debug.Log("Wall Check:" + wallcheck);
             }
-
-
         }
-        else
+        /*else
         {
             wallcheck = false;
-        }
+        }*/
     }
 
     #endregion
@@ -267,9 +266,9 @@ public class Player : Character
 
         if (!wallcheck)
         {
+            Debug.Log("이동 가능");
             playerRb.velocity = new Vector3(playerRb.velocity.x, playerRb.velocity.y, hori * PlayerStat.instance.moveSpeed);
-        }        
-
+        }
 
         //playerRb.velocity = new Vector3(hori * PlayerStat.instance.moveSpeed, playerRb.velocity.y,playerRb.velocity.z);        
 

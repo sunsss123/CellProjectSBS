@@ -2519,6 +2519,74 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e50c6d81bf97f0a40ad1cc2e21d01b49, type: 3}
+--- !u!1001 &627407745
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3665218055723102358, guid: cba0a5c471329d84a91125101275be5d,
+        type: 3}
+      propertyPath: m_Name
+      value: EnemyBoxTest
+      objectReference: {fileID: 0}
+    - target: {fileID: 6695644968073820805, guid: cba0a5c471329d84a91125101275be5d,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6695644968073820805, guid: cba0a5c471329d84a91125101275be5d,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.49999994
+      objectReference: {fileID: 0}
+    - target: {fileID: 6695644968073820805, guid: cba0a5c471329d84a91125101275be5d,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.3267314
+      objectReference: {fileID: 0}
+    - target: {fileID: 6695644968073820805, guid: cba0a5c471329d84a91125101275be5d,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6695644968073820805, guid: cba0a5c471329d84a91125101275be5d,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6695644968073820805, guid: cba0a5c471329d84a91125101275be5d,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6695644968073820805, guid: cba0a5c471329d84a91125101275be5d,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6695644968073820805, guid: cba0a5c471329d84a91125101275be5d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6695644968073820805, guid: cba0a5c471329d84a91125101275be5d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6695644968073820805, guid: cba0a5c471329d84a91125101275be5d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: cba0a5c471329d84a91125101275be5d, type: 3}
 --- !u!4 &649547967 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4070738964693305473, guid: e50c6d81bf97f0a40ad1cc2e21d01b49,
@@ -5807,6 +5875,7 @@ MonoBehaviour:
   ActiveMaterial: {fileID: 2100000, guid: b03d970f65924a9408a3a432141cdb5f, type: 2}
   DeactiveMaterial: {fileID: 2100000, guid: 09b9c3bf0166b844b9dd4be8608ffc6a, type: 2}
   FrontOBj: {fileID: 1772796512}
+  tvLight: {fileID: 0}
 --- !u!65 &1711092851
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8797,64 +8866,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bceb9589ee35100458f98dc52110b3fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerRb: {fileID: 0}
-  capsuleCollider: {fileID: 0}
-  direction: 1
-  meleeCollider: {fileID: 0}
-  flyCollider: {fileID: 0}
-  downAttackCollider: {fileID: 0}
-  firePoint: {fileID: 0}
-  ModelAnimator: {fileID: 0}
-  Humonoidanimator: {fileID: 0}
-  ChrRenderer: {fileID: 0}
-  chrmat: {fileID: 0}
-  color: {r: 0, g: 0, b: 0, a: 0}
-  moveValue: 0
-  hori: 0
-  vert: 0
-  jumpholdLevel: 0.85
-  isJump: 0
-  jumpAnim: 0
-  isRun: 0
-  isIdle: 0
-  isAttack: 0
-  animationSpeed: 0
-  waitTime: 0
-  formChange: 0
-  changeEffect: {fileID: 0}
-  onGround: 0
-  downAttack: 0
-  jumpLimit: 0
-  attackSky: 0
-  attackGround: 0
-  velocityValue: {x: 0, y: 0, z: 0}
-  onInvincible: 0
-  onDash: 0
-  isMove: 0
-  canAttack: 0
-  velocityMove: {x: 0, y: 0, z: 0}
-  rigidbodyPos: {x: 0, y: 0, z: 0}
-  sizeX: 0
-  sizeY: 0
-  flyTime: 0
-  RunEffect: {fileID: 0}
-  HittedEffect: {fileID: 0}
-  AttackEffect: {fileID: 0}
-  LandingEffect: {fileID: 0}
-  JumpEffect: {fileID: 0}
-  DownAttackForce: 20
-  CullingPlatform: 0
-  handleMaxTime: 0
-  handlediameterrangemax: 0
-  handlediameterrangemin: 0
-  handlerange: {fileID: 0}
-  electricCharge: {fileID: 0}
-  holdSpeed: 0
-  remoteObj: []
-  timeScale: 0
-  chargeSpeed: 0
-  Charging: 0
-  laserPrefab: {fileID: 0}
 --- !u!1 &5441911734851482424
 GameObject:
   m_ObjectHideFlags: 0
@@ -9156,6 +9167,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: SIngleton
       objectReference: {fileID: 0}
+    - target: {fileID: 8498270468886955785, guid: a07cd33f9c6953b41830e2ff55865b25,
+        type: 3}
+      propertyPath: playerformlist.Array.data[0]
+      value: 
+      objectReference: {fileID: 7664586703414084814, guid: adab39cdc59ea234aa9ec9dbf410dc93,
+        type: 3}
+    - target: {fileID: 8498270468886955785, guid: a07cd33f9c6953b41830e2ff55865b25,
+        type: 3}
+      propertyPath: playerformlist.Array.data[1]
+      value: 
+      objectReference: {fileID: 5892187899129608376, guid: ea32b7d32a0187347a6ad5c144d9b1b0,
+        type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9572,3 +9595,4 @@ SceneRoots:
   - {fileID: 517237314}
   - {fileID: 1792935596}
   - {fileID: 559059580}
+  - {fileID: 627407745}
