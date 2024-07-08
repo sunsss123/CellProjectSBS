@@ -21,8 +21,7 @@ public class TransformText : MonoBehaviour
         }*/
         switch (type)
         {
-            case TransformType.transform0:
-                return "HouseholdIron";
+       
             case TransformType.transform1:
                 return "NanoDrone";
             default:

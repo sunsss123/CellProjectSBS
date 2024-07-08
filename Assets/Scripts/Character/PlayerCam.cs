@@ -45,8 +45,10 @@ public class PlayerCam : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
+        if(PlayerHandler.instance.CurrentPlayer!=null)
         target = PlayerHandler.instance.CurrentPlayer.transform;
-
+        if (target == null)
+            return;
         CameraTrakingTime = ProjectSetting.instance.CameraTrackingTime;
         Cameramove();
         cameraVector = ((target.position + camPos) - transform.position).magnitude;

@@ -10,6 +10,7 @@ TagManager:
   - PlayerAttack
   - InteractivePlatform
   - InteractiveObject
+  - ShootingBullet
   layers:
   - Default
   - TransparentFX

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.Rendering.Universal.ShaderGUI;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -8,11 +9,22 @@ public enum ShootingDirection {right=1,none=0,UP=3,Down=-3,left=-1,right_up=4,ri
 public class ShootingPlayer : ShootingObject
 {
     public static ShootingPlayer instance;
-    public TextMeshProUGUI hittedUI;
+    public TextMeshProUGUI LifeUI;
     public Transform ShootPos;
     ShootingDirection direction;
     public Transform Sprite;
-  Vector3 movedirection;
+    public float untouchableTime;
+    float untouchableTimer;
+    public override void hitted()
+    {
+
+        if (untouchableTimer <= 0)
+        {
+            base.hitted();
+            untouchableTimer = untouchableTime;
+        }
+    }
+    Vector3 movedirection;
     private void Awake()
     {
         instance = this;
@@ -21,54 +33,56 @@ public class ShootingPlayer : ShootingObject
   
  public void rotateSprite(Vector3 vec)
     {
+        vec = vec.normalized;
         if (vec.x == 1)
         {
-            Sprite.rotation = Quaternion.Euler(0, 0, 90);
+            Sprite.localRotation = Quaternion.Euler(0, 0, -90);
             direction = ShootingDirection.right;
-            TargetVector = Vector2.left;
+            TargetVector = Vector2.right;
         }
         else if (vec.x == -1)
         {
-            Sprite.rotation = Quaternion.Euler(0, 0, -90);
+            Sprite.localRotation = Quaternion.Euler(0, 0, 90);
             direction = ShootingDirection.left;
-            TargetVector= Vector2.right;
+            TargetVector= Vector2.left;
         }
         else if (vec.y == -1)
         {
-            Sprite.rotation = Quaternion.Euler(0, 0, 180);
+            Sprite.localRotation = Quaternion.Euler(0, 0, 180);
             direction = ShootingDirection.Down;
             TargetVector=Vector2.down;
         }
         else if (vec.x > 0 && vec.y > 0)
         {
-            Sprite.rotation = Quaternion.Euler(0, 0, 45);
+            Sprite.localRotation = Quaternion.Euler(0, 0, -45);
             direction = ShootingDirection.right_up;
-            TargetVector = (Vector2.left + Vector2.up) * 0.5f;
+            TargetVector = (Vector2.right + Vector2.up) * 0.5f;
         }
         else if (vec.x > 0 && vec.y < 0)
         {
-            Sprite.rotation = Quaternion.Euler(0, 0, 135);
+            Sprite.localRotation = Quaternion.Euler(0, 0, -135);
             direction = ShootingDirection.right_down;
-            TargetVector = (Vector2.left + Vector2.down) * 0.5f;
+            TargetVector = (Vector2.right + Vector2.down) * 0.5f;
         }
         else if (vec.x < 0 && vec.y > 0)
         {
-            Sprite.rotation = Quaternion.Euler(0, 0, -45);
+            Sprite.localRotation = Quaternion.Euler(0, 0, 45);
             direction = ShootingDirection.Left_up;
-            TargetVector = (Vector2.right + Vector2.up) * 0.5f;
+            TargetVector = (Vector2.left + Vector2.up) * 0.5f;
         }
         else if (vec.x < 0 && vec.y < 0)
         {
-            Sprite.rotation = Quaternion.Euler(0, 0, -135);
+            Sprite.localRotation = Quaternion.Euler(0, 0, 135);
             direction = ShootingDirection.Left_down;
-            TargetVector = (Vector2.right + Vector2.down) * 0.5f;
+            TargetVector = (Vector2.left + Vector2.down) * 0.5f;
         }
         else if (vec.y == 1)
         {
-            Sprite.rotation = Quaternion.Euler(0, 0, 0);
+            Sprite.localRotation = Quaternion.Euler(0, 0, 0);
             direction = ShootingDirection.Down;
             TargetVector = Vector2.up;
         }
+        
     }
 
     public void Move()
@@ -76,32 +90,48 @@ public class ShootingPlayer : ShootingObject
      
         float hori = Input.GetAxisRaw("Horizontal");
         float vert = Input.GetAxisRaw("Vertical");
-        movedirection = new Vector3(hori, vert, 0).normalized;
+        movedirection = new Vector3(-1*hori, vert, 0).normalized;
         rotateSprite(movedirection);
         transform.Translate(movedirection * Time.deltaTime* movespeed);
     }
-    //public IEnumerator AttackPlayer()
-    //{
-    //    var bullet = Instantiate(Bullet, ShootPos.position, ShootPos.rotation);
-    //    bullet.GetComponent<ShootingBullet>().Setbullet(bulletspeed, TargetVector, Player);
-    //    onshoot = true;
-    //    yield return new WaitForSeconds(AttackDelay);
-    //    onshoot = false;
-    //}
+
+    public IEnumerator PlayerAttack()
+    {
+        var bullet = Instantiate(Bullet, this.transform.position, this.transform.rotation);
+        bullet.GetComponent<ShootingBullet>().Setbullet(bulletspeed, TargetVector.normalized, bulletlifetime, true);
+        onshoot = true;
+        yield return new WaitForSeconds(AttackDelay);
+        onshoot = false;
+    }
+
+    void snapFieldPosition()
+    {
+
+        if (this.transform.localPosition.x > ShootingFIeld.instance.MaxSizeX) 
+            this.transform.localPosition = new Vector3( ShootingFIeld.instance.MaxSizeX,transform.localPosition.y,transform.localPosition.z);
+        else if (this.transform.localPosition.x < ShootingFIeld.instance.MinSizeX)
+            this.transform.localPosition = new Vector3(ShootingFIeld.instance.MinSizeX, transform.localPosition.y, transform.localPosition.z);
+       if (this.transform.localPosition.y > ShootingFIeld.instance.MaxSizeY)
+            this.transform.localPosition = new Vector3(transform.localPosition.x, ShootingFIeld.instance.MaxSizeY, transform.localPosition.z);
+        else if (this.transform.localPosition.y < ShootingFIeld.instance.MinSizeY)
+            this.transform.localPosition = new Vector3(transform.localPosition.x, ShootingFIeld.instance.MinSizeY, transform.localPosition.z);
+
+     
+    }
     private void FixedUpdate()
     {
-        //corutineseconds =new WaitForSeconds( AttackDelay);
-        Debug.Log((int)direction);
 
-        //if (movedirection != Vector3.zero)
-        //    TargetVector = movedirection*Vector2.left;
-        //else
-        ////TargetVector= Sprite.transform.forward.normalized;
+        LifeUI.text = $"Life:{Hp}";
+        snapFieldPosition();
+
+      if(untouchableTimer>0)
+            untouchableTimer-=Time.deltaTime;
         Move();
         if (Input.GetKey(KeyCode.X)&&!onshoot)
         {
            
-            StartCoroutine(Attack());
+            StartCoroutine(PlayerAttack());
         }
     }
+
 }

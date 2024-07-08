@@ -97,7 +97,7 @@ public class Enemy : Character
         enemyRb.AddForce(-((transform.forward + transform.up)*5f), ForceMode.Impulse);
         //testMesh.materials[0] = stun;
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(eStat.invincibleTimer);
 
         onStun = false;
         eStat.onInvincible = false;
@@ -187,6 +187,7 @@ public class Enemy : Character
         {
             enemyRb.MovePosition(transform.position + transform.forward * Time.deltaTime * eStat.moveSpeed);
         }
+
     }
 
     public bool SetRotation()

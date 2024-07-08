@@ -18,7 +18,7 @@ public class RemoteLaser : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(transform.forward * rangeSpeed * Time.deltaTime);
+        transform.Translate(transform.forward * rangeSpeed * Time.deltaTime, Space.World);
     }
 
     private void OnTriggerEnter(Collider other)

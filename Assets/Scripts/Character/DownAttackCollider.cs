@@ -8,7 +8,7 @@ public class DownAttackCollider : MonoBehaviour
     public GameObject hitEffect;
     public ParticleSystem saveEffect;
 
-    private void Awake()
+    private void Start()
     {
         saveEffect = Instantiate(hitEffect).GetComponent<ParticleSystem>();
         damage = PlayerStat.instance.atk;
