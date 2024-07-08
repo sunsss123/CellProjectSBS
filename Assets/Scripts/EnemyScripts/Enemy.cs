@@ -169,7 +169,7 @@ public class Enemy : Character
                 }
             }
 
-            //Patrol();
+            Patrol();
         }
     }
 
@@ -236,7 +236,7 @@ public class Enemy : Character
             }*/
         }
 
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(testTarget), rotationSpeed * Time.deltaTime);
+        //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(testTarget), rotationSpeed * Time.deltaTime);
     }
 
     private void OnDrawGizmos()
