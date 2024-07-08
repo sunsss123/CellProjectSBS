@@ -39,6 +39,9 @@ public class BoxTestt : MonoBehaviour
 
     public Vector3 rotPos;
 
+    public float rotLevel;
+    bool complete;
+
     private void Awake()
     {
         eStat = gameObject.AddComponent<EnemyStat>();
@@ -164,15 +167,16 @@ public class BoxTestt : MonoBehaviour
     {
         bool completeRot = false;
 
-        if (transform.eulerAngles.y >= -10 && transform.eulerAngles.y <= 10)
+        if (/*transform.eulerAngles.y >= -10 && transform.eulerAngles.y <= 10*/transform.eulerAngles.y >=5+rotLevel && transform.eulerAngles.y<=10+rotLevel)
         {
             completeRot = true;
         }
-        else if (transform.eulerAngles.y >= 175 && transform.eulerAngles.y <= 190 ||
-            transform.eulerAngles.y >= 350 && transform.eulerAngles.y <= 360)
+        else if (transform.eulerAngles.y >= 175 - rotLevel && transform.eulerAngles.y <= 190 - rotLevel ||
+            transform.eulerAngles.y >= 350 - rotLevel && transform.eulerAngles.y <= 360 - rotLevel)
         {
             completeRot = true;
         }
+        Debug.Log($"체크가 되는 거냐? {complete = completeRot}\n로테이션앵글:{transform.eulerAngles.y}");
         return completeRot;
     }
     #endregion

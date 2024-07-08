@@ -60,11 +60,16 @@ public class PlayerInteract : MonoBehaviour
             InteractiveObject obj;
             if (!other.TryGetComponent<InteractiveObject>(out obj))
             {
-                if (obj == CurrentInteract)
-                    CurrentInteract = null;
+              
                 Debug.Log("Fatal Error? Can't Find Script instance");
             }
+            else
+            {
+                if (obj == CurrentInteract)
+                    CurrentInteract = null;
+            }
         }
+        
     }
     private void OnTriggerStay(Collider other)
     {

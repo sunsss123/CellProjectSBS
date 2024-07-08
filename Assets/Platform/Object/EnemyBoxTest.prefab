@@ -298,8 +298,8 @@ MonoBehaviour:
   enemy: {fileID: 5972430000464431206, guid: 04b5e7c62857ca4469474fb531d18114, type: 3}
   breakBox: {fileID: 5846610172985709236, guid: a49cee705e2dbe943a4eaa11efbc90a6,
     type: 3}
-  searchCubeRange: {x: 0.8, y: 0.54, z: 3}
-  searchCubePos: {x: 0, y: 0.57, z: 0}
+  searchCubeRange: {x: 3.61, y: 0.51, z: 0.7}
+  searchCubePos: {x: 0, y: 0.48, z: 0}
   attackTimer: 0
   attackInitCoolTime: 0
   attackDelay: 0
@@ -315,6 +315,7 @@ MonoBehaviour:
   eulerAnglesY: 0
   rotationSpeed: 3
   rotPos: {x: 0, y: 0, z: 0}
+  rotLevel: 80
 --- !u!65 &168067208238146849
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -361,7 +362,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 114
+  m_Constraints: 120
   m_CollisionDetection: 0
 --- !u!1 &4722684844102015234
 GameObject:
