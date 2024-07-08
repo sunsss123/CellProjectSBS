@@ -7,9 +7,11 @@ public class shootingShield : MonoBehaviour
 {
     public Transform Shielder;
 
-    public Transform Target;
+    public Vector3 Target;
     public float rotationspeed = 2.0f;
     public float orbitradius = 0.5f;
+
+
 
     Vector3 OrbitPos;
     void Start()
@@ -22,7 +24,7 @@ public class shootingShield : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 targetdir = Target.position - Shielder.position;
+        Vector3 targetdir = Target - Shielder.position;
         targetdir.z = 0;
 
         Vector3 neworbitpos = Vector3.RotateTowards(OrbitPos - Shielder.position,
@@ -40,4 +42,6 @@ public class shootingShield : MonoBehaviour
       //var a = Quaternion.RotateTowards(transform.rotation, targetrot, rotationspeed * Time.deltaTime );
       //  transform.rotation = Quaternion.Euler(0, 0, a.eulerAngles.z);
     }
+
+   
 }

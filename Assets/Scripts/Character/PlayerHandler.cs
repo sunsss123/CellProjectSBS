@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 
@@ -9,10 +11,11 @@ public class PlayerHandler : MonoBehaviour
     #region 플레이어 변신관련 스탯
     public float CurrentPower;
     public float MaxPower=60;
-    public TransformType retoretype=TransformType.transform0;
+    public TransformType retoretype=TransformType.Default;
     #endregion
     #region 플레이어 현재 위치,상태
     Transform Player;
+    GameObject Playerprefab;
     public Player CurrentPlayer; // 행동 작업
     public PlayerStat pStat; //스탯 분배 (스페셜어택)
 
@@ -64,27 +67,28 @@ public class PlayerHandler : MonoBehaviour
         PlayerFallOut();
 
         #region 캐릭터 조작
-        if(!CurrentPlayer.formChange)
+        if(CurrentPlayer != null && !CurrentPlayer.formChange)
         charactermove();
         #endregion
     }
     #region 변신 시스템
     #region 변수
    public TransformType CurrentType = 0;
-    Dictionary<TransformType, Player> PlayerTransformList = new Dictionary<TransformType, Player>();
+    Dictionary<TransformType, GameObject> PlayerTransformList = new Dictionary<TransformType, GameObject>();
 
-    Dictionary<TransformType, Player> CreatedTransformlist = new Dictionary<TransformType, Player>();
+    Dictionary<TransformType, GameObject> CreatedTransformlist = new Dictionary<TransformType, GameObject>();
 
     #endregion
 
-    public void transformed(TransformType type)
+    public void transformed(TransformType type,Action eventhandler=null)
 {
+       
         #region Type 변경
         if (CurrentType == type)
         return;
     CurrentType = type;
         #endregion
-        CreateModelByCurrentType();
+        CreateModelByCurrentType(eventhandler);
 }
     void userestoredtype()
     {
@@ -93,9 +97,10 @@ public class PlayerHandler : MonoBehaviour
             transformed(retoretype);
         }
     }
-    void CreateModelByCurrentType()
+    void CreateModelByCurrentType(Action eventhandler =null)
 {
-    if ((int)CurrentType < PlayerTransformList.Count)
+     
+        if ((int)CurrentType < PlayerTransformList.Count)
     {
             #region 플레이어 프리팹 교체
             Transform tf=null;
@@ -109,20 +114,35 @@ public class PlayerHandler : MonoBehaviour
             {
                 tf = Player;
             }
-            Player p;
+            GameObject p;
             if (CreatedTransformlist.TryGetValue(CurrentType, out p))
                 p.gameObject.SetActive(true);
             else
-                 Instantiate(PlayerTransformList[CurrentType].gameObject, Player)
-                    .TryGetComponent<Player>(out p);
-
+                p= Instantiate(PlayerTransformList[CurrentType].gameObject, Player)
+                    ;
+            Playerprefab = p;
             #endregion
             #region 위치 동기화
-      
-            
+
+
             p.transform.position = tf.position;
             p.transform.rotation = tf.rotation;
-            CurrentPlayer = p;
+            canthandle handle;
+            EventHandle Ehandler;
+            if (p.TryGetComponent<canthandle>(out handle))
+            {
+                CurrentPlayer = null;
+            }
+            else
+            {
+                CurrentPlayer = p.GetComponent<Player>();
+            }
+            if (p.TryGetComponent<EventHandle>(out Ehandler))
+            {
+                Debug.Log("handler 발견");
+                Ehandler.GetEvent(eventhandler);
+            }
+           
             #endregion
         }
         else
@@ -130,6 +150,7 @@ public class PlayerHandler : MonoBehaviour
 }
     #endregion
     #region 플레이어 기본 조작
+    
     void charactermove()
     {
         if (!CurrentPlayer.downAttack && PlayerStat.instance.cState == CharacterState.idle)
@@ -183,5 +204,5 @@ public class PlayerHandler : MonoBehaviour
 }
 
 
-public enum TransformType { Default, remoteform, transform0,transform1,testtransform}
+public enum TransformType { Default, remoteform,mouseform,transform1,testtransform}
 

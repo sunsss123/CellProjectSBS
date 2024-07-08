@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 3778598153351385184}
   - component: {fileID: 4966472953275273854}
   - component: {fileID: 8569057498582370789}
-  - component: {fileID: 6940578616775891597}
   - component: {fileID: 3721272256314071201}
+  - component: {fileID: 6255727862910257480}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 8782937380948948699}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 26.005, y: -1.944, z: -0.018}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -133,26 +133,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &6940578616775891597
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8782937380948948699}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b890fdb4e281634489a60d788c5c1d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movespeed: 2
-  Hp: 3
-  AttackDelay: 2
-  Bullet: {fileID: 8919642080162425035, guid: 2082708c218f8244da652055a92e55cd, type: 3}
-  bulletspeed: 5
-  Player: 0
-  attacktime: 1
-  movelooptime: 2
 --- !u!50 &3721272256314071201
 Rigidbody2D:
   serializedVersion: 4
@@ -180,3 +160,26 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
+--- !u!114 &6255727862910257480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8782937380948948699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 114c5a7440ffa5540b676c435cce2d42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movespeed: 2
+  Hp: 3
+  AttackDelay: 2
+  Bullet: {fileID: 8919642080162425035, guid: 2082708c218f8244da652055a92e55cd, type: 3}
+  bulletspeed: 2
+  bulletlifetime: 2
+  Player: 0
+  movelooptime: 0
+  snappoint: 0.6
+  enemyAttackrange: 2
+  attacktime: 1

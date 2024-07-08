@@ -8,7 +8,7 @@ public class MeleeCollider : MonoBehaviour
     public GameObject hitEffect; // 이펙트 프리팹
     public ParticleSystem saveEffect; // 파티클 저장
 
-    private void Awake()
+    private void Start()
     {
         saveEffect = Instantiate(hitEffect).GetComponent<ParticleSystem>();
         damage = PlayerStat.instance.atk;

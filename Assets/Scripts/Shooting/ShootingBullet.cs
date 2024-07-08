@@ -4,12 +4,15 @@ public class ShootingBullet : MonoBehaviour
 {
     public bool Player;
     public float speed;
+    public float lifetime=999;
+    float lifetimer;
     Vector2 Vector;
 
     public float snappoint = 0.6f;
 
-    public void Setbullet(float speed,Vector3 vector,bool Player)
+    public void Setbullet(float speed,Vector3 vector,float lifetime,bool Player)
     {
+        this.lifetime = lifetime;
         this.speed = speed;
         this.Vector = vector;
         this.Player = Player;
@@ -24,7 +27,12 @@ public class ShootingBullet : MonoBehaviour
     {
         //this.transform.position = new Vector3(transform.position.x, transform.position.y, ShootingPlayer.instance.transform.position.z);
         transform.Translate(Vector * speed * Time.deltaTime);
-        DestroyDisable();
+        lifetimer += Time.deltaTime;
+        if (lifetimer >= lifetime)
+        {
+            Destroy(gameObject);
+        }
+        //DestroyDisable();
        
     }
     private void OnBecameInvisible()
@@ -37,7 +45,7 @@ public class ShootingBullet : MonoBehaviour
         if ((Player && collision.CompareTag("Enemy")) || (!Player && collision.CompareTag("Player")))
         {
             collision.GetComponent<ShootingObject>().hitted();
-            Destroy(gameObject);
+           gameObject.SetActive(false);
         }
     }
    

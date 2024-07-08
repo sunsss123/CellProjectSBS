@@ -135,7 +135,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4736172195848164184
 Transform:
   m_ObjectHideFlags: 0
@@ -146,7 +146,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 24.351, y: -1.944, z: 0.018}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.06543529, y: 0.11337398, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 885729623897987940}
@@ -169,10 +169,12 @@ MonoBehaviour:
   AttackDelay: 0.5
   Bullet: {fileID: 4557769492657524705, guid: 751d43c08fc925449badf419b2f2d70c, type: 3}
   bulletspeed: 10
+  bulletlifetime: 10
   Player: 1
-  hittedUI: {fileID: 0}
+  LifeUI: {fileID: 0}
   ShootPos: {fileID: 2724655891944160998}
   Sprite: {fileID: 885729623897987940}
+  untouchableTime: 2
 --- !u!50 &6105791034146765627
 Rigidbody2D:
   serializedVersion: 4

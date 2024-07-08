@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -103,15 +104,17 @@ public class Player : Character
     #region 레이 체크
     void jumpRaycastCheck()
     {
-        Debug.DrawRay(transform.position, Vector3.down * 0.15f, Color.green);
 
-        RaycastHit hit;
-        Debug.Log($"광선 쏘는 중");
 
-        if (Physics.Raycast(this.transform.position, Vector3.down, out hit, 0.15f))
+        Debug.DrawRay(transform.position + Vector3.down * (sizeY - 1) * 0.01f, Vector3.down * 0.05f , Color.blue );
+        if (!onGround)
         {
-            Debug.Log($"hit tag={hit.collider.tag}");
-            
+            RaycastHit hit;
+
+
+            if (Physics.Raycast(this.transform.position + Vector3.down * (sizeY - 1) * 0.01f, Vector3.down, out hit, 0.15f))
+            {
+
 
                 if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform"))
                 {
@@ -124,7 +127,7 @@ public class Player : Character
 
                 }
 
-
+            }
           
 
 
@@ -163,10 +166,11 @@ public class Player : Character
         }
 
         if(HittedEffect!=null)
-        HittedEffect.gameObject.SetActive(true);
+                HittedEffect.gameObject.SetActive(true);
 
     }
     bool wallcheck;
+
     private void FixedUpdate()
     {
 
@@ -184,7 +188,7 @@ public class Player : Character
         }
         else
         {
-            Debug.Log("달리기 애니메이션 무응답");
+        
         }
         
         wallRayCastCheck();
@@ -259,19 +263,16 @@ public class Player : Character
         rotate(hori);
 
 
-        translateFix = new(0, 0, Mathf.Abs(hori));
+        //translateFix = new(0, 0, Mathf.Abs(hori));
 
-        //playerRb.AddForce(Vector3.forward.normalized * PlayerStat.instance.moveSpeed);
-
-        /*if (wallcheck)
-            playerRb.velocity = new Vector3(playerRb.velocity.x, -(playerRb.velocity.y * jumpholdLevel), hori * PlayerStat.instance.moveSpeed);
-        else*/
         if (!wallcheck)
         {
             playerRb.velocity = new Vector3(playerRb.velocity.x, playerRb.velocity.y, hori * PlayerStat.instance.moveSpeed);
         }        
 
-        //transform.Translate(translateFix * PlayerStat.instance.moveSpeed * Time.deltaTime, Space.World);
+
+        //playerRb.velocity = new Vector3(hori * PlayerStat.instance.moveSpeed, playerRb.velocity.y,playerRb.velocity.z);        
+
 
         if (!isJump)
         {
@@ -532,13 +533,15 @@ public class Player : Character
     #endregion
 
     #region 변신
-    public void FormChange(TransformType type)
+    public void FormChange(TransformType type,Action event_=null)
     {
-        StartCoroutine(EndFormChange(type));
+        
+        StartCoroutine(EndFormChange(type,event_));
     }
 
-    IEnumerator EndFormChange(TransformType type)
+    IEnumerator EndFormChange(TransformType type, Action event_ )
     {
+
         PlayerStat.instance.formInvincible = true;
         formChange = true;
         onInvincible = true;
@@ -550,7 +553,7 @@ public class Player : Character
 
         PlayerHandler.instance.CurrentPower = PlayerHandler.instance.MaxPower;
         Instantiate(changeEffect, transform.position, Quaternion.identity);
-        PlayerHandler.instance.transformed(type);
+        PlayerHandler.instance.transformed(type,event_);
         formChange = false;
         Time.timeScale = 1f;
     }
@@ -646,11 +649,13 @@ public class Player : Character
         RaycastHit hit;
         //if (playerRb.velocity.y <=0)
         //{
+
+        Debug.DrawRay(transform.position + sizeY * Vector3.up * 0.1f, Vector3.up * 0.1f, Color.green);
         if (!CullingPlatform && playerRb.velocity.y > 0)
         {
-            Debug.DrawRay(transform.position + Vector3.up * 0.3f, Vector3.up * sizeY * 0.1f, Color.green);
+            Debug.DrawRay(transform.position + sizeY * Vector3.up * 0.1f, Vector3.up * 0.1f, Color.green);
 
-            if (Physics.Raycast(this.transform.position + Vector3.up * 0.3f, Vector3.up, out hit, sizeY * 0.1f))
+            if (Physics.Raycast(this.transform.position + sizeY * Vector3.up * 0.1f, Vector3.up, out hit, 0.1f))
             {
 
                 if (hit.collider.CompareTag("InteractivePlatform"))
@@ -671,15 +676,15 @@ public class Player : Character
     public void InteractivePlatformrayCheck()
     {
 
-
+        Debug.DrawRay(transform.position + sizeY * Vector3.up * 0.1f, Vector3.up *  0.1f, Color.green);
         RaycastHit hit;
         //if ()
         //{
-        Debug.DrawRay(transform.position + Vector3.up * 0.3f, Vector3.up *sizeY* 0.1f, Color.yellow);
+       
         if (CullingPlatform && playerRb.velocity.y <= 0)
         {
            
-            if (Physics.Raycast(this.transform.position + Vector3.up * 0.3f, Vector3.up, out hit, sizeY*0.1f))
+            if (Physics.Raycast(this.transform.position + sizeY * Vector3.up * 0.1f, Vector3.up, out hit, 0.1f))
             {
 
                 if (hit.collider.CompareTag("InteractivePlatform"))
@@ -688,7 +693,7 @@ public class Player : Character
                     CullingPlatform = false;
                     Physics.IgnoreLayerCollision(6, 11, false);
                     platformDisableTimer = 0;
-                    Debug.Log("rayCheck");
+                    Debug.Log("rayCheck3");
                 }
 
             }

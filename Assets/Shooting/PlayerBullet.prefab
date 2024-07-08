@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7366447179045835502}
   m_Layer: 0
   m_Name: PlayerBullet
-  m_TagString: Untagged
+  m_TagString: ShootingBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -136,3 +136,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: 0
   speed: 0
+  snappoint: 0.6

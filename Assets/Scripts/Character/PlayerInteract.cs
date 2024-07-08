@@ -10,8 +10,8 @@ public class PlayerInteract : MonoBehaviour
     void InteractrayCast() {
 
         RaycastHit hit;
-        Debug.DrawRay(transform.position + Vector3.up * 0.1f + Vector3.forward * 0.1f * (int)p.direction, Vector3.forward * 0.1f * (int)p.direction, Color.black);
-        if (Physics.Raycast(this.transform.position + Vector3.up * 0.1f + Vector3.forward * 0.1f * (int)p.direction, Vector3.forward * (int)p.direction, out hit, 0.1f))
+        Debug.DrawRay(transform.position   * (int)p.direction, Vector3.right * 0.15f * (int)p.direction, Color.black);
+        if (Physics.Raycast(this.transform.position  * (int)p.direction, Vector3.right * (int)p.direction, out hit, 0.15f))
         {
             Debug.Log(hit.collider.name);
             if (hit.collider.CompareTag("InteractiveObject"))
