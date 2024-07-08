@@ -26,6 +26,8 @@ public class PlayerStat : CharacterStat
 
     public bool formInvincible; // 변신 무적
 
+    public float InteractDelay;
+
     private void Awake()
     {
         if (instance == null)
