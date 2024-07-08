@@ -59,10 +59,10 @@ public class Player : Character
     public bool isMove; // 이동 가능 상태
 
     public bool canAttack; // 공격 가능
-
+    bool wallcheck;
 
     #endregion
-  
+
     public Vector3 velocityMove; // 벨로시티 이동 테스트
     public Vector3 rigidbodyPos; // 리지드바디 포지션 확인용
     public float sizeX;
@@ -110,9 +110,9 @@ public class Player : Character
         if (!onGround)
         {
             RaycastHit hit;
-    
-           
-            if (Physics.Raycast(this.transform.position+ Vector3.down * (sizeY-1)*0.01f, Vector3.down, out hit, 0.15f))
+
+
+            if (Physics.Raycast(this.transform.position + Vector3.down * (sizeY - 1) * 0.01f, Vector3.down, out hit, 0.15f))
             {
 
                 if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform"))
@@ -127,7 +127,7 @@ public class Player : Character
                 }
 
 
-          
+            }
 
 
         }
@@ -168,7 +168,7 @@ public class Player : Character
         HittedEffect.gameObject.SetActive(true);
 
     }
-    bool wallcheck;
+   
     private void FixedUpdate()
     {
 
@@ -271,7 +271,7 @@ public class Player : Character
         else*/
         if (!wallcheck)
         {
-            playerRb.velocity = new Vector3(playerRb.velocity.x, playerRb.velocity.y, hori * PlayerStat.instance.moveSpeed);
+            playerRb.velocity = new Vector3(hori * PlayerStat.instance.moveSpeed, playerRb.velocity.y,playerRb.velocity.z );
         }        
 
 
@@ -594,7 +594,7 @@ public class Player : Character
 
             downAttack = false;
 
-            if (Input.GetKey(KeyCode.DownArrow) && !CullingPlatform)
+            if (Input.GetKey(KeyCode.DownArrow)&&Input.GetKeyDown(KeyCode.C) && !CullingPlatform)
             {
                 Debug.Log("DownArrowChk");
                 CullingPlatform = true;
