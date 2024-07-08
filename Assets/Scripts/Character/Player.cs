@@ -136,20 +136,25 @@ public class Player : Character
     void wallRayCastCheck()
     {
         RaycastHit hit;
-        //Debug.DrawRay(this.transform.position + Vector3.up * 0.1f + Vector3.forward * 0.1f * (int)direction, Vector3.forward * (int)direction, Color.red, 0.1f);
-        if (Physics.Raycast(this.transform.position + Vector3.up * 0.1f + Vector3.forward * 0.1f * (int)direction, Vector3.forward*(int)direction, out hit, 0.1f))
+        Debug.DrawRay(this.transform.position + Vector3.up * 0.1f + Vector3.right * 0.1f * (int)direction, Vector3.right * (int)direction, Color.red, 0.1f);
+        if (Physics.Raycast(this.transform.position + Vector3.up * 0.1f + Vector3.right * 0.1f * (int)direction, Vector3.right*(int)direction, out hit, 0.1f))
         {
             if (hit.collider.CompareTag("Ground"))
             {
                 wallcheck = true;
-                Debug.Log("Blue Ray:" + hit.collider.name);
-                Debug.Log("Wall Check:" + wallcheck);
+                Debug.Log("ÇÃ·§Æû Ã¼Å©");
+            }
+            else
+            {
+                Debug.Log("ÇÃ·§ÆûÀÌ ¾Æ´Ô");
+                wallcheck = false;
             }
 
 
         }
         else
         {
+            Debug.Log("¾Æ¹«°Íµµ ´êÁö ¾ÊÀ½");
             wallcheck = false;
         }
     }
@@ -578,7 +583,7 @@ public class Player : Character
         //#region ¹Ù´Ú »óÈ£ÀÛ¿ë
         if (collision.gameObject.CompareTag("Ground") && onGround == false)
         {
-            Debug.Log("ÇÃ·§Æû¿¡ ´ê°íÀÖÀ½+ onground=false ·¹ÀÌ Ã¼Å© Áß");
+            
             jumpRaycastCheck();
         
             downAttack = false;
@@ -589,14 +594,14 @@ public class Player : Character
 
         if (collision.gameObject.CompareTag("InteractivePlatform"))
         {
-            Debug.Log("checkplaatform");
+           
             jumpRaycastCheck();
 
             downAttack = false;
 
             if (Input.GetKey(KeyCode.DownArrow)&&Input.GetKeyDown(KeyCode.C) && !CullingPlatform)
             {
-                Debug.Log("DownArrowChk");
+    
                 CullingPlatform = true;
                 Physics.IgnoreLayerCollision(6, 11, true);
             }

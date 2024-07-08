@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class PlayerXChangePortal : InteractiveObject
 {
-    float XchangeVaule;
+    float ZchangeVaule;
     public PlayerXChangePortal Destination;
     public Transform PlayerTeleportPosition;
     private void Awake()
     {
         if(Destination != null)
-        XchangeVaule=this.transform.position.x- Destination.transform.position.x;
+        ZchangeVaule=this.transform.position.z- Destination.transform.position.z;
     }
     
    
     public override void Active(direction direct)
     {
         PlayerHandler.instance.CurrentPlayer.transform.position = Destination.PlayerTeleportPosition.position;
-        PlayerCam.instance.PlayerXVaule += XchangeVaule;
+        PlayerCam.instance.PlayerZVaule += ZchangeVaule;
     }
 }

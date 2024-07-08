@@ -189,17 +189,18 @@ public class Enemy : Character
         }
 
     }
-
+    public float rotationLv;
     public bool SetRotation()
     {
         bool completeRot = false;
 
+   
         if (transform.eulerAngles.y >= -10 && transform.eulerAngles.y <= 10)
         {
             completeRot = true;
         }
-        else if (transform.eulerAngles.y >= 175 && transform.eulerAngles.y <= 190 ||
-            transform.eulerAngles.y >= 350 && transform.eulerAngles.y <= 360)
+        else if ((transform.eulerAngles.y >= 185+ rotationLv -5&& transform.eulerAngles.y <=185- rotationLv+5)&&
+            (transform.eulerAngles.y >= 360- rotationLv-5 && transform.eulerAngles.y <= 360 - rotationLv +5))
         {
             completeRot = true;
         }
