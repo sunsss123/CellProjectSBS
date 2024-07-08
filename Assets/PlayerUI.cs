@@ -8,7 +8,8 @@ using UnityEngine.UI;
 public class PlayerUI : MonoBehaviour
 {
     public TextMeshProUGUI PlayerFormText;
-    public SpriteRenderer Hpbar;
+    public Image Hpbar;
+    public RectTransform HpbarTransform;
     public TextMeshProUGUI firstSkillIconText;
     public TextMeshProUGUI secondSkillIconText;
    void FormUIUpdate()
@@ -36,7 +37,7 @@ public class PlayerUI : MonoBehaviour
     void HPUIUpdate()
     {
 
-        Hpbar.size = new Vector2(PlayerStat.instance.hp, 1.7f);
+        HpbarTransform.sizeDelta = new Vector2(60*(PlayerStat.instance.hp), 1.7f);
         switch (PlayerStat.instance.hp)
         {
             case 1:
