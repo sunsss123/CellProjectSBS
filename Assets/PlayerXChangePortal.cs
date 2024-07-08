@@ -11,6 +11,8 @@ public class PlayerXChangePortal : InteractiveObject
     {
         if(Destination != null)
         ZchangeVaule=this.transform.position.z- Destination.transform.position.z;
+
+        InteractOption = InteractOption.collider;
     }
     
    
