@@ -825,7 +825,7 @@ CapsuleCollider:
   m_Radius: 0.1
   m_Height: 0.3
   m_Direction: 1
-  m_Center: {x: 0, y: 0.15, z: 0}
+  m_Center: {x: 0, y: 0.14, z: 0}
 --- !u!54 &2721062536692114604
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -851,7 +851,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 114
+  m_Constraints: 120
   m_CollisionDetection: 0
 --- !u!114 &2166734876067594961
 MonoBehaviour:
@@ -886,10 +886,10 @@ MonoBehaviour:
   isRun: 0
   isIdle: 0
   isAttack: 0
-  animationSpeed: 0
-  waitTime: 0
+  animationSpeed: 10
+  waitTime: 0.5
   formChange: 0
-  changeEffect: {fileID: 0}
+  changeEffect: {fileID: 7790902311302496447}
   onGround: 0
   downAttack: 0
   jumpLimit: 0
@@ -904,7 +904,7 @@ MonoBehaviour:
   rigidbodyPos: {x: 0, y: 0, z: 0}
   sizeX: 1
   sizeY: 2
-  flyTime: 0
+  flyTime: 0.5
   RunEffect: {fileID: 8908631264578808313}
   HittedEffect: {fileID: 7911526485466602651}
   AttackEffect: {fileID: 676002087169428122}
