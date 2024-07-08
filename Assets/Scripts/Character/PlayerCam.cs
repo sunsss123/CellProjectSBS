@@ -17,8 +17,8 @@ public class PlayerCam : MonoBehaviour
     float rotationValue;
 
 
-    [Header("플레이어 X위치 가중치")]
-    public float PlayerXVaule;
+    [Header("플레이어 Z위치 가중치")]
+    public float PlayerZVaule;
 
 
    public float CameraTrakingTime;
@@ -54,7 +54,7 @@ public class PlayerCam : MonoBehaviour
         cameraVector = ((target.position + camPos) - transform.position).magnitude;
         cameraspeed = cameraVector / CameraTrakingTime;
         //transform.Translate(((target.position + camPos) - transform.position).normalized * cameraspeed * Time.deltaTime);
-        transform.position = Vector3.Lerp(transform.position, target.position+camPos+Vector3.right*PlayerXVaule, Time.deltaTime * cameraspeed);
+        transform.position = Vector3.Lerp(transform.position, target.position+camPos+Vector3.forward*PlayerZVaule, Time.deltaTime * cameraspeed);
         //if(transform.position!= target.position + camPos)
         //     transform.Translate((target.position + camPos).normalized * CameraSpeed*Time.deltaTime);
     }
