@@ -8,6 +8,8 @@ public class PlayerInteract : MonoBehaviour
 {
     Player p;
     InteractiveObject CurrentInteract;
+    public float InteractDelay;
+   float InteractTimer;
     void InteractrayCast()
     {
 
@@ -40,13 +42,19 @@ public class PlayerInteract : MonoBehaviour
     {
         if (p != null)
             InteractrayCast();
-        if (CurrentInteract != null)
-            if (Input.GetKeyDown(KeyCode.F))
+
+        if (InteractTimer > 0)
+            InteractTimer -= Time.deltaTime;
+        if (CurrentInteract != null )
+        {
+            if (Input.GetKeyDown(KeyCode.F) && InteractTimer <= 0)
             {
                 CurrentInteract.Active(p.direction);
                 CurrentInteract = null;
                 Debug.Log("しししし");
+                InteractTimer = InteractDelay;
             }
+        }
     }
     private void Awake()
     {
@@ -60,7 +68,7 @@ public class PlayerInteract : MonoBehaviour
             InteractiveObject obj;
             if (!other.TryGetComponent<InteractiveObject>(out obj))
             {
-              
+                
                 Debug.Log("Fatal Error? Can't Find Script instance");
             }
             else
@@ -69,7 +77,6 @@ public class PlayerInteract : MonoBehaviour
                     CurrentInteract = null;
             }
         }
-        
     }
     private void OnTriggerStay(Collider other)
     {

@@ -41,9 +41,9 @@ public class PlayerCam : MonoBehaviour
         if(ProjectSetting.instance.CameraTrackingTime==0)
             ProjectSetting.instance.CameraTrackingTime = CameraTrakingTime;
     }
-
+ 
     // Update is called once per frame
-    void LateUpdate()
+    void FixedUpdate()
     {
         if(PlayerHandler.instance.CurrentPlayer!=null)
         target = PlayerHandler.instance.CurrentPlayer.transform;
