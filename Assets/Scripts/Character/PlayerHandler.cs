@@ -158,7 +158,7 @@ public class PlayerHandler : MonoBehaviour
             CurrentPlayer.Move();
         }
 
-        if(PlayerStat.instance.jumpCount <= PlayerStat.instance.jumpCountMax && Input.GetKeyDown(KeyCode.C) && !CurrentPlayer.downAttack)
+        if(PlayerStat.instance.jumpCount <= PlayerStat.instance.jumpCountMax && !Input.GetKey(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.C) && !CurrentPlayer.downAttack)
         {
             CurrentPlayer.Jump();
         }
@@ -197,7 +197,6 @@ public class PlayerHandler : MonoBehaviour
         CurrentPlayer.Skill1();
         CurrentPlayer.Skill2();
 
-       
     }
     #endregion
 

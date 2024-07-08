@@ -13,13 +13,17 @@ public class RemoteObject : MonoBehaviour
     public Material ActiveMaterial;
     public Material DeactiveMaterial;
     public GameObject FrontOBj;
+    public Light tvLight;
     MeshRenderer Frontrenderer;
     SphereCollider activeCollider;
+    BoxCollider activeCol;
 
     private void Awake()
     {
         tvMaterials = new Material[GetComponent<MeshRenderer>().materials.Length];
         tvMaterials = GetComponent<MeshRenderer>().materials;
+        tvLight = transform.GetChild(0).gameObject.GetComponent<Light>();
+        tvLight.enabled = onActive;
     }
     void Start()
     {
@@ -36,6 +40,7 @@ public class RemoteObject : MonoBehaviour
         //Frontrenderer.material = DeactiveMaterial;
         onActive = false;
         activeCollider.enabled = onActive;
+        tvLight.enabled = onActive;
     }
     public void Active()
     {
@@ -45,5 +50,6 @@ public class RemoteObject : MonoBehaviour
         //Frontrenderer.material= ActiveMaterial;
         onActive = true;
         activeCollider.enabled = onActive;
-    }
+        tvLight.enabled = onActive;
+    }    
 }
