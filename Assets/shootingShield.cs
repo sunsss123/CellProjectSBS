@@ -30,7 +30,7 @@ public class shootingShield : MonoBehaviour
         Vector3 neworbitpos = Vector3.RotateTowards(OrbitPos - Shielder.position,
             targetdir, rotationspeed * Time.deltaTime, 0).normalized 
             * orbitradius + Shielder.position;
-
+        neworbitpos = new Vector3(neworbitpos.x * -1, neworbitpos.y, neworbitpos.z);
         transform.position = neworbitpos;
         OrbitPos = neworbitpos;
       //  Vector3 lookdir = Target.position - transform.position;
