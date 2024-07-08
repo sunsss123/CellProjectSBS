@@ -1418,7 +1418,8 @@ MonoBehaviour:
   rigidbodyPos: {x: 0, y: 0, z: 0}
   sizeX: 1
   sizeY: 1
-  flyTime: 0.5
+  raySize: 0
+  flyTime: 1
   RunEffect: {fileID: 7756572666751904677}
   HittedEffect: {fileID: 3359610123080102011}
   AttackEffect: {fileID: 4736781096793473584}
@@ -1426,7 +1427,6 @@ MonoBehaviour:
   JumpEffect: {fileID: 2803013037455162963}
   DownAttackForce: 0
   CullingPlatform: 0
-  PlatformDisableTime: 0.3
 --- !u!136 &2012848794722345922
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1630,6 +1630,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32177de85efdfc943b70253b78ba038e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InteractDelay: 0.5
 --- !u!1 &7687757393293647033
 GameObject:
   m_ObjectHideFlags: 0

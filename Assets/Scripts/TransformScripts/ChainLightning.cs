@@ -114,7 +114,13 @@ public class ChainLightning : MonoBehaviour
         {
             if (!checkEndChainObject(other.gameObject))
             {
-                other.GetComponent<Enemy>().Damaged(damage, gameObject);
+                if (!other.GetComponent<Enemy>())
+                {
+                    other.GetComponent<BoxTestt>().Damaged(damage, gameObject);
+                }
+                else
+                    other.GetComponent<Enemy>().Damaged(damage, gameObject);
+                
                 endEnemy.Add(other.gameObject);
                 lineRenderer.positionCount++;
                 lineRenderer.SetPosition(lineRenderer.positionCount - 1, other.transform.position);

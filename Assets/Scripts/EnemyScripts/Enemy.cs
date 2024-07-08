@@ -169,7 +169,7 @@ public class Enemy : Character
                 }
             }
 
-            Patrol();
+            //Patrol();
         }
     }
 
