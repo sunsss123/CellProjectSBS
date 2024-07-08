@@ -51,6 +51,8 @@ public class Enemy : Character
     public Material regular;
     public Material stun;
     public MeshRenderer testMesh;
+
+    bool complete;
     private void Awake()
     {
         eStat = gameObject.AddComponent<EnemyStat>();
@@ -190,6 +192,8 @@ public class Enemy : Character
 
     }
 
+    public float rotLevel;
+
     public bool SetRotation()
     {
         bool completeRot = false;
@@ -198,11 +202,12 @@ public class Enemy : Character
         {
             completeRot = true;
         }
-        else if (transform.eulerAngles.y >= 175 && transform.eulerAngles.y <= 190 ||
-            transform.eulerAngles.y >= 350 && transform.eulerAngles.y <= 360)
+        else if (transform.eulerAngles.y >= 175 -rotLevel && transform.eulerAngles.y <= 190 -rotLevel ||
+            transform.eulerAngles.y >= 350 - rotLevel && transform.eulerAngles.y <= 360 - rotLevel)
         {
             completeRot = true;
         }
+        Debug.Log($"체크가 되는 거냐? {complete = completeRot}\n로테이션앵글:{transform.eulerAngles.y}");
         return completeRot;
     }
     #endregion
@@ -356,7 +361,10 @@ public class Enemy : Character
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            enemyRb.constraints = RigidbodyConstraints.FreezePositionX |
+            /*enemyRb.constraints = RigidbodyConstraints.FreezePositionX |
+                RigidbodyConstraints.FreezePositionY |
+                RigidbodyConstraints.FreezeRotation;*/
+            enemyRb.constraints = RigidbodyConstraints.FreezePositionZ |
                 RigidbodyConstraints.FreezePositionY |
                 RigidbodyConstraints.FreezeRotation;
         }

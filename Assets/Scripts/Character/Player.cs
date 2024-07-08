@@ -136,8 +136,8 @@ public class Player : Character
     void wallRayCastCheck()
     {
         RaycastHit hit;
-        //Debug.DrawRay(this.transform.position + Vector3.up * 0.1f + Vector3.forward * 0.1f * (int)direction, Vector3.forward * (int)direction, Color.red, 0.1f);
-        if (Physics.Raycast(this.transform.position + Vector3.up * 0.1f + Vector3.forward * 0.1f * (int)direction, Vector3.forward*(int)direction, out hit, 0.1f))
+        Debug.DrawRay(this.transform.position + Vector3.right * 0.1f * (int)direction, Vector3.right * (int)direction, Color.red, 0.1f);
+        if (Physics.Raycast(this.transform.position +  Vector3.right * 0.1f * (int)direction, Vector3.right*(int)direction, out hit, 0.1f))
         {
             if (hit.collider.CompareTag("Ground"))
             {
@@ -147,11 +147,13 @@ public class Player : Character
             }
 
 
+
         }
         else
         {
             wallcheck = false;
         }
+
     }
 
     #endregion
