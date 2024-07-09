@@ -10,7 +10,7 @@ public class shootingShieldrotate : MonoBehaviour
     void Update()
     {
         Vector3 lookdir = Target - transform.position;
-       
+        lookdir.x *= -1;
         Quaternion targetrot = Quaternion.LookRotation(Vector3.forward, lookdir);
         transform.rotation = targetrot;
         var a = Quaternion.RotateTowards(transform.rotation, targetrot, rotatespeed * Time.deltaTime);
