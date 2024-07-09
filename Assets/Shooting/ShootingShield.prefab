@@ -55,9 +55,7 @@ MonoBehaviour:
   bulletspeed: 0
   bulletlifetime: 0
   Player: 0
-  movelooptime: 0
-  snappoint: 0.6
-  enemyAttackrange: 1.5
+  enemyMoverange: 1.5
   SSrot: {fileID: 1059799845650319383}
   SS: {fileID: 3977902777664841317}
   SSrtSpriteRot: {fileID: 5734189134373345420}
@@ -344,7 +342,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Shielder: {fileID: 8878108572132555683}
   Target: {x: 0, y: 0, z: 0}
-  rotationspeed: 1.5
+  rotationspeed: 1.8
   orbitradius: 0.8
 --- !u!1 &8612122626051978379
 GameObject:

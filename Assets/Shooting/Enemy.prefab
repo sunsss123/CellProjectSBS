@@ -179,7 +179,6 @@ MonoBehaviour:
   bulletspeed: 3.5
   bulletlifetime: 3
   Player: 0
-  movelooptime: 0
-  snappoint: 0.6
-  enemyAttackrange: 5.2
+  enemyMoverange: 4.5
   attacktime: 1
+  enemyAttackrange: 5.5

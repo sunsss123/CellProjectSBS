@@ -173,13 +173,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movespeed: 2.5
-  Hp: 10
-  AttackDelay: 0.0003
+  Hp: 8
+  AttackDelay: 0.00035
   Bullet: {fileID: 8919642080162425035, guid: 2082708c218f8244da652055a92e55cd, type: 3}
   bulletspeed: 4.5
   bulletlifetime: 2
   Player: 0
-  movelooptime: 0
-  snappoint: 0.6
-  enemyAttackrange: 5.5
+  enemyMoverange: 5.5
   attacktime: 0.5
+  enemyAttackrange: 6.5
