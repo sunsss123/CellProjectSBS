@@ -8,6 +8,7 @@ public class TransformPlace : MonoBehaviour
         if (PlayerHandler.instance.CurrentType == TransformType.Default)
         {
             other.transform.position = this.transform.position;
+            PlayerHandler.instance.LastTransformPlace = this;
             gameObject.SetActive(false);
 
             other.GetComponent<Player>().FormChange(type);
