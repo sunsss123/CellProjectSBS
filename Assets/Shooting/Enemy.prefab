@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6,
     type: 3}
-  m_Color: {r: 1, g: 0.54711235, b: 0.45882356, a: 1}
+  m_Color: {r: 1, g: 0.5550314, b: 0.4660377, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -173,13 +173,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movespeed: 2
-  Hp: 3
-  AttackDelay: 2
+  Hp: 2
+  AttackDelay: 0.006
   Bullet: {fileID: 8919642080162425035, guid: 2082708c218f8244da652055a92e55cd, type: 3}
-  bulletspeed: 2
-  bulletlifetime: 2
+  bulletspeed: 3.5
+  bulletlifetime: 3
   Player: 0
-  movelooptime: 0
-  snappoint: 0.6
-  enemyAttackrange: 2
+  enemyMoverange: 4.5
   attacktime: 1
+  enemyAttackrange: 5.5

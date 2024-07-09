@@ -1,5 +1,6 @@
 
 using UnityEditor;
+using UnityEngine;
 
 public enum CurrentAttack { ground, sky }
 
@@ -26,6 +27,8 @@ public class PlayerStat : CharacterStat
 
     public bool formInvincible; // 변신 무적
 
+    public float InteractDelay;
+
     private void Awake()
     {
         if (instance == null)
@@ -34,13 +37,18 @@ public class PlayerStat : CharacterStat
         }
 
     }
+    private void FixedUpdate()
+    {
+        if (hp <= 0)
+            Application.Quit();
+    }
 
     // Start is called before the first frame update
     /*void Start()
     {
         InitStatus();
     }*/
- 
+
     //void InitStatus()
     //{
     //    hpMax = 200;

@@ -17,9 +17,9 @@ public class PlayerCam : MonoBehaviour
     float rotationValue;
 
 
-    [Header("플레이어 X위치 가중치")]
-    public float PlayerXVaule;
-
+    [Header("플레이어 Z위치 가중치")]
+    public float PlayerZVaule;
+    public bool ZPin;
 
    public float CameraTrakingTime;
     public float CameraMoveSpeed;
@@ -41,9 +41,9 @@ public class PlayerCam : MonoBehaviour
         if(ProjectSetting.instance.CameraTrackingTime==0)
             ProjectSetting.instance.CameraTrackingTime = CameraTrakingTime;
     }
-
+    Vector3 CalculateVector;
     // Update is called once per frame
-    void LateUpdate()
+    void FixedUpdate()
     {
         if(PlayerHandler.instance.CurrentPlayer!=null)
         target = PlayerHandler.instance.CurrentPlayer.transform;
@@ -54,10 +54,15 @@ public class PlayerCam : MonoBehaviour
         cameraVector = ((target.position + camPos) - transform.position).magnitude;
         cameraspeed = cameraVector / CameraTrakingTime;
         //transform.Translate(((target.position + camPos) - transform.position).normalized * cameraspeed * Time.deltaTime);
-        transform.position = Vector3.Lerp(transform.position, target.position+camPos+Vector3.right*PlayerXVaule, Time.deltaTime * cameraspeed);
-        //if(transform.position!= target.position + camPos)
-        //     transform.Translate((target.position + camPos).normalized * CameraSpeed*Time.deltaTime);
-    }
+        if (!ZPin)
+            CalculateVector = target.position + camPos;
+        else
+            CalculateVector = (Vector3)((Vector2)target.position + (Vector2)camPos) + Vector3.forward * transform.position.z;
+
+            transform.position = Vector3.Lerp(transform.position, CalculateVector, Time.deltaTime * cameraspeed);
+            //if(transform.position!= target.position + camPos)
+            //     transform.Translate((target.position + camPos).normalized * CameraSpeed*Time.deltaTime);
+        }
     public void initializecamtransform()
     {
 

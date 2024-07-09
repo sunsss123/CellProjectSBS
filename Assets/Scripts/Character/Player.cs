@@ -120,6 +120,7 @@ public class Player : Character
 
 
         Debug.DrawRay(transform.position + Vector3.down * (sizeY - 1) * 0.01f, Vector3.down * 0.15f , Color.blue );
+
         if (!onGround)
         {
             RaycastHit hit;

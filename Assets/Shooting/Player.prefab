@@ -164,12 +164,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beea50a0b7805264fa2895e0ed3d6319, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movespeed: 10
+  movespeed: 3.5
   Hp: 5
-  AttackDelay: 0.5
+  AttackDelay: 0.2
   Bullet: {fileID: 4557769492657524705, guid: 751d43c08fc925449badf419b2f2d70c, type: 3}
-  bulletspeed: 10
-  bulletlifetime: 10
+  bulletspeed: 4.8
+  bulletlifetime: 1.5
   Player: 1
   LifeUI: {fileID: 0}
   ShootPos: {fileID: 2724655891944160998}

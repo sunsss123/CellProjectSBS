@@ -48,15 +48,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c4e71df94391d64d89104380b772763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movespeed: 0
-  Hp: 5
+  movespeed: 1.5
+  Hp: 2
   AttackDelay: 0
   Bullet: {fileID: 0}
   bulletspeed: 0
+  bulletlifetime: 0
   Player: 0
-  attacktime: 0
-  movelooptime: 0
-  snappoint: 0.6
+  enemyMoverange: 1.5
   SSrot: {fileID: 1059799845650319383}
   SS: {fileID: 3977902777664841317}
   SSrtSpriteRot: {fileID: 5734189134373345420}
@@ -103,7 +102,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3268478710457733429}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -121,7 +120,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 7
 --- !u!1 &6274082525449519979
 GameObject:
   m_ObjectHideFlags: 0
@@ -343,8 +342,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Shielder: {fileID: 8878108572132555683}
   Target: {x: 0, y: 0, z: 0}
-  rotationspeed: 2
-  orbitradius: 2
+  rotationspeed: 1.8
+  orbitradius: 0.8
 --- !u!1 &8612122626051978379
 GameObject:
   m_ObjectHideFlags: 0

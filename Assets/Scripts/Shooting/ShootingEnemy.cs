@@ -8,12 +8,11 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 public class ShootingEnemy : ShootingObject
 {
 
-    public float movelooptime;
-    float movelooptimer;
+
     int direction = 1;
 
 
-    public float snappoint=0.6f;
+
 
     public event Action<ShootingEnemy> Destroyevent;
  
@@ -36,7 +35,7 @@ public class ShootingEnemy : ShootingObject
     //        onviewport = false;
        
     //}
-    public float enemyAttackrange; 
+    public float enemyMoverange; 
     void EnemyMoveToPlayer()
     {
 
@@ -46,35 +45,23 @@ public class ShootingEnemy : ShootingObject
    
     protected virtual void EnemyAi()
     {
-    if (enemyAttackrange < TargetVector.magnitude)
+    if (enemyMoverange < TargetVector.magnitude)
     {
 
             EnemyMoveToPlayer();
         }
       
     }
-    protected void Moveloop()
-    {
-        movelooptimer += Time.deltaTime;
-        if (movelooptimer >= movelooptime)
-        {
-            movelooptimer = 0;
-            direction *= -1;
-        }
-        transform.Translate(Vector3.right * direction * movespeed * Time.deltaTime);
-
-    }
+  
     protected virtual void SetTarget()
     {
         TargetVector =(ShootingPlayer.instance.transform.position - transform.position);
-        TargetVector = new Vector2(TargetVector.x * -1, TargetVector.y
-            );
+        TargetVector.x *= -1;
     }
     protected virtual void FixedUpdate()
     {
 
 
-        this.transform.position = new Vector3(transform.position.x, transform.position.y, ShootingPlayer.instance.transform.position.z);
         SetTarget();
 
      

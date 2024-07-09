@@ -12,6 +12,7 @@ public class ShootingSpriteRotate : MonoBehaviour
         void Update()
         {
             Vector3 dir = target - this.transform.position;
+        dir.x *= -1;
             var a = Quaternion.LookRotation(Vector3.forward, dir);
 
             transform.rotation = a;

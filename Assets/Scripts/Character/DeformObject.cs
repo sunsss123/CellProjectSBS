@@ -8,9 +8,9 @@ public class DeformObject : MonoBehaviour
     {
         if ( other.CompareTag("Player") )
         {
-            PlayerHandler.instance.CurrentPower -= Time.deltaTime;
+    
             if (PlayerHandler.instance.CurrentType != TransformType.Default)
-            PlayerHandler.instance.transformed(TransformType.Default);
+                PlayerHandler.instance.Deform();
         }
       
     }

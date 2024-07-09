@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 public class ConvertCoordiate {
 };
-public class ShootingFIeld : MonoBehaviour
+public class ShootingFIeld : signalSender
 {
     public Camera PlatformerCam;
     public Camera ShootingCam;
@@ -25,6 +26,22 @@ public class ShootingFIeld : MonoBehaviour
     public float MinSizeY;
 
     public float SnapPoint;
+
+
+    public void EndShooting()
+    {
+        PlatformerCam.gameObject.SetActive(true);
+        ShootingCam.gameObject.SetActive(false);
+
+        PlayerHandler.instance.Deform();
+        if(this.gameObject.activeSelf)
+        this.gameObject.SetActive(false);
+    }
+    void DefeatShooting()
+    {
+        PlayerStat.instance.hp--;
+        EndShooting();
+    }
     private void OnEnable()
     {
         startshooting();
@@ -33,6 +50,7 @@ public class ShootingFIeld : MonoBehaviour
     {
         PlatformerCam.gameObject.SetActive(false);
         ShootingCam.gameObject.SetActive(true);
+        player.ShootingPlayerDieEvent += DefeatShooting;
         player.gameObject.SetActive(true);
         currentfolderindex = 0;
         if (folders.Length > 0)
@@ -71,11 +89,11 @@ public class ShootingFIeld : MonoBehaviour
             else
             {
                 Debug.Log("슈팅 클리어 축하한다");
-                //여기에 슈팅 클리어 이벤트 추가
-                PlatformerCam.gameObject.SetActive(true);
-                ShootingCam.gameObject.SetActive(false);
-                PlayerHandler.instance.transformed(TransformType.Default);
-                this.gameObject.SetActive(false);
+      
+                active = true;
+                Send(active);
+                EndShooting();
+                
             }
             return false;
             }
@@ -101,7 +119,8 @@ public class ShootingFIeld : MonoBehaviour
     void gonextwave(ShootingEnemyGroup g)
     {
         g.OnwaveCleard -= gonextwave;
-        g.gameObject.SetActive(false);
+        //if(g.gameObject.activeSelf)
+        //    g.gameObject.SetActive(false);
         scroll.GetVaule();
         if (foldersCheck())
             activewave();
@@ -128,5 +147,17 @@ public class ShootingFIeld : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(this.transform.position+ (Vector3)Center, new Vector3(0,FieldSize.y,FieldSize.x));
+    }
+    signalReceiver receiver;
+    int signalnumber;
+    public override void register(signalReceiver receiver, int index)
+    {
+        this.receiver = receiver;
+        signalnumber = index;
+    }
+
+    public override void Send(bool signal)
+    {
+        receiver.Receive(signal, signalnumber);
     }
 }

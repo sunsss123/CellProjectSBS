@@ -1,7 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.Rendering.Universal.ShaderGUI;
+
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -15,13 +16,20 @@ public class ShootingPlayer : ShootingObject
     public Transform Sprite;
     public float untouchableTime;
     float untouchableTimer;
+
+    public event Action ShootingPlayerDieEvent;
     public override void hitted()
     {
 
         if (untouchableTimer <= 0)
         {
             base.hitted();
-            untouchableTimer = untouchableTime;
+            if (currenthp <= 0)
+            {
+                ShootingPlayerDieEvent?.Invoke();
+                ShootingPlayerDieEvent = null;
+            }
+                untouchableTimer = untouchableTime;
         }
     }
     Vector3 movedirection;
@@ -121,7 +129,7 @@ public class ShootingPlayer : ShootingObject
     private void FixedUpdate()
     {
 
-        LifeUI.text = $"Life:{Hp}";
+        LifeUI.text = $"Life:{currenthp}";
         snapFieldPosition();
 
       if(untouchableTimer>0)
