@@ -25,6 +25,9 @@ public class ShootingFIeld : MonoBehaviour
     public float MinSizeY;
 
     public float SnapPoint;
+
+    public bool shootingclear;
+
     private void OnEnable()
     {
         startshooting();
@@ -72,10 +75,13 @@ public class ShootingFIeld : MonoBehaviour
             {
                 Debug.Log("슈팅 클리어 축하한다");
                 //여기에 슈팅 클리어 이벤트 추가
+                
                 PlatformerCam.gameObject.SetActive(true);
                 ShootingCam.gameObject.SetActive(false);
-                PlayerHandler.instance.transformed(TransformType.Default);
+                shootingclear = true;
+                PlayerHandler.instance.Deform();
                 this.gameObject.SetActive(false);
+                
             }
             return false;
             }

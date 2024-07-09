@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor.PackageManager;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 
 
@@ -12,6 +13,7 @@ public class PlayerHandler : MonoBehaviour
     public float CurrentPower;
     public float MaxPower=60;
     public TransformType retoretype=TransformType.Default;
+    public TransformPlace LastTransformPlace;
     #endregion
     #region 플레이어 현재 위치,상태
     Transform Player;
@@ -58,12 +60,11 @@ public class PlayerHandler : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (CurrentType != TransformType.Default)
-        {
-            CurrentPower -= Time.deltaTime;
-            if (CurrentPower == 0)
-                transformed(TransformType.Default);
-        }
+        //if (CurrentType != TransformType.Default)
+        //{
+        //    CurrentPower -= Time.deltaTime;
+     
+        //}
         PlayerFallOut();
 
         #region 캐릭터 조작
@@ -96,6 +97,15 @@ public class PlayerHandler : MonoBehaviour
         {
             transformed(retoretype);
         }
+    }
+    public float defromUpPosition;
+ public   void Deform()
+    {
+        transformed(TransformType.Default);
+        LastTransformPlace.transform.position = CurrentPlayer.transform.position;
+        CurrentPlayer.transform.Translate(Vector3.up * defromUpPosition);
+        LastTransformPlace.gameObject.SetActive(true);
+        LastTransformPlace = null;
     }
     void CreateModelByCurrentType(Action eventhandler =null)
 {
@@ -150,7 +160,8 @@ public class PlayerHandler : MonoBehaviour
 }
     #endregion
     #region 플레이어 기본 조작
-    
+    public float DeTransformtime = 2;
+    float DeTransformtimer = 0;
     void charactermove()
     {
         if (!CurrentPlayer.downAttack && PlayerStat.instance.cState == CharacterState.idle)
@@ -170,7 +181,28 @@ public class PlayerHandler : MonoBehaviour
         {
             CurrentPlayer. SwapAttackType();
         }
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            switch (CurrentType)
+            {
+                case TransformType.remoteform:
+                    DeTransformtimer += Time.deltaTime;
+                    if (DeTransformtimer > DeTransformtime)
+                    {
+                        DeTransformtimer = 0;
+                        Deform();
+                    }
+                    break;
+                default:
+                    break;
 
+            }
+
+        }
+        else
+        {
+            DeTransformtimer = 0;
+        }
         if (Input.GetKey(KeyCode.DownArrow))
         {
             if (Input.GetKeyDown(KeyCode.X) && !CurrentPlayer.onGround)
@@ -186,13 +218,13 @@ public class PlayerHandler : MonoBehaviour
             CurrentPlayer.Attack();
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (CurrentType == TransformType.Default)
-                userestoredtype();
-            else
-                transformed(TransformType.Default);
-        }
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    if (CurrentType == TransformType.Default)
+        //        userestoredtype();
+        //    else
+        //    
+        //}
 
         CurrentPlayer.Skill1();
         CurrentPlayer.Skill2();

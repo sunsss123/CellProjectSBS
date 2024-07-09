@@ -13,7 +13,7 @@ public class TransformMouse : TransformPlace
     }
     public override void transformStart(Collider other)
     {
-        if (PlayerHandler.instance.CurrentType == TransformType.Default)
+        if (PlayerHandler.instance.CurrentType == TransformType.Default&&!ShootingGame.shootingclear)
         {
             other.transform.position = this.transform.position;
             gameObject.SetActive(false);
