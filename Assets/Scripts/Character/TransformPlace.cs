@@ -15,10 +15,6 @@ public class TransformPlace : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
-        if (Input.GetKey(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.X))
-        {
-            PlayerHandler.instance.CurrentPlayer.downAttack = true;
-        }
 
         /*if (other.CompareTag("Player") && Input.GetKeyDown(KeyCode.F))
         {

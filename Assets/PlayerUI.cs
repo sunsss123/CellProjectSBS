@@ -36,7 +36,11 @@ public class PlayerUI : MonoBehaviour
     void HPUIUpdate()
     {
 
+<<<<<<< Updated upstream
         Hpbar.size = new Vector2(PlayerStat.instance.hp, 1.7f);
+=======
+        HpbarTransform.sizeDelta = new Vector2(60*(PlayerStat.instance.hp), 75);
+>>>>>>> Stashed changes
         switch (PlayerStat.instance.hp)
         {
             case 1:
