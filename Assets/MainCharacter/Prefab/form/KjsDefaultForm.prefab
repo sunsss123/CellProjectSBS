@@ -1419,7 +1419,7 @@ MonoBehaviour:
   sizeX: 1
   sizeY: 1
   raySize: 0
-  flyTime: 0.5
+  flyTime: 1
   RunEffect: {fileID: 7756572666751904677}
   HittedEffect: {fileID: 3359610123080102011}
   AttackEffect: {fileID: 4736781096793473584}
@@ -1475,7 +1475,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 120
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &7390080442552347909
 MonoBehaviour:
@@ -1630,7 +1630,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32177de85efdfc943b70253b78ba038e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InteractDelay: 0
+  InteractDelay: 0.5
 --- !u!1 &7687757393293647033
 GameObject:
   m_ObjectHideFlags: 0

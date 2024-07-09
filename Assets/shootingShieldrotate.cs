@@ -14,6 +14,7 @@ public class shootingShieldrotate : MonoBehaviour
         Quaternion targetrot = Quaternion.LookRotation(Vector3.forward, lookdir);
         transform.rotation = targetrot;
         var a = Quaternion.RotateTowards(transform.rotation, targetrot, rotatespeed * Time.deltaTime);
+        
         transform.rotation = Quaternion.Euler(0, 0, a.eulerAngles.z);
     }
     private void OnTriggerEnter2D(Collider2D other)

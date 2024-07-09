@@ -51,6 +51,8 @@ public class Enemy : Character
     public Material regular;
     public Material stun;
     public MeshRenderer testMesh;
+
+    bool complete;
     private void Awake()
     {
         eStat = gameObject.AddComponent<EnemyStat>();
@@ -189,21 +191,23 @@ public class Enemy : Character
         }
 
     }
-    public float rotationLv;
+
+    public float rotLevel;
+
     public bool SetRotation()
     {
         bool completeRot = false;
 
-   
-        if (transform.eulerAngles.y >= -10 && transform.eulerAngles.y <= 10)
+        if (/*transform.eulerAngles.y >= -10 && transform.eulerAngles.y <= 10*/transform.eulerAngles.y >= rotLevel && transform.eulerAngles.y <= 10 + rotLevel)
         {
             completeRot = true;
         }
-        else if ((transform.eulerAngles.y >= 185+ rotationLv -5&& transform.eulerAngles.y <=185- rotationLv+5)&&
-            (transform.eulerAngles.y >= 360- rotationLv-5 && transform.eulerAngles.y <= 360 - rotationLv +5))
+        else if (transform.eulerAngles.y >= 175 -rotLevel && transform.eulerAngles.y <= 190 -rotLevel ||
+            transform.eulerAngles.y >= 350 - rotLevel && transform.eulerAngles.y <= 360 - rotLevel)
         {
             completeRot = true;
         }
+        Debug.Log($"체크가 되는 거냐? {complete = completeRot}\n로테이션앵글:{transform.eulerAngles.y}");
         return completeRot;
     }
     #endregion
@@ -232,7 +236,7 @@ public class Enemy : Character
             }*/
         }
 
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(testTarget), rotationSpeed * Time.deltaTime);
+        //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(testTarget), rotationSpeed * Time.deltaTime);
     }
 
     private void OnDrawGizmos()
@@ -357,7 +361,7 @@ public class Enemy : Character
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            enemyRb.constraints = RigidbodyConstraints.FreezePositionX |
+            enemyRb.constraints = 
                 RigidbodyConstraints.FreezePositionY |
                 RigidbodyConstraints.FreezeRotation;
         }

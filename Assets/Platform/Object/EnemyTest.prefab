@@ -621,7 +621,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 114
+  m_Constraints: 120
   m_CollisionDetection: 0
 --- !u!114 &679739752782495093
 MonoBehaviour:
@@ -639,8 +639,8 @@ MonoBehaviour:
   enemyRb: {fileID: 0}
   attackCollider: {fileID: 7760997083194175977}
   rangeCollider: {fileID: 2202126381614901408}
-  searchCubeRange: {x: 0.8, y: 0.8, z: 3}
-  searchCubePos: {x: 0, y: 0.45, z: 0}
+  searchCubeRange: {x: 1.67, y: 0.63, z: 0.7}
+  searchCubePos: {x: -1.24, y: 0.61, z: 0}
   attackTimer: 0
   attackInitCoolTime: 0
   attackDelay: 0
@@ -663,6 +663,7 @@ MonoBehaviour:
   regular: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   stun: {fileID: 2100000, guid: 0223f599766758345840d556d305b0a6, type: 2}
   testMesh: {fileID: 7189765219622040990}
+  rotLevel: 85
 --- !u!1 &7760997083194175977
 GameObject:
   m_ObjectHideFlags: 0

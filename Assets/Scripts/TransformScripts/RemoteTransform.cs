@@ -119,7 +119,7 @@ public class RemoteTransform : Player
     {
         if (Input.GetKeyDown(KeyCode.D))
         {
-            Instantiate(chain, transform.position, Quaternion.identity);
+            Instantiate(chain, transform.position, transform.rotation);
             /*if (!onChain)
             {
                 onChain = true;

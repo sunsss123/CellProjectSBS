@@ -68,13 +68,11 @@ public class ShootingEnemy : ShootingObject
     {
         TargetVector =(ShootingPlayer.instance.transform.position - transform.position);
         TargetVector.x *= -1;
-        
     }
     protected virtual void FixedUpdate()
     {
 
 
-        //this.transform.position = new Vector3(transform.position.x, transform.position.y, ShootingPlayer.instance.transform.position.z);
         SetTarget();
 
      

@@ -129,7 +129,7 @@ GameObject:
   - component: {fileID: 4636546208016664966}
   - component: {fileID: 4601809136869582469}
   - component: {fileID: 5550999498225120316}
-  - component: {fileID: 4636511791049888360}
+  - component: {fileID: 5845025156049103862}
   m_Layer: 6
   m_Name: TransformPlace_Mouse
   m_TagString: Untagged
@@ -145,7 +145,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8049943151598472710}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.63, z: 2.95}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -225,7 +225,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.3, y: 0.3, z: 0.3}
   m_Center: {x: 0, y: 0.1, z: 0}
---- !u!114 &4636511791049888360
+--- !u!114 &5845025156049103862
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -234,10 +234,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8049943151598472710}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a14b3a75057adc429f5d696e9f9a1e0, type: 3}
+  m_Script: {fileID: 11500000, guid: a88d885645db30745881d58f68327f60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
+  ShootingGame: {fileID: 0}
 --- !u!1 &8503820412430245120
 GameObject:
   m_ObjectHideFlags: 0
