@@ -48,8 +48,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c4e71df94391d64d89104380b772763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movespeed: 0
-  Hp: 5
+  movespeed: 1.5
+  Hp: 2
   AttackDelay: 0
   Bullet: {fileID: 0}
   bulletspeed: 0
@@ -57,7 +57,7 @@ MonoBehaviour:
   Player: 0
   movelooptime: 0
   snappoint: 0.6
-  enemyAttackrange: 0
+  enemyAttackrange: 1.5
   SSrot: {fileID: 1059799845650319383}
   SS: {fileID: 3977902777664841317}
   SSrtSpriteRot: {fileID: 5734189134373345420}
@@ -344,8 +344,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Shielder: {fileID: 8878108572132555683}
   Target: {x: 0, y: 0, z: 0}
-  rotationspeed: 1
-  orbitradius: 2
+  rotationspeed: 1.5
+  orbitradius: 0.8
 --- !u!1 &8612122626051978379
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3721272256314071201}
   - component: {fileID: 6255727862910257480}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: Enemy 1
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6,
     type: 3}
-  m_Color: {r: 1, g: 0.5550314, b: 0.4660377, a: 1}
+  m_Color: {r: 0.82046986, g: 0.019607842, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -172,14 +172,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 114c5a7440ffa5540b676c435cce2d42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movespeed: 2
-  Hp: 2
-  AttackDelay: 0.006
+  movespeed: 2.5
+  Hp: 10
+  AttackDelay: 0.0003
   Bullet: {fileID: 8919642080162425035, guid: 2082708c218f8244da652055a92e55cd, type: 3}
-  bulletspeed: 3.5
-  bulletlifetime: 3
+  bulletspeed: 4.5
+  bulletlifetime: 2
   Player: 0
   movelooptime: 0
   snappoint: 0.6
-  enemyAttackrange: 5.2
-  attacktime: 1
+  enemyAttackrange: 5.5
+  attacktime: 0.5
