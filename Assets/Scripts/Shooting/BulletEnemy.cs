@@ -6,6 +6,7 @@ public class BulletEnemy : ShootingEnemy
 {
     float AttackTimer;
     public float attacktime;
+    public float enemyAttackrange;
     public override void Start()
     {
         base.Start();
