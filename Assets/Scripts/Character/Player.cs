@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using System;
 using System.Collections;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UIElements;
@@ -65,14 +66,26 @@ public class Player : Character
 
     public Vector3 velocityMove; // 벨로시티 이동 테스트
     public Vector3 rigidbodyPos; // 리지드바디 포지션 확인용
+    
     public float sizeX;
     public float sizeY;
-
+    [Header("기존 레이에서 테스트로 더 추가")]
+    public float sizeFir;
+    public float sizeSec;
+    public float sizeThr;
+    public float sizefou;
+    public float sizeMiddle;
     bool platform;
     public float raySize;
 
     [Header("내려찍기 체공 시간")]
     public float flyTime;
+
+    [Header("박스 캐스트 테스트")]
+    public Vector3 boxRaySize; // box 레이캐스트 >> 벽에 고정되는 것 방지를 위한
+    public float distanceRay; // box 캐스트의 거리
+    RaycastHit boxHit;                              
+
     // Start is called before the first frame update
     void Start()
     {        
@@ -106,7 +119,7 @@ public class Player : Character
     {
 
 
-        Debug.DrawRay(transform.position + Vector3.down * (sizeY - 1) * 0.01f, Vector3.down * 0.05f , Color.blue );
+        Debug.DrawRay(transform.position + Vector3.down * (sizeY - 1) * 0.01f, Vector3.down * 0.15f , Color.blue );
         if (!onGround)
         {
             RaycastHit hit;
@@ -115,15 +128,15 @@ public class Player : Character
             if (Physics.Raycast(this.transform.position + Vector3.down * (sizeY - 1) * 0.01f, Vector3.down, out hit, 0.15f))
             {
 
-                if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform"))
+                if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy"))
                 {
                     onGround = true;
                     isJump = false;
+                    downAttack = false;
                     PlayerStat.instance.jumpCount = 0;
                     Debug.Log("점프회복");
                     if (LandingEffect != null)
                         LandingEffect.SetActive(true);
-
                 }
 
 
@@ -136,24 +149,84 @@ public class Player : Character
 
     void wallRayCastCheck()
     {
-        //wallcheck = false;
+        /*//wallcheck = false;
         RaycastHit hit;
-        Debug.DrawRay(this.transform.position + Vector3.right * 0.1f * (int)direction, Vector3.right * (int)direction, Color.red, 0.1f);
-        if (Physics.Raycast(this.transform.position +  Vector3.right * 0.1f * (int)direction, Vector3.right*(int)direction, out hit, 0.1f))
+        Debug.DrawRay(this.transform.position + (Vector3.up * sizeFir + Vector3.right * raySize) * 0.1f * (int)direction, Vector3.right * (int)direction * 0.1f, Color.red, 0.1f);
+        Debug.DrawRay(this.transform.position + (Vector3.up * sizeSec + Vector3.right * raySize) * 0.1f * (int)direction, Vector3.right * (int)direction * 0.1f, Color.magenta, 0.1f);
+        Debug.DrawRay(this.transform.position + (Vector3.up * sizeThr + Vector3.right * raySize) * 0.1f * (int)direction, Vector3.right * (int)direction * 0.1f, Color.blue, 0.1f);
+        Debug.DrawRay(this.transform.position + (Vector3.up * sizefou + Vector3.right * raySize) * 0.1f * (int)direction, Vector3.right * (int)direction * 0.1f, Color.green, 0.1f);
+        Debug.DrawRay(this.transform.position + (Vector3.up * sizeMiddle + Vector3.right * raySize) * 0.1f * (int)direction, Vector3.right * (int)direction * 0.1f, Color.green, 0.1f);
+        bool firstCast = Physics.Raycast(this.transform.position + (Vector3.up * sizeFir + Vector3.right * raySize) * 0.1f * (int)direction, Vector3.right * (int)direction, out hit, 0.1f);
+        bool secondCast = Physics.Raycast(this.transform.position + (Vector3.up * sizeSec + Vector3.right * raySize) * 0.1f * (int)direction, Vector3.right * (int)direction, out hit, 0.1f);
+        bool thirdCast = Physics.Raycast(this.transform.position + (Vector3.up * sizeThr + Vector3.right * raySize) * 0.1f * (int)direction, Vector3.right * (int)direction, out hit, 0.1f);
+        bool fourthCast = Physics.Raycast(this.transform.position + (Vector3.up * sizefou + Vector3.right * raySize) * 0.1f * (int)direction, Vector3.right * (int)direction, out hit, 0.1f);
+        bool middleCast = Physics.Raycast(this.transform.position + (Vector3.up * sizeMiddle + Vector3.right * raySize) * 0.1f * (int)direction, Vector3.right * (int)direction, out hit, 0.1f);
+        //Debug.DrawRay(this.transform.position + Vector3.right * (int)direction, Vector3.right * distanceRay * (int)direction, Color.white, 0.1f);
+        //bool boxCast = Physics.BoxCast(this.transform.position, boxRaySize, Vector3.right * (int)direction, out hit, transform.rotation, distanceRay);
+        if (firstCast || secondCast || thirdCast || fourthCast)
         {
-            if (hit.collider.CompareTag("Ground"))
+            Debug.Log("레이캐스트에 인식됨");
+            if (hit.collider == null)
+            {
+                Debug.Log("hit값이 null로 들어옴");
+            }
+            else if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractiveObject"))
             {
                 wallcheck = true;
-                Debug.Log("Blue Ray:" + hit.collider.name);
-                Debug.Log("Wall Check:" + wallcheck);
-            }
-
+                Debug.Log("벽 체크됨");
+                Debug.Log("Blue Ray:" + hit.collider.name + "\nWall Check:" + wallcheck);
+            }            
         }
-        /*else
+        else
         {
+            Debug.Log("벽 체크 안됨");
             wallcheck = false;
         }*/
+
+        Debug.DrawRay(transform.position + Vector3.right * 0.1f * (int)direction, Vector3.right * (int)direction * distanceRay, Color.white, 0.1f);
+        if (Physics.BoxCast(this.transform.position, boxRaySize, Vector3.right * (int)direction, out boxHit, transform.rotation, distanceRay))
+        {
+            //Debug.Log($"박스캐스트 인식함 {boxHit.collider}");
+            if (boxHit.collider.CompareTag("InteractivePlatform") || boxHit.collider.CompareTag("Ground"))
+            {
+                wallcheck = true;
+                Debug.Log($"박스캐스트가 플랫폼을 인식하여 벽 고정을 방지함{boxHit.collider}");
+            }
+            else
+            {
+                Debug.Log($"박스캐스트가 플랫폼을 찾지 못하여 고정됨{boxHit.collider}");
+                wallcheck = false;
+            }
+            Debug.DrawRay(transform.position + Vector3.right * 0.1f * (int)direction, Vector3.right * (int)direction * distanceRay, Color.black, 0.1f);
+            //Gizmos.DrawWireCube(boxHit.point, boxRaySize);
+        }
+        else
+        {
+            wallcheck = false;
+        }
+
     }
+
+    /*private void OnDrawGizmos()
+    {
+        Debug.DrawRay(transform.position + Vector3.right * 0.1f * (int)direction, Vector3.right * (int)direction * distanceRay, Color.white, 0.1f);
+        if (Physics.BoxCast(this.transform.position, boxRaySize, Vector3.right * (int)direction, out boxHit, transform.rotation, distanceRay))
+        {
+            //Debug.Log($"박스캐스트 인식함 {boxHit.collider}");
+            if (boxHit.collider.CompareTag("InteractivePlatform"))
+            {
+                wallcheck = true;
+                Debug.Log($"박스캐스트가 플랫폼을 인식하여 벽 고정을 방지함{boxHit.collider}");
+            }
+            else
+            {
+                Debug.Log($"박스캐스트가 플랫폼을 찾지 못하여 고정됨{boxHit.collider}");
+                wallcheck = false;
+            }
+            Debug.DrawRay(transform.position + Vector3.right * 0.1f *(int)direction, Vector3.right * (int)direction * distanceRay, Color.black, 0.1f);
+            Gizmos.DrawWireCube(boxHit.point, boxRaySize);
+        }        
+    }*/
 
     #endregion
 
@@ -172,10 +245,12 @@ public class Player : Character
 
     private void FixedUpdate()
     {
+        wallRayCastCheck();
+        InteractivePlatformrayCheck();
+        InteractivePlatformrayCheck2();
 
-     
-       /* chrmat.SetColor("_Emissive_Color", color);*///emission 건들기
-        if(Input.GetKeyDown(KeyCode.Tab)) { HittedTest(); }
+        /* chrmat.SetColor("_Emissive_Color", color);*///emission 건들기
+        if (Input.GetKeyDown(KeyCode.Tab)) { HittedTest(); }
 
 
         if (Humonoidanimator != null)
@@ -185,14 +260,8 @@ public class Player : Character
             ModelAnimator.SetBool("Rolling", downAttack);
             Humonoidanimator.SetBool("DownAttack", downAttack);
         }
-        else
-        {
         
-        }
-        
-        wallRayCastCheck();
-        InteractivePlatformrayCheck();
-        InteractivePlatformrayCheck2();
+                
         var a = RunEffect.main;
 
         if (isRun && onGround)
@@ -263,24 +332,45 @@ public class Player : Character
 
 
         //translateFix = new(0, 0, Mathf.Abs(hori));
+        translateFix = new(hori, 0, 0);
 
-
-        if (!wallcheck)
+        /*if (!wallcheck)
         {
             Debug.Log("이동 가능");
             playerRb.velocity = new Vector3(playerRb.velocity.x, playerRb.velocity.y, hori * PlayerStat.instance.moveSpeed);
-        }
+        }*/
 
-        //playerRb.velocity = new Vector3(hori * PlayerStat.instance.moveSpeed, playerRb.velocity.y,playerRb.velocity.z);        
-
-
-        
+        #region 프로토타입용
         if (!wallcheck)
         {
-            playerRb.velocity = new Vector3(hori * PlayerStat.instance.moveSpeed, playerRb.velocity.y,playerRb.velocity.z );
-        }        
-
-
+            Debug.Log("이동 가능");
+            playerRb.velocity = new Vector3(hori * PlayerStat.instance.moveSpeed, playerRb.velocity.y, playerRb.velocity.z);
+            /*if (hori > 0 || hori < 0)
+            {
+                if (playerRb.velocity.x >= 2)
+                {
+                    playerRb.velocity = new(2, playerRb.velocity.y, playerRb.velocity.z);
+                }
+                else if (playerRb.velocity.x <= -2)
+                {
+                    playerRb.velocity = new(-2, playerRb.velocity.y, playerRb.velocity.z);
+                }
+                else
+                {
+                    playerRb.AddForce(translateFix * PlayerStat.instance.moveSpeed * 5);
+                }
+            }*/
+        }
+        else
+        {
+            playerRb.velocity = new Vector3(0, playerRb.velocity.y, playerRb.velocity.z);
+        }
+        /*if (!wallcheck)
+        {
+            transform.Translate(translateFix * PlayerStat.instance.moveSpeed * Time.deltaTime, Space.World);
+        }*/
+        #endregion
+        //playerRb.velocity = new Vector3(hori * PlayerStat.instance.moveSpeed, playerRb.velocity.y,playerRb.velocity.z);
 
         if (!isJump)
         {
@@ -348,7 +438,6 @@ public class Player : Character
         if (!downAttack)
         {
             downAttack = true;
-
             StartCoroutine(GoDownAttack());
         }
     }
@@ -366,9 +455,9 @@ public class Player : Character
 
         yield return new WaitForSeconds(PlayerStat.instance.flyTime);
 
+        playerRb.AddForce(Vector3.down * PlayerStat.instance.downForce);
         downAttackCollider.SetActive(true);
         playerRb.useGravity = true;
-        playerRb.AddForce(Vector3.down * PlayerStat.instance.downForce);
     }
     #endregion
 
@@ -501,7 +590,8 @@ public class Player : Character
          
             meleeCollider.SetActive(true);
             meleeCollider.GetComponent<SphereCollider>().enabled = true;
-            playerRb.AddForce(transform.forward * 3, ForceMode.Impulse);
+            if(!wallcheck)
+                playerRb.AddForce(transform.forward * 3, ForceMode.Impulse);
         }
         if(AttackEffect!=null)
         AttackEffect.SetActive(true);
@@ -571,12 +661,9 @@ public class Player : Character
     private void OnCollisionExit(Collision collision)
     {
         #region 바닥 상호작용
-        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("InteractivePlatform"))
-
-        {
-           
-            onGround = false;
-            
+        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("InteractivePlatform") || collision.gameObject.CompareTag("Enemy"))
+        {           
+            onGround = false;            
         }
         #endregion
     }
@@ -586,9 +673,7 @@ public class Player : Character
         if (collision.gameObject.CompareTag("Ground") && onGround == false)
         {
             Debug.Log("플랫폼에 닿고있음+ onground=false 레이 체크 중");
-            jumpRaycastCheck();
-        
-            downAttack = false;
+            jumpRaycastCheck();                   
 
             //platform = true;
         }
@@ -598,8 +683,6 @@ public class Player : Character
         {
             Debug.Log("checkplaatform");
             jumpRaycastCheck();
-
-            downAttack = false;
 
             if (Input.GetKey(KeyCode.DownArrow)&&Input.GetKeyDown(KeyCode.C) && !CullingPlatform)
             {
@@ -619,6 +702,8 @@ public class Player : Character
             {
                 Debug.Log("무적 상태입니다");
             }
+
+            jumpRaycastCheck();
         }
         #endregion
     }

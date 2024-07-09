@@ -178,7 +178,7 @@ public class PlayerHandler : MonoBehaviour
                 Debug.Log("내려찍기 작동합니다");                
 
                 CurrentPlayer.DownAttack();
-            }
+            }            
         }
         
         if (!Input.GetKey(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.X))

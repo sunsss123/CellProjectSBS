@@ -151,6 +151,14 @@ public class Enemy : Character
 
             Dead();
         }
+        if (target.position.x > transform.position.x)
+        {
+            transform.rotation = Quaternion.Euler(0, 90, 0);
+        }
+        else
+        {
+            transform.rotation = Quaternion.Euler(0, -90, 0);
+        }
         enemyRb.AddForce(-transform.forward * 3f, ForceMode.Impulse);
         InitAttackCoolTime();
     }
@@ -198,7 +206,7 @@ public class Enemy : Character
     {
         bool completeRot = false;
 
-        if (transform.eulerAngles.y >= -10 && transform.eulerAngles.y <= 10)
+        if (/*transform.eulerAngles.y >= -10 && transform.eulerAngles.y <= 10*/transform.eulerAngles.y >= rotLevel && transform.eulerAngles.y <= 10 + rotLevel)
         {
             completeRot = true;
         }
@@ -236,7 +244,10 @@ public class Enemy : Character
             }*/
         }
 
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(testTarget), rotationSpeed * Time.deltaTime);
+        /*if (testTarget != null)
+        {
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(testTarget), rotationSpeed * Time.deltaTime);
+        }*/
     }
 
     private void OnDrawGizmos()
@@ -361,10 +372,7 @@ public class Enemy : Character
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            /*enemyRb.constraints = RigidbodyConstraints.FreezePositionX |
-                RigidbodyConstraints.FreezePositionY |
-                RigidbodyConstraints.FreezeRotation;*/
-            enemyRb.constraints = RigidbodyConstraints.FreezePositionZ |
+            enemyRb.constraints = 
                 RigidbodyConstraints.FreezePositionY |
                 RigidbodyConstraints.FreezeRotation;
         }
