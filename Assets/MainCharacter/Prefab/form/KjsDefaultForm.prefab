@@ -1630,7 +1630,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32177de85efdfc943b70253b78ba038e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InteractDelay: 0.5
 --- !u!1 &7687757393293647033
 GameObject:
   m_ObjectHideFlags: 0
@@ -2259,6 +2258,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: LandingEffect
       objectReference: {fileID: 0}
+    - target: {fileID: 9074771481981546379, guid: 5558ec3b1b2614748a3e641e0dfd8385,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9077692708793887705, guid: 5558ec3b1b2614748a3e641e0dfd8385,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2415,6 +2419,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: RUNNINGeFFECT
       objectReference: {fileID: 0}
+    - target: {fileID: 8196178405622179907, guid: 69b92891381de2d4785a25572f46c697,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8418679488021058250, guid: 69b92891381de2d4785a25572f46c697,
         type: 3}
       propertyPath: looping
@@ -2529,6 +2538,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: JumpEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 2116291424760253944, guid: 9752f8386ccf40f429765cc1790d85a2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2123300198780780793, guid: 9752f8386ccf40f429765cc1790d85a2,
         type: 3}
@@ -2747,6 +2761,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Electro slash
+      objectReference: {fileID: 0}
+    - target: {fileID: 1171201465392465800, guid: 4aa9f30a28a77224ba84b2a2c334c71b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1233010467109672509, guid: 4aa9f30a28a77224ba84b2a2c334c71b,
         type: 3}
@@ -3211,6 +3230,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Hit_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 5024009746357069194, guid: ebcff9b8eb2eb8a4783c8ca85314ccad,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

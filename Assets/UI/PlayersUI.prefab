@@ -503,11 +503,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3da7213225838d4e91cd16bcd73cce2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerFormText: {fileID: 0}
-  Hpbar: {fileID: 0}
-  HpbarTransform: {fileID: 0}
-  firstSkillIconText: {fileID: 0}
-  secondSkillIconText: {fileID: 0}
+  PlayerFormText: {fileID: 6143632332547401616}
+  Hpbar: {fileID: 3076527209884652548}
+  HpbarTransform: {fileID: 5173886899004564973}
+  firstSkillIconText: {fileID: 3559235324659607755}
+  secondSkillIconText: {fileID: 4119848950748495800}
 --- !u!1 &1686091029747517958
 GameObject:
   m_ObjectHideFlags: 0

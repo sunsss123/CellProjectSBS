@@ -3,6 +3,7 @@ using UnityEngine;
 public class TransformPlace : MonoBehaviour
 {
     public TransformType type;
+    public GameObject TransformPlaceEffect;
     public virtual void transformStart(Collider other)
     {
         if (PlayerHandler.instance.CurrentType == TransformType.Default)
