@@ -150,6 +150,7 @@ public class Player : Character
 
     void wallRayCastCheck()
     {
+        #region 직선 레이캐스트
         /*//wallcheck = false;
         RaycastHit hit;
         Debug.DrawRay(this.transform.position + (Vector3.up * sizeFir + Vector3.right * raySize) * 0.1f * (int)direction, Vector3.right * (int)direction * 0.1f, Color.red, 0.1f);
@@ -183,38 +184,45 @@ public class Player : Character
             Debug.Log("벽 체크 안됨");
             wallcheck = false;
         }*/
+        #endregion
 
-        Debug.DrawRay(transform.position + Vector3.right * 0.1f * (int)direction, Vector3.right * (int)direction * distanceRay, Color.white, 0.1f);
-        if (Physics.BoxCast(this.transform.position, boxRaySize, Vector3.right * (int)direction, out boxHit, transform.rotation, distanceRay))
+        #region 박스캐스트 시도
+       /* Debug.DrawRay(transform.position + Vector3.right * 0.05f * (int)direction, Vector3.right * (int)direction * distanceRay, Color.white, 0.1f);
+        if (Physics.BoxCast(this.transform.position + Vector3.right * 0.05f * (int)direction, boxRaySize, Vector3.right * (int)direction, out boxHit, Quaternion.identity, distanceRay))
         {
             //Debug.Log($"박스캐스트 인식함 {boxHit.collider}");
             if (boxHit.collider.CompareTag("InteractivePlatform") || boxHit.collider.CompareTag("Ground"))
             {
                 wallcheck = true;
-                Debug.Log($"박스캐스트가 플랫폼을 인식하여 벽 고정을 방지함{boxHit.collider}");
+                Debug.Log($"박스캐스트가 플랫폼을 인식하여 벽 고정을 방지함{boxHit.collider}\n콜라이더의 위치 {boxHit.collider.transform.position}");
             }
             else
             {
                 Debug.Log($"박스캐스트가 플랫폼을 찾지 못하여 고정됨{boxHit.collider}");
                 wallcheck = false;
             }
-            Debug.DrawRay(transform.position + Vector3.right * 0.1f * (int)direction, Vector3.right * (int)direction * distanceRay, Color.black, 0.1f);
+            Debug.DrawRay(transform.position + Vector3.right * 0.05f * (int)direction, Vector3.right * (int)direction * distanceRay, Color.black, 0.1f);
             //Gizmos.DrawWireCube(boxHit.point, boxRaySize);
         }
         else
         {
-            wallcheck = false;
-        }
-
+            wallcheck = false;            
+        }*/
+        #endregion
     }
 
-    /*private void OnDrawGizmos()
+    public void SetWallcheck(bool checking)
     {
-        Debug.DrawRay(transform.position + Vector3.right * 0.1f * (int)direction, Vector3.right * (int)direction * distanceRay, Color.white, 0.1f);
+        wallcheck = checking;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Debug.DrawRay(transform.position + Vector3.right * 0.05f * (int)direction, Vector3.right * (int)direction * distanceRay, Color.white, 0.1f);
         if (Physics.BoxCast(this.transform.position, boxRaySize, Vector3.right * (int)direction, out boxHit, transform.rotation, distanceRay))
         {
             //Debug.Log($"박스캐스트 인식함 {boxHit.collider}");
-            if (boxHit.collider.CompareTag("InteractivePlatform"))
+            /*if (boxHit.collider.CompareTag("InteractivePlatform"))
             {
                 wallcheck = true;
                 Debug.Log($"박스캐스트가 플랫폼을 인식하여 벽 고정을 방지함{boxHit.collider}");
@@ -224,10 +232,12 @@ public class Player : Character
                 Debug.Log($"박스캐스트가 플랫폼을 찾지 못하여 고정됨{boxHit.collider}");
                 wallcheck = false;
             }
-            Debug.DrawRay(transform.position + Vector3.right * 0.1f *(int)direction, Vector3.right * (int)direction * distanceRay, Color.black, 0.1f);
+            Debug.DrawRay(transform.position + Vector3.right * 0.1f * (int)direction, Vector3.right * (int)direction * distanceRay, Color.black, 0.1f);*/
             Gizmos.DrawWireCube(boxHit.point, boxRaySize);
-        }        
-    }*/
+            Debug.Log(boxHit.point);
+        }
+        Gizmos.DrawWireCube(transform.position, boxRaySize);
+    }
 
     #endregion
 
@@ -244,9 +254,14 @@ public class Player : Character
 
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         wallRayCastCheck();
+    }
+
+    private void FixedUpdate()
+    {
+        //wallRayCastCheck();
         InteractivePlatformrayCheck();
         InteractivePlatformrayCheck2();
 

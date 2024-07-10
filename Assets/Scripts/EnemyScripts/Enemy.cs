@@ -96,6 +96,7 @@ public class Enemy : Character
     IEnumerator WaitStunTime()
     {
         eStat.onInvincible = true;
+        transform.rotation = Quaternion.Euler(0, -90 * (int)PlayerHandler.instance.CurrentPlayer.direction, 0);
         enemyRb.AddForce(-((transform.forward + transform.up)*5f), ForceMode.Impulse);
         //testMesh.materials[0] = stun;
 
