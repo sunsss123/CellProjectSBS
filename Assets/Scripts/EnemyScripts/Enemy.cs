@@ -96,6 +96,7 @@ public class Enemy : Character
     IEnumerator WaitStunTime()
     {
         eStat.onInvincible = true;
+        transform.rotation = Quaternion.Euler(0, -90 * (int)PlayerHandler.instance.CurrentPlayer.direction, 0);
         enemyRb.AddForce(-((transform.forward + transform.up)*5f), ForceMode.Impulse);
         //testMesh.materials[0] = stun;
 
@@ -150,6 +151,14 @@ public class Enemy : Character
             eStat.hp = 0;
 
             Dead();
+        }
+        if (target.position.x > transform.position.x)
+        {
+            transform.rotation = Quaternion.Euler(0, 90, 0);
+        }
+        else
+        {
+            transform.rotation = Quaternion.Euler(0, -90, 0);
         }
         enemyRb.AddForce(-transform.forward * 3f, ForceMode.Impulse);
         InitAttackCoolTime();
@@ -236,7 +245,10 @@ public class Enemy : Character
             }*/
         }
 
-        //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(testTarget), rotationSpeed * Time.deltaTime);
+        /*if (testTarget != null)
+        {
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(testTarget), rotationSpeed * Time.deltaTime);
+        }*/
     }
 
     private void OnDrawGizmos()
@@ -359,12 +371,7 @@ public class Enemy : Character
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            enemyRb.constraints = 
-                RigidbodyConstraints.FreezePositionY| RigidbodyConstraints.FreezePositionZ |
-                RigidbodyConstraints.FreezeRotation;
-        }
+        
     }
 
     /*private void OnTriggerExit(Collider other)
