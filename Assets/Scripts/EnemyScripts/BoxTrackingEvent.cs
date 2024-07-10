@@ -8,7 +8,7 @@ public class BoxTrackingEvent : MonoBehaviour
 
     private void Awake()
     {
-        boxEnemy = transform.root.GetComponent<BoxTestt>();
+        boxEnemy = transform.parent.GetComponent<BoxTestt>();
     }
 
     public void StopMove()

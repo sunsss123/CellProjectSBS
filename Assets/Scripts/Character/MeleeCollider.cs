@@ -24,14 +24,21 @@ public class MeleeCollider : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            Enemy enemy = other.GetComponent<Enemy>();
-
-            if (!enemy.eStat.onInvincible)
+            if (!other.GetComponent<Enemy>())
             {
-                enemy.Damaged(damage, gameObject);
-                saveEffect.transform.position = other.transform.position;
-                saveEffect.Play();
-                gameObject.SetActive(false);
+                other.GetComponent<BoxTestt>().Damaged(damage, gameObject);
+            }
+            else
+            {
+                Enemy enemy = other.GetComponent<Enemy>();
+
+                if (!enemy.eStat.onInvincible)
+                {
+                    enemy.Damaged(damage, gameObject);
+                    saveEffect.transform.position = other.transform.position;
+                    saveEffect.Play();
+                    gameObject.SetActive(false);
+                }
             }
         }
     }
