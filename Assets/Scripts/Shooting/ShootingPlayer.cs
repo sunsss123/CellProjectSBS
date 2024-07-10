@@ -21,7 +21,7 @@ public class ShootingPlayer : ShootingObject
     public override void hitted()
     {
 
-        if (untouchableTimer <= 0)
+        if (untouchableTimer <= 0&& !ShootingFIeld.instance.active)
         {
             base.hitted();
             if (currenthp <= 0)
@@ -128,7 +128,8 @@ public class ShootingPlayer : ShootingObject
     }
     private void FixedUpdate()
     {
-
+        if (ShootingFIeld.instance.active)
+            return;
         LifeUI.text = $"Life:{currenthp}";
         snapFieldPosition();
 

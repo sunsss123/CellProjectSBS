@@ -135,7 +135,7 @@ public class Player : Character
                     isJump = false;
                     downAttack = false;
                     PlayerStat.instance.jumpCount = 0;
-                    Debug.Log("점프회복");
+
                     if (LandingEffect != null)
                         LandingEffect.SetActive(true);
                 }
@@ -286,7 +286,7 @@ public class Player : Character
             if (!RunEffect.isPlaying)
                 RunEffect.Play();
 
-            Debug.Log("활성");
+           
         }
         else
         {
@@ -359,7 +359,7 @@ public class Player : Character
         #region 프로토타입용
         if (!wallcheck)
         {
-            Debug.Log("이동 가능");
+     
             playerRb.velocity = new Vector3(hori * PlayerStat.instance.moveSpeed, playerRb.velocity.y, playerRb.velocity.z);
             /*if (hori > 0 || hori < 0)
             {
@@ -433,7 +433,7 @@ public class Player : Character
             {
                 attackGround = true;
             }
-            Debug.Log("공격키");
+ 
             if (Humonoidanimator != null)
                 Humonoidanimator.Play("Attack");
             StartCoroutine(TestMeleeAttack());
@@ -496,7 +496,7 @@ public class Player : Character
         PlayerStat.instance.cState = CharacterState.hit;
         HittedEffect.gameObject.SetActive(true);
         PlayerStat.instance.hp -= damage;
-        Debug.Log($"{gameObject}가 {obj}에 의해 데미지를 받음:{damage}, 남은 체력:{PlayerStat.instance.hp}/{PlayerStat.instance.hpMax}");
+      
 
         if (PlayerStat.instance.hp <= 0)
         {
@@ -688,7 +688,7 @@ public class Player : Character
         //#region 바닥 상호작용
         if (collision.gameObject.CompareTag("Ground") && onGround == false)
         {
-            Debug.Log("플랫폼에 닿고있음+ onground=false 레이 체크 중");
+          
             jumpRaycastCheck();                   
 
             //platform = true;
@@ -697,12 +697,12 @@ public class Player : Character
 
         if (collision.gameObject.CompareTag("InteractivePlatform"))
         {
-            Debug.Log("checkplaatform");
+            
             jumpRaycastCheck();
 
             if (Input.GetKey(KeyCode.DownArrow)&&Input.GetKeyDown(KeyCode.C) && !CullingPlatform)
             {
-                Debug.Log("DownArrowChk");
+              
                 CullingPlatform = true;
                 Physics.IgnoreLayerCollision(6, 11, true);
             }
@@ -772,7 +772,7 @@ public class Player : Character
 
                     CullingPlatform = true;
                     Physics.IgnoreLayerCollision(6, 11, true);
-                    Debug.Log("rayCheck1");
+
 
                 }
 
@@ -802,7 +802,7 @@ public class Player : Character
                     CullingPlatform = false;
                     Physics.IgnoreLayerCollision(6, 11, false);
                     platformDisableTimer = 0;
-                    Debug.Log("rayCheck3");
+
                 }
 
             }

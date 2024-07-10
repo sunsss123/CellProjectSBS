@@ -5,9 +5,9 @@ using UnityEngine;
 public class DontMoveCollider : MonoBehaviour
 {
     private void OnTriggerStay(Collider other)
-    {               
-        if (other.CompareTag("Ground") || other.CompareTag("Enemy") || other.CompareTag("GameController") ||
-            other.CompareTag("InteractivePlatform") && !PlayerHandler.instance.CurrentPlayer.CullingPlatform)
+    {
+        if (other.CompareTag("Ground") && !other.GetComponent<TransformPlace>() || other.CompareTag("Enemy") || other.CompareTag("GameController") && !other.GetComponent<RemoteObject>().onActive
+          ||  other.CompareTag("InteractivePlatform") && !PlayerHandler.instance.CurrentPlayer.CullingPlatform)
         {
             PlayerHandler.instance.CurrentPlayer.SetWallcheck(true);
         }
@@ -19,12 +19,17 @@ public class DontMoveCollider : MonoBehaviour
                 PlayerHandler.instance.CurrentPlayer.SetWallcheck(true);
             }
         }
+
+        if (other.CompareTag("Untagged"))
+        {
+            PlayerHandler.instance.CurrentPlayer.SetWallcheck(false);
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Ground") || other.CompareTag("Enemy") || other.CompareTag("GameController") ||
-            other.CompareTag("InteractivePlatform") && !PlayerHandler.instance.CurrentPlayer.CullingPlatform)
+        if (other.CompareTag("Ground") && !other.GetComponent<TransformPlace>()  ||other.CompareTag("Enemy") || other.CompareTag("GameController") && !other.GetComponent<RemoteObject>().onActive
+           || other.CompareTag("InteractivePlatform") && !PlayerHandler.instance.CurrentPlayer.CullingPlatform)
         {
             PlayerHandler.instance.CurrentPlayer.SetWallcheck(false);
         }
@@ -35,6 +40,11 @@ public class DontMoveCollider : MonoBehaviour
             {
                 PlayerHandler.instance.CurrentPlayer.SetWallcheck(false);
             }
+        }
+
+        if (other.CompareTag("Untagged"))
+        {
+            PlayerHandler.instance.CurrentPlayer.SetWallcheck(false);
         }
     }
 }

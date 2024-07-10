@@ -7,6 +7,7 @@ public class PlayerXChangePortal : InteractiveObject
     float ZchangeVaule;
     public PlayerXChangePortal Destination;
     public Transform PlayerTeleportPosition;
+    public bool isZpin=true;
     private void Awake()
     {
         if(Destination != null)
@@ -21,6 +22,6 @@ public class PlayerXChangePortal : InteractiveObject
         PlayerHandler.instance.CurrentPlayer.transform.position = Destination.PlayerTeleportPosition.position;
         PlayerCam.instance.PlayerZVaule += ZchangeVaule;
         if(PlayerCam.instance.PlayerZVaule!=0)
-             PlayerCam.instance.ZPin=true;
+             PlayerCam.instance.ZPin= isZpin;
     }
 }
