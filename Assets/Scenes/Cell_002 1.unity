@@ -10110,6 +10110,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Portal (1-1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4258465103199411461, guid: 4447933fbefb0254cb86ad376b8f148b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7112567660650482744, guid: 4447933fbefb0254cb86ad376b8f148b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -19557,7 +19562,7 @@ Transform:
   m_GameObject: {fileID: 1888291534}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 47.348, y: -5.68, z: -0.48600006}
+  m_LocalPosition: {x: 47.7, y: -5.54, z: -0.49}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

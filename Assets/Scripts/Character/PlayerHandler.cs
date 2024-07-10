@@ -114,10 +114,10 @@ public class PlayerHandler : MonoBehaviour
     {
             #region 플레이어 프리팹 교체
             Transform tf=null;
-            if (CurrentPlayer != null)
+            if (Playerprefab != null)
             {
               
-                tf = CurrentPlayer.transform;
+                tf = Playerprefab.transform;
                 CurrentPlayer = null;
             }
             else
