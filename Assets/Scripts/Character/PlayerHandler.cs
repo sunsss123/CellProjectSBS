@@ -12,6 +12,7 @@ public class PlayerHandler : MonoBehaviour
     #region 플레이어 변신관련 스탯
     public float CurrentPower;
     public float MaxPower=60;
+    public bool OnDeformField;
     public TransformType retoretype=TransformType.Default;
     public TransformPlace LastTransformPlace;
     #endregion
@@ -106,6 +107,7 @@ public class PlayerHandler : MonoBehaviour
         CurrentPlayer.transform.Translate(Vector3.up * defromUpPosition);
         LastTransformPlace.gameObject.SetActive(true);
         LastTransformPlace = null;
+        PlayerStat.instance.jumpCount = 0;
     }
     void CreateModelByCurrentType(Action eventhandler =null)
 {
