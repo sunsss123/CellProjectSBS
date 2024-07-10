@@ -69,7 +69,7 @@ public class Enemy : Character
         attackDelay = 1.5f;
         if (onStun)
         {
-            Debug.Log("행동 불능");
+         
             StartCoroutine(WaitStunTime());
         }
     }
@@ -78,7 +78,7 @@ public class Enemy : Character
     {
         ReadyAttackTime();
 
-        Debug.Log($"추적대상: {target}");
+  
     }
 
     // 부모인 Enemy에서 사용?
@@ -216,7 +216,7 @@ public class Enemy : Character
         {
             completeRot = true;
         }
-        Debug.Log($"체크가 되는 거냐? {complete = completeRot}\n로테이션앵글:{transform.eulerAngles.y}");
+        //Debug.Log($"체크가 되는 거냐? {complete = completeRot}\n로테이션앵글:{transform.eulerAngles.y}");
         return completeRot;
     }
     #endregion
@@ -232,7 +232,7 @@ public class Enemy : Character
         {
             if (colliders[i].CompareTag("Player"))
             {
-                Debug.Log($"{target} 추적해라");
+  
                 target = colliders[i].transform;
                 checkPlayer = true;
                 tracking = true;

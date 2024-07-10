@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEditor;
 using UnityEngine;
 public class ConvertCoordiate {
@@ -19,6 +20,8 @@ public class ShootingFIeld : signalSender
     public ShootingPlayer player;
     public float nextwavetime;
 
+    public TextMeshProUGUI CompleteTExt;
+
     [Header("World Position")]
   public  float MaxSizeX;
    public float MinSizeX;
@@ -34,13 +37,14 @@ public class ShootingFIeld : signalSender
         ShootingCam.gameObject.SetActive(false);
 
         PlayerHandler.instance.Deform();
-        if(this.gameObject.activeSelf)
-        this.gameObject.SetActive(false);
+       
     }
     void DefeatShooting()
     {
         PlayerStat.instance.hp--;
         EndShooting();
+        if (gameObject.activeSelf)
+            gameObject.SetActive(false);
     }
     private void OnEnable()
     {
@@ -48,6 +52,7 @@ public class ShootingFIeld : signalSender
     }
     public void startshooting()
     {
+        CompleteTExt.gameObject.SetActive(false);
         PlatformerCam.gameObject.SetActive(false);
         ShootingCam.gameObject.SetActive(true);
         player.ShootingPlayerDieEvent += DefeatShooting;
@@ -63,7 +68,7 @@ public class ShootingFIeld : signalSender
     void activewave()
     {
         var obj = shootingwavesqueue.Dequeue();
-        Debug.Log($"{obj.gameObject.name}Dequeue");
+   
         obj.gameObject.SetActive(true);
         obj.startwave();
     }
@@ -88,12 +93,12 @@ public class ShootingFIeld : signalSender
             }
             else
             {
-                Debug.Log("슈팅 클리어 축하한다");
-      
+              
+                CompleteTExt.gameObject.SetActive(true);
                 active = true;
                 Send(active);
                 EndShooting();
-                
+             
             }
             return false;
             }
@@ -108,7 +113,7 @@ public class ShootingFIeld : signalSender
         var a = g.enemylist.GetComponentsInChildren<ShootingEnemyGroup>();
         foreach (var s in a)
         {
-            Debug.Log($"{s.name}웨이브 추가");
+
             s.OnwaveCleard += gonextwave;
             shootingwavesqueue.Enqueue(s);
             s.gameObject.SetActive(false);

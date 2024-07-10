@@ -13,7 +13,7 @@ public class DOor : InteractiveObject
     public override void Active(direction direct)
     {
         animator.SetInteger("direction", (int)direct);
-        Debug.Log("´©¸§¤»");
+  
         animator.SetBool("Open", true);
     }
    

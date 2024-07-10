@@ -30,6 +30,8 @@ public class DontMoveCollider : MonoBehaviour
             {
                 PlayerHandler.instance.CurrentPlayer.SetWallcheck(true);
             }
+
+            //PlayerHandler.instance.CurrentPlayer.SetWallcheck(false);
         }
     }
 

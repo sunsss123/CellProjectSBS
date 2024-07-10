@@ -17,7 +17,7 @@ public class Switch :  signalSender
     {
       if(collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Enemy"))
         {
-            Debug.Log("Switch Active");
+       
             active = true;
             Send(active);
         }

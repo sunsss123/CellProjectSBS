@@ -114,10 +114,10 @@ public class PlayerHandler : MonoBehaviour
     {
             #region 플레이어 프리팹 교체
             Transform tf=null;
-            if (CurrentPlayer != null)
+            if (Playerprefab != null)
             {
               
-                tf = CurrentPlayer.transform;
+                tf = Playerprefab.transform;
                 CurrentPlayer = null;
             }
             else
@@ -154,7 +154,7 @@ public class PlayerHandler : MonoBehaviour
             }
             if (p.TryGetComponent<EventHandle>(out Ehandler))
             {
-                Debug.Log("handler 발견");
+               
                 Ehandler.GetEvent(eventhandler);
             }
            
@@ -212,7 +212,7 @@ public class PlayerHandler : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.X) && !CurrentPlayer.onGround)
             {
-                Debug.Log("내려찍기 작동합니다");                
+                          
 
                 CurrentPlayer.DownAttack();
             }            

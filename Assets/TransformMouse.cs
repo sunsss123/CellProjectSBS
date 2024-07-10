@@ -13,7 +13,7 @@ public class TransformMouse : TransformPlace
     }
     void activeshooting()
     {
-        Debug.Log("슈팅게임시작");
+      
         ShootingGame.gameObject.SetActive(true);
     }
     public override void transformStart(Collider other)

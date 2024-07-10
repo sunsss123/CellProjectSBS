@@ -8,7 +8,7 @@ public class RemoteSkillCollider : MonoBehaviour
     {
         if (other.CompareTag("GameController"))
         {
-            Debug.Log("Å½Áö");
+            //Debug.Log("Å½Áö");
             remocon.remoteObj.Add(other.gameObject);
         }
     }

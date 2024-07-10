@@ -18,7 +18,7 @@ public class ShootingEnemyGroup : MonoBehaviour
         foreach (var s in GetComponentsInChildren<ShootingEnemy>())
         {
             Shootinggroupmembers.Add(s);
-            Debug.Log($" 웨이브에 {s.name}추가");
+  
             s.gameObject.SetActive(false);
             s.Destroyevent += RemoveMember;
         }
@@ -28,7 +28,7 @@ public class ShootingEnemyGroup : MonoBehaviour
     {
         foreach (var s in Shootinggroupmembers)
         {
-            Debug.Log("웨이브 스타트");
+        
             s.gameObject.SetActive(true);
 
         }

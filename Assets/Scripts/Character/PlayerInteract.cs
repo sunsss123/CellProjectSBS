@@ -17,7 +17,7 @@ public class PlayerInteract : MonoBehaviour
         Debug.DrawRay(transform.position * (int)p.direction, Vector3.right * 0.15f * (int)p.direction, Color.black);
         if (Physics.Raycast(this.transform.position * (int)p.direction, Vector3.right * (int)p.direction, out hit, 0.15f))
         {
-            Debug.Log(hit.collider.name);
+   
             if (hit.collider.CompareTag("InteractiveObject"))
             {
                 if (!hit.collider.TryGetComponent<InteractiveObject>(out CurrentInteract))
@@ -51,7 +51,7 @@ public class PlayerInteract : MonoBehaviour
             {
                 CurrentInteract.Active(p.direction);
                 CurrentInteract = null;
-                Debug.Log("しししし");
+
                 InteractTimer = PlayerStat.instance. InteractDelay;
             }
         }

@@ -8,6 +8,7 @@ public class Quitportal : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            Debug.Log("°­Á¾");
             Application.Quit();
         }
     }
