@@ -105,7 +105,7 @@ public class ShootingPlayer : ShootingObject
 
     public IEnumerator PlayerAttack()
     {
-        var bullet = Instantiate(Bullet, this.transform.position, this.transform.rotation);
+        var bullet = Instantiate(Bullet, ShootPos.position, this.transform.rotation);
         bullet.GetComponent<ShootingBullet>().Setbullet(bulletspeed, TargetVector.normalized, bulletlifetime, true);
         onshoot = true;
         yield return new WaitForSeconds(AttackDelay);

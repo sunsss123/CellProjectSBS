@@ -8,10 +8,9 @@ public class Quitportal : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("강종");
-            Application.Quit();
 
-            Debug.Log("강종");
+
+          
             SceneManager.LoadScene("Title");
 
 
