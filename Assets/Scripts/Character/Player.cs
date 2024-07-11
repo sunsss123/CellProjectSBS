@@ -77,7 +77,7 @@ public class Player : Character
     public float sizeMiddle;
     bool platform;
     public float raySize;
-
+    public float jumpInitDelay;
     [Header("내려찍기 체공 시간")]
     public float flyTime;
 
@@ -268,7 +268,8 @@ public class Player : Character
         /* chrmat.SetColor("_Emissive_Color", color);*///emission 건들기
         if (Input.GetKeyDown(KeyCode.Tab)) { HittedTest(); }
 
-
+        if (onGround && isJump && playerRb.velocity.y <= 0)
+            jumpRaycastCheck();
         if (Humonoidanimator != null)
         {
             Humonoidanimator.SetBool("run", isRun);

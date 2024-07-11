@@ -8,10 +8,23 @@ public class DeformObject : MonoBehaviour
     {
         if ( other.CompareTag("Player") )
         {
-    
+
             if (PlayerHandler.instance.CurrentType != TransformType.Default)
+            {
                 PlayerHandler.instance.Deform();
+                PlayerHandler.instance.OnDeformField = true;
+            }
         }
       
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+
+           
+                PlayerHandler.instance.OnDeformField = false;
+
+        }
     }
 }
