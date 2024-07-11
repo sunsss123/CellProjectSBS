@@ -8,13 +8,11 @@ public class Quitportal : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-<<<<<<< Updated upstream
-            Application.Quit();
-=======
+
             Debug.Log("°­Á¾");
             SceneManager.LoadScene("Title");
 
->>>>>>> Stashed changes
+
         }
     }
 }
