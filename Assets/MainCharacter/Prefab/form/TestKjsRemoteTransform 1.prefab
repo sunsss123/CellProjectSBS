@@ -629,12 +629,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4487332042099046175}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.035, z: 0.061}
-  m_LocalScale: {x: 0.06, y: 0.22, z: 0.1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.17899999, z: 0.061}
+  m_LocalScale: {x: 0.06, y: 0.22, z: 0.10000001}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3103236764559981538}
+  m_Father: {fileID: 6694174433823802773}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5424903837394158965
 MeshFilter:
@@ -886,7 +886,6 @@ Transform:
   - {fileID: 1082617012181833111}
   - {fileID: 1025928171613452622}
   - {fileID: 6694174433823802773}
-  - {fileID: 6579642725403285219}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &8686286565664874215
@@ -953,6 +952,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerRb: {fileID: 2721062536692114604}
   capsuleCollider: {fileID: 8686286565664874215}
+  dmCollider: {fileID: 3543678051008448152}
   direction: 1
   meleeCollider: {fileID: 7327762641764429713}
   flyCollider: {fileID: 8625533091771102808}
@@ -986,6 +986,7 @@ MonoBehaviour:
   onDash: 0
   isMove: 0
   canAttack: 0
+  wallcheck: 0
   velocityMove: {x: 0, y: 0, z: 0}
   rigidbodyPos: {x: 0, y: 0, z: 0}
   sizeX: 1
@@ -1269,6 +1270,7 @@ Transform:
   - {fileID: 7599378028163488949}
   - {fileID: 4897481150841746211}
   - {fileID: 3852787268940778463}
+  - {fileID: 6579642725403285219}
   m_Father: {fileID: 3103236764559981538}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7251639947537884206

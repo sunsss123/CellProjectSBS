@@ -10,7 +10,7 @@ public class DontMoveCollider : MonoBehaviour
 
     private void Awake()
     {
-        Player player = transform.parent.GetComponent<Player>();
+        Player player = transform.parent.parent.GetComponent<Player>();
         player.dmCollider = this;
     }
 

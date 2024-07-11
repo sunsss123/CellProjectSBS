@@ -315,7 +315,7 @@ public class BoxTestt : MonoBehaviour
             rangeCollider.SetActive(false);
             //gameObject.SetActive(false);
             GetComponent<BoxCollider>().enabled = false;
-            Instantiate(breakBox, transform.position, Quaternion.identity);
+            Instantiate(breakBox, transform.position, Quaternion.identity).transform.parent = this.transform;
             Instantiate(enemy, transform.position, Quaternion.identity).GetComponent<Enemy>().onStun = true;
             gameObject.SetActive(false);
         }
