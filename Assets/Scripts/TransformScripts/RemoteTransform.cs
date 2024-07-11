@@ -56,14 +56,16 @@ public class RemoteTransform : Player
             {
                 handlerange.gameObject.SetActive(true);
             }*/
-
+            Humonoidanimator.SetBool("Charge", true);
             if (!handlerange.gameObject.activeSelf)
             {
                 handlerange.gameObject.SetActive(true);
                 handlerange.enabled = true;
+                Humonoidanimator.Play("Charge");
             }
 
             Charging = true;
+          
             handletimer += Time.deltaTime;
             if (handletimer >= handleMaxTime)
             {
@@ -98,7 +100,7 @@ public class RemoteTransform : Player
                 handlerange.radius = handlediameterrangemin;
             }*/
             Charging = false;
-
+            Humonoidanimator.SetBool("Charge", false);
             if (timeScale < handlediameterrangemin)
             {
                 handlerange.transform.localScale = new Vector3(handlediameterrangemin, handlediameterrangemin, 0);
@@ -111,6 +113,7 @@ public class RemoteTransform : Player
 
     public override void Attack()
     {
+        Humonoidanimator.Play("Attack");
         Instantiate(laserPrefab, firePoint.position, transform.rotation);
 
     }

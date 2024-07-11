@@ -1,7 +1,7 @@
 
 using UnityEditor;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public enum CurrentAttack { ground, sky }
 
 public class PlayerStat : CharacterStat
@@ -40,7 +40,7 @@ public class PlayerStat : CharacterStat
     private void FixedUpdate()
     {
         if (hp <= 0)
-            Application.Quit();
+            SceneManager.LoadScene("Title");
     }
 
     // Start is called before the first frame update

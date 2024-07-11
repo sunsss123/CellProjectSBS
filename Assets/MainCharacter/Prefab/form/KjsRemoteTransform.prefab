@@ -904,8 +904,16 @@ MonoBehaviour:
   rigidbodyPos: {x: 0, y: 0, z: 0}
   sizeX: 1
   sizeY: 2
+  sizeFir: 0
+  sizeSec: 0
+  sizeThr: 0
+  sizefou: 0
+  sizeMiddle: 0
   raySize: 0
+  jumpInitDelay: 0
   flyTime: 0.5
+  boxRaySize: {x: 0, y: 0, z: 0}
+  distanceRay: 0
   RunEffect: {fileID: 8908631264578808313}
   HittedEffect: {fileID: 7911526485466602651}
   AttackEffect: {fileID: 676002087169428122}
