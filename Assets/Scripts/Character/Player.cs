@@ -13,8 +13,9 @@ public class Player : Character
     #region 변수
     public Rigidbody playerRb;
     public CapsuleCollider capsuleCollider;
+    public DontMoveCollider dmCollider;
 
-   public direction direction=direction.Right;
+    public direction direction=direction.Right;
 
     [Header("근접 및 원거리 공격 관련")]
     public GameObject meleeCollider; // 근접 공격 콜라이더
@@ -60,7 +61,7 @@ public class Player : Character
     public bool isMove; // 이동 가능 상태
 
     public bool canAttack; // 공격 가능
-    bool wallcheck;
+    public bool wallcheck;
 
     #endregion
 
@@ -234,7 +235,7 @@ public class Player : Character
             }
             Debug.DrawRay(transform.position + Vector3.right * 0.1f * (int)direction, Vector3.right * (int)direction * distanceRay, Color.black, 0.1f);*/
             Gizmos.DrawWireCube(boxHit.point, boxRaySize);
-            Debug.Log(boxHit.point);
+            //Debug.Log(boxHit.point);
         }
         Gizmos.DrawWireCube(transform.position, boxRaySize);
     }
@@ -658,6 +659,7 @@ public class Player : Character
     {
 
         PlayerStat.instance.formInvincible = true;
+        PlayerHandler.instance.lastDirection = direction;
         formChange = true;
         onInvincible = true;
         Time.timeScale = 0.2f;
@@ -667,8 +669,10 @@ public class Player : Character
         yield return new WaitForSeconds(waitTime);
 
         PlayerHandler.instance.CurrentPower = PlayerHandler.instance.MaxPower;
-        Instantiate(changeEffect, transform.position, Quaternion.identity);
+        Instantiate(changeEffect, transform.position, Quaternion.identity);       
         PlayerHandler.instance.transformed(type,event_);
+        if (PlayerHandler.instance.CurrentPlayer != null)
+            PlayerHandler.instance.CurrentPlayer.direction = direction;
         formChange = false;
         Time.timeScale = 1f;
     }
@@ -737,7 +741,8 @@ public class Player : Character
     {
         if (other.CompareTag("EnemyAttack") && !onInvincible)
         {
-            Damaged(other.GetComponent<EnemyMeleeAttack>().GetDamage(), other.gameObject);
+            Debug.Log("피해를 받음");
+            //Damaged(other.GetComponent<EnemyMeleeAttack>().GetDamage(), other.gameObject);
         }
     }    
 

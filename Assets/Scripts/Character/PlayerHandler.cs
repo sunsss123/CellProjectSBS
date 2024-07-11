@@ -21,7 +21,7 @@ public class PlayerHandler : MonoBehaviour
     GameObject Playerprefab;
     public Player CurrentPlayer; // «‡µø ¿€æ˜
     public PlayerStat pStat; //Ω∫≈» ∫–πË (Ω∫∆‰º»æÓ≈√)
-
+    public direction lastDirection = direction.Right;
     #endregion
     #region ΩÃ±€≈Ê
     public static PlayerHandler instance;
@@ -102,8 +102,11 @@ public class PlayerHandler : MonoBehaviour
     public float defromUpPosition;
  public   void Deform()
     {
+        if(CurrentPlayer !=null)
+            lastDirection = CurrentPlayer.direction;        
         transformed(TransformType.Default);
         LastTransformPlace.transform.position = Playerprefab.transform.position;
+        CurrentPlayer.direction = lastDirection;
         CurrentPlayer.transform.Translate(Vector3.up * defromUpPosition);
         LastTransformPlace.gameObject.SetActive(true);
         LastTransformPlace = null;

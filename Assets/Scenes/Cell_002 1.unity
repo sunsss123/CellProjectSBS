@@ -1147,6 +1147,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1613567425}
     m_Modifications:
+    - target: {fileID: 679739752782495093, guid: 04b5e7c62857ca4469474fb531d18114,
+        type: 3}
+      propertyPath: rushForce
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2202126381614901408, guid: 04b5e7c62857ca4469474fb531d18114,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4100606063395682568, guid: 04b5e7c62857ca4469474fb531d18114,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3793,6 +3803,7 @@ MonoBehaviour:
   LastTransformPlace: {fileID: 0}
   CurrentPlayer: {fileID: 0}
   pStat: {fileID: 0}
+  lastDirection: 1
   characterFallLimit: 20
   CurrentType: 0
   defromUpPosition: 0.6
@@ -20036,7 +20047,7 @@ Transform:
   m_GameObject: {fileID: 1888291534}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 18.63, y: 2.5, z: -0}
+  m_LocalPosition: {x: 27.93, y: -3.2, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

@@ -15,7 +15,16 @@ public class AttackColliderRange : MonoBehaviour
     {
         //ebug.Log($"트리거 감지 중 {other.gameObject}");   
         if (other.CompareTag("Player") && !enemy.activeTv && !enemy.onAttack && !enemy.onStun)
-        {            
+        {
+            if (enemy.transform.position.x < enemy.target.position.x)
+            {
+                enemy.transform.rotation = Quaternion.Euler(0, 90, 0);
+            }
+            else
+            {
+                enemy.transform.rotation = Quaternion.Euler(0, -90, 0);
+            }
+
             enemy.onAttack = true;
         }
     }

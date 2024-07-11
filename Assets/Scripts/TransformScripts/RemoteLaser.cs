@@ -36,4 +36,9 @@ public class RemoteLaser : MonoBehaviour
             }
         }
     }
+
+    private void OnBecameInvisible()
+    {
+        Destroy(gameObject);
+    }
 }

@@ -152,13 +152,18 @@ public class Enemy : Character
 
             Dead();
         }
-        if (target.position.x > transform.position.x)
+        enemyRb.velocity = Vector3.zero;
+        attackCollider.SetActive(false);        
+        if (target != null)
         {
-            transform.rotation = Quaternion.Euler(0, 90, 0);
-        }
-        else
-        {
-            transform.rotation = Quaternion.Euler(0, -90, 0);
+            if (target.position.x > transform.position.x)
+            {
+                transform.rotation = Quaternion.Euler(0, 90, 0);
+            }
+            else
+            {
+                transform.rotation = Quaternion.Euler(0, -90, 0);
+            }
         }
         enemyRb.AddForce(-transform.forward * 3f, ForceMode.Impulse);
         InitAttackCoolTime();
@@ -266,6 +271,7 @@ public class Enemy : Character
     public override void Dead()
     {
         //rangeCollider.SetActive(false);
+        PlayerHandler.instance.CurrentPlayer.dmCollider.OtherCheck(this.gameObject);
         gameObject.SetActive(false);
     }
     #endregion

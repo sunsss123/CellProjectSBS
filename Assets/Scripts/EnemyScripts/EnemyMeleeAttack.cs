@@ -6,6 +6,12 @@ public class EnemyMeleeAttack : MonoBehaviour
     public Enemy enemy;
     float damage;
 
+    private void OnEnable()
+    {
+        GetComponent<MeshRenderer>().enabled = true;
+        GetComponent<SphereCollider>().enabled = true;
+    }
+
     public void SetDamage(float value)
     {
         damage = value;
@@ -25,6 +31,7 @@ public class EnemyMeleeAttack : MonoBehaviour
     {
         yield return new WaitForSeconds(timer);
         this.gameObject.SetActive(false);
+        Debug.Log("초기화하자");
         enemy.InitAttackCoolTime();
     }
 
@@ -40,7 +47,10 @@ public class EnemyMeleeAttack : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            this.gameObject.SetActive(false);
+            other.GetComponent<Player>().Damaged(damage, gameObject);
+            GetComponent<MeshRenderer>().enabled = false;
+            GetComponent<SphereCollider>().enabled = false;
+            //this.gameObject.SetActive(false);
         }
     }
 }

@@ -23,7 +23,7 @@ public class DeformObject : MonoBehaviour
         {
 
            
-                PlayerHandler.instance.OnDeformField = false;
+            PlayerHandler.instance.OnDeformField = false;
 
         }
     }
