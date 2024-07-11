@@ -35,4 +35,12 @@ public class EnemyMeleeAttack : MonoBehaviour
             onAttack = true;
         }
     }*/
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            this.gameObject.SetActive(false);
+        }
+    }
 }
