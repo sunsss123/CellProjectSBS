@@ -17,7 +17,7 @@ public class SpecialDashCollider : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    private void OnTriggerEnter(Collider other)
+    /*private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Enemy"))
         {
@@ -34,5 +34,5 @@ public class SpecialDashCollider : MonoBehaviour
                 Debug.Log("Áö³ª°©´Ï´Ù");
             }
         }        
-    }
+    }*/
 }

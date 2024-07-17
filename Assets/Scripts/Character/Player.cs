@@ -34,6 +34,8 @@ public class Player : Character
 
     [Header("점프 홀딩 조절")]
     public float jumpholdLevel = 0.85f;
+    public float jumpBufferTime;
+    public float jumpButtferTimer;
     [Header("애니메이션 관련 변수")]
     public bool isJump, jumpAnim;
     public bool isRun;
@@ -73,9 +75,7 @@ public class Player : Character
     [Header("기존 레이에서 테스트로 더 추가")]
     public float sizeFir;
     public float sizeSec;
-    public float sizeThr;
-    public float sizefou;
-    public float sizeMiddle;
+    
     bool platform;
     public float raySize;
     public float jumpInitDelay;
@@ -85,7 +85,7 @@ public class Player : Character
     [Header("박스 캐스트 테스트")]
     public Vector3 boxRaySize; // box 레이캐스트 >> 벽에 고정되는 것 방지를 위한
     public float distanceRay; // box 캐스트의 거리
-    RaycastHit boxHit;                              
+    RaycastHit boxHit;
 
     // Start is called before the first frame update
     void Start()
@@ -156,17 +156,11 @@ public class Player : Character
         RaycastHit hit;
         Debug.DrawRay(this.transform.position + (Vector3.up * sizeFir + Vector3.right * raySize) * 0.1f * (int)direction, Vector3.right * (int)direction * 0.1f, Color.red, 0.1f);
         Debug.DrawRay(this.transform.position + (Vector3.up * sizeSec + Vector3.right * raySize) * 0.1f * (int)direction, Vector3.right * (int)direction * 0.1f, Color.magenta, 0.1f);
-        Debug.DrawRay(this.transform.position + (Vector3.up * sizeThr + Vector3.right * raySize) * 0.1f * (int)direction, Vector3.right * (int)direction * 0.1f, Color.blue, 0.1f);
-        Debug.DrawRay(this.transform.position + (Vector3.up * sizefou + Vector3.right * raySize) * 0.1f * (int)direction, Vector3.right * (int)direction * 0.1f, Color.green, 0.1f);
-        Debug.DrawRay(this.transform.position + (Vector3.up * sizeMiddle + Vector3.right * raySize) * 0.1f * (int)direction, Vector3.right * (int)direction * 0.1f, Color.green, 0.1f);
         bool firstCast = Physics.Raycast(this.transform.position + (Vector3.up * sizeFir + Vector3.right * raySize) * 0.1f * (int)direction, Vector3.right * (int)direction, out hit, 0.1f);
         bool secondCast = Physics.Raycast(this.transform.position + (Vector3.up * sizeSec + Vector3.right * raySize) * 0.1f * (int)direction, Vector3.right * (int)direction, out hit, 0.1f);
-        bool thirdCast = Physics.Raycast(this.transform.position + (Vector3.up * sizeThr + Vector3.right * raySize) * 0.1f * (int)direction, Vector3.right * (int)direction, out hit, 0.1f);
-        bool fourthCast = Physics.Raycast(this.transform.position + (Vector3.up * sizefou + Vector3.right * raySize) * 0.1f * (int)direction, Vector3.right * (int)direction, out hit, 0.1f);
-        bool middleCast = Physics.Raycast(this.transform.position + (Vector3.up * sizeMiddle + Vector3.right * raySize) * 0.1f * (int)direction, Vector3.right * (int)direction, out hit, 0.1f);
         //Debug.DrawRay(this.transform.position + Vector3.right * (int)direction, Vector3.right * distanceRay * (int)direction, Color.white, 0.1f);
         //bool boxCast = Physics.BoxCast(this.transform.position, boxRaySize, Vector3.right * (int)direction, out hit, transform.rotation, distanceRay);
-        if (firstCast || secondCast || thirdCast || fourthCast)
+        if (firstCast || secondCast)
         {
             Debug.Log("레이캐스트에 인식됨");
             if (hit.collider == null)
@@ -184,30 +178,6 @@ public class Player : Character
         {
             Debug.Log("벽 체크 안됨");
             wallcheck = false;
-        }*/
-        #endregion
-
-        #region 박스캐스트 시도
-       /* Debug.DrawRay(transform.position + Vector3.right * 0.05f * (int)direction, Vector3.right * (int)direction * distanceRay, Color.white, 0.1f);
-        if (Physics.BoxCast(this.transform.position + Vector3.right * 0.05f * (int)direction, boxRaySize, Vector3.right * (int)direction, out boxHit, Quaternion.identity, distanceRay))
-        {
-            //Debug.Log($"박스캐스트 인식함 {boxHit.collider}");
-            if (boxHit.collider.CompareTag("InteractivePlatform") || boxHit.collider.CompareTag("Ground"))
-            {
-                wallcheck = true;
-                Debug.Log($"박스캐스트가 플랫폼을 인식하여 벽 고정을 방지함{boxHit.collider}\n콜라이더의 위치 {boxHit.collider.transform.position}");
-            }
-            else
-            {
-                Debug.Log($"박스캐스트가 플랫폼을 찾지 못하여 고정됨{boxHit.collider}");
-                wallcheck = false;
-            }
-            Debug.DrawRay(transform.position + Vector3.right * 0.05f * (int)direction, Vector3.right * (int)direction * distanceRay, Color.black, 0.1f);
-            //Gizmos.DrawWireCube(boxHit.point, boxRaySize);
-        }
-        else
-        {
-            wallcheck = false;            
         }*/
         #endregion
     }
@@ -493,7 +463,7 @@ public class Player : Character
     #endregion
 
     #region 피격
-    public override void Damaged(float damage, GameObject obj)
+    public override void Damaged(float damage)
     {
         PlayerStat.instance.cState = CharacterState.hit;
         HittedEffect.gameObject.SetActive(true);
@@ -541,29 +511,35 @@ public class Player : Character
     #region 점프동작
     public void Jump()
     {
-        if (!isJump)
+        if (PlayerStat.instance.jumpCount <= PlayerStat.instance.jumpCountMax && Input.GetKeyDown(KeyCode.C) && !Input.GetKey(KeyCode.DownArrow) && !downAttack)
         {
-            //플랫폼에 닿았을 때 점프 가능(바닥,천장, 벽에 닿아도 점프 되지만 신경쓰지말기)
-            isJump = true;
-
-
-            if (Humonoidanimator != null)
+            if (!isJump)
             {
-                Humonoidanimator.SetTrigger("jump");
+                //플랫폼에 닿았을 때 점프 가능(바닥,천장, 벽에 닿아도 점프 되지만 신경쓰지말기)
+                isJump = true;
+
+
+                if (Humonoidanimator != null)
+                {
+                    Humonoidanimator.SetTrigger("jump");
+                }
+
+                if (JumpEffect != null)
+                    JumpEffect.SetActive(true);
+
+                isRun = false;
+                if (PlayerStat.instance.jumpCount < PlayerStat.instance.jumpCountMax)
+                {
+
+                    //YMove 
+
+                    playerRb.AddForce(Vector3.up * PlayerStat.instance.jumpForce, ForceMode.Impulse);
+                    PlayerStat.instance.jumpCount++;
+                }
+
+                Debug.Log("점프 누르는 중?");
             }
-
-            if(JumpEffect!=null)
-            JumpEffect.SetActive(true);
-
-            isRun = false;
-            if (PlayerStat.instance.jumpCount < PlayerStat.instance.jumpCountMax)
-            {
-
-                //YMove 
-           
-                playerRb.AddForce(Vector3.up * PlayerStat.instance.jumpForce, ForceMode.Impulse);
-                PlayerStat.instance.jumpCount++;
-            }
+            Debug.Log("누르는 중입니다만");
         }
     }
 

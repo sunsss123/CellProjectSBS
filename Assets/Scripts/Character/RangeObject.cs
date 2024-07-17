@@ -17,12 +17,12 @@ public class RangeObject : MonoBehaviour
         transform.Translate(transform.forward * rangeSpeed * Time.deltaTime, Space.World);
     }
 
-    private void OnTriggerEnter(Collider other)
+    /*private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Enemy"))
         {
             other.GetComponent<Enemy>().Damaged(damage, gameObject);
             Destroy(gameObject);
         }        
-    }
+    }*/
 }

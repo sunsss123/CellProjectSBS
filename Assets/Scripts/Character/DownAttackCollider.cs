@@ -29,7 +29,7 @@ public class DownAttackCollider : MonoBehaviour
             playerRb.AddForce((Vector3.up*2 + Vector3.right * DecideDirection()) * 80);*/
             if (!enemy.eStat.onInvincible)
             {
-                enemy.Damaged(damage, gameObject);
+                enemy.Damaged(damage);
                 saveEffect.transform.position = other.transform.position;
                 saveEffect.Play();
                 gameObject.SetActive(false);

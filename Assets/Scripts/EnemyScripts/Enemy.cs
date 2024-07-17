@@ -77,8 +77,6 @@ public class Enemy : Character
     private void Update()
     {
         ReadyAttackTime();
-
-  
     }
 
     // 부모인 Enemy에서 사용?
@@ -98,13 +96,11 @@ public class Enemy : Character
         eStat.onInvincible = true;
         transform.rotation = Quaternion.Euler(0, -90 * (int)PlayerHandler.instance.CurrentPlayer.direction, 0);
         enemyRb.AddForce(-((transform.forward + transform.up)*5f), ForceMode.Impulse);
-        //testMesh.materials[0] = stun;
 
         yield return new WaitForSeconds(eStat.invincibleTimer);
 
         onStun = false;
         eStat.onInvincible = false;
-        //testMesh.materials[0] = regular;
     }
 
     #region 추적 대상 확인
@@ -127,23 +123,11 @@ public class Enemy : Character
                 }
             }
         }
-
-        /*if (Physics.Raycast(transform.position + Vector3.up * rayHeight, transform.forward, out hit, rayRange))
-        {
-            if (hit.collider.CompareTag("GameController"))
-            {
-                Debug.Log($"Hit collider>> {hit.collider}");
-                if (hit.collider.gameObject.GetComponent<RemoteObject>().rType == RemoteType.tv && activeTv)
-                {
-                    checkTv = true;
-                }
-            }
-        }*/
     }
     #endregion
 
     #region 피격함수
-    public override void Damaged(float damage, GameObject obj)
+    public override void Damaged(float damage)
     {
         eStat.hp -= damage;
         if (eStat.hp <= 0)
@@ -370,20 +354,6 @@ public class Enemy : Character
             }
             activeTv = false;
             checkTv = false;
-            // 플레이어를 타겟으로 지정하도록 구현 예정
         }
     }
-
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        
-    }
-
-    /*private void OnTriggerExit(Collider other)
-    {
-        activeAttack = false;
-        //attackTimer = attackInitCoolTime;
-        //attackCollider.SetActive(false);     
-    }*/
 }

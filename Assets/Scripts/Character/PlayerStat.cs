@@ -41,30 +41,5 @@ public class PlayerStat : CharacterStat
     {
         if (hp <= 0)
             SceneManager.LoadScene("Title");
-    }
-
-    // Start is called before the first frame update
-    /*void Start()
-    {
-        InitStatus();
-    }*/
-
-    //void InitStatus()
-    //{
-    //    hpMax = 200;
-    //    hp = hpMax;
-    //    atk = 25;
-    //    moveSpeed = 5f;
-    //    jumpForce = 4f;
-    //    shotJumpForce = 8f;
-    //    jumpCountMax = 1;
-
-    //    dashForce = 30;
-    //    dashTimer = 0.2f;
-    //    dashCoolTime = 1.5f;
-    //    invincibleCoolTime = 0.2f;
-    //    rotationSpeed = 10f;
-    //    attackDelay = 1f;
-    //    //jumpLimit = 24f;
-    //}
+    }    
 }

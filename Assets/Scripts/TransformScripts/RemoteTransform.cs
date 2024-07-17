@@ -114,8 +114,8 @@ public class RemoteTransform : Player
     public override void Attack()
     {
         Humonoidanimator.Play("Attack");
-        Instantiate(laserPrefab, firePoint.position, transform.rotation);
-
+        //Instantiate(laserPrefab, firePoint.position, transform.rotation);
+        PoolingManager.instance.GetPoolObject("Laser", firePoint);
     }
 
     public override void Skill2()

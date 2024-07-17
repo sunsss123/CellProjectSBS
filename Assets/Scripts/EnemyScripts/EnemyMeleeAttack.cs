@@ -47,7 +47,7 @@ public class EnemyMeleeAttack : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            other.GetComponent<Player>().Damaged(damage, gameObject);
+            other.GetComponent<Player>().Damaged(damage);
             GetComponent<MeshRenderer>().enabled = false;
             GetComponent<SphereCollider>().enabled = false;
             //this.gameObject.SetActive(false);

@@ -1239,6 +1239,7 @@ MonoBehaviour:
   attackForce: 2
   flyTime: 0
   formInvincible: 0
+  InteractDelay: 0
 --- !u!4 &650167059
 Transform:
   m_ObjectHideFlags: 0
@@ -1283,11 +1284,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentPower: 0
   MaxPower: 60
+  OnDeformField: 0
   retoretype: 1
+  LastTransformPlace: {fileID: 0}
   CurrentPlayer: {fileID: 0}
   pStat: {fileID: 0}
+  lastDirection: 1
   characterFallLimit: 10
   CurrentType: 0
+  defromUpPosition: 0
+  DeTransformtime: 2
 --- !u!114 &650167062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1503,6 +1509,120 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2145634289}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &711666846
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 711666848}
+  - component: {fileID: 711666847}
+  m_Layer: 0
+  m_Name: PoolingManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &711666847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 711666846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d54bee88cba7612478527395b7eaa9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hittedEffect: {fileID: 0}
+  attackEffect: []
+  landingEffect: []
+  jumpEffect: []
+  poolObjects:
+  - poolName: Laser
+    poolPrefab: {fileID: 8906621709063784198, guid: c95aa4697be2c7341959ffcec170d214,
+      type: 3}
+    poolPrefabs:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+  - poolName: Bullet
+    poolPrefab: {fileID: 4557769492657524705, guid: 751d43c08fc925449badf419b2f2d70c,
+      type: 3}
+    poolPrefabs:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+  bullet: {fileID: 4557769492657524705, guid: 751d43c08fc925449badf419b2f2d70c, type: 3}
+  bulletGroup:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  laserPrefab: {fileID: 8906621709063784198, guid: c95aa4697be2c7341959ffcec170d214,
+    type: 3}
+  laserGroup:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  chain: {fileID: 2200097500776395386, guid: f7ef9a7cddd4f7045ae7e241544407d8, type: 3}
+  chainGroup:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!4 &711666848
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 711666846}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 12.179014, y: -3.4473634, z: -4.2283897}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &802333524 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1731335098809276273, guid: ac650ad5a738cd94f92e9992fe8f5a0a,
@@ -4208,7 +4328,8 @@ MonoBehaviour:
   camPos: {x: 3, y: 1, z: 0.5}
   camrot: {x: 0, y: 0, z: 0}
   target: {fileID: 0}
-  PlayerXVaule: 0
+  PlayerZVaule: 0
+  ZPin: 0
   CameraTrakingTime: 2
   CameraMoveSpeed: 0
 --- !u!1 &1711092848
@@ -6394,3 +6515,4 @@ SceneRoots:
   - {fileID: 907166508}
   - {fileID: 1907341900}
   - {fileID: 989222372}
+  - {fileID: 711666848}

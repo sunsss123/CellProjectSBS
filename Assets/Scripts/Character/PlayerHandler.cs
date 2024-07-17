@@ -179,9 +179,16 @@ public class PlayerHandler : MonoBehaviour
             CurrentPlayer.Move();
         }
 
-        if(PlayerStat.instance.jumpCount <= PlayerStat.instance.jumpCountMax && !Input.GetKey(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.C) && !CurrentPlayer.downAttack)
+        if (Input.GetKey(KeyCode.C))
         {
+
+            Debug.Log("점프키 입력 중");
             CurrentPlayer.Jump();
+            /*if (PlayerStat.instance.jumpCount <= PlayerStat.instance.jumpCountMax && !Input.GetKey(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.C) && !CurrentPlayer.downAttack)
+            {
+                Debug.Log("점프체크");
+                CurrentPlayer.Jump();
+            }*/
         }
         if (!Input.GetKey(KeyCode.C))
         {

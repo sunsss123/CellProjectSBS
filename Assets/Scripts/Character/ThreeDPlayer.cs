@@ -259,7 +259,7 @@ public class ThreeDPlayer : Character
             }
             else
             {
-                Damaged(collision.gameObject.GetComponent<Enemy>().eStat.atk, collision.gameObject);
+                Damaged(collision.gameObject.GetComponent<Enemy>().eStat.atk);
                 if (PlayerStat.instance.hp <= 0)
                 {
                     //피해를 받음
@@ -301,11 +301,10 @@ public class ThreeDPlayer : Character
         }
     }
 
-    public override void Damaged(float damage, GameObject obj)
+    public override void Damaged(float damage)
     {
         PlayerStat.instance.hp -= damage;
-        Debug.Log($"{gameObject}가 {obj}에 의해 데미지를 받음:{damage}, 남은 체력:{PlayerStat.instance.hp}/{PlayerStat.instance.hpMax}");
-
+        
         if (PlayerStat.instance.hp <= 0)
         {
             //Dead()

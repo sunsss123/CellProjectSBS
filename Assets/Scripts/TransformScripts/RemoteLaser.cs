@@ -11,8 +11,13 @@ public class RemoteLaser : MonoBehaviour
     void Awake()
     {
         //saveEffect = Instantiate(hitEffect).GetComponent<ParticleSystem>();
-        damage = PlayerStat.instance.atk;
+        
         //gameObject.SetActive(false);
+    }
+
+    private void Start()
+    {
+        damage = PlayerStat.instance.atk;
     }
 
     // Update is called once per frame
@@ -29,16 +34,17 @@ public class RemoteLaser : MonoBehaviour
 
             if (!enemy.eStat.onInvincible)
             {
-                enemy.Damaged(damage, gameObject);
+                enemy.Damaged(damage);
                 /*saveEffect.transform.position = other.transform.position;
                 saveEffect.Play();*/
-                gameObject.SetActive(false);
+                PoolingManager.instance.ReturnPoolObject(this.gameObject);
+                //gameObject.SetActive(false);
             }
         }
     }
 
     private void OnBecameInvisible()
     {
-        Destroy(gameObject);
+        PoolingManager.instance.ReturnPoolObject(this.gameObject);
     }
 }

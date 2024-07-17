@@ -1578,6 +1578,8 @@ MonoBehaviour:
   hori: 0
   vert: 0
   jumpholdLevel: 0.85
+  jumpBufferTime: 0
+  jumpButtferTimer: 0
   isJump: 0
   jumpAnim: 0
   isRun: 0
