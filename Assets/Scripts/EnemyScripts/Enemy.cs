@@ -1,7 +1,7 @@
 using NUnit.Framework.Constraints;
 using System.Collections;
 using System.Net.Http.Headers;
-using UnityEditor.ShaderGraph.Drawing.Inspector.PropertyDrawers;
+
 using UnityEngine;
 
 public class Enemy : Character
@@ -362,7 +362,7 @@ public class Enemy : Character
         if (collision.gameObject.CompareTag("Ground"))
         {
             enemyRb.constraints = 
-                RigidbodyConstraints.FreezePositionY |
+                RigidbodyConstraints.FreezePositionY| RigidbodyConstraints.FreezePositionZ |
                 RigidbodyConstraints.FreezeRotation;
         }
     }

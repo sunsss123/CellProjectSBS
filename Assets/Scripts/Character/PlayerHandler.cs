@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.PackageManager;
+
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -102,7 +102,7 @@ public class PlayerHandler : MonoBehaviour
  public   void Deform()
     {
         transformed(TransformType.Default);
-        LastTransformPlace.transform.position = CurrentPlayer.transform.position;
+        LastTransformPlace.transform.position = Playerprefab.transform.position;
         CurrentPlayer.transform.Translate(Vector3.up * defromUpPosition);
         LastTransformPlace.gameObject.SetActive(true);
         LastTransformPlace = null;
@@ -116,7 +116,7 @@ public class PlayerHandler : MonoBehaviour
             Transform tf=null;
             if (CurrentPlayer != null)
             {
-                CurrentPlayer.gameObject.SetActive(false);
+              
                 tf = CurrentPlayer.transform;
                 CurrentPlayer = null;
             }
@@ -124,12 +124,17 @@ public class PlayerHandler : MonoBehaviour
             {
                 tf = Player;
             }
+            if(Playerprefab != null) 
+            Playerprefab.SetActive(false);
             GameObject p;
             if (CreatedTransformlist.TryGetValue(CurrentType, out p))
                 p.gameObject.SetActive(true);
             else
-                p= Instantiate(PlayerTransformList[CurrentType].gameObject, Player)
+            {
+                p = Instantiate(PlayerTransformList[CurrentType].gameObject, Player)
                     ;
+                CreatedTransformlist.Add(CurrentType,p);
+            }
             Playerprefab = p;
             #endregion
             #region 위치 동기화
