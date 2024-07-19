@@ -11,6 +11,7 @@ TagManager:
   - InteractivePlatform
   - InteractiveObject
   - ShootingBullet
+  - Item
   layers:
   - Default
   - TransparentFX

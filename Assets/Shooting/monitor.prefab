@@ -675,6 +675,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b708289b786a7164e9552e5e0b044c97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  active: 0
   PlatformerCam: {fileID: 0}
   ShootingCam: {fileID: 4872312955917602059}
   scroll: {fileID: 1209780043557215265}
@@ -686,6 +687,7 @@ MonoBehaviour:
   - {fileID: 5375019567324462749}
   player: {fileID: 3824948374596870534}
   nextwavetime: 0
+  CompleteTExt: {fileID: 2675988873455731213}
   MaxSizeX: 0
   MinSizeX: 0
   MaxSizeY: 0

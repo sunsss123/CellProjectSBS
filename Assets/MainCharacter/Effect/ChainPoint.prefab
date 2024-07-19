@@ -266,7 +266,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
-  moveSpeed: 75
+  moveSpeed: 30
   sphereRange: 6
   searchObj:
     enemy: {fileID: 0}
