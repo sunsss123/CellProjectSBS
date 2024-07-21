@@ -303,7 +303,7 @@ public class PlayerKjs : Character
     #region ÇÇ°Ý
     public override void Damaged(float damage)
     {
-        PlayerStat.instance.cState = CharacterState.hit;
+        PlayerStat.instance.pState = PlayerState.hitted;
 
         PlayerStat.instance.hp -= damage;
 
@@ -330,7 +330,7 @@ public class PlayerKjs : Character
 
         yield return new WaitForSeconds(1f);
 
-        PlayerStat.instance.cState = CharacterState.idle;
+        PlayerStat.instance.pState = PlayerState.idle;
     }
 
     #endregion
@@ -338,7 +338,7 @@ public class PlayerKjs : Character
     #region »ç¸Á
     public override void Dead()
     {
-        PlayerStat.instance.cState = CharacterState.dead;
+        PlayerStat.instance.pState = PlayerState.dead;
         gameObject.SetActive(false);
     }
     #endregion

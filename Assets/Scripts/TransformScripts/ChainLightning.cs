@@ -128,15 +128,8 @@ public class ChainLightning : MonoBehaviour
                 }
                 else
                 {
-                    other.GetComponent<BoxTestt>().Damaged(damage, gameObject);
+                    other.GetComponent<BoxTestt>().Damaged(damage);
                 }
-
-                /*if (!other.GetComponent<Enemy>())
-                {
-                    other.GetComponent<BoxTestt>().Damaged(damage, gameObject);
-                }
-                else
-                    other.GetComponent<Enemy>().Damaged(damage, gameObject);*/
               
                 endEnemy.Add(other.gameObject);
                 lineRenderer.positionCount++;

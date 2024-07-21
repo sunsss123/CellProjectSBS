@@ -642,11 +642,11 @@ public class PlayerMokUp : Character
 
     public override void Dead()
     {
-        PlayerStat.instance.cState = CharacterState.dead;
+        PlayerStat.instance.pState = PlayerState.dead;
         gameObject.SetActive(false);
     }
 
-    public void Dash()
+    /*public void Dash()
     {
         if (!onDash)
         {
@@ -683,14 +683,14 @@ public class PlayerMokUp : Character
 
             StartCoroutine(WaitCoolTime());
         }
-    }
+    }*/
 
     public void SpecialAttack()
     {
         sAttackPrefab.SetActive(true);
     }
 
-    IEnumerator WaitCoolTime()
+    /*IEnumerator WaitCoolTime()
     {
         yield return new WaitForSeconds(PlayerStat.instance.dashTimer);
 
@@ -702,5 +702,5 @@ public class PlayerMokUp : Character
 
         onDash = true;
         Debug.Log("대시 쿨타임 완료");
-    }
+    }*/
 }

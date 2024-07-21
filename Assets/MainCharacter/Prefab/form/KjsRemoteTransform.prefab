@@ -1018,10 +1018,12 @@ MonoBehaviour:
   ChrRenderer: {fileID: 0}
   chrmat: {fileID: 0}
   color: {r: 0, g: 0, b: 0, a: 0}
-  moveValue: 0
-  hori: 0
-  vert: 0
   jumpholdLevel: 0.85
+  jumpBufferTimeMax: 0.2
+  jumpBufferTimer: 0
+  jumpInputCheck: 0
+  attackBufferTimeMax: 0.15
+  attackBufferTimer: 0
   isJump: 0
   jumpAnim: 0
   isRun: 0
@@ -1042,15 +1044,13 @@ MonoBehaviour:
   isMove: 0
   canAttack: 0
   wallcheck: 0
+  inputCheck: 0
   velocityMove: {x: 0, y: 0, z: 0}
   rigidbodyPos: {x: 0, y: 0, z: 0}
   sizeX: 1
   sizeY: 2
   sizeFir: 0
   sizeSec: 0
-  sizeThr: 0
-  sizefou: 0
-  sizeMiddle: 0
   raySize: 0
   jumpInitDelay: 0
   flyTime: 0.5

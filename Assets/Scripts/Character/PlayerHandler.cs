@@ -174,7 +174,7 @@ public class PlayerHandler : MonoBehaviour
     float DeTransformtimer = 0;
     void charactermove()
     {
-        if (!CurrentPlayer.downAttack && PlayerStat.instance.cState == CharacterState.idle)
+        if (!CurrentPlayer.downAttack && PlayerStat.instance.pState == PlayerState.idle)
         {
             CurrentPlayer.Move();
         }
@@ -183,17 +183,14 @@ public class PlayerHandler : MonoBehaviour
         {
 
             Debug.Log("점프키 입력 중");
-            CurrentPlayer.Jump();
-            /*if (PlayerStat.instance.jumpCount <= PlayerStat.instance.jumpCountMax && !Input.GetKey(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.C) && !CurrentPlayer.downAttack)
-            {
-                Debug.Log("점프체크");
-                CurrentPlayer.Jump();
-            }*/
+
+            CurrentPlayer.jumpBufferTimer = CurrentPlayer.jumpBufferTimeMax;
         }
         if (!Input.GetKey(KeyCode.C))
         {
             CurrentPlayer.jumphold();
         }
+
         if (Input.GetKeyDown(KeyCode.E))
         {
             CurrentPlayer. SwapAttackType();
@@ -222,7 +219,7 @@ public class PlayerHandler : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.DownArrow))
         {
-            if (Input.GetKeyDown(KeyCode.X) && !CurrentPlayer.onGround)
+            if (Input.GetKey(KeyCode.X) && !CurrentPlayer.onGround)
             {
                           
 
@@ -230,9 +227,11 @@ public class PlayerHandler : MonoBehaviour
             }            
         }
         
-        if (!Input.GetKey(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.X))
+        if (!Input.GetKey(KeyCode.DownArrow) && Input.GetKey(KeyCode.X)
+            || !Input.GetKey(KeyCode.UpArrow) && Input.GetKey(KeyCode.X))
         {
-            CurrentPlayer.Attack();
+            //CurrentPlayer.Attack();
+            CurrentPlayer.attackBufferTimer = CurrentPlayer.attackBufferTimeMax;
         }
 
         //if (Input.GetKeyDown(KeyCode.Space))

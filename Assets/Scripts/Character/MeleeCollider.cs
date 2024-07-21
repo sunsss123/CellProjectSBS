@@ -26,7 +26,7 @@ public class MeleeCollider : MonoBehaviour
         {
             if (!other.GetComponent<Enemy>())
             {
-                other.GetComponent<BoxTestt>().Damaged(damage, gameObject);
+                other.GetComponent<BoxTestt>().Damaged(damage);
             }
             else
             {

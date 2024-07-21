@@ -3401,7 +3401,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4451332a9b34584b9089b0ecbb0d136, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxFrame: 60
+  MaxFrame: 500
   fontsize: 30
   color: {r: 0, g: 1, b: 0, a: 0.7058824}
   width: 0
@@ -3736,7 +3736,7 @@ MonoBehaviour:
   dashTimer: 0
   dashCoolTime: 0
   invincibleCoolTime: 0
-  attackDelay: 0
+  attackDelay: 0.5
   rotationValue: 0
   downForce: 0
   attackForce: 0
@@ -3771,8 +3771,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerformlist:
-  - {fileID: 7664586703414084814, guid: 95bb39b98559b1546bbe4f0a2234418f, type: 3}
-  - {fileID: 5892187899129608376, guid: 9820d472a79c9834095a60d07e1ad462, type: 3}
+  - {fileID: 5892187899129608376, guid: ea32b7d32a0187347a6ad5c144d9b1b0, type: 3}
+  - {fileID: 7664586703414084814, guid: adab39cdc59ea234aa9ec9dbf410dc93, type: 3}
   - {fileID: 783853098181501423, guid: adb0feb0b49dc1b43b0fa40e22bf6468, type: 3}
 --- !u!114 &650167061
 MonoBehaviour:
@@ -3793,6 +3793,7 @@ MonoBehaviour:
   LastTransformPlace: {fileID: 0}
   CurrentPlayer: {fileID: 0}
   pStat: {fileID: 0}
+  lastDirection: 1
   characterFallLimit: 20
   CurrentType: 0
   defromUpPosition: 0.6

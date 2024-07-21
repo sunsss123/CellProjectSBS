@@ -561,11 +561,11 @@ public class ThreeDPlayer : Character
 
     public override void Dead()
     {
-        PlayerStat.instance.cState = CharacterState.dead;
+        PlayerStat.instance.pState = PlayerState.dead;
         gameObject.SetActive(false);
     }
 
-    public void Dash()
+    /*public void Dash()
     {
         if (!onDash)
         {
@@ -602,14 +602,14 @@ public class ThreeDPlayer : Character
             Debug.Log("여기까지는 작동하냐");
             StartCoroutine(WaitCoolTime());
         }
-    }
+    }*/
 
     public void SpecialAttack()
     {
         sAttackPrefab.SetActive(true);
     }
 
-    IEnumerator WaitCoolTime()
+    /*IEnumerator WaitCoolTime()
     {
         Debug.Log("대시 충전 중입니다");
 
@@ -623,5 +623,5 @@ public class ThreeDPlayer : Character
 
         onDash = true;
         Debug.Log("대시 쿨타임 완료");
-    }
+    }*/
 }

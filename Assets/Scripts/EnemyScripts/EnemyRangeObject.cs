@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RangeObject : MonoBehaviour
+public class EnemyRangeObject : MonoBehaviour
 {
-    public float damage;
     public float rangeSpeed;
+    public float damage;
 
     public void SetDamage(float damageValue)
     {
@@ -19,10 +19,10 @@ public class RangeObject : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy"))
+        if (other.CompareTag("Player")
+            && PlayerHandler.instance.CurrentPlayer.onInvincible)
         {
-            other.GetComponent<Enemy>().Damaged(damage);
-            Destroy(gameObject);
+            PlayerHandler.instance.CurrentPlayer.Damaged(damage);
         }
     }
 }

@@ -11,9 +11,7 @@ public class Enemy : Character
     public Rigidbody enemyRb; // 적 리지드바디
     public GameObject attackCollider; // 적의 공격 콜라이더 오브젝트
     public GameObject rangeCollider; // 공격 범위 콜라이더 오브젝트
-
-    //public float searchRange; // 플레이어 인지 범위
-    //public float attackRange; // 공격 실행 범위
+    
     [Header("플레이어 탐색 큐브 조정")]
     public Vector3 searchCubeRange; // 플레이어 인지 범위를 Cube 사이즈로 설정
     public Vector3 searchCubePos; // Cube 위치 조정
@@ -30,27 +28,16 @@ public class Enemy : Character
 
     [Header("목표 회전을 테스트하기 위한 변수")]
     public Transform target; // 추적할 타겟
-    bool tracking; // 추적 활성화 체크
+    public bool tracking; // 추적 활성화 체크
     public Vector3 testTarget; // 타겟을 바라보는 시점을 테스트하기 위한 임시 변수
-    public float rotationY; // 로테이션 값을 이해하기 위한 테스트 변수
-    public float notMinusRotation;
-    public float eulerAnglesY; // 오일러값 확인 테스트
+    float rotationY; // 로테이션 값을 이해하기 위한 테스트 변수
+    float notMinusRotation;
+    float eulerAnglesY; // 오일러값 확인 테스트
     public float rotationSpeed; // 자연스러운 회전을 찾기 위한 테스트 
 
-    [Header("Tv 오브젝트 관련")]
-    public bool checkTv; // Tv오브젝트를 추격하고 근접했을 때 true(Tv 인식 이후 목표 지점으로 도달했을 때)
-    public bool activeTv; // Tv 오브젝트가 활성화 되었을 때 true (활성화 시점)
-    public float rayRange; // 레이캐스트 길이 조절
-    public float rayHeight; // 레이캐스트 높이 조절
-
-    [Header("돌진 캐릭터 테스트 변수")]
-    public float rushForce; // 돌진 속도
 
     [Header("상자에서 나올때 기절상태?")]
     public bool onStun;
-    public Material regular;
-    public Material stun;
-    public MeshRenderer testMesh;
 
     bool complete;
     private void Awake()
@@ -78,16 +65,14 @@ public class Enemy : Character
     {
         ReadyAttackTime();
     }
-
-    // 부모인 Enemy에서 사용?
-    // 자식인 다양한 적 오브젝트 스크립트에서 사용? 
+    
     private void FixedUpdate()
     {
         if (!onStun)
         {
             Move();
 
-            TrackingCheck();
+            //TrackingCheck();
         }
     }
 
@@ -104,7 +89,7 @@ public class Enemy : Character
     }
 
     #region 추적 대상 확인
-    public void TrackingCheck()
+    /*public void TrackingCheck()
     {
         Debug.DrawRay(transform.position + Vector3.up * rayHeight, transform.forward * rayRange, Color.magenta, 0.1f);
 
@@ -123,7 +108,7 @@ public class Enemy : Character
                 }
             }
         }
-    }
+    }*/
     #endregion
 
     #region 피격함수
@@ -137,7 +122,7 @@ public class Enemy : Character
             Dead();
         }
         enemyRb.velocity = Vector3.zero;
-        attackCollider.SetActive(false);        
+        attackCollider.SetActive(false);
         if (target != null)
         {
             if (target.position.x > transform.position.x)
@@ -157,18 +142,18 @@ public class Enemy : Character
     #region 이동함수
     public override void Move()
     {
-        if (eStat.cState != CharacterState.dead)
+        if (eStat.eState != EnemyState.dead || eStat.eState != EnemyState.hitted)
         {
             if (tracking)
             {
-                if (!activeAttack && !checkTv && !onAttack)
+                if (!activeAttack /*&& !checkTv*/ && !onAttack)
                 {
                     TrackingMove();
                 }
             }
 
             Patrol();
-        }
+        }        
     }
 
     #region 추격
@@ -176,9 +161,8 @@ public class Enemy : Character
     {
         testTarget = target.position - transform.position;
         testTarget.y = 0;
-
-        //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(target.position - transform.position), 10 * Time.deltaTime);
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(testTarget), rotationSpeed * Time.deltaTime);
+        
+        //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(testTarget), rotationSpeed * Time.deltaTime);
         rotationY = transform.localRotation.y;
         notMinusRotation = 360 - rotationY;
         eulerAnglesY = transform.eulerAngles.y;
@@ -189,6 +173,16 @@ public class Enemy : Character
         }
 
     }
+
+    /*public void LookTarget()
+    {
+        if (target != null)
+        {
+            testTarget = target.position - transform.position;
+            testTarget.y = 0;
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(testTarget), rotationSpeed * Time.deltaTime);
+        }
+    }*/
 
     public float rotLevel;
 
@@ -216,28 +210,24 @@ public class Enemy : Character
         //Debug.Log("추적하고있지 않다면 주변을 정찰합니다");
         //Collider[] colliders = Physics.OverlapSphere(transform.position, searchRange);
         Collider[] colliders = Physics.OverlapBox(transform.position + searchCubePos, searchCubeRange);
-
+        bool playerCheck = false;
         for (int i = 0; i < colliders.Length; i++)
         {
             if (colliders[i].CompareTag("Player"))
             {
-  
                 target = colliders[i].transform;
-                checkPlayer = true;
-                tracking = true;
+                //checkPlayer = true;
+                playerCheck = true;
             }
-            /*else
-            {
-                //Debug.Log("플레이어 추적하지마라");
-                tracking = false;
-                checkPlayer = false;
-            }*/
-        }
 
-        /*if (testTarget != null)
-        {
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(testTarget), rotationSpeed * Time.deltaTime);
-        }*/
+            tracking = playerCheck;
+
+            /*if (!tracking && !onAttack && activeAttack)
+            {
+                LookTarget();
+            }*/
+
+        }
     }
 
     private void OnDrawGizmos()
@@ -253,8 +243,7 @@ public class Enemy : Character
 
     #region 사망함수
     public override void Dead()
-    {
-        //rangeCollider.SetActive(false);
+    {        
         PlayerHandler.instance.CurrentPlayer.dmCollider.OtherCheck(this.gameObject);
         gameObject.SetActive(false);
     }
@@ -263,21 +252,13 @@ public class Enemy : Character
     #region 공격함수
     public override void Attack()
     {
-        //공격 콜라이더 오브젝트 활성화
-        attackCollider.SetActive(true);
-        //앞으로 돌진
-        enemyRb.AddForce(transform.forward * rushForce, ForceMode.Impulse);
-        /*
-         * 공격 콜라이더 오브젝트를 0.2초 후에 비활성화한 다음
-         * activeAttack 부울 변수를 false변환 및 공격 타이머 초기화      
-        */
-        attackCollider.GetComponent<EnemyMeleeAttack>().AttackReady(this, attackDelay);
+
     }
 
     // 공격 준비
     public void ReadyAttackTime()
     {
-        if (onAttack && eStat.cState != CharacterState.dead)
+        if (onAttack && eStat.eState != EnemyState.dead)
         {
             if (attackTimer > 0 && !activeAttack)
             {
@@ -289,18 +270,24 @@ public class Enemy : Character
                 attackTimer = attackInitCoolTime;
                 Attack();
             }
-        }
-        /*else
-        {
-            InitAttackCoolTime();
-        }*/
+        }        
+    }
+
+    public void DelayTime()
+    {
+        StartCoroutine(WaitDelay());
+    }
+
+    IEnumerator WaitDelay()
+    {
+        yield return new WaitForSeconds(attackDelay);
+        InitAttackCoolTime();
     }
 
     // 공격 초기화
     public void InitAttackCoolTime()
     {
         activeAttack = false;
-        attackTimer = attackInitCoolTime;
         onAttack = false;
     }
     #endregion
@@ -320,40 +307,7 @@ public class Enemy : Character
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {        
-        if (other.CompareTag("GameController"))
-        {
-            if (other.GetComponent<RemoteObject>().rType == RemoteType.tv && !hitByPlayer)
-            {
-                RemoteObject tv = other.GetComponent<RemoteObject>();
 
-                if (tv.onActive)
-                {
-                    target = other.transform;
-                    activeTv = true;
-                    tracking = true;
-                }
-            }
-        }
 
-        if (other.CompareTag("Player"))
-        {
-            if (!activeTv)
-            {
-                target = other.transform;
-                tracking = true;
-            }
-        }
-
-        if (other.CompareTag("PlayerAttack") && !eStat.onInvincible)
-        {
-            if (activeTv)
-            {
-                hitByPlayer = true;
-            }
-            activeTv = false;
-            checkTv = false;
-        }
-    }
+    
 }
