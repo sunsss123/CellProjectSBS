@@ -62,7 +62,7 @@ public class TvEnemy : Enemy
         }
 
         /*if (other.CompareTag("Player"))
-        {
+        {sd
             if (!activeTv)
             {
                 target = other.transform;
