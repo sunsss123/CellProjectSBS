@@ -289,15 +289,16 @@ public class Player : Character
         {         
             a.maxParticles = 0;
             if((RunEffect.isPlaying&&RunEffect.particleCount==0))
-            RunEffect.Stop();   
+            RunEffect.Stop();   sd
         }*/
 
         if (CullingPlatform)
         {
+            var a = RunEffect.main;
+
             platformDisableTimer += Time.deltaTime;
             if (PlatformDisableTime <= platformDisableTimer)
 
-            var a = RunEffect.main;
 
             if (isRun && onGround)
             {

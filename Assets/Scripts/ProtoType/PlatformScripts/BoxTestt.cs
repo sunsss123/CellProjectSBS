@@ -224,7 +224,7 @@ public class BoxTestt : MonoBehaviour
                 attackTimer = attackInitCoolTime;
                 Attack();
             }
-        //}
+        }
         /*else
         {
             InitAttackCoolTime();
