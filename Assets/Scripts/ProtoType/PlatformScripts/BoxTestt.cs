@@ -75,7 +75,7 @@ public class BoxTestt : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
-    }    
+    }
 
     #region 피격함수
     public void Damaged(float damage)
@@ -108,105 +108,107 @@ public class BoxTestt : MonoBehaviour
             }
 
             Patrol();
-        //}
-    }
-
-    #region 추격
-    public void TrackingMove()
-    {
-        animator.SetBool("Tracking", tracking);
-
-        testTarget = target.position - transform.position;
-        testTarget.y = 0;
-
-        //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(target.position - transform.position), 10 * Time.deltaTime);
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(testTarget), rotationSpeed * Time.deltaTime);
-        rotationY = transform.localRotation.y;
-        notMinusRotation = 360 - rotationY;
-        eulerAnglesY = transform.eulerAngles.y;
-        
-        if (SetRotation())
-        {
-            enemyRb.MovePosition(transform.position + transform.forward * Time.deltaTime * eStat.moveSpeed);
+            //}
         }
     }
 
-    public bool SetRotation()
-    {
-        bool completeRot = false;
-
-        if (/*transform.eulerAngles.y >= -10 && transform.eulerAngles.y <= 10*/transform.eulerAngles.y >=5+rotLevel && transform.eulerAngles.y<=10+rotLevel)
+        #region 추격
+        public void TrackingMove()
         {
-            completeRot = true;
-        }
-        else if (transform.eulerAngles.y >= 175 - rotLevel && transform.eulerAngles.y <= 190 - rotLevel ||
-            transform.eulerAngles.y >= 350 - rotLevel && transform.eulerAngles.y <= 360 - rotLevel)
-        {
-            completeRot = true;
-        }
-        //Debug.Log($"체크가 되는 거냐? {complete = completeRot}\n로테이션앵글:{transform.eulerAngles.y}");
-        return completeRot;
-    }
-    #endregion
+            animator.SetBool("Tracking", tracking);
 
-    #region 정찰
-    public void Patrol()
-    {
-        //Debug.Log("추적하고있지 않다면 주변을 정찰합니다");
-        //Collider[] colliders = Physics.OverlapSphere(transform.position, searchRange);
-        Collider[] colliders = Physics.OverlapBox(transform.position + searchCubePos, searchCubeRange);
+            testTarget = target.position - transform.position;
+            testTarget.y = 0;
 
-        for (int i = 0; i < colliders.Length; i++)
-        {
-            if (colliders[i].CompareTag("Player"))
+            //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(target.position - transform.position), 10 * Time.deltaTime);
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(testTarget), rotationSpeed * Time.deltaTime);
+            rotationY = transform.localRotation.y;
+            notMinusRotation = 360 - rotationY;
+            eulerAnglesY = transform.eulerAngles.y;
+
+            if (SetRotation())
             {
-                //Debug.Log($"{target} 추적해라");
-                target = colliders[i].transform;
-                //checkPlayer = true;
-                tracking = true;
-
-                //animator.SetBool("Tracking", tracking);
+                enemyRb.MovePosition(transform.position + transform.forward * Time.deltaTime * eStat.moveSpeed);
             }
-            /*else
-            {
-                //Debug.Log("플레이어 추적하지마라");
-                tracking = false;
-                checkPlayer = false;                
-            }*/
         }
 
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(testTarget), rotationSpeed * Time.deltaTime);
-    }
+        public bool SetRotation()
+        {
+            bool completeRot = false;
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireCube(transform.position + searchCubePos, searchCubeRange * 2f);
-        //Gizmos.DrawWireSphere(transform.position, searchRange);
-    }
+            if (/*transform.eulerAngles.y >= -10 && transform.eulerAngles.y <= 10*/transform.eulerAngles.y >= 5 + rotLevel && transform.eulerAngles.y <= 10 + rotLevel)
+            {
+                completeRot = true;
+            }
+            else if (transform.eulerAngles.y >= 175 - rotLevel && transform.eulerAngles.y <= 190 - rotLevel ||
+                transform.eulerAngles.y >= 350 - rotLevel && transform.eulerAngles.y <= 360 - rotLevel)
+            {
+                completeRot = true;
+            }
+            //Debug.Log($"체크가 되는 거냐? {complete = completeRot}\n로테이션앵글:{transform.eulerAngles.y}");
+            return completeRot;
+        }
+    
+        #endregion
 
-    #endregion
+        #region 정찰
+        public void Patrol()
+        {
+            //Debug.Log("추적하고있지 않다면 주변을 정찰합니다");
+            //Collider[] colliders = Physics.OverlapSphere(transform.position, searchRange);
+            Collider[] colliders = Physics.OverlapBox(transform.position + searchCubePos, searchCubeRange);
 
-    #endregion
+            for (int i = 0; i < colliders.Length; i++)
+            {
+                if (colliders[i].CompareTag("Player"))
+                {
+                    //Debug.Log($"{target} 추적해라");
+                    target = colliders[i].transform;
+                    //checkPlayer = true;
+                    tracking = true;
 
-    #region 사망함수
-    public void Dead()
-    {
-        //rangeCollider.SetActive(false);
-        gameObject.SetActive(false);
-    }
-    #endregion
+                    //animator.SetBool("Tracking", tracking);
+                }
+                /*else
+                {
+                    //Debug.Log("플레이어 추적하지마라");
+                    tracking = false;
+                    checkPlayer = false;                
+                }*/
+            }
 
-    #region 공격함수
-    public void Attack()
-    {
-        //공격 콜라이더 오브젝트 활성화
-        attackCollider.SetActive(true);        
-        /*
-         * 공격 콜라이더 오브젝트를 0.2초 후에 비활성화한 다음
-         * activeAttack 부울 변수를 false변환 및 공격 타이머 초기화      
-        */        
-    }
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(testTarget), rotationSpeed * Time.deltaTime);
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireCube(transform.position + searchCubePos, searchCubeRange * 2f);
+            //Gizmos.DrawWireSphere(transform.position, searchRange);
+        }
+
+        #endregion
+
+        #endregion
+
+        #region 사망함수
+        public void Dead()
+        {
+            //rangeCollider.SetActive(false);
+            gameObject.SetActive(false);
+        }
+        #endregion
+
+        #region 공격함수
+        public void Attack()
+        {
+            //공격 콜라이더 오브젝트 활성화
+            attackCollider.SetActive(true);
+            /*
+             * 공격 콜라이더 오브젝트를 0.2초 후에 비활성화한 다음
+             * activeAttack 부울 변수를 false변환 및 공격 타이머 초기화      
+            */
+        }
 
     // 공격 준비
     public void ReadyAttackTime()
@@ -225,13 +227,13 @@ public class BoxTestt : MonoBehaviour
                 attackTimer = attackInitCoolTime;
                 Attack();
             }
-        //}
-        /*else
-        {
-            InitAttackCoolTime();
-        }*/
+            //}
+            /*else
+            {
+                InitAttackCoolTime();
+            }*/
+        }
     }
-
     // 공격 초기화
     public void InitAttackCoolTime()
     {

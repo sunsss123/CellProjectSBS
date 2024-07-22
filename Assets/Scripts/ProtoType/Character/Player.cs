@@ -279,26 +279,28 @@ public class Player : Character
             Humonoidanimator.SetBool("DownAttack", downAttack);
         }
 
-        /*if (RunEffect != null)
+        var a = RunEffect.main;
+
+        if (RunEffect != null)
         {
 
             a.maxParticles = 100;
             if (!RunEffect.isPlaying)
-                RunEffect.Play();           
+                RunEffect.Play();
         }
         else
-        {         
+        {
             a.maxParticles = 0;
-            if((RunEffect.isPlaying&&RunEffect.particleCount==0))
-            RunEffect.Stop();   
-        }*/
+            if ((RunEffect.isPlaying && RunEffect.particleCount == 0))
+                RunEffect.Stop();
+        }
 
         if (CullingPlatform)
         {
             platformDisableTimer += Time.deltaTime;
             if (PlatformDisableTime <= platformDisableTimer)
 
-            var a = RunEffect.main;
+            //var a = RunEffect.main;
 
             if (isRun && onGround)
 
