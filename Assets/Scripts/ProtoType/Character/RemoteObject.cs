@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum RemoteType { tv, none }
 
-public class RemoteObject : MonoBehaviour
+public class RemoteObject: MonoBehaviour
 {
     public RemoteType rType;
 

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TransformPlace : MonoBehaviour
+public class TransformPlace: MonoBehaviour
 {
     public TransformType type;
     public GameObject TransformPlaceEffect;

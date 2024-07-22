@@ -3931,11 +3931,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackType: 0
   characterState: 0
-  hpMax: 4
+  initMaxHP: 0
+  initMoveSpeed: 0
+  HPBonus: 0
+  MoveSpeedBonus: 0
+  initattackCoolTime: 0
+  attackCoolTimebonus: 0
   hp: 4
   atk: 2
-  moveSpeed: 0
-  attackCoolTime: 0
+  atkSpeed: 0
   rotationSpeed: 0
   canMove: 0
   canAttack: 0
@@ -4002,6 +4006,8 @@ MonoBehaviour:
   OnDeformField: 0
   retoretype: 1
   LastTransformPlace: {fileID: 0}
+  PlayerSpawn: {fileID: 0}
+  Playerprefab: {fileID: 0}
   CurrentPlayer: {fileID: 0}
   pStat: {fileID: 0}
   lastDirection: 1
@@ -4009,6 +4015,7 @@ MonoBehaviour:
   CurrentType: 0
   defromUpPosition: 0.6
   DeTransformtime: 2
+  DeTransformtimer: 0
 --- !u!114 &650167062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4021,12 +4028,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e741bdc490717c4fb7cd1b18220388e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GravityX: 0
-  GravityY: -9
-  GravityZ: 0
-  jumpforce: 4.35
-  movespeed: 2.2
-  CameraTrackingTime: 0.5
 --- !u!1 &651892634
 GameObject:
   m_ObjectHideFlags: 0
@@ -12970,6 +12971,37 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4873b44c37ccc8d47a3f07878eed478b, type: 3}
+--- !u!1 &1446130271
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1446130272}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1446130272
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1446130271}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 29.607, y: -3.329, z: -0.10799885}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1461538682
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14474,15 +14506,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 250d45961340ad64fa356ecd5f359708, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InitCamPos: {x: 0.5, y: 0.5, z: -4}
-  InitCamrot: {x: 0, y: 0, z: 0}
-  camPos: {x: 0.5, y: 0.5, z: -4}
-  camrot: {x: 0, y: 0, z: 0}
-  target: {fileID: 0}
-  PlayerZVaule: 0
-  ZPin: 0
-  CameraTrakingTime: 0.2
-  CameraMoveSpeed: 0
 --- !u!1001 &1676097622
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24241,3 +24264,4 @@ SceneRoots:
   - {fileID: 4018328793325491621}
   - {fileID: 1944484067808183126}
   - {fileID: 601739540}
+  - {fileID: 1446130272}

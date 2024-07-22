@@ -4,7 +4,7 @@ using System.Net.Http.Headers;
 
 using UnityEngine;
 
-public class Enemy : Character
+public class Enemy: Character
 {
     public EnemyStat eStat;
 

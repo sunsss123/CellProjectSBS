@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerUI : MonoBehaviour
+public class PlayerUI: MonoBehaviour
 {
     public TextMeshProUGUI PlayerFormText;
     public Image Hpbar;

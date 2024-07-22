@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TransformMouse : TransformPlace
+public class TransformMouse: TransformPlace
 {
     public ShootingFIeld ShootingGame;
     private void OnEnable()
