@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class ItemObject : MonoBehaviour
 {
-    
+    public abstract void GetITemData(item data);
 
     protected abstract void ItemPickUp();
 
