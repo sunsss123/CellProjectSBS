@@ -135,6 +135,7 @@ public class Player : Character
                     onGround = true;
                     isJump = false;
                     downAttack = false;
+                    PlayerStat.instance.doubleJump = true;
                     PlayerStat.instance.jumpCount = 0;
 
                     if (LandingEffect != null)
@@ -258,11 +259,17 @@ public class Player : Character
     private void Update()
     {
         wallRayCastCheck();
+        if (jumpBufferTimer > 0)
+        {
+            jumpBufferTimer -= Time.deltaTime;
+        }
     }
 
     private void FixedUpdate()
     {
         //wallRayCastCheck();
+        JumpKeyInput();
+
         InteractivePlatformrayCheck();
         InteractivePlatformrayCheck2();
 
@@ -543,40 +550,85 @@ public class Player : Character
     #region 점프동작
     public void Jump()
     {
-        if (!isJump)
-        {
+      
             //플랫폼에 닿았을 때 점프 가능(바닥,천장, 벽에 닿아도 점프 되지만 신경쓰지말기)
             isJump = true;
 
+
+            if (PlayerStat.instance.jumpCount < PlayerStat.instance.jumpCountMax)
+            {
 
             if (Humonoidanimator != null)
             {
                 Humonoidanimator.SetTrigger("jump");
             }
 
-            if(JumpEffect!=null)
-            JumpEffect.SetActive(true);
+            if (JumpEffect != null)
+                JumpEffect.SetActive(true);
 
             isRun = false;
-            if (PlayerStat.instance.jumpCount < PlayerStat.instance.jumpCountMax)
-            {
-
-                //YMove 
-           
-                playerRb.AddForce(Vector3.up * PlayerStat.instance.jumpForce, ForceMode.Impulse);
+            //YMove 
+            playerRb.velocity = Vector3.zero;
+            playerRb.AddForce(Vector3.up * PlayerStat.instance.jumpForce, ForceMode.Impulse);
                 PlayerStat.instance.jumpCount++;
+            }
+        
+    }
+
+    bool canjumpInput;
+    public int jumpInputValue;
+    public float jumpBufferTimer;
+    public float jumpBufferTimeMax;
+    public void JumpTest()
+    {
+
+        isJump = true;
+        jumpBufferTimer = 0;
+        canjumpInput = false;
+
+        if (Humonoidanimator != null)
+        {
+            Humonoidanimator.SetTrigger("jump");
+        }
+
+        if (JumpEffect != null)
+            JumpEffect.SetActive(true);
+
+        isRun = false;
+        playerRb.velocity = Vector3.zero;
+        playerRb.AddForce(Vector3.up * PlayerStat.instance.jumpForce, ForceMode.Impulse);
+
+        Debug.Log("점프 누르는 중?");
+
+    }
+    public void JumpKeyInput()
+    {
+        if (jumpBufferTimer > 0)
+        {
+            if (!Input.GetKey(KeyCode.DownArrow) && !downAttack)
+            {
+                if (!isJump)
+                {
+                    JumpTest();
+                }
+                else if (jumpInputValue > 0 && canjumpInput && PlayerStat.instance.doubleJump)
+                {
+                    PlayerStat.instance.doubleJump = false;
+                    JumpTest();
+                }
+                Debug.Log("누르는 중입니다만");
             }
         }
     }
-
     public void jumphold()
     {
-        if (playerRb.velocity.y > 0)
+        jumpInputValue = 0;
+        canjumpInput = true;
+        /*if (playerRb.velocity.y > 0)
         {
             playerRb.velocity = new Vector3(playerRb.velocity.x, playerRb.velocity.y * jumpholdLevel, playerRb.velocity.z);
-        }
+        }*/
     }
-
     #endregion
 
 

@@ -1618,6 +1618,9 @@ MonoBehaviour:
   AttackEffect: {fileID: 4736781096793473584}
   LandingEffect: {fileID: 7281951006512747657}
   JumpEffect: {fileID: 2803013037455162963}
+  jumpInputValue: 0
+  jumpBufferTimer: 0
+  jumpBufferTimeMax: 0.05
   DownAttackForce: 0
   CullingPlatform: 0
 --- !u!136 &2012848794722345922

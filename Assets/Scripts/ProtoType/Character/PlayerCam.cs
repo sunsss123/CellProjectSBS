@@ -27,7 +27,7 @@ public class PlayerCam : MonoBehaviour
     float cameraVector;
     Vector3 PlayerPos;
 
-
+    float ZPinValue;
     void Start()
     {
         //target = GameObject.Find("Player").transform;
@@ -52,15 +52,17 @@ public class PlayerCam : MonoBehaviour
         cameraVector = ((target.position + camPos) - transform.position).magnitude;
         cameraspeed = cameraVector / CameraTrakingTime;
         //transform.Translate(((target.position + camPos) - transform.position).normalized * cameraspeed * Time.deltaTime);
+        camPos.x = Mathf.Abs(camPos.x) *(int) PlayerHandler.instance.PlayerDirection;
         if (!ZPin)
-            CalculateVector = target.position + camPos;
+            CalculateVector =(target.position + camPos);
         else
-            CalculateVector = (Vector3)((Vector2)target.position + (Vector2)camPos) + Vector3.forward * transform.position.z;
+            CalculateVector = (Vector3)((Vector2)target.position + (Vector2)camPos) + Vector3.forward * ZPinValue;
 
             transform.position = Vector3.Lerp(transform.position, CalculateVector, Time.deltaTime * cameraspeed);
-            //if(transform.position!= target.position + camPos)
-            //     transform.Translate((target.position + camPos).normalized * CameraSpeed*Time.deltaTime);
-        }
+        //if(transform.position!= target.position + camPos)
+        //     transform.Translate((target.position + camPos).normalized * CameraSpeed*Time.deltaTime);
+        ZPinValue = transform.position.z;
+    }
     public void initializecamtransform()
     {
 

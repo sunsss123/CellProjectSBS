@@ -26,6 +26,8 @@ public class PlayerHandler : MonoBehaviour
     #region ΩÃ±€≈Ê
     public static PlayerHandler instance;
     #endregion
+
+    public direction PlayerDirection;
     private void Awake()
     {
         #region ΩÃ±€≈Ê
@@ -68,8 +70,11 @@ public class PlayerHandler : MonoBehaviour
         //}
         PlayerFallOut();
 
+
+        if (CurrentPlayer != null)
+            PlayerDirection = CurrentPlayer.direction;
         #region ƒ≥∏Ø≈Õ ¡∂¿€
-        if(CurrentPlayer != null && !CurrentPlayer.formChange)
+        if (CurrentPlayer != null && !CurrentPlayer.formChange)
         charactermove();
         #endregion
     }
@@ -179,9 +184,16 @@ public class PlayerHandler : MonoBehaviour
             CurrentPlayer.Move();
         }
 
-        if(PlayerStat.instance.jumpCount <= PlayerStat.instance.jumpCountMax && !Input.GetKey(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.C) && !CurrentPlayer.downAttack)
+        /*if(PlayerStat.instance.jumpCount <= PlayerStat.instance.jumpCountMax && !Input.GetKey(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.C) && !CurrentPlayer.downAttack)
         {
             CurrentPlayer.Jump();
+        }*/
+        if (Input.GetKey(KeyCode.C))
+        {
+
+            Debug.Log("¡°«¡≈∞ ¿‘∑¬ ¡ﬂ");
+            CurrentPlayer.jumpInputValue = 1;
+            CurrentPlayer.jumpBufferTimer = CurrentPlayer.jumpBufferTimeMax;
         }
         if (!Input.GetKey(KeyCode.C))
         {
