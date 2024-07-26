@@ -48,14 +48,15 @@ public class GameManager : MonoBehaviour
         else
         return null;//첫번째 스테이지를 불려온다
     }
-    public void OnStartLoading()
+    public void ReLoadingScene()
     {
         currentscenename = LoadLastestStage();
         StartCoroutine(RELoadingTest());
     }
     public void LoadingScene(string scenename)
     {
-        currentscenename = LoadLastestStage();
+        saveCheckPointIndexKey(0);
+        SaveCurrentStage(scenename);
         StartCoroutine(LoadingTest());
     }
 
@@ -72,7 +73,8 @@ public class GameManager : MonoBehaviour
 
         Debug.Log($"로딩 씬 연출(최소 {MinimumLoadingTime}초 소모....)");
         yield return new WaitForSeconds(MinimumLoadingTime); // 로딩 종료 연출 시간 (필요에 따라 조정)
-        
+  
+     
         syncoperation.allowSceneActivation = true;
 
         // 다음 씬에서 맞는 체크포인트 위치에 플레이어를 생성합니다.

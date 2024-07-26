@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Crane_material
+  m_Name: HBeam
   m_Shader: {fileID: 4800000, guid: be891319084e9d147b09d89e80ce60e0, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -523,15 +523,15 @@ Material:
     - _utsVersionY: 8
     - _utsVersionZ: 3
     m_Colors:
-    - _1st_ShadeColor: {r: 0.26112494, g: 0.4086167, b: 0.509434, a: 1}
+    - _1st_ShadeColor: {r: 0.55345905, g: 0.4080404, b: 0, a: 1}
     - _2nd_ShadeColor: {r: 1, g: 1, b: 1, a: 1}
     - _AngelRingMaskColor: {r: 0, g: 1, b: 0, a: 1}
     - _AngelRing_Color: {r: 1, g: 1, b: 1, a: 1}
     - _Ap_RimLightColor: {r: 1, g: 1, b: 1, a: 1}
-    - _BaseColor: {r: 0.5251572, g: 0.8063386, b: 1, a: 1}
+    - _BaseColor: {r: 1, g: 0.8240103, b: 0.33018857, a: 1}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColorMaskColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 0.52515715, g: 0.8063386, b: 1, a: 1}
+    - _Color: {r: 1, g: 0.8240103, b: 0.33018854, a: 1}
     - _ColorShift: {r: 0, g: 0, b: 0, a: 1}
     - _DiffusionProfileAsset: {r: 0, g: 0, b: 0, a: 0}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}

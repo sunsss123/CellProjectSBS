@@ -51,6 +51,7 @@ public class PlayerSpawnManager : MonoBehaviour
     }
     public void FindCheckpoint(int n)
     {
+        
         if (ChkPointsDic.ContainsKey(n))
         {
             CurrentCheckPoint = ChkPointsDic[n];
@@ -78,6 +79,11 @@ public class PlayerSpawnManager : MonoBehaviour
     }
     private void Start()
     {
+        if (GameManager.instance.LoadLastestStage() != SceneManager.GetActiveScene().name)
+        {
+            Debug.Log("씬 변화가 감지됨(단 방향이니깐 체크포인트 인덱스를 0으로 강제 초기화)\n 만약에 양방향으로 만들고 싶으면 PD한테 문의");
+            GameManager.instance.saveCheckPointIndexKey(0);
+        }
         FindCheckpoint(GameManager.instance.LoadCheckPointIndexKey());
         Spawn();
     }

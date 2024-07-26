@@ -136,9 +136,15 @@ public class PlayerHandler : MonoBehaviour
             Playerprefab.SetActive(false);
             GameObject p;
             if (CreatedTransformlist.TryGetValue(CurrentType, out p))
+            {
                 p.gameObject.SetActive(true);
-           
-                CreatedTransformlist.Add(CurrentType,p);
+              
+            }
+            else
+            {
+                p = Instantiate(PlayerTransformList[CurrentType]);
+                CreatedTransformlist.Add(CurrentType, p);
+            }
             
             Playerprefab = p;
             #endregion
