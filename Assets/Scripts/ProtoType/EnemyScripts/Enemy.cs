@@ -11,7 +11,9 @@ public class Enemy: Character
     public Rigidbody enemyRb; // 적 리지드바디
     public GameObject attackCollider; // 적의 공격 콜라이더 오브젝트
     public GameObject rangeCollider; // 공격 범위 콜라이더 오브젝트
-    
+
+    bool posRetry;
+
     [Header("플레이어 탐색 큐브 조정")]
     public Vector3 searchCubeRange; // 플레이어 인지 범위를 Cube 사이즈로 설정
     public Vector3 searchCubePos; // Cube 위치 조정
@@ -38,7 +40,6 @@ public class Enemy: Character
     float eulerAnglesY; // 오일러값 확인 테스트
     public float rotationSpeed; // 자연스러운 회전을 찾기 위한 테스트 
 
-
     [Header("기절상태")]
     public bool onStun;
     public bool reachCheck;
@@ -60,13 +61,11 @@ public class Enemy: Character
     }
 
     private void Start()
-    {
-        
+    {        
         attackTimer = attackInitCoolTime;
         
         if (onStun)
-        {
-         
+        {         
             StartCoroutine(WaitStunTime());
         }
     }
@@ -214,7 +213,8 @@ public class Enemy: Character
 
     #region 정찰
     public void Patrol()
-    {
+    {        
+
         //Debug.Log("추적하고있지 않다면 주변을 정찰합니다");
         //Collider[] colliders = Physics.OverlapSphere(transform.position, searchRange);
         Collider[] colliders = Physics.OverlapBox(transform.position + searchCubePos, searchCubeRange);
@@ -223,6 +223,12 @@ public class Enemy: Character
         {
             if (colliders[i].CompareTag("Player"))
             {
+                if (!posRetry)
+                {
+                    posRetry = true;
+                    transform.position = new(transform.position.x, transform.position.y, PlayerHandler.instance.CurrentPlayer.transform.localPosition.z);
+                }
+
                 target = colliders[i].transform;
                 //checkPlayer = true;
                 playerCheck = true;
