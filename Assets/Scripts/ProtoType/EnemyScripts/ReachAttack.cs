@@ -13,11 +13,25 @@ public class ReachAttack : MonoBehaviour
         damage = enemy.eStat.atk;
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void SetDamage(float value)
+    {
+        damage = value;
+    }
+
+    /*private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && !PlayerHandler.instance.CurrentPlayer.onInvincible)
         {
             other.GetComponent<Player>().Damaged(damage);
+        }
+    }*/
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player") && !PlayerHandler.instance.CurrentPlayer.onInvincible)
+        {
+            other.GetComponent<Player>().Damaged(damage);
+            enemy.reachCheck = true;
         }
     }
 }

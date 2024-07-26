@@ -20,11 +20,20 @@ public class DownAttackCollider : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other)
-    {
+    {        
         if (other.CompareTag("Enemy"))
         {
-            Enemy enemy = other.GetComponent<Enemy>();
-            
+            Enemy enemy;
+
+            if (!other.GetComponent<Enemy>())
+            {
+                enemy = other.transform.parent.GetComponent<Enemy>();
+            }
+            else
+            {
+                enemy = other.GetComponent<Enemy>();
+            }
+
             /*playerRb.velocity = Vector3.zero;
             playerRb.AddForce((Vector3.up*2 + Vector3.right * DecideDirection()) * 80);*/
             if (!enemy.eStat.onInvincible)
@@ -46,7 +55,7 @@ public class DownAttackCollider : MonoBehaviour
     public float DecideDirection()
     {
         float r = 0;
-        switch (player.direction)
+        switch (PlayerStat.instance.direction)
         {
             case direction.Right:
                 r = -1;

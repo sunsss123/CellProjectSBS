@@ -4,7 +4,7 @@ using System.Net.Http.Headers;
 
 using UnityEngine;
 
-public class Enemy : Character
+public class Enemy: Character
 {
     public EnemyStat eStat;
 
@@ -15,6 +15,9 @@ public class Enemy : Character
     [Header("플레이어 탐색 큐브 조정")]
     public Vector3 searchCubeRange; // 플레이어 인지 범위를 Cube 사이즈로 설정
     public Vector3 searchCubePos; // Cube 위치 조정
+
+    public Vector3 rangePos;
+    public Vector3 rangeSize;
 
     [Header("플레이어 추격 관련")]
     public float attackTimer; // 공격 대기시간
@@ -36,24 +39,31 @@ public class Enemy : Character
     public float rotationSpeed; // 자연스러운 회전을 찾기 위한 테스트 
 
 
-    [Header("상자에서 나올때 기절상태?")]
+    [Header("기절상태")]
     public bool onStun;
-
+    public bool reachCheck;
     bool complete;
     private void Awake()
     {
-        eStat = gameObject.AddComponent<EnemyStat>();
-        attackCollider.GetComponent<EnemyMeleeAttack>().SetDamage(eStat.atk);
+        //eStat = gameObject.AddComponent<EnemyStat>();
+        eStat = GetComponent<EnemyStat>();
+        //attackCollider.GetComponent<EnemyMeleeAttack>().SetDamage(eStat.atk);
         attackCollider.SetActive(false);
 
         enemyRb = GetComponent<Rigidbody>();
+
+        if (rangeCollider != null)
+        {
+            rangePos = rangeCollider.GetComponent<BoxCollider>().center;
+            rangeSize = rangeCollider.GetComponent<BoxCollider>().size;
+        }
     }
 
     private void Start()
     {
-        attackInitCoolTime = 3.5f;
+        
         attackTimer = attackInitCoolTime;
-        attackDelay = 1.5f;
+        
         if (onStun)
         {
          
@@ -64,6 +74,11 @@ public class Enemy : Character
     private void Update()
     {
         ReadyAttackTime();
+        if (rangeCollider != null)
+        {
+            rangeCollider.GetComponent<BoxCollider>().center = rangePos;
+            rangeCollider.GetComponent<BoxCollider>().size = rangeSize;
+        }
     }
     
     private void FixedUpdate()
@@ -71,15 +86,13 @@ public class Enemy : Character
         if (!onStun)
         {
             Move();
-
-            //TrackingCheck();
         }
     }
 
     IEnumerator WaitStunTime()
     {
         eStat.onInvincible = true;
-        transform.rotation = Quaternion.Euler(0, -90 * (int)PlayerHandler.instance.CurrentPlayer.direction, 0);
+        transform.rotation = Quaternion.Euler(0, -90 * (int)PlayerStat.instance.direction, 0);
         enemyRb.AddForce(-((transform.forward + transform.up)*5f), ForceMode.Impulse);
 
         yield return new WaitForSeconds(eStat.invincibleTimer);
@@ -88,32 +101,10 @@ public class Enemy : Character
         eStat.onInvincible = false;
     }
 
-    #region 추적 대상 확인
-    /*public void TrackingCheck()
-    {
-        Debug.DrawRay(transform.position + Vector3.up * rayHeight, transform.forward * rayRange, Color.magenta, 0.1f);
-
-        RaycastHit[] hits = Physics.RaycastAll(transform.position + Vector3.up * rayHeight, transform.forward, rayRange);
-
-        for (int i = 0; i < hits.Length; i++)
-        {
-            if (hits[i].collider.CompareTag("GameController"))
-            {
-                if (!hitByPlayer && hits[i].collider == hits[i].collider.GetComponent<BoxCollider>() && hits[i].collider.GetComponent<RemoteObject>().rType == RemoteType.tv)
-                {
-                    if (hits[i].collider.GetComponent<RemoteObject>().onActive)
-                    {
-                        checkTv = true;
-                    }
-                }
-            }
-        }
-    }*/
-    #endregion
-
     #region 피격함수
     public override void Damaged(float damage)
     {
+
         eStat.hp -= damage;
         if (eStat.hp <= 0)
         {
@@ -121,21 +112,34 @@ public class Enemy : Character
 
             Dead();
         }
-        enemyRb.velocity = Vector3.zero;
-        attackCollider.SetActive(false);
-        if (target != null)
+        else
         {
-            if (target.position.x > transform.position.x)
+            enemyRb.velocity = Vector3.zero;
+            attackCollider.SetActive(false);
+            if (target != null)
             {
-                transform.rotation = Quaternion.Euler(0, 90, 0);
+                if (target.position.x > transform.position.x)
+                {
+                    transform.rotation = Quaternion.Euler(0, 90, 0);
+                }
+                else
+                {
+                    transform.rotation = Quaternion.Euler(0, -90, 0);
+                }
             }
-            else
-            {
-                transform.rotation = Quaternion.Euler(0, -90, 0);
-            }
+            enemyRb.AddForce(-transform.forward * 3f, ForceMode.Impulse);
+            InitAttackCoolTime();
         }
-        enemyRb.AddForce(-transform.forward * 3f, ForceMode.Impulse);
-        InitAttackCoolTime();
+    }
+
+    IEnumerator HiiitedState()
+    {
+        eStat.eState = EnemyState.hitted;
+        yield return new WaitForSeconds(1f);
+        if (!onAttack)
+            eStat.eState = EnemyState.idle;
+        else if(onAttack)
+            eStat.eState = EnemyState.attack;
     }
     #endregion
 
@@ -148,7 +152,7 @@ public class Enemy : Character
 
             if (tracking)
             {
-                if (!activeAttack /*&& !checkTv*/ && !onAttack)
+                if (!activeAttack && !onAttack)
                 {
                     TrackingMove();
                 }
@@ -165,7 +169,7 @@ public class Enemy : Character
         testTarget = target.position - transform.position;
         testTarget.y = 0;
         
-        //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(testTarget), rotationSpeed * Time.deltaTime);
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(testTarget), rotationSpeed * Time.deltaTime);
         rotationY = transform.localRotation.y;
         notMinusRotation = 360 - rotationY;
         eulerAnglesY = transform.eulerAngles.y;
@@ -203,6 +207,7 @@ public class Enemy : Character
             completeRot = true;
         }
         //Debug.Log($"체크가 되는 거냐? {complete = completeRot}\n로테이션앵글:{transform.eulerAngles.y}");
+        Debug.Log(completeRot);
         return completeRot;
     }
     #endregion
@@ -246,7 +251,8 @@ public class Enemy : Character
 
     #region 사망함수
     public override void Dead()
-    {        
+    {
+        eStat.eState = EnemyState.dead;
         PlayerHandler.instance.CurrentPlayer.dmCollider.OtherCheck(this.gameObject);
         gameObject.SetActive(false);
     }
@@ -258,7 +264,7 @@ public class Enemy : Character
 
     }
 
-    // 공격 준비
+    // 공격 준비시간
     public void ReadyAttackTime()
     {
         if (onAttack && eStat.eState != EnemyState.dead)
@@ -297,22 +303,4 @@ public class Enemy : Character
     }
     #endregion
 
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag("GameController"))
-        {
-            if (other.GetComponent<RemoteObject>().rType == RemoteType.tv && !hitByPlayer)
-            {
-                if (other.GetComponent<RemoteObject>().onActive)
-                {
-                    target = other.transform;
-                    tracking = true;
-                }
-            }
-        }
-    }
-
-
-
-    
 }

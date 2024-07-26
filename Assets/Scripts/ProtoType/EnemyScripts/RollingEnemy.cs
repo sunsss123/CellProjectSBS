@@ -6,6 +6,7 @@ using UnityEngine;
 public class RollingEnemy : Enemy
 {
     public GameObject rollingObecjt;
+    public Transform parent;
 
     public override void Move()
     {
@@ -52,11 +53,24 @@ public class RollingEnemy : Enemy
 
             Dead();
         }
-        enemyRb.velocity = Vector3.zero;
+        else
+        {
+            StartCoroutine(WaitHittedDelay());
+        }        
+    }
+
+    public override void Dead()
+    {
+        rollingObecjt.GetComponent<RollingObject>().enemyDie = true;
+        rollingObecjt.transform.SetParent(null);
+        base.Dead();
     }
 
     IEnumerator WaitHittedDelay()
     {
-        yield return new WaitForSeconds(1f);
+        enemyRb.velocity = Vector3.zero;
+        activeAttack = true;
+        yield return new WaitForSeconds(.5f);
+        activeAttack = false;
     }
 }
