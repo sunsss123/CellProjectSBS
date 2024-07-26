@@ -61,9 +61,6 @@ public class DontMoveCollider : MonoBehaviour
 
     public void OtherCheck(GameObject obj)
     {
-        if (obj == collider_.gameObject)
-        {
-            PlayerHandler.instance.CurrentPlayer.wallcheck = false;
-        }
+        PlayerHandler.instance.CurrentPlayer.wallcheck = false;
     }
 }

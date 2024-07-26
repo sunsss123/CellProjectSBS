@@ -20,6 +20,8 @@ public class RemoteObject: MonoBehaviour
     SphereCollider activeCollider;
     BoxCollider activeCol;
 
+    bool onViewport;
+
     private void Awake()
     {
         tvMaterials = new Material[GetComponent<MeshRenderer>().materials.Length];
@@ -33,6 +35,15 @@ public class RemoteObject: MonoBehaviour
         activeCollider = GetComponent<SphereCollider>();
         Deactive();
     }
+
+    private void Update()
+    {
+        if (onViewport)
+        {
+            distanceToRemocon = Vector3.Distance(this.transform.position, PlayerHandler.instance.CurrentPlayer.transform.position);
+        }
+    }
+
     public void Deactive()
     {
         //GetComponent<MeshRenderer>().materials[1] = DeactiveMaterial;
@@ -57,10 +68,17 @@ public class RemoteObject: MonoBehaviour
 
     private void OnBecameVisible()
     {
-        Debug.Log("상호작용할 오브젝트와의 거리");
         if (PlayerHandler.instance.CurrentType == TransformType.remoteform)
         {
-            distanceToRemocon = Vector3.Distance(this.transform.position, PlayerHandler.instance.CurrentPlayer.transform.position);
+            onViewport = true;
+        }        
+    }
+
+    private void OnBecameInvisible()
+    {
+        if (PlayerHandler.instance.CurrentType == TransformType.remoteform)
+        {
+            onViewport = false;
         }
     }
 }
