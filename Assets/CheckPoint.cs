@@ -4,15 +4,23 @@ using UnityEngine;
 
 public class CheckPoint : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public Transform ChkPointTestPrefab;
+    private void Awake()
     {
-        
+        ChkPointTestPrefab.gameObject.SetActive(false);
     }
-
-    // Update is called once per frame
-    void Update()
+    public int index;
+    public GameObject spawn(GameObject obj)
     {
-        
+        Debug.Log("Player Spawn");
+       return Instantiate(obj, ChkPointTestPrefab.position, ChkPointTestPrefab.rotation);
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            Debug.Log($"체크포인트{index}에 닿음");
+            PlayerSpawnManager.Instance.ChangeCheckPoint(this);
+        }
     }
 }

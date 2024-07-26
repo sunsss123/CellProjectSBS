@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 2941687202988247702}
   - component: {fileID: 3346297588009659795}
   - component: {fileID: 8765526764128613502}
+  - component: {fileID: 3493046245006148624}
+  - component: {fileID: 6415053609986595596}
   m_Layer: 0
   m_Name: SIngleton
   m_TagString: Untagged
@@ -48,25 +50,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackType: 0
-  cState: 0
   characterState: 0
-  hpMax: 4
-  hp: 4
+  initMaxHP: 3
+  initMoveSpeed: 2
+  HPBonus: 0
+  MoveSpeedBonus: 0
+  initattackCoolTime: 0
+  attackCoolTimebonus: 0
+  hp: 3
   atk: 2
-  moveSpeed: 0
   atkSpeed: 0
-  attackCoolTime: 0
   rotationSpeed: 0
   canMove: 0
   canAttack: 0
+  pState: 0
   currentAttack: 0
   jumpCount: 0
   jumpCountMax: 1
+  doubleJump: 0
   jumpForce: 0
   shotJumpForce: 0
-  dashForce: 0
-  dashTimer: 0
-  dashCoolTime: 0
   invincibleCoolTime: 0
   attackDelay: 0
   rotationValue: 0
@@ -112,7 +115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerformlist:
-  - {fileID: 7664586703414084814, guid: 95bb39b98559b1546bbe4f0a2234418f, type: 3}
+  - {fileID: 7664586703414084814, guid: c38077de9249dc54d853fbf9b41797aa, type: 3}
   - {fileID: 5892187899129608376, guid: 9820d472a79c9834095a60d07e1ad462, type: 3}
   - {fileID: 783853098181501423, guid: adb0feb0b49dc1b43b0fa40e22bf6468, type: 3}
 --- !u!114 &8765526764128613502
@@ -133,3 +136,38 @@ MonoBehaviour:
   jumpforce: 4.35
   movespeed: 2.2
   CameraTrackingTime: 0.5
+--- !u!114 &3493046245006148624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8262377263790243442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe0d97363c1f9a14cad6f33dca5f0c7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Checkpoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  DefaultForm: {fileID: 7664586703414084814, guid: adab39cdc59ea234aa9ec9dbf410dc93,
+    type: 3}
+  LastestCheckPointID: 0
+  CurrentCheckPoint: {fileID: 0}
+  CurrentPlayer: {fileID: 0}
+--- !u!114 &6415053609986595596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8262377263790243442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d4ba5ca5aa2a714692c9b52714277fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MultiplyItems:
+  - {fileID: 11400000, guid: d64366db019773d40b39e7f075e469e0, type: 2}
+  - {fileID: 11400000, guid: 36fa515c215463b4da91e0e178d37ac4, type: 2}

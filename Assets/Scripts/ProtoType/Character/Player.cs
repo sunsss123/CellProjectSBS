@@ -16,7 +16,9 @@ public class Player : Character
     public CapsuleCollider capsuleCollider;
     public DontMoveCollider dmCollider;
 
-    //public direction direction=direction.Right;
+    Vector3 EnvironmentPower;
+
+    public direction direction=direction.Right;
 
     [Header("근접 및 원거리 공격 관련")]
     public GameObject meleeCollider; // 근접 공격 콜라이더
@@ -35,10 +37,9 @@ public class Player : Character
 
     [Header("점프 홀딩 조절")]
     public float jumpholdLevel = 0.85f;
-    public float jumpBufferTimeMax; // 점프 선입력 시간
-    public float jumpBufferTimer;   // 점프 선입력 타이머
-    public bool canjumpInput;       // 점프 키입력 체크
-    public int jumpInputValue;      // 점프 입력값 
+    public float jumpBufferTimeMax;
+    public float jumpBufferTimer;
+    public bool canjumpInput;
     [Header("키 선입력 관련")]
     public float attackBufferTimeMax;
     public float attackBufferTimer;
@@ -54,7 +55,6 @@ public class Player : Character
     public float waitTime; // 코루틴 yield return 시간 조절
     public bool formChange; // 오브젝트 변신 중인지 체크    
     public GameObject changeEffect; // 변신 완료 이펙트
-    public bool changing;
 
     [Space(15f)]
     public bool onGround; // 지상 판정 유무
@@ -170,7 +170,6 @@ public class Player : Character
                     onGround = true;
                     isJump = false;
                     downAttack = false;
-                    PlayerStat.instance.doubleJump = true;
                     PlayerStat.instance.jumpCount = 0;
 
                     if (LandingEffect != null)
@@ -190,10 +189,10 @@ public class Player : Character
         #region 직선 레이캐스트
         //wallcheck = false;
         RaycastHit hit;
-        Debug.DrawRay(this.transform.position + (Vector3.up * sizeFir + Vector3.right * raySize) * 0.1f * (int)PlayerStat.instance.direction, Vector3.right * (int)PlayerStat.instance.direction * 0.1f, Color.red, 0.1f);
-        Debug.DrawRay(this.transform.position + (Vector3.up * sizeSec + Vector3.right * raySize) * 0.1f * (int)PlayerStat.instance.direction, Vector3.right * (int)PlayerStat.instance.direction * 0.1f, Color.magenta, 0.1f);
-        bool firstCast = Physics.Raycast(this.transform.position + (Vector3.up * sizeFir + Vector3.right * raySize) * 0.1f * (int)PlayerStat.instance.direction, Vector3.right * (int)PlayerStat.instance.direction, out hit, 0.1f);
-        bool secondCast = Physics.Raycast(this.transform.position + (Vector3.up * sizeSec + Vector3.right * raySize) * 0.1f * (int)PlayerStat.instance.direction, Vector3.right * (int)PlayerStat.instance.direction, out hit, 0.1f);
+        Debug.DrawRay(this.transform.position + (Vector3.up * sizeFir + Vector3.right * raySize) * 0.1f * (int)direction, Vector3.right * (int)direction * 0.1f, Color.red, 0.1f);
+        Debug.DrawRay(this.transform.position + (Vector3.up * sizeSec + Vector3.right * raySize) * 0.1f * (int)direction, Vector3.right * (int)direction * 0.1f, Color.magenta, 0.1f);
+        bool firstCast = Physics.Raycast(this.transform.position + (Vector3.up * sizeFir + Vector3.right * raySize) * 0.1f * (int)direction, Vector3.right * (int)direction, out hit, 0.1f);
+        bool secondCast = Physics.Raycast(this.transform.position + (Vector3.up * sizeSec + Vector3.right * raySize) * 0.1f * (int)direction, Vector3.right * (int)direction, out hit, 0.1f);
         //Debug.DrawRay(this.transform.position + Vector3.right * (int)direction, Vector3.right * distanceRay * (int)direction, Color.white, 0.1f);
         //bool boxCast = Physics.BoxCast(this.transform.position, boxRaySize, Vector3.right * (int)direction, out hit, transform.rotation, distanceRay);
         if (firstCast || secondCast)
@@ -225,11 +224,11 @@ public class Player : Character
 
     private void OnDrawGizmos()
     {
-        /*Debug.DrawRay(transform.position + Vector3.right * 0.05f * (int)PlayerStat.instance.direction, Vector3.right * (int)PlayerStat.instance.direction * distanceRay, Color.white, 0.1f);
-        if (Physics.BoxCast(this.transform.position, boxRaySize, Vector3.right * (int)PlayerStat.instance.direction, out boxHit, transform.rotation, distanceRay))
+        Debug.DrawRay(transform.position + Vector3.right * 0.05f * (int)direction, Vector3.right * (int)direction * distanceRay, Color.white, 0.1f);
+        if (Physics.BoxCast(this.transform.position, boxRaySize, Vector3.right * (int)direction, out boxHit, transform.rotation, distanceRay))
         {
-            Debug.Log($"박스캐스트 인식함 {boxHit.collider}");
-            if (boxHit.collider.CompareTag("InteractivePlatform"))
+            //Debug.Log($"박스캐스트 인식함 {boxHit.collider}");
+            /*if (boxHit.collider.CompareTag("InteractivePlatform"))
             {
                 wallcheck = true;
                 Debug.Log($"박스캐스트가 플랫폼을 인식하여 벽 고정을 방지함{boxHit.collider}");
@@ -239,11 +238,11 @@ public class Player : Character
                 Debug.Log($"박스캐스트가 플랫폼을 찾지 못하여 고정됨{boxHit.collider}");
                 wallcheck = false;
             }
-            Debug.DrawRay(transform.position + Vector3.right * 0.1f * (int)direction, Vector3.right * (int)direction * distanceRay, Color.black, 0.1f);
-            //Gizmos.DrawWireCube(boxHit.point, boxRaySize);
+            Debug.DrawRay(transform.position + Vector3.right * 0.1f * (int)direction, Vector3.right * (int)direction * distanceRay, Color.black, 0.1f);*/
+            Gizmos.DrawWireCube(boxHit.point, boxRaySize);
             //Debug.Log(boxHit.point);
         }
-        Gizmos.DrawWireCube(transform.position, boxRaySize);*/
+        Gizmos.DrawWireCube(transform.position, boxRaySize);
     }
 
     #endregion
@@ -294,7 +293,7 @@ public class Player : Character
             if((RunEffect.isPlaying&&RunEffect.particleCount==0))
             RunEffect.Stop();   sd
         }*/
-
+     
         if (CullingPlatform)
         {
             var a = RunEffect.main;
@@ -346,15 +345,16 @@ public class Player : Character
     #region 이동
     public void rotate(float f)
     {
-        if ((f == -1 && PlayerStat.instance.direction == direction.Right) || (f == 1 && PlayerStat.instance.direction == direction.Left))
+        if ((f == -1 && direction == direction.Right) || (f == 1 && direction == direction.Left))
         {
             this.transform.Rotate(new Vector3(0, 180, 0));
-            if (PlayerStat.instance.direction == direction.Right)
-                PlayerStat.instance.direction = direction.Left;
+            if (direction == direction.Right)
+                direction = direction.Left;
             else
-                PlayerStat.instance.direction = direction.Right;
+                direction = direction.Right;
         }
     }
+    public float Decelatate = 2;
     public override void Move()
     {
 
@@ -366,17 +366,39 @@ public class Player : Character
 
         rotate(hori);
 
-        translateFix = new(hori, 0, 0);
+        //translateFix = new(hori, 0, 0);
 
         #region 움직임
+       
+     
+          
+                Vector3 Movevelocity = Vector3.zero;
+                Vector3 desiredVector =  new Vector3(hori, 0, 0).normalized * PlayerStat.instance.moveSpeed + EnvironmentPower;
+                Movevelocity = desiredVector - playerRb.velocity.x*Vector3.right;
+                Debug.Log("MOveVelocity:" + Movevelocity);
+
         if (!wallcheck)
-        {     
-            playerRb.velocity = new Vector3(hori * PlayerStat.instance.moveSpeed, playerRb.velocity.y, playerRb.velocity.z);
-        }
+            playerRb.AddForce(Movevelocity, ForceMode.VelocityChange);
         else
-        {
-            playerRb.velocity = new Vector3(0, playerRb.velocity.y, playerRb.velocity.z);
+            playerRb.AddForce(EnvironmentPower, ForceMode.VelocityChange);
+
+
+        if (Movevelocity==Vector3.zero) { 
+            Vector3 CurrentVelocity = playerRb.velocity;
+
+       var   newDecelateVector=  Vector3.Lerp(CurrentVelocity, Vector3.zero, Decelatate * Time.fixedDeltaTime);
+
+          
+            playerRb.velocity = new Vector3(newDecelateVector.x, CurrentVelocity.y, newDecelateVector.z);
+     //else
+     //           playerRb.velocity = new Vector3(0,playerRb.velocity.y, playerRb.velocity.z);
+
         }
+        
+      
+        EnvironmentPower = Vector3.zero;
+
+
         #endregion
 
         if (!isJump)
@@ -394,8 +416,11 @@ public class Player : Character
 
         velocityMove = playerRb.velocity;
         rigidbodyPos = playerRb.position;
-    }
 
+
+     
+    }
+    
 
 
     bool MoveCheck(float hori, float vert)
@@ -414,7 +439,7 @@ public class Player : Character
     #region 공격
     public override void Attack()
     {
-        if (attackBufferTimer > 0 && canAttack && !formChange)
+        if (attackBufferTimer > 0 && canAttack)
         {
             if (PlayerStat.instance.attackType == AttackType.melee && canAttack && !downAttack)
             {
@@ -546,9 +571,9 @@ public class Player : Character
     #region 점프동작
     public void Jump()
     {
+        //플랫폼에 닿았을 때 점프 가능(바닥,천장, 벽에 닿아도 점프 되지만 신경쓰지말기)
         isJump = true;
         jumpBufferTimer = 0;
-        canjumpInput = false;        
 
         if (Humonoidanimator != null)
         {
@@ -559,45 +584,11 @@ public class Player : Character
             JumpEffect.SetActive(true);
 
         isRun = false;
-        playerRb.velocity = Vector3.zero;
+
         playerRb.AddForce(Vector3.up * PlayerStat.instance.jumpForce, ForceMode.Impulse);
 
         Debug.Log("점프 누르는 중?");
-        
-    }
-
-
-    public void JumpKeyInput()
-    {
-        if (jumpBufferTimer > 0)
-        {
-            if (!Input.GetKey(KeyCode.DownArrow) && !downAttack)
-            {
-                if (!isJump)
-                {
-                    Jump();
-                }
-                else if (jumpInputValue>0 && canjumpInput && PlayerStat.instance.doubleJump)
-                {
-                    PlayerStat.instance.doubleJump = false;
-                    Jump();
-                }
-                Debug.Log("누르는 중입니다만");
-            }
-        }
-    }
-
-    public void jumphold()
-    {
-        jumpInputValue = 0;
-        canjumpInput = true;
-        if (playerRb.velocity.y > 0)
-        {
-            playerRb.velocity = new Vector3(playerRb.velocity.x, playerRb.velocity.y * jumpholdLevel, playerRb.velocity.z);
-        }
-    }
-
-    /*if (jumpBufferTimer > 0)
+        /*if (jumpBufferTimer > 0)
         {
             if (!Input.GetKey(KeyCode.DownArrow) && !downAttack)
             {
@@ -629,6 +620,35 @@ public class Player : Character
                 Debug.Log("누르는 중입니다만");
             }
         }*/
+    }
+
+    public void JumpKeyInput()
+    {
+        if (jumpBufferTimer > 0)
+        {
+            if (!Input.GetKey(KeyCode.DownArrow) && !downAttack)
+            {
+                if (!isJump)
+                {
+                    Jump();
+                }
+                else if (PlayerStat.instance.doubleJump)
+                {
+                    Jump();
+                }
+                Debug.Log("누르는 중입니다만");
+            }
+        }
+    }
+
+    public void jumphold()
+    {
+        if (playerRb.velocity.y > 0)
+        {
+            playerRb.velocity = new Vector3(playerRb.velocity.x, playerRb.velocity.y * jumpholdLevel, playerRb.velocity.z);
+        }
+    }
+
     #endregion
 
 
@@ -712,7 +732,7 @@ public class Player : Character
     {
 
         PlayerStat.instance.formInvincible = true;
-        PlayerHandler.instance.lastDirection = PlayerStat.instance.direction;
+        PlayerHandler.instance.lastDirection = direction;
         formChange = true;
         onInvincible = true;
         Time.timeScale = 0.2f;
@@ -725,7 +745,7 @@ public class Player : Character
         Instantiate(changeEffect, transform.position, Quaternion.identity);       
         PlayerHandler.instance.transformed(type,event_);
         if (PlayerHandler.instance.CurrentPlayer != null)
-            //PlayerHandler.instance.CurrentPlayer.direction = direction;            
+            PlayerHandler.instance.CurrentPlayer.direction = direction;
         formChange = false;
         Time.timeScale = 1f;
     }
@@ -836,6 +856,16 @@ public class Player : Character
 
 
     }
+    public void AddEnviromentPower(Vector3 power)
+    {
+        EnvironmentPower += power;
+    }
+  //public  void getEnviromentPower()
+  //  {
+  //      playerRb.AddForce(EnvironmentPower, ForceMode.Acceleration);
+       
+  //      Debug.Log("Velocity"+playerRb.velocity);
+  //  }
     public void InteractivePlatformrayCheck()
     {
 
