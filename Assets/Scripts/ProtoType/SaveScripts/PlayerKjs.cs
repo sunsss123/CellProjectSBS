@@ -301,12 +301,11 @@ public class PlayerKjs : Character
     #endregion
 
     #region 피격
-    public override void Damaged(float damage, GameObject obj)
+    public override void Damaged(float damage)
     {
         PlayerStat.instance.pState = PlayerState.hitted;
 
         PlayerStat.instance.hp -= damage;
-        Debug.Log($"{gameObject}가 {obj}에 의해 데미지를 받음:{damage}, 남은 체력:{PlayerStat.instance.hp}/{PlayerStat.instance.hpMax}");
 
         if (PlayerStat.instance.hp <= 0)
         {
@@ -504,13 +503,13 @@ public class PlayerKjs : Character
 
 
 
-    private void OnTriggerEnter(Collider other)
+    /*private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("EnemyAttack") && !onInvincible)
         {
             Damaged(other.GetComponent<EnemyMeleeAttack>().GetDamage(), other.gameObject);
         }
-    }
+    }*/
 
     public float DownAttackForce;
 

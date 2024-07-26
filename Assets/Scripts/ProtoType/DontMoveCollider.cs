@@ -19,30 +19,19 @@ public class DontMoveCollider : MonoBehaviour
         if (other.CompareTag("Ground") && !other.GetComponent<TransformPlace>() || other.CompareTag("Enemy") || other.CompareTag("GameController") && !other.GetComponent<RemoteObject>().onActive ||
             other.CompareTag("InteractivePlatform") && !PlayerHandler.instance.CurrentPlayer.CullingPlatform)
         {
-            PlayerHandler.instance.CurrentPlayer.SetWallcheck(true);
+            if ( PlayerHandler.instance.CurrentPlayer != null)
+                 PlayerHandler.instance.CurrentPlayer.SetWallcheck(true);
         }        
 
         if (other.CompareTag("InteractiveObject"))
         {
-            if (other.GetComponent<InteractiveObject>().InteractOption != InteractOption.collider)
+            if (other.GetComponent<InteractiveObject>().InteractOption != InteractOption.collider&& PlayerHandler.instance.CurrentPlayer!=null)
             {
-                PlayerHandler.instance.CurrentPlayer.SetWallcheck(true);
+                if (PlayerHandler.instance.CurrentPlayer != null)
+                    PlayerHandler.instance.CurrentPlayer.SetWallcheck(true);
             }
         }
 
-        if (other.CompareTag("Untagged"))
-        {
-            if (other.GetComponent<DeformObject>() || other.GetComponent<AttackColliderRange>() || other.GetComponent<TransformMouse>() || other.GetComponent<Quitportal>())
-            {
-                PlayerHandler.instance.CurrentPlayer.SetWallcheck(false);
-            }
-            else
-            {
-                PlayerHandler.instance.CurrentPlayer.SetWallcheck(true);
-            }
-
-            //PlayerHandler.instance.CurrentPlayer.SetWallcheck(false);
-        }
 
 
 
@@ -54,23 +43,20 @@ public class DontMoveCollider : MonoBehaviour
         if (other.CompareTag("Ground") && !other.GetComponent<TransformPlace>() || other.CompareTag("Enemy") || other.CompareTag("GameController") && !other.GetComponent<RemoteObject>().onActive ||
             other.CompareTag("InteractivePlatform") && !PlayerHandler.instance.CurrentPlayer.CullingPlatform)
         {
-            PlayerHandler.instance.CurrentPlayer.SetWallcheck(false);
+            if (PlayerHandler.instance.CurrentPlayer != null)
+                PlayerHandler.instance.CurrentPlayer.SetWallcheck(false);
         }
 
         if (other.CompareTag("InteractiveObject"))
         {
-            if (other.GetComponent<InteractiveObject>().InteractOption != InteractOption.collider)
+            if (other.GetComponent<InteractiveObject>().InteractOption != InteractOption.collider )
             {
-                PlayerHandler.instance.CurrentPlayer.SetWallcheck(false);
+                if (PlayerHandler.instance.CurrentPlayer != null)
+                    PlayerHandler.instance.CurrentPlayer.SetWallcheck(false);
             }
         }
 
-        if (other.CompareTag("Untagged"))
-        {
-            PlayerHandler.instance.CurrentPlayer.SetWallcheck(false);
-        }
 
-        Debug.Log($"Exit하는 콜라이더:{other.gameObject} 벽체크:{PlayerHandler.instance.CurrentPlayer.wallcheck}");
     }
 
     public void OtherCheck(GameObject obj)

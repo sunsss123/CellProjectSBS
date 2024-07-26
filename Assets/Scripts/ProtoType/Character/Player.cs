@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 using UnityEngine.Rendering;
 using UnityEngine.UIElements;
 
@@ -14,6 +15,8 @@ public class Player : Character
     public Rigidbody playerRb;
     public CapsuleCollider capsuleCollider;
     public DontMoveCollider dmCollider;
+
+    Vector3 EnvironmentPower;
 
     public direction direction=direction.Right;
 
@@ -29,11 +32,18 @@ public class Player : Character
     public Material chrmat;
     public Color color;
 
-    public float moveValue; // 움직임 유무를 결정하기 위한 변수
-    public float hori, vert; // 플레이어의 움직임 변수
+    //public float moveValue; // 움직임 유무를 결정하기 위한 변수
+    float hori, vert; // 플레이어의 움직임 변수
 
     [Header("점프 홀딩 조절")]
     public float jumpholdLevel = 0.85f;
+    public float jumpBufferTimeMax;
+    public float jumpBufferTimer;
+    public bool canjumpInput;
+    [Header("키 선입력 관련")]
+    public float attackBufferTimeMax;
+    public float attackBufferTimer;
+
     [Header("애니메이션 관련 변수")]
     public bool isJump, jumpAnim;
     public bool isRun;
@@ -62,9 +72,11 @@ public class Player : Character
 
     public bool canAttack; // 공격 가능
     public bool wallcheck;
-
     #endregion
 
+    public bool inputCheck;
+    
+    [Header("이동에 따른 값 변화 테스트")]
     public Vector3 velocityMove; // 벨로시티 이동 테스트
     public Vector3 rigidbodyPos; // 리지드바디 포지션 확인용
     
@@ -73,19 +85,17 @@ public class Player : Character
     [Header("기존 레이에서 테스트로 더 추가")]
     public float sizeFir;
     public float sizeSec;
-    public float sizeThr;
-    public float sizefou;
-    public float sizeMiddle;
+    
     bool platform;
     public float raySize;
     public float jumpInitDelay;
     [Header("내려찍기 체공 시간")]
     public float flyTime;
-
+    public int jumpInputValue;
     [Header("박스 캐스트 테스트")]
     public Vector3 boxRaySize; // box 레이캐스트 >> 벽에 고정되는 것 방지를 위한
     public float distanceRay; // box 캐스트의 거리
-    RaycastHit boxHit;                              
+    RaycastHit boxHit;
 
     // Start is called before the first frame update
     void Start()
@@ -97,10 +107,35 @@ public class Player : Character
 
         //chrmat = ChrRenderer.material;
         //color = Color.red;
-
         
         canAttack = true;
         onDash = true;
+    }
+
+    void Update()
+    {
+        if (jumpBufferTimer > 0)
+        {
+            jumpBufferTimer -= Time.deltaTime;
+        }
+
+        if (attackBufferTimer > 0)
+        {
+            attackBufferTimer -= Time.deltaTime;
+        }
+    }
+
+    public void BaseBufferTimer()
+    {
+        if (jumpBufferTimer > 0)
+        {
+            jumpBufferTimer -= Time.deltaTime;
+        }
+
+        if (attackBufferTimer > 0)
+        {
+            attackBufferTimer -= Time.deltaTime;
+        }
     }
 
     #region 변신 후 무적
@@ -135,7 +170,6 @@ public class Player : Character
                     onGround = true;
                     isJump = false;
                     downAttack = false;
-                    PlayerStat.instance.doubleJump = true;
                     PlayerStat.instance.jumpCount = 0;
 
                     if (LandingEffect != null)
@@ -153,21 +187,15 @@ public class Player : Character
     void wallRayCastCheck()
     {
         #region 직선 레이캐스트
-        /*//wallcheck = false;
+        //wallcheck = false;
         RaycastHit hit;
         Debug.DrawRay(this.transform.position + (Vector3.up * sizeFir + Vector3.right * raySize) * 0.1f * (int)direction, Vector3.right * (int)direction * 0.1f, Color.red, 0.1f);
         Debug.DrawRay(this.transform.position + (Vector3.up * sizeSec + Vector3.right * raySize) * 0.1f * (int)direction, Vector3.right * (int)direction * 0.1f, Color.magenta, 0.1f);
-        Debug.DrawRay(this.transform.position + (Vector3.up * sizeThr + Vector3.right * raySize) * 0.1f * (int)direction, Vector3.right * (int)direction * 0.1f, Color.blue, 0.1f);
-        Debug.DrawRay(this.transform.position + (Vector3.up * sizefou + Vector3.right * raySize) * 0.1f * (int)direction, Vector3.right * (int)direction * 0.1f, Color.green, 0.1f);
-        Debug.DrawRay(this.transform.position + (Vector3.up * sizeMiddle + Vector3.right * raySize) * 0.1f * (int)direction, Vector3.right * (int)direction * 0.1f, Color.green, 0.1f);
         bool firstCast = Physics.Raycast(this.transform.position + (Vector3.up * sizeFir + Vector3.right * raySize) * 0.1f * (int)direction, Vector3.right * (int)direction, out hit, 0.1f);
         bool secondCast = Physics.Raycast(this.transform.position + (Vector3.up * sizeSec + Vector3.right * raySize) * 0.1f * (int)direction, Vector3.right * (int)direction, out hit, 0.1f);
-        bool thirdCast = Physics.Raycast(this.transform.position + (Vector3.up * sizeThr + Vector3.right * raySize) * 0.1f * (int)direction, Vector3.right * (int)direction, out hit, 0.1f);
-        bool fourthCast = Physics.Raycast(this.transform.position + (Vector3.up * sizefou + Vector3.right * raySize) * 0.1f * (int)direction, Vector3.right * (int)direction, out hit, 0.1f);
-        bool middleCast = Physics.Raycast(this.transform.position + (Vector3.up * sizeMiddle + Vector3.right * raySize) * 0.1f * (int)direction, Vector3.right * (int)direction, out hit, 0.1f);
         //Debug.DrawRay(this.transform.position + Vector3.right * (int)direction, Vector3.right * distanceRay * (int)direction, Color.white, 0.1f);
         //bool boxCast = Physics.BoxCast(this.transform.position, boxRaySize, Vector3.right * (int)direction, out hit, transform.rotation, distanceRay);
-        if (firstCast || secondCast || thirdCast || fourthCast)
+        if (firstCast || secondCast)
         {
             Debug.Log("레이캐스트에 인식됨");
             if (hit.collider == null)
@@ -179,37 +207,13 @@ public class Player : Character
                 wallcheck = true;
                 Debug.Log("벽 체크됨");
                 Debug.Log("Blue Ray:" + hit.collider.name + "\nWall Check:" + wallcheck);
-            }            
+            }
         }
         else
         {
             Debug.Log("벽 체크 안됨");
             wallcheck = false;
-        }*/
-        #endregion
-
-        #region 박스캐스트 시도
-       /* Debug.DrawRay(transform.position + Vector3.right * 0.05f * (int)direction, Vector3.right * (int)direction * distanceRay, Color.white, 0.1f);
-        if (Physics.BoxCast(this.transform.position + Vector3.right * 0.05f * (int)direction, boxRaySize, Vector3.right * (int)direction, out boxHit, Quaternion.identity, distanceRay))
-        {
-            //Debug.Log($"박스캐스트 인식함 {boxHit.collider}");
-            if (boxHit.collider.CompareTag("InteractivePlatform") || boxHit.collider.CompareTag("Ground"))
-            {
-                wallcheck = true;
-                Debug.Log($"박스캐스트가 플랫폼을 인식하여 벽 고정을 방지함{boxHit.collider}\n콜라이더의 위치 {boxHit.collider.transform.position}");
-            }
-            else
-            {
-                Debug.Log($"박스캐스트가 플랫폼을 찾지 못하여 고정됨{boxHit.collider}");
-                wallcheck = false;
-            }
-            Debug.DrawRay(transform.position + Vector3.right * 0.05f * (int)direction, Vector3.right * (int)direction * distanceRay, Color.black, 0.1f);
-            //Gizmos.DrawWireCube(boxHit.point, boxRaySize);
         }
-        else
-        {
-            wallcheck = false;            
-        }*/
         #endregion
     }
 
@@ -256,22 +260,13 @@ public class Player : Character
 
     }
 
-    private void Update()
-    {
-        wallRayCastCheck();
-        if (jumpBufferTimer > 0)
-        {
-            jumpBufferTimer -= Time.deltaTime;
-        }
-    }
-
     private void FixedUpdate()
     {
-        //wallRayCastCheck();
-        JumpKeyInput();
-
         InteractivePlatformrayCheck();
         InteractivePlatformrayCheck2();
+
+        JumpKeyInput();
+        Attack();
 
         /* chrmat.SetColor("_Emissive_Color", color);*///emission 건들기
         if (Input.GetKeyDown(KeyCode.Tab)) { HittedTest(); }
@@ -286,9 +281,26 @@ public class Player : Character
             Humonoidanimator.SetBool("DownAttack", downAttack);
         }
 
-        if (RunEffect != null)
+        /*if (RunEffect != null)
+        {
+            a.maxParticles = 100;
+            if (!RunEffect.isPlaying)
+                RunEffect.Play();           
+        }
+        else
+        {         
+            a.maxParticles = 0;
+            if((RunEffect.isPlaying&&RunEffect.particleCount==0))
+            RunEffect.Stop();   sd
+        }*/
+     
+        if (CullingPlatform)
         {
             var a = RunEffect.main;
+
+            platformDisableTimer += Time.deltaTime;
+            if (PlatformDisableTime <= platformDisableTimer)
+
 
             if (isRun && onGround)
             {
@@ -324,11 +336,7 @@ public class Player : Character
     public GameObject HittedEffect;
     public GameObject AttackEffect;
     public GameObject LandingEffect;
-    public GameObject JumpEffect;
-    
-
-
-
+    public GameObject JumpEffect;   
 
     Vector3 translateFix;
 
@@ -346,6 +354,7 @@ public class Player : Character
                 direction = direction.Right;
         }
     }
+    public float Decelatate = 2;
     public override void Move()
     {
 
@@ -357,47 +366,40 @@ public class Player : Character
 
         rotate(hori);
 
+        //translateFix = new(hori, 0, 0);
 
-        //translateFix = new(0, 0, Mathf.Abs(hori));
-        translateFix = new(hori, 0, 0);
-
-        /*if (!wallcheck)
-        {
-            Debug.Log("이동 가능");
-            playerRb.velocity = new Vector3(playerRb.velocity.x, playerRb.velocity.y, hori * PlayerStat.instance.moveSpeed);
-        }*/
-
-        #region 프로토타입용
-        if (!wallcheck)
-        {
+        #region 움직임
+       
      
-            playerRb.velocity = new Vector3(hori * PlayerStat.instance.moveSpeed, playerRb.velocity.y, playerRb.velocity.z);
-            /*if (hori > 0 || hori < 0)
-            {
-                if (playerRb.velocity.x >= 2)
-                {
-                    playerRb.velocity = new(2, playerRb.velocity.y, playerRb.velocity.z);
-                }
-                else if (playerRb.velocity.x <= -2)
-                {
-                    playerRb.velocity = new(-2, playerRb.velocity.y, playerRb.velocity.z);
-                }
-                else
-                {
-                    playerRb.AddForce(translateFix * PlayerStat.instance.moveSpeed * 5);
-                }
-            }*/
-        }
+          
+                Vector3 Movevelocity = Vector3.zero;
+                Vector3 desiredVector =  new Vector3(hori, 0, 0).normalized * PlayerStat.instance.moveSpeed + EnvironmentPower;
+                Movevelocity = desiredVector - playerRb.velocity.x*Vector3.right;
+                Debug.Log("MOveVelocity:" + Movevelocity);
+
+        if (!wallcheck)
+            playerRb.AddForce(Movevelocity, ForceMode.VelocityChange);
         else
-        {
-            playerRb.velocity = new Vector3(0, playerRb.velocity.y, playerRb.velocity.z);
+            playerRb.AddForce(EnvironmentPower, ForceMode.VelocityChange);
+
+
+        if (Movevelocity==Vector3.zero) { 
+            Vector3 CurrentVelocity = playerRb.velocity;
+
+       var   newDecelateVector=  Vector3.Lerp(CurrentVelocity, Vector3.zero, Decelatate * Time.fixedDeltaTime);
+
+          
+            playerRb.velocity = new Vector3(newDecelateVector.x, CurrentVelocity.y, newDecelateVector.z);
+     //else
+     //           playerRb.velocity = new Vector3(0,playerRb.velocity.y, playerRb.velocity.z);
+
         }
-        /*if (!wallcheck)
-        {
-            transform.Translate(translateFix * PlayerStat.instance.moveSpeed * Time.deltaTime, Space.World);
-        }*/
+        
+      
+        EnvironmentPower = Vector3.zero;
+
+
         #endregion
-        //playerRb.velocity = new Vector3(hori * PlayerStat.instance.moveSpeed, playerRb.velocity.y,playerRb.velocity.z);
 
         if (!isJump)
         {
@@ -414,8 +416,11 @@ public class Player : Character
 
         velocityMove = playerRb.velocity;
         rigidbodyPos = playerRb.position;
-    }
 
+
+     
+    }
+    
 
 
     bool MoveCheck(float hori, float vert)
@@ -434,20 +439,26 @@ public class Player : Character
     #region 공격
     public override void Attack()
     {
-        if (PlayerStat.instance.attackType == AttackType.melee && canAttack && !downAttack)
+        if (attackBufferTimer > 0 && canAttack)
         {
-            if (!onGround)
+            if (PlayerStat.instance.attackType == AttackType.melee && canAttack && !downAttack)
             {
-                attackSky = true;
+                attackBufferTimer = 0;
+                canAttack = false;
+                if (!onGround)
+                {
+                    attackSky = true;
+                }
+                else
+                {
+                    attackGround = true;
+                }
+
+                if (Humonoidanimator != null)
+                    Humonoidanimator.Play("Attack");
+
+                StartCoroutine(TestMeleeAttack());
             }
-            else
-            {
-                attackGround = true;
-            }
- 
-            if (Humonoidanimator != null)
-                Humonoidanimator.Play("Attack");
-            StartCoroutine(TestMeleeAttack());
         }
     }
   
@@ -502,8 +513,10 @@ public class Player : Character
     #endregion
 
     #region 피격
-    public override void Damaged(float damage, GameObject obj)
+    public override void Damaged(float damage)
     {
+        onInvincible = true;
+
         PlayerStat.instance.pState = PlayerState.hitted;
         HittedEffect.gameObject.SetActive(true);
         PlayerStat.instance.hp -= damage;
@@ -517,8 +530,16 @@ public class Player : Character
         }
         else
         {
+            StartCoroutine(ActiveInvincible());
             StartCoroutine(WaitEndDamaged());
         }
+    }
+
+    IEnumerator ActiveInvincible()
+    {
+        yield return new WaitForSeconds(PlayerStat.instance.invincibleCoolTime);
+
+        onInvincible = false;
     }
 
     IEnumerator WaitEndDamaged()
@@ -550,38 +571,6 @@ public class Player : Character
     #region 점프동작
     public void Jump()
     {
-      
-            //플랫폼에 닿았을 때 점프 가능(바닥,천장, 벽에 닿아도 점프 되지만 신경쓰지말기)
-            isJump = true;
-
-
-            if (PlayerStat.instance.jumpCount < PlayerStat.instance.jumpCountMax)
-            {
-
-            if (Humonoidanimator != null)
-            {
-                Humonoidanimator.SetTrigger("jump");
-            }
-
-            if (JumpEffect != null)
-                JumpEffect.SetActive(true);
-
-            isRun = false;
-            //YMove 
-            playerRb.velocity = Vector3.zero;
-            playerRb.AddForce(Vector3.up * PlayerStat.instance.jumpForce, ForceMode.Impulse);
-                PlayerStat.instance.jumpCount++;
-            }
-        
-    }
-
-    bool canjumpInput;
-    public int jumpInputValue;
-    public float jumpBufferTimer;
-    public float jumpBufferTimeMax;
-    public void JumpTest()
-    {
-
         isJump = true;
         jumpBufferTimer = 0;
         canjumpInput = false;
@@ -601,6 +590,8 @@ public class Player : Character
         Debug.Log("점프 누르는 중?");
 
     }
+
+
     public void JumpKeyInput()
     {
         if (jumpBufferTimer > 0)
@@ -609,26 +600,29 @@ public class Player : Character
             {
                 if (!isJump)
                 {
-                    JumpTest();
+                    Jump();
                 }
                 else if (jumpInputValue > 0 && canjumpInput && PlayerStat.instance.doubleJump)
                 {
                     PlayerStat.instance.doubleJump = false;
-                    JumpTest();
+                    Jump();
                 }
                 Debug.Log("누르는 중입니다만");
             }
         }
     }
+
     public void jumphold()
     {
         jumpInputValue = 0;
         canjumpInput = true;
-        /*if (playerRb.velocity.y > 0)
+        if (playerRb.velocity.y > 0)
         {
             playerRb.velocity = new Vector3(playerRb.velocity.x, playerRb.velocity.y * jumpholdLevel, playerRb.velocity.z);
-        }*/
+        }
     }
+
+
     #endregion
 
 
@@ -651,7 +645,6 @@ public class Player : Character
     //애니메이션 없이 근접 공격
     IEnumerator TestMeleeAttack()
     {
-        canAttack = false;
         if (attackSky)
         {
             flyCollider.SetActive(true);
@@ -736,7 +729,9 @@ public class Player : Character
     private void OnCollisionExit(Collision collision)
     {
         #region 바닥 상호작용
-        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("InteractivePlatform") || collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Ground") || 
+            collision.gameObject.CompareTag("InteractivePlatform") || 
+            collision.gameObject.CompareTag("Enemy"))
         {           
             onGround = false;            
         }
@@ -746,17 +741,13 @@ public class Player : Character
     {
         //#region 바닥 상호작용
         if (collision.gameObject.CompareTag("Ground") && onGround == false)
-        {
-          
+        {          
             jumpRaycastCheck();                   
-
-            //platform = true;
         }
         //#endregion
 
         if (collision.gameObject.CompareTag("InteractivePlatform"))
-        {
-            
+        {            
             jumpRaycastCheck();
 
             if (Input.GetKey(KeyCode.DownArrow)&&Input.GetKeyDown(KeyCode.C) && !CullingPlatform)
@@ -765,10 +756,7 @@ public class Player : Character
                 CullingPlatform = true;
                 Physics.IgnoreLayerCollision(6, 11, true);
             }
-
-            //platform = true;
         }
-
 
         #region 적 상호작용
         if (collision.gameObject.CompareTag("Enemy"))
@@ -791,14 +779,14 @@ public class Player : Character
 
 
 
-    private void OnTriggerEnter(Collider other)
+    /*private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("EnemyAttack") && !onInvincible)
         {
             Debug.Log("피해를 받음");
-            //Damaged(other.GetComponent<EnemyMeleeAttack>().GetDamage(), other.gameObject);
+            Damaged(other.GetComponent<EnemyMeleeAttack>().GetDamage());
         }
-    }    
+    }*/    
 
     public float DownAttackForce;
 
@@ -842,6 +830,16 @@ public class Player : Character
 
 
     }
+    public void AddEnviromentPower(Vector3 power)
+    {
+        EnvironmentPower += power;
+    }
+  //public  void getEnviromentPower()
+  //  {
+  //      playerRb.AddForce(EnvironmentPower, ForceMode.Acceleration);
+       
+  //      Debug.Log("Velocity"+playerRb.velocity);
+  //  }
     public void InteractivePlatformrayCheck()
     {
 

@@ -605,7 +605,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -1008,7 +1008,6 @@ MonoBehaviour:
   playerRb: {fileID: 2721062536692114604}
   capsuleCollider: {fileID: 8686286565664874215}
   dmCollider: {fileID: 2054268378585717281}
-  direction: 1
   meleeCollider: {fileID: 7327762641764429713}
   flyCollider: {fileID: 8625533091771102808}
   downAttackCollider: {fileID: 1451015873961866783}
@@ -1018,10 +1017,13 @@ MonoBehaviour:
   ChrRenderer: {fileID: 0}
   chrmat: {fileID: 0}
   color: {r: 0, g: 0, b: 0, a: 0}
-  moveValue: 0
-  hori: 0
-  vert: 0
   jumpholdLevel: 0.85
+  jumpBufferTimeMax: 0.2
+  jumpBufferTimer: 0
+  canjumpInput: 0
+  jumpInputValue: 0
+  attackBufferTimeMax: 0.15
+  attackBufferTimer: 0
   isJump: 0
   jumpAnim: 0
   isRun: 0
@@ -1031,6 +1033,7 @@ MonoBehaviour:
   waitTime: 0.5
   formChange: 0
   changeEffect: {fileID: 7790902311302496447}
+  changing: 0
   onGround: 0
   downAttack: 0
   jumpLimit: 0
@@ -1042,15 +1045,13 @@ MonoBehaviour:
   isMove: 0
   canAttack: 0
   wallcheck: 0
+  inputCheck: 0
   velocityMove: {x: 0, y: 0, z: 0}
   rigidbodyPos: {x: 0, y: 0, z: 0}
   sizeX: 1
   sizeY: 2
   sizeFir: 0
   sizeSec: 0
-  sizeThr: 0
-  sizefou: 0
-  sizeMiddle: 0
   raySize: 0
   jumpInitDelay: 0
   flyTime: 0.5
@@ -1063,10 +1064,12 @@ MonoBehaviour:
   JumpEffect: {fileID: 6963524531328094719}
   DownAttackForce: 0
   CullingPlatform: 0
-  handleMaxTime: 5
+  handleMaxTime: 2
   handlediameterrangemax: 5
   handlediameterrangemin: 3
   handlerange: {fileID: 1079836473686256018}
+  chargingBufferTimer: 0
+  chargingBufferTimeMax: 0
   electricCharge: {fileID: 0}
   holdSpeed: 1.5
   remoteObj: []
@@ -1714,7 +1717,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0.148, y: 0, z: -0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3103236764559981538}

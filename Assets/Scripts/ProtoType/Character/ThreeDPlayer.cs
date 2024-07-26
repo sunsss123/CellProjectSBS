@@ -259,7 +259,7 @@ public class ThreeDPlayer : Character
             }
             else
             {
-                Damaged(collision.gameObject.GetComponent<Enemy>().eStat.atk, collision.gameObject);
+                Damaged(collision.gameObject.GetComponent<Enemy>().eStat.atk);
                 if (PlayerStat.instance.hp <= 0)
                 {
                     //피해를 받음
@@ -301,11 +301,10 @@ public class ThreeDPlayer : Character
         }
     }
 
-    public override void Damaged(float damage, GameObject obj)
+    public override void Damaged(float damage)
     {
         PlayerStat.instance.hp -= damage;
-        Debug.Log($"{gameObject}가 {obj}에 의해 데미지를 받음:{damage}, 남은 체력:{PlayerStat.instance.hp}/{PlayerStat.instance.hpMax}");
-
+        
         if (PlayerStat.instance.hp <= 0)
         {
             //Dead()
@@ -562,22 +561,23 @@ public class ThreeDPlayer : Character
 
     public override void Dead()
     {
-        //PlayerStat.instance.cState = CharacterState.dead;
-        //gameObject.SetActive(false);
+        PlayerStat.instance.pState = PlayerState.dead;
+        gameObject.SetActive(false);
     }
 
-    //public void Dash()
-    //{
-    //    if (!onDash)
-    //    {
-    //        Debug.Log("대시 쿨타임 중입니다");
-    //    }
-    //    else
-    //    {
-    //        onInvincible = true;
-    //        onDash = false;
-    //        gameObject.layer = 6;
-    //        //playerRb.AddForce(Vector3.right * PlayerStat.instance.dashForce, ForceMode.Impulse);
+    /*public void Dash()
+    {
+        if (!onDash)
+        {
+            Debug.Log("대시 쿨타임 중입니다");
+        }
+        else
+        {
+            onInvincible = true;
+            onDash = false;
+            gameObject.layer = 6;
+            //playerRb.AddForce(Vector3.right * PlayerStat.instance.dashForce, ForceMode.Impulse);
+
 
     //        IronDash.SetActive(true);
 
@@ -599,20 +599,24 @@ public class ThreeDPlayer : Character
     //            playerRb.AddForce(Vector3.forward * PlayerStat.instance.dashForce, ForceMode.Impulse);
     //        }
 
-    //        velocityValue = playerRb.velocity;
-    //        Debug.Log("여기까지는 작동하냐");
-    //        StartCoroutine(WaitCoolTime());
-    //    }
-    //}
+
+            velocityValue = playerRb.velocity;
+            Debug.Log("여기까지는 작동하냐");
+            StartCoroutine(WaitCoolTime());
+        }
+    }*/
+
 
     public void SpecialAttack()
     {
         sAttackPrefab.SetActive(true);
     }
 
-    //IEnumerator WaitCoolTime()
-    //{
-    //    Debug.Log("대시 충전 중입니다");
+
+    /*IEnumerator WaitCoolTime()
+    {
+        Debug.Log("대시 충전 중입니다");
+
 
     //    yield return new WaitForSeconds(PlayerStat.instance.dashTimer);
 
@@ -622,7 +626,8 @@ public class ThreeDPlayer : Character
 
     //    yield return new WaitForSeconds(PlayerStat.instance.dashCoolTime);
 
-    //    onDash = true;
-    //    Debug.Log("대시 쿨타임 완료");
-    //}
+
+        onDash = true;
+        Debug.Log("대시 쿨타임 완료");
+    }*/
 }

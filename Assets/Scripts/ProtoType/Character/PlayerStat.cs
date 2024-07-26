@@ -7,6 +7,7 @@ public enum CurrentAttack { ground, sky }
 public class PlayerStat : CharacterStat
 {
     public static PlayerStat instance;
+    public direction direction = direction.Right;
 
     public PlayerState pState = PlayerState.idle;
     public CurrentAttack currentAttack;
@@ -14,6 +15,9 @@ public class PlayerStat : CharacterStat
     public float jumpCount; // 삭제
     public float jumpCountMax; // 삭제
     public bool doubleJump; // 이단 점프 체크
+
+
+
     public float jumpForce; // velocity.y 값에 영향을 주는 점프 가중치
     public float shotJumpForce; // 순간적으로 눌렀다 떼었을 경우에 사용될 점프 높이 값
     public float invincibleCoolTime; // 무적 지속시간
@@ -46,9 +50,10 @@ public class PlayerStat : CharacterStat
   
 
 
-    private void FixedUpdate()
+    /*private void FixedUpdate()
     {
         if (hp <= 0)
             SceneManager.LoadScene("Title");
-    }
+
+    }*/    
 }

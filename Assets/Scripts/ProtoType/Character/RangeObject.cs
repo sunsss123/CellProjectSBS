@@ -21,8 +21,8 @@ public class RangeObject : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            other.GetComponent<Enemy>().Damaged(damage, gameObject);
+            other.GetComponent<Enemy>().Damaged(damage);
             Destroy(gameObject);
-        }        
+        }
     }
 }

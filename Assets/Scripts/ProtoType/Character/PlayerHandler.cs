@@ -17,17 +17,21 @@ public class PlayerHandler : MonoBehaviour
     public TransformPlace LastTransformPlace;
     #endregion
     #region 플레이어 현재 위치,상태
-    Transform PlayerSpawn;
+
     GameObject Playerprefab;
-    public Player CurrentPlayer; // 행동 작업
+
+    public Player CurrentPlayer;// 행동 작업
+    public void registerPlayer(GameObject o)//?
+    {
+        Playerprefab = o;
+        CurrentPlayer = o.GetComponent<Player>();
+    }
     public PlayerStat pStat; //스탯 분배 (스페셜어택)
     public direction lastDirection = direction.Right;
     #endregion
     #region 싱글톤
     public static PlayerHandler instance;
     #endregion
-
-    public direction PlayerDirection;
     private void Awake()
     {
         #region 싱글톤
@@ -42,8 +46,8 @@ public class PlayerHandler : MonoBehaviour
                 .ToDictionary(item => (TransformType)item.index, item => item.Value);
         }
         #region 캐릭터 초기화
-        PlayerSpawn = GameObject.Find("PlayerSpawn").transform;
-        CreateModelByCurrentType();
+   
+        //CreateModelByCurrentType();
         #endregion
    
     }
@@ -58,7 +62,7 @@ public class PlayerHandler : MonoBehaviour
             {
                 rb.velocity = Vector3.zero;
             }
-            CurrentPlayer.transform.position = PlayerSpawn.transform.position;
+            CurrentPlayer.transform.position = PlayerSpawnManager.Instance. CurrentCheckPoint.transform.position;
         }
     }
     private void FixedUpdate()
@@ -70,11 +74,8 @@ public class PlayerHandler : MonoBehaviour
         //}
         PlayerFallOut();
 
-
-        if (CurrentPlayer != null)
-            PlayerDirection = CurrentPlayer.direction;
         #region 캐릭터 조작
-        if (CurrentPlayer != null && !CurrentPlayer.formChange)
+        if(CurrentPlayer != null && !CurrentPlayer.formChange)
         charactermove();
         #endregion
     }
@@ -108,10 +109,10 @@ public class PlayerHandler : MonoBehaviour
  public   void Deform()
     {
         if(CurrentPlayer !=null)
-            lastDirection = CurrentPlayer.direction;        
+            lastDirection = PlayerStat.instance.direction;        
         transformed(TransformType.Default);
         LastTransformPlace.transform.position = Playerprefab.transform.position;
-        CurrentPlayer.direction = lastDirection;
+        PlayerStat.instance.direction = lastDirection;
         CurrentPlayer.transform.Translate(Vector3.up * defromUpPosition);
         LastTransformPlace.gameObject.SetActive(true);
         LastTransformPlace = null;
@@ -130,21 +131,15 @@ public class PlayerHandler : MonoBehaviour
                 tf = Playerprefab.transform;
                 CurrentPlayer = null;
             }
-            else
-            {
-                tf = PlayerSpawn;
-            }
+           
             if(Playerprefab != null) 
             Playerprefab.SetActive(false);
             GameObject p;
             if (CreatedTransformlist.TryGetValue(CurrentType, out p))
                 p.gameObject.SetActive(true);
-            else
-            {
-                p = Instantiate(PlayerTransformList[CurrentType].gameObject, PlayerSpawn)
-                    ;
+           
                 CreatedTransformlist.Add(CurrentType,p);
-            }
+            
             Playerprefab = p;
             #endregion
             #region 위치 동기화
@@ -179,18 +174,13 @@ public class PlayerHandler : MonoBehaviour
     float DeTransformtimer = 0;
     void charactermove()
     {
-        if (!CurrentPlayer.downAttack && PlayerStat.instance.pState == PlayerState.idle)
+        if (!CurrentPlayer.downAttack)
         {
             CurrentPlayer.Move();
         }
 
-        /*if(PlayerStat.instance.jumpCount <= PlayerStat.instance.jumpCountMax && !Input.GetKey(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.C) && !CurrentPlayer.downAttack)
-        {
-            CurrentPlayer.Jump();
-        }*/
         if (Input.GetKey(KeyCode.C))
         {
-
             Debug.Log("점프키 입력 중");
             CurrentPlayer.jumpInputValue = 1;
             CurrentPlayer.jumpBufferTimer = CurrentPlayer.jumpBufferTimeMax;
@@ -199,11 +189,12 @@ public class PlayerHandler : MonoBehaviour
         {
             CurrentPlayer.jumphold();
         }
+
         if (Input.GetKeyDown(KeyCode.E))
         {
             CurrentPlayer. SwapAttackType();
         }
-        if (Input.GetKey(KeyCode.UpArrow))
+        if (!Input.GetKey(KeyCode.X) && Input.GetKey(KeyCode.UpArrow))
         {
             switch (CurrentType)
             {
@@ -227,17 +218,16 @@ public class PlayerHandler : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.DownArrow))
         {
-            if (Input.GetKeyDown(KeyCode.X) && !CurrentPlayer.onGround)
-            {
-                          
-
+            if (Input.GetKey(KeyCode.X) && !CurrentPlayer.onGround)
+            {                         
                 CurrentPlayer.DownAttack();
             }            
         }
         
-        if (!Input.GetKey(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.X))
+        if (Input.GetKey(KeyCode.X) && !Input.GetKey(KeyCode.UpArrow))
         {
-            CurrentPlayer.Attack();
+            //CurrentPlayer.Attack();
+            CurrentPlayer.attackBufferTimer = CurrentPlayer.attackBufferTimeMax;
         }
 
         //if (Input.GetKeyDown(KeyCode.Space))
@@ -249,7 +239,7 @@ public class PlayerHandler : MonoBehaviour
         //}
 
         CurrentPlayer.Skill1();
-        CurrentPlayer.Skill2();
+        //CurrentPlayer.Skill2();
 
     }
     #endregion

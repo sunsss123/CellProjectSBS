@@ -13,6 +13,8 @@ public class RemoteTransform : Player
     public float handlediameterrangemax; // 차징 최대 범위
     public float handlediameterrangemin; // 차징 최소 범위
     public SphereCollider handlerange; // 차징 범위 콜라이더
+    public float chargingBufferTimer;
+    public float chargingBufferTimeMax;
 
     public RectTransform electricCharge;
     public float holdSpeed; // 충전 속도
@@ -43,33 +45,38 @@ public class RemoteTransform : Player
         handlerange = transform.Find("SKillChargeRadius").GetComponent<SphereCollider>();        
     }
 
-    /*private void Update()
+    private void Update()
     {
-        SearchRemoteObject();
-    }*/
+        BaseBufferTimer();
+
+        /*if (chargingBufferTimer > 0 && !Charging)
+        {
+            chargingBufferTimer -= Time.deltaTime;
+        }*/
+    }
 
     public override void Skill1()
     {
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.UpArrow) && Input.GetKey(KeyCode.X))
         {
+            Charging = true;
             /*if (!handlerange.gameObject.activeSelf)
             {
                 handlerange.gameObject.SetActive(true);
             }*/
-            Humonoidanimator.SetBool("Charge", true);
+            Humonoidanimator.SetBool("Charge", Charging);
             if (!handlerange.gameObject.activeSelf)
             {
-                handlerange.gameObject.SetActive(true);
-                handlerange.enabled = true;
+                //handlerange.gameObject.SetActive(Charging);
+                //handlerange.enabled = Charging;
                 Humonoidanimator.Play("Charge");
             }
-
-            Charging = true;
           
             handletimer += Time.deltaTime;
             if (handletimer >= handleMaxTime)
             {
                 Debug.Log("충전량 최대치입니다");
+                handlerange.gameObject.SetActive(true);
             }
             else
             {
@@ -81,7 +88,7 @@ public class RemoteTransform : Player
                 {
                     handlerange.radius += Time.deltaTime;
                 }*/
-                if (timeScale > handlediameterrangemax)
+                /*if (timeScale > handlediameterrangemax)
                 {
                     handlerange.transform.localScale = new Vector3(handlediameterrangemax, handlediameterrangemax, 0);
                 }
@@ -89,74 +96,57 @@ public class RemoteTransform : Player
                 {
                     timeScale += Time.deltaTime;
                     handlerange.transform.localScale = new Vector3(chargeSpeed * timeScale, chargeSpeed * timeScale, 0);
-                }
+                }*/
             }
         }
 
-        if (!Input.GetKey(KeyCode.S) && Charging)
+        if (!Input.GetKey(KeyCode.UpArrow) && Charging
+            || !Input.GetKey(KeyCode.X) && Charging)
         {
             /*if (handlerange.radius < handlediameterrangemin)
             {
                 handlerange.radius = handlediameterrangemin;
             }*/
             Charging = false;
-            Humonoidanimator.SetBool("Charge", false);
+            chargingBufferTimer = chargingBufferTimeMax;
+            Humonoidanimator.SetBool("Charge", Charging);
             if (timeScale < handlediameterrangemin)
             {
                 handlerange.transform.localScale = new Vector3(handlediameterrangemin, handlediameterrangemin, 0);
             }
             //handlerange.gameObject.SetActive(true);
-            handlerange.gameObject.SetActive(false);
+            handlerange.gameObject.SetActive(Charging);
             ActiveRemoteObject();
         }
     }
 
     public override void Attack()
     {
-        Humonoidanimator.Play("Attack");
-        Instantiate(laserPrefab, firePoint.position, transform.rotation);
+        if (attackBufferTimer > 0 && canAttack)
+        {
+            canAttack = false;
 
+            StartCoroutine(LaserAttack());
+        }
     }
 
-    public override void Skill2()
+    IEnumerator LaserAttack()
+    {
+        Humonoidanimator.Play("Attack");
+        PoolingManager.instance.GetPoolObject("Laser", firePoint);
+
+        yield return new WaitForSeconds(PlayerStat.instance.attackDelay);
+
+        canAttack = true;
+    }
+
+    /*public override void Skill2()
     {
         if (Input.GetKeyDown(KeyCode.D))
         {
             Instantiate(chain, transform.position, transform.rotation);
-            /*if (!onChain)
-            {
-                onChain = true;
-                Collider[] search = Physics.OverlapBox(transform.forward + transform.position + searchCubePos, searchCubeRange);
-                for (int i = 0; i < search.Length; i++)
-                {
-                    if (search[i].CompareTag("Enemy"))
-                    {
-                        Debug.Log($"탐지한 오브젝트:{search[i].gameObject}");
-                        enemies.Add(search[i].gameObject);
-                        lineRenderer.positionCount++;
-                    }
-                }
-
-                if (enemies.Count > 0)
-                {
-                    for (int i = 0; i < enemies.Count; i++)
-                    {
-                        lineRenderer.SetPosition(i, enemies[i].transform.position);
-                    }
-                }
-
-                if (enemies != null)
-                {
-                    StartCoroutine(ChainLightning());
-                }
-            }*/            
-
-            /*for (int i = 0; i < enemies.Count; i++)
-            {
-                Instantiate(chain, enemies[i].transform.position, Quaternion.identity);
-            }*/                      
         }
-    }
+    }*/
 
     IEnumerator ChainLightning()
     {
@@ -170,19 +160,6 @@ public class RemoteTransform : Player
         //enemies.Clear();
         onChain = false;*/
     }
-
-    /*private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.blue;
-
-        Matrix4x4 originMatrix = Gizmos.matrix;
-        Gizmos.matrix = Matrix4x4.TRS(transform.position + searchCubePos, transform.rotation, Vector3.one);
-
-        Gizmos.DrawWireCube(transform.position + searchCubePos, searchCubeRange * 2f);
-
-        //Gizmos.matrix = originMatrix;
-        //Gizmos.DrawWireSphere(transform.position, searchRange);               
-    }*/
 
     #region 오버랩스피어 시도
     /*public void SearchRemoteObject()
@@ -232,7 +209,7 @@ public class RemoteTransform : Player
         }
 
         remoteObj.Clear();
-        handlerange.transform.localScale = new Vector3(0, 0, 0);
+        //handlerange.transform.localScale = new Vector3(0, 0, 0);
         handletimer = 0;
         timeScale = 0;
         handlerange.enabled = false;

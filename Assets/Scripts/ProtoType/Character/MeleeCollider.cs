@@ -26,7 +26,7 @@ public class MeleeCollider : MonoBehaviour
         {
             if (!other.GetComponent<Enemy>())
             {
-                other.GetComponent<BoxTestt>().Damaged(damage, gameObject);
+                other.GetComponent<BoxTestt>().Damaged(damage);
             }
             else
             {
@@ -34,7 +34,7 @@ public class MeleeCollider : MonoBehaviour
 
                 if (!enemy.eStat.onInvincible)
                 {
-                    enemy.Damaged(damage, gameObject);
+                    enemy.Damaged(damage);
                     saveEffect.transform.position = other.transform.position;
                     saveEffect.Play();
                     gameObject.SetActive(false);

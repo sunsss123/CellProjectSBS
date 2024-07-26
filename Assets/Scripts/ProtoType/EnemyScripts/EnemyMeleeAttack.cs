@@ -6,6 +6,13 @@ public class EnemyMeleeAttack : MonoBehaviour
     public Enemy enemy;
     float damage;
 
+
+    private void Start()
+    {
+        enemy = transform.parent.GetComponent<Enemy>();
+        damage = enemy.eStat.atk;
+    }
+
     private void OnEnable()
     {
         GetComponent<MeshRenderer>().enabled = true;
@@ -47,10 +54,9 @@ public class EnemyMeleeAttack : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            other.GetComponent<Player>().Damaged(damage, gameObject);
+            other.GetComponent<Player>().Damaged(damage);
             GetComponent<MeshRenderer>().enabled = false;
-            GetComponent<SphereCollider>().enabled = false;
-            //this.gameObject.SetActive(false);
+            GetComponent<SphereCollider>().enabled = false;            
         }
     }
 }

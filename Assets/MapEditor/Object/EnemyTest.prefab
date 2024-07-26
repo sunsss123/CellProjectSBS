@@ -282,8 +282,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.01, y: 0.05, z: 1.5}
-  m_Center: {x: 0, y: 0.3, z: 1}
+  m_Size: {x: 0.01, y: 0.05, z: 1}
+  m_Center: {x: 0, y: 0.3, z: 0.8}
 --- !u!1 &4022277139928328520
 GameObject:
   m_ObjectHideFlags: 0
@@ -443,8 +443,9 @@ GameObject:
   - component: {fileID: 4100606063395682568}
   - component: {fileID: 6632304941756833643}
   - component: {fileID: 419587200676306589}
-  - component: {fileID: 679739752782495093}
-  m_Layer: 0
+  - component: {fileID: 76356394766338755}
+  - component: {fileID: 5333237541237593352}
+  m_Layer: 9
   m_Name: EnemyTest
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -517,7 +518,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 120
   m_CollisionDetection: 0
---- !u!114 &679739752782495093
+--- !u!114 &76356394766338755
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -526,38 +527,64 @@ MonoBehaviour:
   m_GameObject: {fileID: 5972430000464431206}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a39c090f715b32349a7866e32a928749, type: 3}
+  m_Script: {fileID: 11500000, guid: 3e1ea9c198711f74881e60b443eb9200, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   eStat: {fileID: 0}
   enemyRb: {fileID: 0}
   attackCollider: {fileID: 7760997083194175977}
   rangeCollider: {fileID: 2202126381614901408}
-  searchCubeRange: {x: 1.67, y: 0.63, z: 0.7}
-  searchCubePos: {x: -1.24, y: 0.61, z: 0}
+  searchCubeRange: {x: 2, y: 0.45, z: 0.7}
+  searchCubePos: {x: 0, y: 0.45, z: 0}
+  rangePos: {x: 0, y: 0, z: 0}
+  rangeSize: {x: 0, y: 0, z: 0}
   attackTimer: 0
-  attackInitCoolTime: 0
-  attackDelay: 0
+  attackInitCoolTime: 1.5
+  attackDelay: 2
   onAttack: 0
   activeAttack: 0
   checkPlayer: 0
   hitByPlayer: 0
   target: {fileID: 0}
+  tracking: 0
   testTarget: {x: 0, y: 0, z: 0}
-  rotationY: 0
-  notMinusRotation: 0
-  eulerAnglesY: 0
   rotationSpeed: 3
-  checkTv: 0
-  activeTv: 0
-  rayRange: 1.2
-  rayHeight: 0.25
-  rushForce: 5
   onStun: 0
-  regular: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
-  stun: {fileID: 2100000, guid: 0223f599766758345840d556d305b0a6, type: 2}
-  testMesh: {fileID: 0}
+  reachCheck: 0
   rotLevel: 85
+  rushForce: 6
+--- !u!114 &5333237541237593352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5972430000464431206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb7de80a2f0f70c48b214d6f9da261c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackType: 0
+  characterState: 0
+  initMaxHP: 5
+  initMoveSpeed: 1.2
+  HPBonus: 0
+  MoveSpeedBonus: 0
+  initattackCoolTime: 0
+  attackCoolTimebonus: 0
+  hp: 3
+  atk: 1
+  atkSpeed: 1
+  rotationSpeed: 0
+  canMove: 0
+  canAttack: 0
+  eState: 0
+  dropGroup:
+    parts: {fileID: 0}
+    partValue: 0
+  onInvincible: 0
+  invincibleTimer: 0
 --- !u!1 &7760997083194175977
 GameObject:
   m_ObjectHideFlags: 0

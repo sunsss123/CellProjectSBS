@@ -10,20 +10,8 @@ public class Drop
 
 public class EnemyStat : CharacterStat
 {
+    public EnemyState eState;
     public Drop dropGroup; // 사망 시, 드랍할 재화에 대한 클래스 변수
     public bool onInvincible;
     public float invincibleTimer;
-    private void Awake()
-    {
-        InitStatus();
-    }
-
-    public void InitStatus()
-    {
-        initMaxHP = 5;
-        hp = hpMax;
-        atk = 1;
-        initMoveSpeed = 1.5f;
-        initattackCoolTime = 0.2f;
-    }
 }

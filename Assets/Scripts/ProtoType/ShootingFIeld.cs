@@ -6,7 +6,7 @@ using UnityEditor;
 using UnityEngine;
 public class ConvertCoordiate {
 };
-public class ShootingFIeld : signalSender
+public class ShootingFIeld: signalSender
 {
     public Camera PlatformerCam;
     public Camera ShootingCam;

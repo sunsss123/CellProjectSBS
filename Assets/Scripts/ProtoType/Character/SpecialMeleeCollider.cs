@@ -25,12 +25,12 @@ public class SpecialMeleeCollider : MonoBehaviour
         damage = value;
     }
 
-    private void OnTriggerEnter(Collider other)
+    /*private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Enemy"))
         {
             //other.GetComponent<Enemy>().eStat.characterState = characterState;
             other.GetComponent<Enemy>().Damaged(damage, gameObject);
         }
-    }
+    }*/
 }

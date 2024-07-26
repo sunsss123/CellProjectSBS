@@ -75,44 +75,10 @@ public class BoxTestt : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
-
-        TrackingCheck();
-    }
-
-    #region 추적 대상 확인
-    public void TrackingCheck()
-    {
-        /*Debug.DrawRay(transform.position + Vector3.up * rayHeight, transform.forward * rayRange, Color.magenta, 0.1f);
-
-        RaycastHit[] hits = Physics.RaycastAll(transform.position + Vector3.up * rayHeight, transform.forward, rayRange);
-
-        for (int i = 0; i < hits.Length; i++)
-        {
-            if (hits[i].collider.CompareTag("GameController"))
-            {
-                if (hits[i].collider == hits[i].collider.GetComponent<BoxCollider>() && hits[i].collider.GetComponent<RemoteObject>().rType == RemoteType.tv)
-                {
-                    checkTv = true;
-                }
-            }
-        }*/
-
-        /*if (Physics.Raycast(transform.position + Vector3.up * rayHeight, transform.forward, out hit, rayRange))
-        {
-            if (hit.collider.CompareTag("GameController"))
-            {
-                Debug.Log($"Hit collider>> {hit.collider}");
-                if (hit.collider.gameObject.GetComponent<RemoteObject>().rType == RemoteType.tv && activeTv)
-                {
-                    checkTv = true;
-                }
-            }
-        }*/
-    }
-    #endregion
+    }    
 
     #region 피격함수
-    public void Damaged(float damage, GameObject obj)
+    public void Damaged(float damage)
     {
         eStat.hp -= damage;
         if (eStat.hp <= 0)
@@ -129,8 +95,9 @@ public class BoxTestt : MonoBehaviour
     #region 이동함수
     public void Move()
     {
-        //if (eStat.sta != CharacterState.dead)
-        //{
+
+        if (eStat.eState != EnemyState.dead)
+        {
             if (tracking)
             {
                 if (!activeAttack && !onAttack)
@@ -140,7 +107,7 @@ public class BoxTestt : MonoBehaviour
             }
 
             Patrol();
-        //}
+        }
     }
 
     #region 추격
@@ -194,7 +161,7 @@ public class BoxTestt : MonoBehaviour
             {
                 //Debug.Log($"{target} 추적해라");
                 target = colliders[i].transform;
-                checkPlayer = true;
+                //checkPlayer = true;
                 tracking = true;
 
                 //animator.SetBool("Tracking", tracking);
@@ -243,8 +210,10 @@ public class BoxTestt : MonoBehaviour
     // 공격 준비
     public void ReadyAttackTime()
     {
-        //if (onAttack && eStat.cState != CharacterState.dead)
-        //{
+
+        if (onAttack && eStat.eState != EnemyState.dead)
+        {
+
             if (attackTimer > 0 && !activeAttack)
             {
                 attackTimer -= Time.deltaTime;
@@ -255,7 +224,7 @@ public class BoxTestt : MonoBehaviour
                 attackTimer = attackInitCoolTime;
                 Attack();
             }
-        //}
+        }
         /*else
         {
             InitAttackCoolTime();
@@ -311,7 +280,9 @@ public class BoxTestt : MonoBehaviour
 
         if (other.CompareTag("PlayerAttack"))
         {
-            //eStat.cState = CharacterState.dead;
+
+            eStat.eState = EnemyState.dead;
+
             rangeCollider.SetActive(false);
             //gameObject.SetActive(false);
             GetComponent<BoxCollider>().enabled = false;
