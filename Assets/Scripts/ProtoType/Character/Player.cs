@@ -91,7 +91,7 @@ public class Player : Character
     public float jumpInitDelay;
     [Header("내려찍기 체공 시간")]
     public float flyTime;
-
+    public int jumpInputValue;
     [Header("박스 캐스트 테스트")]
     public Vector3 boxRaySize; // box 레이캐스트 >> 벽에 고정되는 것 방지를 위한
     public float distanceRay; // box 캐스트의 거리
@@ -571,9 +571,9 @@ public class Player : Character
     #region 점프동작
     public void Jump()
     {
-        //플랫폼에 닿았을 때 점프 가능(바닥,천장, 벽에 닿아도 점프 되지만 신경쓰지말기)
         isJump = true;
         jumpBufferTimer = 0;
+        canjumpInput = false;
 
         if (Humonoidanimator != null)
         {
@@ -584,43 +584,13 @@ public class Player : Character
             JumpEffect.SetActive(true);
 
         isRun = false;
-
+        playerRb.velocity = Vector3.zero;
         playerRb.AddForce(Vector3.up * PlayerStat.instance.jumpForce, ForceMode.Impulse);
 
         Debug.Log("점프 누르는 중?");
-        /*if (jumpBufferTimer > 0)
-        {
-            if (!Input.GetKey(KeyCode.DownArrow) && !downAttack)
-            {
-                if (!isJump)
-                {
-                    //플랫폼에 닿았을 때 점프 가능(바닥,천장, 벽에 닿아도 점프 되지만 신경쓰지말기)
-                    isJump = true;
-                    jumpBufferTimer = 0;
 
-                    if (Humonoidanimator != null)
-                    {
-                        Humonoidanimator.SetTrigger("jump");
-                    }
-
-                    if (JumpEffect != null)
-                        JumpEffect.SetActive(true);
-
-                    isRun = false;                    
-
-                    playerRb.AddForce(Vector3.up * PlayerStat.instance.jumpForce, ForceMode.Impulse);
-
-                    Debug.Log("점프 누르는 중?");
-                }
-                else if (PlayerStat.instance.doubleJump)
-                {
-
-                }
-
-                Debug.Log("누르는 중입니다만");
-            }
-        }*/
     }
+
 
     public void JumpKeyInput()
     {
@@ -632,8 +602,9 @@ public class Player : Character
                 {
                     Jump();
                 }
-                else if (PlayerStat.instance.doubleJump)
+                else if (jumpInputValue > 0 && canjumpInput && PlayerStat.instance.doubleJump)
                 {
+                    PlayerStat.instance.doubleJump = false;
                     Jump();
                 }
                 Debug.Log("누르는 중입니다만");
@@ -643,11 +614,14 @@ public class Player : Character
 
     public void jumphold()
     {
+        jumpInputValue = 0;
+        canjumpInput = true;
         if (playerRb.velocity.y > 0)
         {
             playerRb.velocity = new Vector3(playerRb.velocity.x, playerRb.velocity.y * jumpholdLevel, playerRb.velocity.z);
         }
     }
+
 
     #endregion
 
