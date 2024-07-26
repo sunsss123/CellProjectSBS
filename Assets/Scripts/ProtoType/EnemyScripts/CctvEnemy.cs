@@ -26,7 +26,9 @@ public class CctvEnemy : Enemy
     void CctvTrackingMove()
     {
         testTarget = target.position - transform.position;
-        
-        cctvHead.transform.rotation = Quaternion.Lerp(cctvHead.transform.rotation, Quaternion.LookRotation(testTarget.normalized),rotationSpeed * Time.deltaTime);        
+        Quaternion lookRot = Quaternion.LookRotation(testTarget);
+        //cctvHead.transform.rotation = Quaternion.Lerp(cctvHead.transform.rotation, lookRot,rotationSpeed * Time.deltaTime);
+        cctvHead.transform.rotation = Quaternion.RotateTowards(cctvHead.transform.rotation, lookRot, rotationSpeed * Time.deltaTime);
+        //cctvHead.transform.rotation = Vector3.RotateTowards();
     }
 }
