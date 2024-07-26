@@ -737,6 +737,13 @@ public class Player : Character
         }
         #endregion
     }
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag("Ground") && onGround == false)
+        {
+            jumpRaycastCheck();
+        }
+    }
     private void OnCollisionStay(Collision collision)
     {
         //#region 바닥 상호작용
