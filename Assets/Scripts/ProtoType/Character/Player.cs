@@ -171,6 +171,7 @@ public class Player : Character
                     isJump = false;
                     downAttack = false;
                     PlayerStat.instance.jumpCount = 0;
+                    PlayerStat.instance.doubleJump = true;
 
                     if (LandingEffect != null)
                         LandingEffect.SetActive(true);
