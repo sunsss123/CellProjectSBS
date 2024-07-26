@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using NUnit.Framework.Constraints;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,6 +12,8 @@ public class PoolObjects
     public string poolName;
     public GameObject poolPrefab;
     public GameObject[] poolPrefabs;
+    public List<GameObject> poolList;
+    public Queue<GameObject> poolQueue;
 }
 
 public class PoolingManager : MonoBehaviour
@@ -35,12 +38,27 @@ public class PoolingManager : MonoBehaviour
     // 풀링 초기화
     void TestPoolingInit()
     {
+        /*foreach (var pool in poolObjects)
+        {
+            pool.poolQueue = new Queue<GameObject>();
+            GameObject poolPre = Instantiate(pool.poolPrefab, transform.position, Quaternion.identity);
+            for (int i = 0; i < pool.poolList.Capacity; i++)
+            {
+                poolPre.SetActive(false);
+                pool.poolQueue.Enqueue(poolPre);
+                poolPre.transform.SetParent(transform);
+            }
+        }*/
+
         for (int i = 0; i < poolObjects.Length; i++)
         {
-            GameObject[] poolPrefabs = poolObjects[i].poolPrefabs;                        
+
+
+            GameObject[] poolPrefabs = poolObjects[i].poolPrefabs;
             for (int j = 0; j < poolPrefabs.Length; j++)
             {
                 GameObject prefab = Instantiate(poolObjects[i].poolPrefab, transform.position, Quaternion.identity);
+                prefab.transform.SetParent(this.transform);
                 prefab.SetActive(false);
                 poolPrefabs[j] = prefab;
             }
@@ -51,6 +69,15 @@ public class PoolingManager : MonoBehaviour
     //풀링 오브젝트 대출
     public void GetPoolObject(string poolObj, Transform obj)
     {
+        /*for (int z = 0; z < poolObjects.Length; z++)
+        {
+            if (poolObjects[z].poolName == poolObj)
+            {
+                GameObject QueuePre = poolObjects[z].poolQueue.Dequeue();
+                QueuePre.SetActive(true);
+            }
+        }*/
+
         for (int i = 0; i < poolObjects.Length; i++)
         {
             if (poolObjects[i].poolName == poolObj)
@@ -81,7 +108,7 @@ public class PoolingManager : MonoBehaviour
     //풀링 오브젝트 반납
     public void ReturnPoolObject(GameObject obj)
     {
-        obj.SetActive(false);
         obj.transform.SetParent(transform);
+        obj.SetActive(false);        
     }
 }

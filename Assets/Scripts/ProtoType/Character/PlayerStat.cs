@@ -7,6 +7,7 @@ public enum CurrentAttack { ground, sky }
 public class PlayerStat : CharacterStat
 {
     public static PlayerStat instance;
+    public direction direction = direction.Right;
 
     public PlayerState pState = PlayerState.idle;
     public CurrentAttack currentAttack;
@@ -49,10 +50,10 @@ public class PlayerStat : CharacterStat
   
 
 
-    private void FixedUpdate()
+    /*private void FixedUpdate()
     {
         if (hp <= 0)
             SceneManager.LoadScene("Title");
 
-    }    
+    }*/    
 }

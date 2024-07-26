@@ -103,10 +103,10 @@ public class PlayerHandler : MonoBehaviour
  public   void Deform()
     {
         if(CurrentPlayer !=null)
-            lastDirection = CurrentPlayer.direction;        
+            lastDirection = PlayerStat.instance.direction;        
         transformed(TransformType.Default);
         LastTransformPlace.transform.position = Playerprefab.transform.position;
-        CurrentPlayer.direction = lastDirection;
+        PlayerStat.instance.direction = lastDirection;
         CurrentPlayer.transform.Translate(Vector3.up * defromUpPosition);
         LastTransformPlace.gameObject.SetActive(true);
         LastTransformPlace = null;
@@ -181,9 +181,8 @@ public class PlayerHandler : MonoBehaviour
 
         if (Input.GetKey(KeyCode.C))
         {
-
             Debug.Log("점프키 입력 중");
-
+            CurrentPlayer.jumpInputValue = 1;
             CurrentPlayer.jumpBufferTimer = CurrentPlayer.jumpBufferTimeMax;
         }
         if (!Input.GetKey(KeyCode.C))
@@ -195,7 +194,7 @@ public class PlayerHandler : MonoBehaviour
         {
             CurrentPlayer. SwapAttackType();
         }
-        if (Input.GetKey(KeyCode.UpArrow))
+        if (!Input.GetKey(KeyCode.X) && Input.GetKey(KeyCode.UpArrow))
         {
             switch (CurrentType)
             {
@@ -220,15 +219,12 @@ public class PlayerHandler : MonoBehaviour
         if (Input.GetKey(KeyCode.DownArrow))
         {
             if (Input.GetKey(KeyCode.X) && !CurrentPlayer.onGround)
-            {
-                          
-
+            {                         
                 CurrentPlayer.DownAttack();
             }            
         }
         
-        if (!Input.GetKey(KeyCode.DownArrow) && Input.GetKey(KeyCode.X)
-            || !Input.GetKey(KeyCode.UpArrow) && Input.GetKey(KeyCode.X))
+        if (Input.GetKey(KeyCode.X) && !Input.GetKey(KeyCode.UpArrow))
         {
             //CurrentPlayer.Attack();
             CurrentPlayer.attackBufferTimer = CurrentPlayer.attackBufferTimeMax;
@@ -243,7 +239,7 @@ public class PlayerHandler : MonoBehaviour
         //}
 
         CurrentPlayer.Skill1();
-        CurrentPlayer.Skill2();
+        //CurrentPlayer.Skill2();
 
     }
     #endregion

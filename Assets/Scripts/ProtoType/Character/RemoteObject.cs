@@ -7,7 +7,9 @@ public enum RemoteType { tv, none }
 public class RemoteObject: MonoBehaviour
 {
     public RemoteType rType;
-
+    public TvColor tvColor = TvColor.white;
+    
+    public float distanceToRemocon;
     public bool onActive;
     public Material[] tvMaterials;
     public Material ActiveMaterial;
@@ -51,5 +53,14 @@ public class RemoteObject: MonoBehaviour
         onActive = true;
         activeCollider.enabled = onActive;
         tvLight.enabled = onActive;
-    }    
+    }
+
+    private void OnBecameVisible()
+    {
+        Debug.Log("상호작용할 오브젝트와의 거리");
+        if (PlayerHandler.instance.CurrentType == TransformType.remoteform)
+        {
+            distanceToRemocon = Vector3.Distance(this.transform.position, PlayerHandler.instance.CurrentPlayer.transform.position);
+        }
+    }
 }

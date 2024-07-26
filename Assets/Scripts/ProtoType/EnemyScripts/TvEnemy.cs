@@ -14,6 +14,42 @@ public class TvEnemy : Enemy
     public float rayRange; // 레이캐스트 길이 조절
     public float rayHeight; // 레이캐스트 높이 조절
 
+    private void Awake()
+    {
+        //eStat = gameObject.AddComponent<EnemyStat>();
+        eStat = GetComponent<EnemyStat>();
+        attackCollider.GetComponent<ReachAttack>().SetDamage(eStat.atk);
+        enemyRb = GetComponent<Rigidbody>();
+    }
+
+    private void FixedUpdate()
+    {
+        Move();
+
+        TrackingCheck();
+    }
+
+    public void TrackingCheck()
+    {
+        Debug.DrawRay(transform.position + Vector3.up * rayHeight, transform.forward * rayRange, Color.magenta, 0.1f);
+
+        RaycastHit[] hits = Physics.RaycastAll(transform.position + Vector3.up * rayHeight, transform.forward, rayRange);
+
+        for (int i = 0; i < hits.Length; i++)
+        {
+            if (hits[i].collider.CompareTag("GameController"))
+            {
+                if (!hitByPlayer && hits[i].collider == hits[i].collider.GetComponent<BoxCollider>() && hits[i].collider.GetComponent<RemoteObject>().rType == RemoteType.tv)
+                {
+                    if (hits[i].collider.GetComponent<RemoteObject>().onActive)
+                    {
+                        checkTv = true;
+                    }
+                }
+            }
+        }
+    }
+
     public override void Attack()
     {
         return;
@@ -42,7 +78,22 @@ public class TvEnemy : Enemy
             }
         }
     }
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("GameController"))
+        {
+            if (other.GetComponent<RemoteObject>().rType == RemoteType.tv && !hitByPlayer)
+            {
+                RemoteObject tv = other.GetComponent<RemoteObject>();
 
+                if (tv.onActive && tv.tvColor == tvColor)
+                {
+                    target = other.transform;
+                    tracking = true;
+                }
+            }
+        }
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("GameController"))
@@ -52,7 +103,7 @@ public class TvEnemy : Enemy
             {
                 RemoteObject tv = other.GetComponent<RemoteObject>();
 
-                if (tv.onActive)
+                if (tv.onActive && tv.tvColor == tvColor)
                 {
                     target = other.transform;
                     activeTv = true;

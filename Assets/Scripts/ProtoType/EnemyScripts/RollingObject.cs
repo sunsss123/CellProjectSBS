@@ -6,6 +6,7 @@ public class RollingObject : MonoBehaviour
 {
     public Enemy enemy;
     public float damage;
+    public bool enemyDie;
 
     private void Start()
     {
@@ -15,7 +16,8 @@ public class RollingObject : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && !PlayerHandler.instance.CurrentPlayer.onInvincible)
+        if (other.CompareTag("Player") && !PlayerHandler.instance.CurrentPlayer.onInvincible
+            && !enemyDie)
         {
             other.GetComponent<Player>().Damaged(damage);
 

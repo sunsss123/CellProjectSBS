@@ -49,15 +49,15 @@ public class RemoteTransform : Player
     {
         BaseBufferTimer();
 
-        if (chargingBufferTimer > 0 && !Charging)
+        /*if (chargingBufferTimer > 0 && !Charging)
         {
             chargingBufferTimer -= Time.deltaTime;
-        }
+        }*/
     }
 
     public override void Skill1()
     {
-        if (chargingBufferTimer <= 0 && Input.GetKey(KeyCode.UpArrow) && Input.GetKey(KeyCode.X))
+        if (Input.GetKey(KeyCode.UpArrow) && Input.GetKey(KeyCode.X))
         {
             Charging = true;
             /*if (!handlerange.gameObject.activeSelf)
@@ -67,8 +67,8 @@ public class RemoteTransform : Player
             Humonoidanimator.SetBool("Charge", Charging);
             if (!handlerange.gameObject.activeSelf)
             {
-                handlerange.gameObject.SetActive(Charging);
-                handlerange.enabled = Charging;
+                //handlerange.gameObject.SetActive(Charging);
+                //handlerange.enabled = Charging;
                 Humonoidanimator.Play("Charge");
             }
           
@@ -76,6 +76,7 @@ public class RemoteTransform : Player
             if (handletimer >= handleMaxTime)
             {
                 Debug.Log("충전량 최대치입니다");
+                handlerange.gameObject.SetActive(true);
             }
             else
             {
@@ -87,7 +88,7 @@ public class RemoteTransform : Player
                 {
                     handlerange.radius += Time.deltaTime;
                 }*/
-                if (timeScale > handlediameterrangemax)
+                /*if (timeScale > handlediameterrangemax)
                 {
                     handlerange.transform.localScale = new Vector3(handlediameterrangemax, handlediameterrangemax, 0);
                 }
@@ -95,7 +96,7 @@ public class RemoteTransform : Player
                 {
                     timeScale += Time.deltaTime;
                     handlerange.transform.localScale = new Vector3(chargeSpeed * timeScale, chargeSpeed * timeScale, 0);
-                }
+                }*/
             }
         }
 
@@ -139,13 +140,13 @@ public class RemoteTransform : Player
         canAttack = true;
     }
 
-    public override void Skill2()
+    /*public override void Skill2()
     {
         if (Input.GetKeyDown(KeyCode.D))
         {
             Instantiate(chain, transform.position, transform.rotation);
         }
-    }
+    }*/
 
     IEnumerator ChainLightning()
     {
@@ -208,7 +209,7 @@ public class RemoteTransform : Player
         }
 
         remoteObj.Clear();
-        handlerange.transform.localScale = new Vector3(0, 0, 0);
+        //handlerange.transform.localScale = new Vector3(0, 0, 0);
         handletimer = 0;
         timeScale = 0;
         handlerange.enabled = false;

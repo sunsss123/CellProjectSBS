@@ -14,8 +14,8 @@ public class PlayerInteract : MonoBehaviour
     {
 
         RaycastHit hit;
-        Debug.DrawRay(transform.position * (int)p.direction, Vector3.right * 0.15f * (int)p.direction, Color.black);
-        if (Physics.Raycast(this.transform.position * (int)p.direction, Vector3.right * (int)p.direction, out hit, 0.15f))
+        Debug.DrawRay(transform.position * (int)PlayerStat.instance.direction, Vector3.right * 0.15f * (int)PlayerStat.instance.direction, Color.black);
+        if (Physics.Raycast(this.transform.position * (int)PlayerStat.instance.direction, Vector3.right * (int)PlayerStat.instance.direction, out hit, 0.15f))
         {
    
             if (hit.collider.CompareTag("InteractiveObject"))
@@ -49,7 +49,7 @@ public class PlayerInteract : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.F) && InteractTimer <= 0)
             {
-                CurrentInteract.Active(p.direction);
+                CurrentInteract.Active(PlayerStat.instance.direction);
                 CurrentInteract = null;
 
                 InteractTimer = PlayerStat.instance. InteractDelay;
