@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: HPTEST
   m_EditorClassIdentifier: Assembly-CSharp::MUltiPlyitem
-  itemname: "\uCCB4\uB825 \uC99D\uAC00"
-  itemdescription: "\uCCB4\uB825\uC774 \uB298\uC5B4\uB0AC\uB2E4"
+  itemname: "\uC5D0\uB108\uC9C0 \uC6A9\uB7C9 UP"
+  itemdescription: "\uC5D0\uB108\uC9C0 \uCD5C\uB300\uCE58\uAC00 \uC0C1\uC2B9\uD588\uB2E4!"
   InitItemPower: 5
   ItemPower: 5
   upgradeStatus: 0

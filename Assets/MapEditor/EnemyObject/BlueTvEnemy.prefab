@@ -210,6 +210,8 @@ MonoBehaviour:
   rangeCollider: {fileID: 2888497688095314422}
   searchCubeRange: {x: 0, y: 0, z: 0}
   searchCubePos: {x: 0, y: 0, z: 0}
+  rangePos: {x: 0, y: 0, z: 0}
+  rangeSize: {x: 0, y: 0, z: 0}
   attackTimer: 0
   attackInitCoolTime: 0
   attackDelay: 0
@@ -298,7 +300,7 @@ MonoBehaviour:
   initattackCoolTime: 0
   attackCoolTimebonus: 0
   hp: 5
-  atk: 1
+  atk: 0
   atkSpeed: 1
   rotationSpeed: 1
   canMove: 0

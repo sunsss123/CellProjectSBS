@@ -172,7 +172,7 @@ public class Player : Character
                     downAttack = false;
                     PlayerStat.instance.jumpCount = 0;
                     PlayerStat.instance.doubleJump = true;
-
+                    Debug.Log("abcdefg");
                     if (LandingEffect != null)
                         LandingEffect.SetActive(true);
                 }
@@ -376,7 +376,7 @@ public class Player : Character
                 Vector3 Movevelocity = Vector3.zero;
                 Vector3 desiredVector =  new Vector3(hori, 0, 0).normalized * PlayerStat.instance.moveSpeed + EnvironmentPower;
                 Movevelocity = desiredVector - playerRb.velocity.x*Vector3.right;
-                Debug.Log("MOveVelocity:" + Movevelocity);
+              
 
         if (!wallcheck)
             playerRb.AddForce(Movevelocity, ForceMode.VelocityChange);
@@ -737,6 +737,13 @@ public class Player : Character
             onGround = false;            
         }
         #endregion
+    }
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Ground") && onGround == false)
+        {
+            jumpRaycastCheck();
+        }
     }
     private void OnCollisionStay(Collision collision)
     {

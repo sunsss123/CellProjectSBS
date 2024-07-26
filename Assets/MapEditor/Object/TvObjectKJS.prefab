@@ -122,11 +122,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rType: 0
+  tvColor: 0
+  distanceToRemocon: 0
   onActive: 0
   tvMaterials: []
   ActiveMaterial: {fileID: 2100000, guid: 16aebe7d34d5f6e4ca9d778acc20d47e, type: 2}
   DeactiveMaterial: {fileID: 2100000, guid: c205efe9c8690a04bbc315ca9f5cc592, type: 2}
   FrontOBj: {fileID: 0}
+  tvLight: {fileID: 0}
 --- !u!135 &8294268173819374831
 SphereCollider:
   m_ObjectHideFlags: 0

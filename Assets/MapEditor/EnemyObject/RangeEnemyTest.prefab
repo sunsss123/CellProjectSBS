@@ -566,7 +566,7 @@ MonoBehaviour:
   enemyRb: {fileID: 0}
   attackCollider: {fileID: 7760997083194175977}
   rangeCollider: {fileID: 2202126381614901408}
-  searchCubeRange: {x: 3, y: 0.63, z: 0.7}
+  searchCubeRange: {x: 3.5, y: 0.63, z: 0.7}
   searchCubePos: {x: 0, y: 0.61, z: 0}
   rangePos: {x: 0, y: 0, z: 0}
   rangeSize: {x: 0, y: 0, z: 0}
@@ -608,11 +608,11 @@ MonoBehaviour:
   initattackCoolTime: 1.5
   attackCoolTimebonus: 0
   hp: 0
-  atk: 1
+  atk: 0
   atkSpeed: 0
   rotationSpeed: 0
-  canMove: 0
-  canAttack: 0
+  canMove: 1
+  canAttack: 1
   eState: 0
   dropGroup:
     parts: {fileID: 0}

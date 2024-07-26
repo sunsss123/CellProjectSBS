@@ -102,13 +102,13 @@ MonoBehaviour:
   enemyRb: {fileID: 0}
   attackCollider: {fileID: 3003010046744970119}
   rangeCollider: {fileID: 7523205838727179985}
-  searchCubeRange: {x: 2, y: 0.5, z: 0.5}
+  searchCubeRange: {x: 2.5, y: 0.5, z: 0.5}
   searchCubePos: {x: 0, y: 0.5, z: 0}
   rangePos: {x: 0, y: 0, z: 0}
   rangeSize: {x: 0, y: 0, z: 0}
   attackTimer: 0
-  attackInitCoolTime: 2
-  attackDelay: 1.5
+  attackInitCoolTime: 1
+  attackDelay: 0.1
   onAttack: 0
   activeAttack: 0
   checkPlayer: 0
@@ -116,7 +116,7 @@ MonoBehaviour:
   target: {fileID: 0}
   tracking: 0
   testTarget: {x: 0, y: 0, z: 0}
-  rotationSpeed: 3
+  rotationSpeed: 6
   onStun: 0
   reachCheck: 0
   rotLevel: 85
@@ -134,18 +134,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackType: 0
   characterState: 0
-  initMaxHP: 5
-  initMoveSpeed: 0
+  initMaxHP: 2
+  initMoveSpeed: 1.8
   HPBonus: 0
   MoveSpeedBonus: 0
-  initattackCoolTime: 1.5
+  initattackCoolTime: 2
   attackCoolTimebonus: 0
-  hp: 5
-  atk: 1
-  atkSpeed: 3
-  rotationSpeed: 3
-  canMove: 0
-  canAttack: 0
+  hp: 2
+  atk: 0
+  atkSpeed: 6
+  rotationSpeed: 6
+  canMove: 1
+  canAttack: 1
   eState: 0
   dropGroup:
     parts: {fileID: 0}
@@ -702,8 +702,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.01, y: 0.05, z: 0.6}
-  m_Center: {x: 0, y: 0.3, z: 0.5}
+  m_Size: {x: 1.16, y: 1.1, z: 0.9}
+  m_Center: {x: 0, y: 0.45, z: 0.37}
 --- !u!1 &8096763487964871236
 GameObject:
   m_ObjectHideFlags: 0
