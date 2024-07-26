@@ -17,9 +17,15 @@ public class PlayerHandler : MonoBehaviour
     public TransformPlace LastTransformPlace;
     #endregion
     #region 플레이어 현재 위치,상태
-    Transform PlayerSpawn;
+
     GameObject Playerprefab;
-    public Player CurrentPlayer; // 행동 작업
+
+    public Player CurrentPlayer;// 행동 작업
+    public void registerPlayer(GameObject o)//?
+    {
+        Playerprefab = o;
+        CurrentPlayer = o.GetComponent<Player>();
+    }
     public PlayerStat pStat; //스탯 분배 (스페셜어택)
     public direction lastDirection = direction.Right;
     #endregion
@@ -40,8 +46,8 @@ public class PlayerHandler : MonoBehaviour
                 .ToDictionary(item => (TransformType)item.index, item => item.Value);
         }
         #region 캐릭터 초기화
-        PlayerSpawn = GameObject.Find("PlayerSpawn").transform;
-        CreateModelByCurrentType();
+   
+        //CreateModelByCurrentType();
         #endregion
    
     }
@@ -56,7 +62,7 @@ public class PlayerHandler : MonoBehaviour
             {
                 rb.velocity = Vector3.zero;
             }
-            CurrentPlayer.transform.position = PlayerSpawn.transform.position;
+            CurrentPlayer.transform.position = PlayerSpawnManager.Instance. CurrentCheckPoint.transform.position;
         }
     }
     private void FixedUpdate()
@@ -125,21 +131,15 @@ public class PlayerHandler : MonoBehaviour
                 tf = Playerprefab.transform;
                 CurrentPlayer = null;
             }
-            else
-            {
-                tf = PlayerSpawn;
-            }
+           
             if(Playerprefab != null) 
             Playerprefab.SetActive(false);
             GameObject p;
             if (CreatedTransformlist.TryGetValue(CurrentType, out p))
                 p.gameObject.SetActive(true);
-            else
-            {
-                p = Instantiate(PlayerTransformList[CurrentType].gameObject, PlayerSpawn)
-                    ;
+           
                 CreatedTransformlist.Add(CurrentType,p);
-            }
+            
             Playerprefab = p;
             #endregion
             #region 위치 동기화
@@ -174,7 +174,7 @@ public class PlayerHandler : MonoBehaviour
     float DeTransformtimer = 0;
     void charactermove()
     {
-        if (!CurrentPlayer.downAttack && PlayerStat.instance.pState == PlayerState.idle)
+        if (!CurrentPlayer.downAttack)
         {
             CurrentPlayer.Move();
         }

@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LoadingTest.unity
     guid: 32d38a9dd280351499beddfd3582ea6f
+  - enabled: 1
+    path: Assets/Scenes/KGTTest.unity
+    guid: 9b973a1ee3ab835488420517e03988ee
   m_configObjects: {}

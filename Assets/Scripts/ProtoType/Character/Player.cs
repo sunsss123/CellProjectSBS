@@ -16,6 +16,8 @@ public class Player : Character
     public CapsuleCollider capsuleCollider;
     public DontMoveCollider dmCollider;
 
+    Vector3 EnvironmentPower;
+
     public direction direction=direction.Right;
 
     [Header("근접 및 원거리 공격 관련")]
@@ -291,7 +293,7 @@ public class Player : Character
             if((RunEffect.isPlaying&&RunEffect.particleCount==0))
             RunEffect.Stop();   sd
         }*/
-
+     
         if (CullingPlatform)
         {
             var a = RunEffect.main;
@@ -352,6 +354,7 @@ public class Player : Character
                 direction = direction.Right;
         }
     }
+    public float Decelatate = 2;
     public override void Move()
     {
 
@@ -363,17 +366,39 @@ public class Player : Character
 
         rotate(hori);
 
-        translateFix = new(hori, 0, 0);
+        //translateFix = new(hori, 0, 0);
 
         #region 움직임
+       
+     
+          
+                Vector3 Movevelocity = Vector3.zero;
+                Vector3 desiredVector =  new Vector3(hori, 0, 0).normalized * PlayerStat.instance.moveSpeed + EnvironmentPower;
+                Movevelocity = desiredVector - playerRb.velocity.x*Vector3.right;
+                Debug.Log("MOveVelocity:" + Movevelocity);
+
         if (!wallcheck)
-        {     
-            playerRb.velocity = new Vector3(hori * PlayerStat.instance.moveSpeed, playerRb.velocity.y, playerRb.velocity.z);            
-        }
+            playerRb.AddForce(Movevelocity, ForceMode.VelocityChange);
         else
-        {
-            playerRb.velocity = new Vector3(0, playerRb.velocity.y, playerRb.velocity.z);
+            playerRb.AddForce(EnvironmentPower, ForceMode.VelocityChange);
+
+
+        if (Movevelocity==Vector3.zero) { 
+            Vector3 CurrentVelocity = playerRb.velocity;
+
+       var   newDecelateVector=  Vector3.Lerp(CurrentVelocity, Vector3.zero, Decelatate * Time.fixedDeltaTime);
+
+          
+            playerRb.velocity = new Vector3(newDecelateVector.x, CurrentVelocity.y, newDecelateVector.z);
+     //else
+     //           playerRb.velocity = new Vector3(0,playerRb.velocity.y, playerRb.velocity.z);
+
         }
+        
+      
+        EnvironmentPower = Vector3.zero;
+
+
         #endregion
 
         if (!isJump)
@@ -391,8 +416,11 @@ public class Player : Character
 
         velocityMove = playerRb.velocity;
         rigidbodyPos = playerRb.position;
-    }
 
+
+     
+    }
+    
 
 
     bool MoveCheck(float hori, float vert)
@@ -828,6 +856,16 @@ public class Player : Character
 
 
     }
+    public void AddEnviromentPower(Vector3 power)
+    {
+        EnvironmentPower += power;
+    }
+  //public  void getEnviromentPower()
+  //  {
+  //      playerRb.AddForce(EnvironmentPower, ForceMode.Acceleration);
+       
+  //      Debug.Log("Velocity"+playerRb.velocity);
+  //  }
     public void InteractivePlatformrayCheck()
     {
 
