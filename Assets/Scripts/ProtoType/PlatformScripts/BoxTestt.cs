@@ -244,9 +244,10 @@ public class BoxTestt : MonoBehaviour
     {
         if (other.CompareTag("GameController"))
         {
-            if (other.GetComponent<RemoteObject>().rType == RemoteType.tv && !hitByPlayer)
+            RemoteObject o=null;
+            if (other.TryGetComponent<RemoteObject>(out o) && !hitByPlayer)
             {
-                if (other.GetComponent<RemoteObject>().onActive)
+                if (other.GetComponent<RemoteObject>().CanControl)
                 {
                     target = other.transform;
                     tracking = true;
