@@ -39,10 +39,12 @@ public class TvEnemy : Enemy
         {
             if (hits[i].collider.CompareTag("GameController"))
             {
-                Debug.Log("컨트롤러 체크됨?");
-                if (!hitByPlayer && hits[i].collider == hits[i].collider.GetComponent<BoxCollider>() && hits[i].collider.GetComponent<RemoteObject>().rType == RemoteType.tv)
+
+                RemoteTV TV;
+                if (!hitByPlayer && hits[i].collider == hits[i].collider.GetComponent<BoxCollider>()&&
+                    hits[i].collider.TryGetComponent<RemoteTV>(out TV))
                 {
-                    if (hits[i].collider.GetComponent<RemoteObject>().onActive)
+                    if (TV.onActive)
                     {
                         checkTv = true;
                     }
@@ -79,31 +81,37 @@ public class TvEnemy : Enemy
             }
         }
     }
-    /*private void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag("GameController"))
-        {
-            if (other.GetComponent<RemoteObject>().rType == RemoteType.tv && !hitByPlayer)
-            {
-                RemoteObject tv = other.GetComponent<RemoteObject>();
 
-                if (tv.onActive && tv.tvColor == tvColor)
-                {
-                    target = other.transform;
-                    tracking = true;
-                }
-            }
-        }
-    }*/
+    //private void OnTriggerStay(Collider other)
+    //{
+    //    if (other.CompareTag("GameController"))
+    //    {
+    //        RemoteTV TV = null;
+    //        if (other.TryGetComponent<RemoteTV>(out TV) && !hitByPlayer)
+    //        {
+                
+
+    //            if (TV.onActive && TV.tvColor == tvColor)
+    //            {
+    //                target = other.transform;
+    //                tracking = true;
+    //            }
+    //        }
+    //    }
+    //}
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("GameController"))
         {
-            if (other.GetComponent<RemoteObject>().rType == RemoteType.tv)
-            {
-                RemoteObject tv = other.GetComponent<RemoteObject>();
 
-                if (tv.onActive && tv.tvColor == tvColor)
+            RemoteTV TV = null;
+            if (other.TryGetComponent<RemoteTV>(out TV)
+                && !hitByPlayer)
+            {
+                
+
+                if (TV.onActive && TV.tvColor == tvColor)
                 {
                     target = other.transform;
                     activeTv = true;

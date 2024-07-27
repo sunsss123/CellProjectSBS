@@ -2,16 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
-public abstract class RemoteObject: MonoBehaviour
+public class RemoteTV : RemoteObject
 {
-    public bool onActive;
-    public bool CanControl=true;
-    public abstract void Active();
+    public TvColor tvColor = TvColor.white;
 
-
-    bool onViewport;
+    public float distanceToRemocon;
+    
+    public Material[] tvMaterials;
+    public Material ActiveMaterial;
+    public Material DeactiveMaterial;
+    public GameObject FrontOBj;
+    public Light tvLight;
+    MeshRenderer Frontrenderer;
+    SphereCollider activeCollider;
+    BoxCollider activeCol;
 
     private void Awake()
     {
@@ -26,16 +30,7 @@ public abstract class RemoteObject: MonoBehaviour
         activeCollider = GetComponent<SphereCollider>();
         Deactive();
     }
-
-    private void Update()
-    {
-        if (onViewport)
-        {
-            distanceToRemocon = Vector3.Distance(this.transform.position, PlayerHandler.instance.CurrentPlayer.transform.position);
-        }
-    }
-
-    public void Deactive()
+    public override void Deactive()
     {
         //GetComponent<MeshRenderer>().materials[1] = DeactiveMaterial;
         tvMaterials[1] = DeactiveMaterial;
@@ -46,12 +41,11 @@ public abstract class RemoteObject: MonoBehaviour
         activeCollider.enabled = onActive;
         tvLight.enabled = onActive;
     }
-    public void Active()
-    {
-        //GetComponent<MeshRenderer>().materials[1] = ActiveMaterial;
+    public override void Active() { 
+
         tvMaterials[1] = ActiveMaterial;
         GetComponent<MeshRenderer>().materials = tvMaterials;
-        //Frontrenderer.material= ActiveMaterial;
+
         onActive = true;
         activeCollider.enabled = onActive;
         tvLight.enabled = onActive;
@@ -59,21 +53,10 @@ public abstract class RemoteObject: MonoBehaviour
 
     private void OnBecameVisible()
     {
+        Debug.Log("상호작용할 오브젝트와의 거리");
         if (PlayerHandler.instance.CurrentType == TransformType.remoteform)
         {
-            onViewport = true;
-        }        
-    }
-
-    private void OnBecameInvisible()
-    {
-        if (PlayerHandler.instance.CurrentType == TransformType.remoteform)
-        {
-            onViewport = false;
+            distanceToRemocon = Vector3.Distance(this.transform.position, PlayerHandler.instance.CurrentPlayer.transform.position);
         }
     }
-
-    public abstract void Deactive();
-
-
 }

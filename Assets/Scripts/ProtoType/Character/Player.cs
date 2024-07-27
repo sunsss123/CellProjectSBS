@@ -40,6 +40,7 @@ public class Player : Character
     public float jumpBufferTimeMax;
     public float jumpBufferTimer;
     public int jumpInputValue;
+
     public bool canjumpInput;
     [Header("키 선입력 관련")]
     public float attackBufferTimeMax;
@@ -92,7 +93,7 @@ public class Player : Character
     public float jumpInitDelay;
     [Header("내려찍기 체공 시간")]
     public float flyTime;
-
+    public int jumpInputValue;
     [Header("박스 캐스트 테스트")]
     public Vector3 boxRaySize; // box 레이캐스트 >> 벽에 고정되는 것 방지를 위한
     public float distanceRay; // box 캐스트의 거리
@@ -376,7 +377,7 @@ public class Player : Character
                 Vector3 Movevelocity = Vector3.zero;
                 Vector3 desiredVector =  new Vector3(hori, 0, 0).normalized * PlayerStat.instance.moveSpeed + EnvironmentPower;
                 Movevelocity = desiredVector - playerRb.velocity.x*Vector3.right;
-                Debug.Log("MOveVelocity:" + Movevelocity);
+      
 
         if (!wallcheck)
             playerRb.AddForce(Movevelocity, ForceMode.VelocityChange);
@@ -623,6 +624,9 @@ public class Player : Character
         }
     }
 
+
+
+
     #endregion
 
 
@@ -736,6 +740,13 @@ public class Player : Character
             onGround = false;            
         }
         #endregion
+    }
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag("Ground") && onGround == false)
+        {
+            jumpRaycastCheck();
+        }
     }
     private void OnCollisionStay(Collision collision)
     {

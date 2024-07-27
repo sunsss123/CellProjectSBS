@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class ConvayerBelt : MonoBehaviour
 {
+    //팬에서도 쓰이니 이름을 바꿀 것
+
+
     public float conveyorSpeed = 5f; // 컨베이어 벨트의 속도
     public Vector3 conveyorDirection = Vector3.right; // 컨베이어 벨트의 방향
 
