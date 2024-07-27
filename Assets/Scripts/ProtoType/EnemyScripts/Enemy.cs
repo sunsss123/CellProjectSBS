@@ -206,7 +206,7 @@ public class Enemy: Character
             completeRot = true;
         }
         //Debug.Log($"체크가 되는 거냐? {complete = completeRot}\n로테이션앵글:{transform.eulerAngles.y}");
-        Debug.Log(completeRot);
+        //Debug.Log(completeRot);
         return completeRot;
     }
     #endregion

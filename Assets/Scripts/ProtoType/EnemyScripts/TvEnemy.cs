@@ -39,6 +39,7 @@ public class TvEnemy : Enemy
         {
             if (hits[i].collider.CompareTag("GameController"))
             {
+                Debug.Log("컨트롤러 체크됨?");
                 if (!hitByPlayer && hits[i].collider == hits[i].collider.GetComponent<BoxCollider>() && hits[i].collider.GetComponent<RemoteObject>().rType == RemoteType.tv)
                 {
                     if (hits[i].collider.GetComponent<RemoteObject>().onActive)
@@ -69,7 +70,7 @@ public class TvEnemy : Enemy
     {
         if (eStat.eState != EnemyState.dead || eStat.eState != EnemyState.hitted)
         {
-            if (tracking)
+            if (tracking && activeTv)
             {
                 if (!activeAttack && !checkTv && !onAttack)
                 {
@@ -78,7 +79,7 @@ public class TvEnemy : Enemy
             }
         }
     }
-    private void OnTriggerStay(Collider other)
+    /*private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("GameController"))
         {
@@ -93,13 +94,12 @@ public class TvEnemy : Enemy
                 }
             }
         }
-    }
+    }*/
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("GameController"))
         {
-            if (other.GetComponent<RemoteObject>().rType == RemoteType.tv
-                && !hitByPlayer)
+            if (other.GetComponent<RemoteObject>().rType == RemoteType.tv)
             {
                 RemoteObject tv = other.GetComponent<RemoteObject>();
 
@@ -110,25 +110,6 @@ public class TvEnemy : Enemy
                     tracking = true;
                 }
             }
-        }
-
-        /*if (other.CompareTag("Player"))
-        {sd
-            if (!activeTv)
-            {
-                target = other.transform;
-                tracking = true;
-            }
-        }*/
-
-        if (other.CompareTag("PlayerAttack") && !eStat.onInvincible)
-        {
-            if (activeTv)
-            {
-                hitByPlayer = true;
-            }
-            activeTv = false;
-            checkTv = false;
         }
     }
 }

@@ -8,8 +8,12 @@ public class PosFix : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Enemy"))
         {
-            Transform pos = collision.gameObject.transform;
-            collision.gameObject.transform.position = new(pos.localPosition.x, pos.localPosition.y, transform.localPosition.z);
+            if (transform.localPosition.z != collision.gameObject.transform.localPosition.z)
+            {
+                Debug.Log("포지션 갱신");
+                Transform pos = collision.gameObject.transform;
+                collision.gameObject.transform.position = new(pos.localPosition.x, pos.localPosition.y, transform.localPosition.z);
+            }
         }
     }
 }
