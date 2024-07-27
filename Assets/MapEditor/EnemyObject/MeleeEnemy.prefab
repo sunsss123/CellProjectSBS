@@ -102,7 +102,7 @@ MonoBehaviour:
   enemyRb: {fileID: 0}
   attackCollider: {fileID: 3003010046744970119}
   rangeCollider: {fileID: 7523205838727179985}
-  searchCubeRange: {x: 2.5, y: 0.5, z: 0.5}
+  searchCubeRange: {x: 3, y: 0.5, z: 0.5}
   searchCubePos: {x: 0, y: 0.5, z: 0}
   rangePos: {x: 0, y: 0, z: 0}
   rangeSize: {x: 0, y: 0, z: 0}
@@ -116,7 +116,7 @@ MonoBehaviour:
   target: {fileID: 0}
   tracking: 0
   testTarget: {x: 0, y: 0, z: 0}
-  rotationSpeed: 6
+  rotationSpeed: 8
   onStun: 0
   reachCheck: 0
   rotLevel: 85
@@ -134,8 +134,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackType: 0
   characterState: 0
-  initMaxHP: 2
-  initMoveSpeed: 1.8
+  initMaxHP: 3
+  initMoveSpeed: 1.5
   HPBonus: 0
   MoveSpeedBonus: 0
   initattackCoolTime: 2
@@ -277,8 +277,8 @@ Transform:
   m_GameObject: {fileID: 3003010046744970119}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.267, z: 0.448}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_LocalPosition: {x: 0, y: 0.267, z: 0.259}
+  m_LocalScale: {x: 0.607194, y: 0.4781653, z: 0.7589925}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1450748851887952676}
@@ -664,8 +664,8 @@ Transform:
   m_GameObject: {fileID: 7523205838727179985}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0.054, z: -0.067}
+  m_LocalScale: {x: 1, y: 0.85, z: 0.6375}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1450748851887952676}
@@ -702,8 +702,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.16, y: 1.1, z: 0.9}
-  m_Center: {x: 0, y: 0.45, z: 0.37}
+  m_Size: {x: 1.16, y: 0.97, z: 0.96}
+  m_Center: {x: 0, y: 0.42, z: 0.61}
 --- !u!1 &8096763487964871236
 GameObject:
   m_ObjectHideFlags: 0
