@@ -685,9 +685,10 @@ GameObject:
   - component: {fileID: 3402256507647365123}
   - component: {fileID: 1592393287810428784}
   - component: {fileID: 3529679713486994411}
+  - component: {fileID: 5321438684292614413}
   m_Layer: 0
   m_Name: CraneYMove
-  m_TagString: Untagged
+  m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -848,6 +849,27 @@ MonoBehaviour:
   CraneSpeed: 2
   ActiveTransform: {fileID: 7225739929595540204}
   DeActiveTransform: {fileID: 4397020064335183277}
+--- !u!65 &5321438684292614413
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7423763303963884298}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.66666675, y: 0.33333334, z: 0.47549692}
+  m_Center: {x: 0.004503687, y: 0, z: 0.009199937}
 --- !u!1 &7704014565187611679
 GameObject:
   m_ObjectHideFlags: 0

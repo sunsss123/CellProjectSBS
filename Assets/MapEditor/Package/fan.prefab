@@ -179,7 +179,7 @@ GameObject:
   - component: {fileID: 5948533035488507442}
   m_Layer: 0
   m_Name: fan
-  m_TagString: Ground
+  m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

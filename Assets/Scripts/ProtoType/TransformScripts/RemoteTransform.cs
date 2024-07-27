@@ -133,8 +133,10 @@ public class RemoteTransform : Player
     IEnumerator LaserAttack()
     {
         Humonoidanimator.Play("Attack");
+        if(PoolingManager.instance!=null)
         PoolingManager.instance.GetPoolObject("Laser", firePoint);
-
+        else
+        Instantiate(laserPrefab, this.gameObject.transform.position, this.transform.rotation);
         yield return new WaitForSeconds(PlayerStat.instance.attackDelay);
 
         canAttack = true;
@@ -209,10 +211,10 @@ public class RemoteTransform : Player
         }
 
         remoteObj.Clear();
-        //handlerange.transform.localScale = new Vector3(0, 0, 0);
+
         handletimer = 0;
         timeScale = 0;
-        handlerange.enabled = false;
+
     }
 
     IEnumerator ElectricPower()
