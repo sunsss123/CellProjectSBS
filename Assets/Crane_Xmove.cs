@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class Crane_Xmove : Crane
 {
+
     public override Vector3 GetMoveVector(Vector3 Target, Vector3 origin)
     {
-        float f = (Target - origin).x;
+        float f = 0;
+        
+           f = (Target - origin).z;
         if (f > 0)
             return Vector3.left;
         else if (f < 0)
