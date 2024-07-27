@@ -107,7 +107,7 @@ MonoBehaviour:
   rangePos: {x: 0, y: 0, z: 0}
   rangeSize: {x: 0, y: 0, z: 0}
   attackTimer: 0
-  attackInitCoolTime: 1
+  attackInitCoolTime: 1.5
   attackDelay: 0.1
   onAttack: 0
   activeAttack: 0
