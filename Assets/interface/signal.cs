@@ -30,7 +30,8 @@ public abstract class signalReceiver:MonoBehaviour
     {
        for(int i = 0; i < signalSenders.Count; i++)
         {
-            signalSenders[i].register(this,i);
+            if (signalSenders[i]!=null)
+             signalSenders[i].register(this,i);
         }
         //signals = new bool[signalSenders.Count];
     }

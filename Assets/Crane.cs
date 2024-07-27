@@ -12,6 +12,7 @@ public abstract class Crane : RemoteObject
     Vector3 MoveVector;
     public override void Active()
     {
+        Debug.Log("active()");
         if (onActive)
         {
             Deactive();
@@ -22,6 +23,7 @@ public abstract class Crane : RemoteObject
 
     public override void Deactive()
     {
+        Debug.Log("Deactive()");
         onActive = false;
     }
     public abstract Vector3 GetMoveVector(Vector3 Target, Vector3 origin);

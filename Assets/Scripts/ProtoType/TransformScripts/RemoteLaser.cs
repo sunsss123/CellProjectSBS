@@ -37,14 +37,19 @@ public class RemoteLaser : MonoBehaviour
                 enemy.Damaged(damage);
                 /*saveEffect.transform.position = other.transform.position;
                 saveEffect.Play();*/
-                PoolingManager.instance.ReturnPoolObject(this.gameObject);
-                //gameObject.SetActive(false);
+                if (PoolingManager.instance != null)
+                    PoolingManager.instance.ReturnPoolObject(this.gameObject);
+                else
+                    Destroy(gameObject);
             }
         }
     }
 
     private void OnBecameInvisible()
     {
-        PoolingManager.instance.ReturnPoolObject(this.gameObject);
+        if (PoolingManager.instance != null)
+            PoolingManager.instance.ReturnPoolObject(this.gameObject);
+        else
+            Destroy(gameObject);
     }
 }
