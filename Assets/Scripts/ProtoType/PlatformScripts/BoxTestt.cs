@@ -25,8 +25,7 @@ public class BoxTestt : MonoBehaviour
     [Header("하위 오브젝트 공격 범위 콜라이더에서 변경중")]
     public bool onAttack; // 공격 활성화 여부 (공격 범위 내에 플레이어를 인식했을 때 true 변환)
     public bool activeAttack; // 공격 가능한 상태인지 체크
-    public bool checkPlayer; // 범위 내 플레이어 체크
-    public bool hitByPlayer; // Tv 오브젝트 활성화 중에 플레이어에게 공격 당했을 때 적용
+    public bool checkPlayer; // 범위 내 플레이어 체크    
 
     [Header("목표 회전을 테스트하기 위한 변수")]
     public Transform target; // 추적할 타겟
@@ -245,7 +244,7 @@ public class BoxTestt : MonoBehaviour
         if (other.CompareTag("GameController"))
         {
             RemoteObject o=null;
-            if (other.TryGetComponent<RemoteObject>(out o) && !hitByPlayer)
+            if (other.TryGetComponent<RemoteObject>(out o))
             {
                 if (other.GetComponent<RemoteObject>().CanControl)
                 {

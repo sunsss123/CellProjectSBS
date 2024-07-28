@@ -41,6 +41,12 @@ public class CctvEnemy : Enemy
             }                  
         }
     }
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube(transform.position + searchCubePos, searchCubeRange * 2f);
+        //Gizmos.DrawWireSphere(transform.position, searchRange);
+    }
 
     public override void Move()
     {
@@ -82,20 +88,12 @@ public class CctvEnemy : Enemy
             rot = lookRot;            
             /*float angleValue = Quaternion.Angle(cctvHead.transform.rotation, lookRot);
             float finalSpeed = rotationSpeed * (angleValue / 180f);*/
-            cctvHead.transform.rotation = Quaternion.RotateTowards(cctvHead.transform.rotation, lookRot, rotationSpeed * Time.deltaTime);
+            cctvHead.transform.rotation = Quaternion.RotateTowards(cctvHead.transform.rotation, lookRot, eStat.rotationSpeed * Time.deltaTime);
 
             if (Quaternion.Angle(cctvHead.transform.rotation, lookRot) < 0.2f)
             {
-                pointCheck = true;                
-                if (target.name == "FirstPoint" || target.name == "SecondtPoint"
-                    || target.name == "FourthPoint" || target.name == "FifthPoint")
-                {
-                    StartCoroutine(CctvWaitTime());
-                }
-                else
-                {
-                    endWait = true;
-                }              
+                pointCheck = true;
+                StartCoroutine(CctvWaitTime());              
             }
         }
     }
@@ -113,7 +111,7 @@ public class CctvEnemy : Enemy
         /*float angleValue = Quaternion.Angle(cctvHead.transform.rotation, lookRot);
         float finalSpeed = rotationSpeed * (angleValue / 180f);*/
         //cctvHead.transform.rotation = Quaternion.Lerp(cctvHead.transform.rotation, lookRot,rotationSpeed * Time.deltaTime);
-        cctvHead.transform.rotation = Quaternion.RotateTowards(cctvHead.transform.rotation, lookRot, rotationSpeed * Time.deltaTime);
+        cctvHead.transform.rotation = Quaternion.RotateTowards(cctvHead.transform.rotation, lookRot, eStat.rotationSpeed * Time.deltaTime);
         //cctvHead.transform.rotation = Vector3.RotateTowards();
     }
 }

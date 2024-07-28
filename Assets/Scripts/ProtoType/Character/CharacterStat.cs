@@ -21,20 +21,23 @@ public class CharacterStat : MonoBehaviour
     [HideInInspector]
     public float HPBonus;
     [HideInInspector]
-    public float MoveSpeedBonus;
-    [Header("공격딜레이 초기치")]
-    public float initattackCoolTime;
-    [HideInInspector]
-    public float attackCoolTimebonus;
+    public float MoveSpeedBonus; 
     public float hpMax { get { return initMaxHP + HPBonus; } }
-   
+    [Header("#기본적인 스탯")]
     public float hp; // 현재 체력
     public float atk; // 공격력
-    public float moveSpeed { get { return initMoveSpeed + MoveSpeedBonus; } } 
-    public float atkSpeed; // 공격속도
-    public float attackCoolTime { get { if (initattackCoolTime <= attackCoolTimebonus) return 0.1f; return initattackCoolTime - attackCoolTime; } } // 공격 딜레이
-
+    public float moveSpeed { get { return initMoveSpeed + MoveSpeedBonus; } }    
     public float rotationSpeed; // 캐릭터의 방향 전환 속도
+    [HideInInspector]
+    public float attackSpeed;
+    [HideInInspector]
+    public float attackCoolTimebonus;
+
+    [Header("#공격딜레이 관련 변수")]
+    public float initattackCoolTime;
+    public float attackCoolTime { get { if (initattackCoolTime <= attackCoolTimebonus) return 0.1f; return initattackCoolTime - attackCoolTime; } } // 공격 딜레이
+    public float attackDelay; // 공격 후 딜레이
+    
 
     [Header("행동 제어용 bool값(일단 정의만)")]
     public bool canMove; // 이동 가능 여부 체크

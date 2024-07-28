@@ -349,6 +349,59 @@ Transform:
   - {fileID: 4814550138453351736}
   m_Father: {fileID: 4100606063395682568}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4687643837197023593
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3139260496678935453}
+  - component: {fileID: 2777891504936799762}
+  m_Layer: 0
+  m_Name: ReachAttack
+  m_TagString: EnemyAttack
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3139260496678935453
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4687643837197023593}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4100606063395682568}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &2777891504936799762
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4687643837197023593}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.3
+  m_Center: {x: 0, y: 0.3, z: 0}
 --- !u!1 &5215830315767204726
 GameObject:
   m_ObjectHideFlags: 0
@@ -468,6 +521,7 @@ Transform:
   - {fileID: 2462957396677217238}
   - {fileID: 7135976549529522104}
   - {fileID: 3121131663611280635}
+  - {fileID: 3139260496678935453}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &6632304941756833643
@@ -541,10 +595,10 @@ MonoBehaviour:
   attackTimer: 0
   attackInitCoolTime: 1.5
   attackDelay: 2
+  callCheck: 0
   onAttack: 0
   activeAttack: 0
   checkPlayer: 0
-  hitByPlayer: 0
   target: {fileID: 0}
   tracking: 0
   testTarget: {x: 0, y: 0, z: 0}
@@ -571,12 +625,13 @@ MonoBehaviour:
   initMoveSpeed: 1.2
   HPBonus: 0
   MoveSpeedBonus: 0
-  initattackCoolTime: 0
-  attackCoolTimebonus: 0
   hp: 3
   atk: 1
-  atkSpeed: 1
   rotationSpeed: 0
+  attackSpeed: 0
+  attackCoolTimebonus: 0
+  initattackCoolTime: 0
+  attackDelay: 0
   canMove: 0
   canAttack: 0
   eState: 0

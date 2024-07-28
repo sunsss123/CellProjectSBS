@@ -81,7 +81,7 @@ public class PlayerKjs : Character
                     {
                         onGround = true;
                         isJump = false;
-                        PlayerStat.instance.jumpCount = 0;
+                        //PlayerStat.instance.jumpCount = 0;
                         Debug.Log("BottomRayCheck");
 
 
@@ -356,14 +356,14 @@ public class PlayerKjs : Character
                 animator.SetTrigger("jump");
             }
             isRun = false;
-            if (PlayerStat.instance.jumpCount < PlayerStat.instance.jumpCountMax)
+            /*if (PlayerStat.instance.jumpCount < PlayerStat.instance.jumpCountMax)
             {
 
                 //YMove 
 
                 playerRb.AddForce(Vector3.up * PlayerStat.instance.jumpForce, ForceMode.Impulse);
                 PlayerStat.instance.jumpCount++;
-            }
+            }*/
         }
     }
 

@@ -13,7 +13,7 @@ public class RemoteTV : RemoteObject
     public Material DeactiveMaterial;
     public GameObject FrontOBj;
     public Light tvLight;
-    SphereCollider activeCollider;
+    BoxCollider activeCollider;
 
     bool onViewPort;
 
@@ -27,7 +27,7 @@ public class RemoteTV : RemoteObject
     void Start()
     {
         //Frontrenderer=FrontOBj.GetComponent<MeshRenderer>();         
-        activeCollider = GetComponent<SphereCollider>();
+        activeCollider = GetComponent<BoxCollider>();
         Deactive();
     }
 
@@ -36,6 +36,26 @@ public class RemoteTV : RemoteObject
         if (onViewPort)
         {
             Vector3.Distance(transform.position, PlayerHandler.instance.CurrentPlayer.transform.position);
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (onActive)
+        {
+            tvMaterials[1] = ActiveMaterial;
+            GetComponent<MeshRenderer>().materials = tvMaterials;
+
+            activeCollider.enabled = onActive;
+            tvLight.enabled = onActive;
+        }
+        else
+        {            
+            tvMaterials[1] = DeactiveMaterial;
+            GetComponent<MeshRenderer>().materials = tvMaterials;
+            
+            activeCollider.enabled = onActive;
+            tvLight.enabled = onActive;
         }
     }
 
@@ -76,5 +96,5 @@ public class RemoteTV : RemoteObject
         {
             onViewPort = false;
         }
-    }
+    }    
 }
