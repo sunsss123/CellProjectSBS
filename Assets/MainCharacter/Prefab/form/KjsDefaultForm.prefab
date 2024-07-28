@@ -1577,7 +1577,7 @@ MonoBehaviour:
   jumpholdLevel: 0.85
   jumpBufferTimeMax: 0.2
   jumpBufferTimer: 0
-  jumpInputCheck: 0
+  canjumpInput: 0
   attackBufferTimeMax: 0.2
   attackBufferTimer: 0
   isJump: 0
@@ -1611,6 +1611,7 @@ MonoBehaviour:
   raySize: 0
   jumpInitDelay: 0
   flyTime: 0.5
+  jumpInputValue: 0
   boxRaySize: {x: 0.15, y: 0.15, z: 0.15}
   distanceRay: 0.1
   RunEffect: {fileID: 7756572666751904677}
@@ -1618,6 +1619,7 @@ MonoBehaviour:
   AttackEffect: {fileID: 4736781096793473584}
   LandingEffect: {fileID: 7281951006512747657}
   JumpEffect: {fileID: 2803013037455162963}
+  Decelatate: 2
   DownAttackForce: 0
   CullingPlatform: 0
 --- !u!136 &2012848794722345922
@@ -1668,7 +1670,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 120
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &7390080442552347909
 MonoBehaviour:

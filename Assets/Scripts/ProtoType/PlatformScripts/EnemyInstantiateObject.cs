@@ -14,7 +14,7 @@ public class EnemyInstantiateObject : MonoBehaviour
         if (other.CompareTag("Player") && !checkPlayer)
         {
             GameObject obj = Instantiate(enemyPrefab, transform.position, Quaternion.identity);
-            obj.transform.position = new(transform.position.x, transform.position.y, transform.localPosition.z);
+            obj.transform.position = new(transform.position.x, transform.position.y, PlayerHandler.instance.CurrentPlayer.transform.localPosition.z);
             checkPlayer = true;
         }
     }

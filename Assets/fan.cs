@@ -17,6 +17,10 @@ public class fan : RemoteObject
         else
             Air.gameObject.SetActive(false);
     }
+    private void Update()
+    {
+        Air.conveyorSpeed = AirPower;
+    }
     public override void Active()
     {
         if (onActive)

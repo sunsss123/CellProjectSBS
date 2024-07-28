@@ -15,6 +15,15 @@ EditorBuildSettings:
     path: Assets/Scenes/KGTTest.unity
     guid: 9b973a1ee3ab835488420517e03988ee
   - enabled: 1
-    path: Assets/Scenes/KGTTest2.unity
-    guid: 773e10e47cf346c4c8cf08595fb2b7e4
+    path: Assets/Scenes/ldj_02.unity
+    guid: 12e3de03dd59d2a4baceed3171efef81
+  - enabled: 1
+    path: Assets/Scenes/ldj_00.unity
+    guid: 5c00f18dcef3851468f6b557c6875235
+  - enabled: 1
+    path: Assets/Scenes/ldj_01.unity
+    guid: af42a983597951947a33480c9014bc61
+  - enabled: 1
+    path: Assets/Scenes/ldj_Boss.unity
+    guid: a32df1c565209d845816d51870ec26a8
   m_configObjects: {}

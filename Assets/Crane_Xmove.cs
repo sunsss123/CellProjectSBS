@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+public enum CraneZMOVE {forward=-1,back=1 }
 public class Crane_Xmove : Crane
 {
+    public CraneZMOVE MOveDirection;
     public override Vector3 GetMoveVector(Vector3 Target, Vector3 origin)
     {
-        float f = (Target - origin).x;
+        float f = 0;
+
+            f = -1* (Target - origin).z;
+      
         if (f > 0)
             return Vector3.left;
         else if (f < 0)
@@ -18,13 +22,13 @@ public class Crane_Xmove : Crane
     }
     public override void MoveCrane(Vector3 vector, Vector3 Target, Transform origin)
     {
-        Debug.Log("목표 포지션" + origin.position.z + "Target Pos" + Target.z);
+        
         if (vector.x > 0)
         {
          
             if (origin.position.z< Target.z)
             {
-                origin.Translate(vector * CraneSpeed * Time.fixedDeltaTime);
+                origin.Translate((int)MOveDirection * vector * CraneSpeed * Time.fixedDeltaTime);
                 if (origin.position.z >= Target.z)
                     origin.position = new Vector3(Target.x,origin.position.y, Target.z);
             }
@@ -34,7 +38,7 @@ public class Crane_Xmove : Crane
         {
             if (origin.position.z > Target.z)
             {
-                origin.Translate( vector * CraneSpeed * Time.fixedDeltaTime);
+                origin.Translate((int)MOveDirection * vector * CraneSpeed * Time.fixedDeltaTime);
                 if (origin.position.z <= Target.z)
                     origin.position = new Vector3(Target.x, origin.position.y, Target.z);
             }
