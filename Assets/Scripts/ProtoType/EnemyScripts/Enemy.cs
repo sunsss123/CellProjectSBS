@@ -25,7 +25,9 @@ public class Enemy: Character
     public float attackTimer; // 공격 대기시간
     public float attackInitCoolTime; // 공격 대기시간 초기화 변수
     public float attackDelay; // 공격 후 딜레이
+    public bool callCheck;
     [Header("하위 오브젝트 공격 범위 콜라이더에서 변경중")]
+    [HideInInspector]
     public bool onAttack; // 공격 활성화 여부 (공격 범위 내에 플레이어를 인식했을 때 true 변환)
     public bool activeAttack; // 공격 가능한 상태인지 체크
     public bool checkPlayer; // 범위 내 플레이어 체크
@@ -41,9 +43,11 @@ public class Enemy: Character
     public float rotationSpeed; // 자연스러운 회전을 찾기 위한 테스트 
 
     [Header("기절상태")]
+    [HideInInspector]
     public bool onStun;
     public bool reachCheck;
-    bool complete;
+    bool complete;    
+
     private void Awake()
     {
         //eStat = gameObject.AddComponent<EnemyStat>();
@@ -157,7 +161,8 @@ public class Enemy: Character
                 }
             }
 
-            Patrol();
+            if (!callCheck)
+                Patrol();
 
         }        
     }

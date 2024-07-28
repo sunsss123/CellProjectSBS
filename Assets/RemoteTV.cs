@@ -13,9 +13,9 @@ public class RemoteTV : RemoteObject
     public Material DeactiveMaterial;
     public GameObject FrontOBj;
     public Light tvLight;
-    MeshRenderer Frontrenderer;
     SphereCollider activeCollider;
-    BoxCollider activeCol;
+
+    bool onViewPort;
 
     private void Awake()
     {
@@ -30,6 +30,15 @@ public class RemoteTV : RemoteObject
         activeCollider = GetComponent<SphereCollider>();
         Deactive();
     }
+
+    private void Update()
+    {
+        if (onViewPort)
+        {
+            Vector3.Distance(transform.position, PlayerHandler.instance.CurrentPlayer.transform.position);
+        }
+    }
+
     public override void Deactive()
     {
         //GetComponent<MeshRenderer>().materials[1] = DeactiveMaterial;
@@ -56,7 +65,16 @@ public class RemoteTV : RemoteObject
         Debug.Log("상호작용할 오브젝트와의 거리");
         if (PlayerHandler.instance.CurrentType == TransformType.remoteform)
         {
-            distanceToRemocon = Vector3.Distance(this.transform.position, PlayerHandler.instance.CurrentPlayer.transform.position);
+            //distanceToRemocon = Vector3.Distance(this.transform.position, PlayerHandler.instance.CurrentPlayer.transform.position);
+            onViewPort = true;
+        }
+    }
+
+    private void OnBecameInvisible()
+    {
+        if (PlayerHandler.instance.CurrentType == TransformType.remoteform)
+        {
+            onViewPort = false;
         }
     }
 }

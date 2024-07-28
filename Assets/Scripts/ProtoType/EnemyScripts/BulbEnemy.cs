@@ -18,7 +18,7 @@ public class BulbEnemy : Enemy
         }
     }
 
-    public override void Move()
+    /*public override void Move()
     {
         if (lightCheck && eStat.eState != EnemyState.dead || eStat.eState != EnemyState.hitted)
         {
@@ -27,9 +27,12 @@ public class BulbEnemy : Enemy
             {
                 TrackingMove();
             }
-            Patrol();
+            if (!callCheck)
+            {
+                Patrol();
+            }
         }
-    }
+    }*/
 
     public override void Attack()
     {

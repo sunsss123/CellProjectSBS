@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class PosFix : MonoBehaviour
 {
+    public Transform TF;
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Enemy"))
         {
-            if (transform.localPosition.z != collision.gameObject.transform.localPosition.z)
+            if (transform.position.z != collision.gameObject.transform.position.z)
             {
-                Debug.Log("포지션 갱신");
                 Transform pos = collision.gameObject.transform;
-                collision.gameObject.transform.position = new(pos.localPosition.x, pos.localPosition.y, transform.localPosition.z);
+                if (TF != null)
+                    collision.gameObject.transform.position = new(pos.position.x, pos.position.y, TF.position.z);
+                else
+                    collision.gameObject.transform.position = new(pos.position.x, pos.position.y, transform.position.z);
             }
         }
     }
