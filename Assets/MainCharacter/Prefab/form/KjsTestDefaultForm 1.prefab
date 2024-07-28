@@ -698,7 +698,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2594398033960754939}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1574,10 +1574,12 @@ MonoBehaviour:
   ChrRenderer: {fileID: 1979360752492490871}
   chrmat: {fileID: 0}
   color: {r: 0, g: 0, b: 0, a: 0}
-  moveValue: 0
-  hori: 0
-  vert: 0
   jumpholdLevel: 0.85
+  jumpBufferTimeMax: 0.05
+  jumpBufferTimer: 0
+  canjumpInput: 0
+  attackBufferTimeMax: 0
+  attackBufferTimer: 0
   isJump: 0
   jumpAnim: 0
   isRun: 0
@@ -1590,7 +1592,6 @@ MonoBehaviour:
     type: 3}
   onGround: 0
   downAttack: 0
-  jumpLimit: 0
   attackSky: 0
   attackGround: 0
   velocityValue: {x: 0, y: 0, z: 0}
@@ -1599,18 +1600,16 @@ MonoBehaviour:
   isMove: 0
   canAttack: 0
   wallcheck: 0
+  inputCheck: 0
   velocityMove: {x: 0, y: 0, z: 0}
   rigidbodyPos: {x: 0, y: 0, z: 0}
   sizeX: 1
   sizeY: 1
   sizeFir: 1
   sizeSec: 0.5
-  sizeThr: -0.5
-  sizefou: -1
-  sizeMiddle: 0
   raySize: 0
   jumpInitDelay: 0
-  flyTime: 0.5
+  jumpInputValue: 0
   boxRaySize: {x: 0.15, y: 0.15, z: 0.15}
   distanceRay: 0.1
   RunEffect: {fileID: 7756572666751904677}
@@ -1618,9 +1617,7 @@ MonoBehaviour:
   AttackEffect: {fileID: 4736781096793473584}
   LandingEffect: {fileID: 7281951006512747657}
   JumpEffect: {fileID: 2803013037455162963}
-  jumpInputValue: 0
-  jumpBufferTimer: 0
-  jumpBufferTimeMax: 0.05
+  Decelatate: 2
   DownAttackForce: 0
   CullingPlatform: 0
 --- !u!136 &2012848794722345922

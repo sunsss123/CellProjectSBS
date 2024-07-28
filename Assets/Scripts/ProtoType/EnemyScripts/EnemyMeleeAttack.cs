@@ -52,7 +52,7 @@ public class EnemyMeleeAttack : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !PlayerHandler.instance.CurrentPlayer.onInvincible)
         {
             other.GetComponent<Player>().Damaged(damage);
             GetComponent<MeshRenderer>().enabled = false;

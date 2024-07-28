@@ -9,25 +9,32 @@ public class Enemy: Character
     public EnemyStat eStat;
 
     public Rigidbody enemyRb; // 적 리지드바디
-    public GameObject attackCollider; // 적의 공격 콜라이더 오브젝트
-    public GameObject rangeCollider; // 공격 범위 콜라이더 오브젝트
-    
-    [Header("플레이어 탐색 큐브 조정")]
+    public GameObject attackCollider; // 적의 공격 콜라이더 오브젝트    
+
+    bool posRetry;
+
+    [Header("플레이어 탐색 큐브 조정(드로우 기즈모)")]
     public Vector3 searchCubeRange; // 플레이어 인지 범위를 Cube 사이즈로 설정
     public Vector3 searchCubePos; // Cube 위치 조정
-
+    [Header("플레이어 탐색 범위 조정(콜라이더)")]
+    public GameObject searchCollider; // 탐지 범위 콜라이더
+    public Vector3 searchColliderPos;
+    public Vector3 searchColliderRange;    
+    public bool activeSearchMesh;
+    [Header("공격 활성화 콜라이더 큐브 조정")]
+    public GameObject rangeCollider; // 공격 범위 콜라이더 오브젝트
     public Vector3 rangePos;
     public Vector3 rangeSize;
 
-    [Header("플레이어 추격 관련")]
+    [Header("적 공격딜레이 관련(보류중)")]
     public float attackTimer; // 공격 대기시간
     public float attackInitCoolTime; // 공격 대기시간 초기화 변수
     public float attackDelay; // 공격 후 딜레이
-    [Header("하위 오브젝트 공격 범위 콜라이더에서 변경중")]
+    
+    public bool callCheck;        
     public bool onAttack; // 공격 활성화 여부 (공격 범위 내에 플레이어를 인식했을 때 true 변환)
     public bool activeAttack; // 공격 가능한 상태인지 체크
-    public bool checkPlayer; // 범위 내 플레이어 체크
-    public bool hitByPlayer; // Tv 오브젝트 활성화 중에 플레이어에게 공격 당했을 때 적용
+    public bool checkPlayer; // 범위 내 플레이어 체크    
 
     [Header("목표 회전을 테스트하기 위한 변수")]
     public Transform target; // 추적할 타겟
@@ -35,14 +42,16 @@ public class Enemy: Character
     public Vector3 testTarget; // 타겟을 바라보는 시점을 테스트하기 위한 임시 변수
     float rotationY; // 로테이션 값을 이해하기 위한 테스트 변수
     float notMinusRotation;
-    float eulerAnglesY; // 오일러값 확인 테스트
+    float eulerAnglesY; // 오일러값 확인 테스트        
+    [HideInInspector]
     public float rotationSpeed; // 자연스러운 회전을 찾기 위한 테스트 
 
-
     [Header("기절상태")]
+    [HideInInspector]
     public bool onStun;
     public bool reachCheck;
-    bool complete;
+    bool complete;    
+
     private void Awake()
     {
         //eStat = gameObject.AddComponent<EnemyStat>();
@@ -60,13 +69,11 @@ public class Enemy: Character
     }
 
     private void Start()
-    {
-        
-        attackTimer = attackInitCoolTime;
+    {        
+        attackTimer = eStat.initattackCoolTime;
         
         if (onStun)
-        {
-         
+        {         
             StartCoroutine(WaitStunTime());
         }
     }
@@ -158,7 +165,8 @@ public class Enemy: Character
                 }
             }
 
-            Patrol();
+            /*if (!callCheck)
+                Patrol();*/
 
         }        
     }
@@ -169,7 +177,7 @@ public class Enemy: Character
         testTarget = target.position - transform.position;
         testTarget.y = 0;
         
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(testTarget), rotationSpeed * Time.deltaTime);
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(testTarget), eStat.rotationSpeed * Time.deltaTime);
         rotationY = transform.localRotation.y;
         notMinusRotation = 360 - rotationY;
         eulerAnglesY = transform.eulerAngles.y;
@@ -190,7 +198,7 @@ public class Enemy: Character
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(testTarget), rotationSpeed * Time.deltaTime);
         }
     }*/
-
+    [Header("#로테이션레벨(기본적으로 85)")]
     public float rotLevel;
 
     public bool SetRotation()
@@ -207,22 +215,29 @@ public class Enemy: Character
             completeRot = true;
         }
         //Debug.Log($"체크가 되는 거냐? {complete = completeRot}\n로테이션앵글:{transform.eulerAngles.y}");
-        Debug.Log(completeRot);
+        //Debug.Log(completeRot);
         return completeRot;
     }
     #endregion
 
     #region 정찰
     public void Patrol()
-    {
+    {        
+
         //Debug.Log("추적하고있지 않다면 주변을 정찰합니다");
         //Collider[] colliders = Physics.OverlapSphere(transform.position, searchRange);
-        Collider[] colliders = Physics.OverlapBox(transform.position + searchCubePos, searchCubeRange);
+        Collider[] colliders = Physics.OverlapBox(transform.position + searchCubePos, searchCubeRange, Quaternion.identity);
         bool playerCheck = false;
         for (int i = 0; i < colliders.Length; i++)
         {
             if (colliders[i].CompareTag("Player"))
             {
+                if (!posRetry)
+                {
+                    posRetry = true;
+                    transform.position = new(transform.position.x, transform.position.y, PlayerHandler.instance.CurrentPlayer.transform.localPosition.z);
+                }
+
                 target = colliders[i].transform;
                 //checkPlayer = true;
                 playerCheck = true;
@@ -238,12 +253,12 @@ public class Enemy: Character
         }
     }
 
-    private void OnDrawGizmos()
+    /*private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireCube(transform.position + searchCubePos, searchCubeRange * 2f);
         //Gizmos.DrawWireSphere(transform.position, searchRange);
-    }
+    }*/
 
     #endregion
 
@@ -276,7 +291,7 @@ public class Enemy: Character
             else if (attackTimer <= 0)
             {
                 activeAttack = true;
-                attackTimer = attackInitCoolTime;
+                attackTimer = eStat.initattackCoolTime;
                 Attack();
             }
 
@@ -290,7 +305,7 @@ public class Enemy: Character
 
     IEnumerator WaitDelay()
     {
-        yield return new WaitForSeconds(attackDelay);
+        yield return new WaitForSeconds(eStat.attackDelay);
         InitAttackCoolTime();
 
     }

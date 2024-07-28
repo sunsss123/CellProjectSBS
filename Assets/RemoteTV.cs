@@ -13,9 +13,9 @@ public class RemoteTV : RemoteObject
     public Material DeactiveMaterial;
     public GameObject FrontOBj;
     public Light tvLight;
-    MeshRenderer Frontrenderer;
-    SphereCollider activeCollider;
-    BoxCollider activeCol;
+    BoxCollider activeCollider;
+
+    bool onViewPort;
 
     private void Awake()
     {
@@ -27,9 +27,38 @@ public class RemoteTV : RemoteObject
     void Start()
     {
         //Frontrenderer=FrontOBj.GetComponent<MeshRenderer>();         
-        activeCollider = GetComponent<SphereCollider>();
+        activeCollider = GetComponent<BoxCollider>();
         Deactive();
     }
+
+    private void Update()
+    {
+        if (onViewPort)
+        {
+            Vector3.Distance(transform.position, PlayerHandler.instance.CurrentPlayer.transform.position);
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (onActive)
+        {
+            tvMaterials[1] = ActiveMaterial;
+            GetComponent<MeshRenderer>().materials = tvMaterials;
+
+            activeCollider.enabled = onActive;
+            tvLight.enabled = onActive;
+        }
+        else
+        {            
+            tvMaterials[1] = DeactiveMaterial;
+            GetComponent<MeshRenderer>().materials = tvMaterials;
+            
+            activeCollider.enabled = onActive;
+            tvLight.enabled = onActive;
+        }
+    }
+
     public override void Deactive()
     {
         //GetComponent<MeshRenderer>().materials[1] = DeactiveMaterial;
@@ -56,7 +85,16 @@ public class RemoteTV : RemoteObject
         Debug.Log("상호작용할 오브젝트와의 거리");
         if (PlayerHandler.instance.CurrentType == TransformType.remoteform)
         {
-            distanceToRemocon = Vector3.Distance(this.transform.position, PlayerHandler.instance.CurrentPlayer.transform.position);
+            //distanceToRemocon = Vector3.Distance(this.transform.position, PlayerHandler.instance.CurrentPlayer.transform.position);
+            onViewPort = true;
         }
     }
+
+    private void OnBecameInvisible()
+    {
+        if (PlayerHandler.instance.CurrentType == TransformType.remoteform)
+        {
+            onViewPort = false;
+        }
+    }    
 }

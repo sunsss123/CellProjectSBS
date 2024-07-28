@@ -115,8 +115,7 @@ public class PlayerHandler : MonoBehaviour
         PlayerStat.instance.direction = lastDirection;
         CurrentPlayer.transform.Translate(Vector3.up * defromUpPosition);
         LastTransformPlace.gameObject.SetActive(true);
-        LastTransformPlace = null;
-        PlayerStat.instance.jumpCount = 0;
+        LastTransformPlace = null;        
     }
     void CreateModelByCurrentType(Action eventhandler =null)
 {
