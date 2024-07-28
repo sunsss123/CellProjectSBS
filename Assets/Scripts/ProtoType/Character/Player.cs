@@ -35,12 +35,12 @@ public class Player : Character
     //public float moveValue; // 움직임 유무를 결정하기 위한 변수
     float hori, vert; // 플레이어의 움직임 변수
 
-    [Header("점프 홀딩 조절")]
+    [Header("#점프 홀딩 조절")]
     public float jumpholdLevel = 0.85f;
     public float jumpBufferTimeMax;
     public float jumpBufferTimer;
     public bool canjumpInput;
-    [Header("키 선입력 관련")]
+    [Header("#키 선입력 관련")]
     public float attackBufferTimeMax;
     public float attackBufferTimer;
 
@@ -59,7 +59,6 @@ public class Player : Character
     [Space(15f)]
     public bool onGround; // 지상 판정 유무
     public bool downAttack; // 내려찍기 공격 확인
-    public float jumpLimit; // 점프 높이 제한하는 변수 velocity의 y값을 제한
 
     public bool attackSky; // 공중 공격
     public bool attackGround; // 지상 공격
@@ -67,9 +66,10 @@ public class Player : Character
     public Vector3 velocityValue; // 벨로시티값
 
     public bool onInvincible; // 무적 유무
-    public bool onDash; // 대시 사용 가능 상태
-    public bool isMove; // 이동 가능 상태
+    [HideInInspector]
+    public bool onDash; // 대시 사용 가능 상태    
 
+    public bool isMove; // 이동 가능 상태
     public bool canAttack; // 공격 가능
     public bool wallcheck;
     #endregion
@@ -89,8 +89,7 @@ public class Player : Character
     bool platform;
     public float raySize;
     public float jumpInitDelay;
-    [Header("내려찍기 체공 시간")]
-    public float flyTime;
+
     public int jumpInputValue;
     [Header("박스 캐스트 테스트")]
     public Vector3 boxRaySize; // box 레이캐스트 >> 벽에 고정되는 것 방지를 위한
@@ -170,7 +169,6 @@ public class Player : Character
                     onGround = true;
                     isJump = false;
                     downAttack = false;
-                    PlayerStat.instance.jumpCount = 0;
                     PlayerStat.instance.doubleJump = true;
                     Debug.Log("abcdefg");
                     if (LandingEffect != null)
@@ -493,7 +491,7 @@ public class Player : Character
         playerRb.velocity = Vector3.zero;
 
 
-        yield return new WaitForSeconds(PlayerStat.instance.flyTime);
+        yield return new WaitForSeconds(PlayerStat.instance.downAttackFlyTime);
 
         playerRb.AddForce(Vector3.down * PlayerStat.instance.downForce);
         downAttackCollider.SetActive(true);
