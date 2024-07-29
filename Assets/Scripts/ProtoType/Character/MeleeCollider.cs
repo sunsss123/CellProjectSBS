@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeleeCollider : MonoBehaviour
+public class MeleeCollider : PlayerAttack
 {
-    public float damage;
+
     public GameObject hitEffect; // 이펙트 프리팹
     public ParticleSystem saveEffect; // 파티클 저장
 
@@ -19,27 +19,15 @@ public class MeleeCollider : MonoBehaviour
     {
         damage = damageValue;
     }
-
-    private void OnTriggerEnter(Collider other)
+    private void OnDisable()
     {
-        if (other.CompareTag("Enemy"))
-        {
-            if (!other.GetComponent<Enemy>())
-            {
-                other.GetComponent<BoxTestt>().Damaged(damage);
-            }
-            else
-            {
-                Enemy enemy = other.GetComponent<Enemy>();
-
-                if (!enemy.eStat.onInvincible)
-                {
-                    enemy.Damaged(damage);
-                    saveEffect.transform.position = other.transform.position;
-                    saveEffect.Play();
-                    gameObject.SetActive(false);
-                }
-            }
-        }
+        saveEffect.transform.position = transform.position;
+        saveEffect.Play();
     }
+    protected override void OnTriggerEnter(Collider other)
+    {
+        base.OnTriggerEnter(other);
+    }
+   
+
 }
