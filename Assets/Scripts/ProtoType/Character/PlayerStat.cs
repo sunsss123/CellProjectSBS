@@ -37,7 +37,14 @@ public class PlayerStat : CharacterStat
 
 
    
-
+    public void RecoverHP(float hppoint)
+    {
+        this.hp += hppoint;
+        if (this.hp > hpMax)
+        {
+            this.hp = hpMax;
+        }
+    }
     private void Awake()
     {
         if (instance == null)
