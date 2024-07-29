@@ -51,7 +51,9 @@ public class PlayerInventory : MonoBehaviour
             EssentialItems.Clear();
             foreach(Essentialitem e in savedata.essentialitems)
             {
-                EssentialItems.Add(e.itemcode, e);
+
+                if(e!=null)
+                 EssentialItems.Add(e.itemcode, e);
             }
             MultiplyitemNumberDict.Clear();
            for(int n = 0; n < savedata.Upgradesstatus.Count; n++)
