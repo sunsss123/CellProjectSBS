@@ -698,7 +698,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2594398033960754939}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1592,7 +1592,6 @@ MonoBehaviour:
     type: 3}
   onGround: 0
   downAttack: 0
-  jumpLimit: 0
   attackSky: 0
   attackGround: 0
   velocityValue: {x: 0, y: 0, z: 0}
@@ -1610,7 +1609,6 @@ MonoBehaviour:
   sizeSec: 0.5
   raySize: 0
   jumpInitDelay: 0
-  flyTime: 0.5
   jumpInputValue: 0
   boxRaySize: {x: 0.15, y: 0.15, z: 0.15}
   distanceRay: 0.1
@@ -2618,6 +2616,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RUNNINGeFFECT
+      objectReference: {fileID: 0}
+    - target: {fileID: 8196178405622179907, guid: 69b92891381de2d4785a25572f46c697,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8418679488021058250, guid: 69b92891381de2d4785a25572f46c697,
         type: 3}

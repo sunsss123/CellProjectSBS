@@ -313,8 +313,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.01, y: 0.05, z: 2}
-  m_Center: {x: 0, y: 0.3, z: 1.35}
+  m_Size: {x: 0.01, y: 0.2, z: 3.81}
+  m_Center: {x: 0, y: 0.3, z: 2.01}
 --- !u!1 &4022277139928328520
 GameObject:
   m_ObjectHideFlags: 0
@@ -515,8 +515,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2, y: 2, z: 6}
+  m_Center: {x: 0, y: 0.5, z: 0.2}
 --- !u!114 &6413879201968333993
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -635,13 +635,13 @@ MonoBehaviour:
   attackCollider: {fileID: 7760997083194175977}
   searchCubeRange: {x: 3.5, y: 0.63, z: 0.7}
   searchCubePos: {x: 0, y: 0.61, z: 0}
-  searchCollider: {fileID: 0}
-  searchColliderRange: {x: 0, y: 0, z: 0}
+  searchCollider: {fileID: 5917569411468154374}
   searchColliderPos: {x: 0, y: 0, z: 0}
+  searchColliderRange: {x: 0, y: 0, z: 0}
   activeSearchMesh: 0
   rangeCollider: {fileID: 2202126381614901408}
   rangePos: {x: 0, y: 0, z: 0}
-  rangeSize: {x: 0, y: 0, z: 0}
+  rangeSize: {x: 1, y: 1, z: 1}
   attackTimer: 0
   attackInitCoolTime: 1.5
   attackDelay: 1
@@ -674,12 +674,12 @@ MonoBehaviour:
   attackType: 0
   characterState: 0
   initMaxHP: 5
-  initMoveSpeed: 0.8
+  initMoveSpeed: 1
   HPBonus: 0
   MoveSpeedBonus: 0
-  hp: 0
-  atk: 0
-  rotationSpeed: 0
+  hp: 2
+  atk: 1
+  rotationSpeed: 85
   attackSpeed: 0
   attackCoolTimebonus: 0
   initattackCoolTime: 1.5

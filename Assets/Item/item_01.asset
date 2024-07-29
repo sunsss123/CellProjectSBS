@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 0}
-  m_Name: 321
+  m_Name: item_01
   m_EditorClassIdentifier: Assembly-CSharp::Essentialitem
-  itemname: "\uC774\uC774\uB984"
-  itemdescription: "\uC11C\uC124\uBA85"
-  itemcode: 1_23
+  itemname: dd
+  itemdescription: dd
+  itemcode: item_01

@@ -10,10 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 0}
-  m_Name: HPTEST
-  m_EditorClassIdentifier: Assembly-CSharp::MUltiPlyitem
-  itemname: "\uC5D0\uB108\uC9C0 \uC6A9\uB7C9 UP"
-  itemdescription: "\uC5D0\uB108\uC9C0 \uCD5C\uB300\uCE58\uAC00 \uC0C1\uC2B9\uD588\uB2E4!"
-  InitItemPower: 5
-  ItemPower: 5
-  upgradeStatus: 0
+  m_Name: item_02
+  m_EditorClassIdentifier: Assembly-CSharp::Essentialitem
+  itemname: ss
+  itemdescription: ss
+  itemcode: item_02
