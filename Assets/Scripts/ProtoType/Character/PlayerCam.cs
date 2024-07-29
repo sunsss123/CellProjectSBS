@@ -26,14 +26,14 @@ public class PlayerCam : MonoBehaviour
     float cameraspeed;
     float cameraVector;
     Vector3 PlayerPos;
-
+    Camera c;
 
     void Start()
     {
         //target = GameObject.Find("Player").transform;
       
         transform.position = CalculateVector;
- 
+        c = GetComponent<Camera>();
         camrot = InitCamrot;
         transform.position += camPos;
         if(ProjectSetting.instance.CameraTrackingTime==0)
@@ -43,6 +43,14 @@ public class PlayerCam : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    if (c.orthographic)
+        //        c.orthographic = false;
+        //    else
+        //        c.orthographic = true;
+        //}
         if(PlayerHandler.instance.CurrentPlayer!=null)
         target = PlayerHandler.instance.CurrentPlayer.transform;
         if (target == null)

@@ -415,6 +415,7 @@ GameObject:
   - component: {fileID: 9010103578986628687}
   - component: {fileID: 8442493883919604075}
   - component: {fileID: 8605911862824713354}
+  - component: {fileID: 2185607217932079838}
   m_Layer: 0
   m_Name: Platform
   m_TagString: Ground
@@ -520,6 +521,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27f3ca42a2b707a40a9bd3508bcfe378, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2185607217932079838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6651627021268840601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 242995226b2a9064aaffff4bd55644b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TF: {fileID: 0}
 --- !u!1 &6671786802263487114
 GameObject:
   m_ObjectHideFlags: 0
@@ -906,7 +920,7 @@ Transform:
   m_GameObject: {fileID: 7704014565187611679}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.673, z: 0}
+  m_LocalPosition: {x: 0, y: -1.461, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

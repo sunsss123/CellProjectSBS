@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System;
+using UnityEditor.SceneManagement;
+using UnityEngine.SceneManagement;
 [CustomEditor(typeof(PlayerSpawnManager))]
 public class PlayerSapwnEditor : Editor
 {
@@ -20,11 +22,13 @@ public class PlayerSapwnEditor : Editor
 
         if (GUILayout.Button("체크포인트 초기화"))
         {
+            PlayerPrefs.SetString("LastestStageName", SceneManager.GetActiveScene().name);
             PlayerPrefs.SetInt("CheckPointIndex", 0);
         }
         if (GUILayout.Button("체크포인트 전환"))
         {
             int n = 0;
+            PlayerPrefs.SetString("LastestStageName", SceneManager.GetActiveScene().name);
             if (PlayerPrefs.HasKey("CheckPointIndex"))
                 n = PlayerPrefs.GetInt("CheckPointIndex");
             n++;

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Rendering.Universal;
-using UnityEditor.Tilemaps;
+
 using UnityEngine;
 
 public class BulbEnemy : Enemy
