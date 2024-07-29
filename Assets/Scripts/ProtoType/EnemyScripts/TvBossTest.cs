@@ -16,7 +16,7 @@ public class TvBossTest : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        estat.eState = EnemyState.idle;
     }
 
     // Update is called once per frame

@@ -40,6 +40,7 @@ public class Player : Character
     public float jumpBufferTimeMax;
     public float jumpBufferTimer;
     public bool canjumpInput;
+    public bool jumpLimitInput;
     [Header("#키 선입력 관련")]
     public float attackBufferTimeMax;
     public float attackBufferTimer;
@@ -114,14 +115,14 @@ public class Player : Character
     void Update()
     {
         if (jumpBufferTimer > 0)
-        {
+        {          
             jumpBufferTimer -= Time.deltaTime;
         }
 
         if (attackBufferTimer > 0)
-        {
+        {            
             attackBufferTimer -= Time.deltaTime;
-        }
+        }        
     }
 
     public void BaseBufferTimer()
@@ -281,24 +282,34 @@ public class Player : Character
         }
 
         /*if (RunEffect != null)
-        {
-            a.maxParticles = 100;
-            if (!RunEffect.isPlaying)
-                RunEffect.Play();           
+        {            
+
+            if (isRun && onGround)
+            {
+                a.maxParticles = 100;
+                if (!RunEffect.isPlaying)
+                    RunEffect.Play();
+            }
+            else
+            {
+                a.maxParticles = 0;
+                if ((RunEffect.isPlaying && RunEffect.particleCount == 0))
+                    RunEffect.Stop();
+            }
         }
         else
-        {         
+        {
             a.maxParticles = 0;
-            if((RunEffect.isPlaying&&RunEffect.particleCount==0))
-            RunEffect.Stop();   sd
+            if ((RunEffect.isPlaying && RunEffect.particleCount == 0))
+                RunEffect.Stop();
         }*/
 
-        if (CullingPlatform)
+        if (RunEffect!=null)
         {
             var a = RunEffect.main;
 
-            platformDisableTimer += Time.deltaTime;
-            if (PlatformDisableTime <= platformDisableTimer)
+            /*platformDisableTimer += Time.deltaTime;
+            if (PlatformDisableTime <= platformDisableTimer)*/
 
 
                 if (isRun && onGround)
@@ -604,8 +615,11 @@ public class Player : Character
                 }
                 else if (jumpInputValue > 0 && canjumpInput && PlayerStat.instance.doubleJump)
                 {
-                    PlayerStat.instance.doubleJump = false;
-                    Jump();
+                    if (PlayerStat.instance.ableJump)
+                    {
+                        PlayerStat.instance.doubleJump = false;
+                        Jump();
+                    }
                 }
                 Debug.Log("누르는 중입니다만");
             }

@@ -35,7 +35,7 @@ public class RemoteTV : RemoteObject
     {
         if (onViewPort)
         {
-            Vector3.Distance(transform.position, PlayerHandler.instance.CurrentPlayer.transform.position);
+             distanceToRemocon = Vector3.Distance(transform.position, PlayerHandler.instance.CurrentPlayer.transform.position);
         }
     }
 
@@ -81,8 +81,7 @@ public class RemoteTV : RemoteObject
     }
 
     private void OnBecameVisible()
-    {
-        Debug.Log("상호작용할 오브젝트와의 거리");
+    {        
         if (PlayerHandler.instance.CurrentType == TransformType.remoteform)
         {
             //distanceToRemocon = Vector3.Distance(this.transform.position, PlayerHandler.instance.CurrentPlayer.transform.position);

@@ -9771,6 +9771,12 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 3493046245006148624, guid: 498faebe0b50512469dec30511b4f85f,
         type: 3}
+      propertyPath: DefaultForm
+      value: 
+      objectReference: {fileID: 5892187899129608376, guid: ea32b7d32a0187347a6ad5c144d9b1b0,
+        type: 3}
+    - target: {fileID: 3493046245006148624, guid: 498faebe0b50512469dec30511b4f85f,
+        type: 3}
       propertyPath: Checkpoints.Array.size
       value: 2
       objectReference: {fileID: 0}
