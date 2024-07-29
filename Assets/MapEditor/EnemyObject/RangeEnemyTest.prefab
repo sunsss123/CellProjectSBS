@@ -674,12 +674,12 @@ MonoBehaviour:
   attackType: 0
   characterState: 0
   initMaxHP: 5
-  initMoveSpeed: 0.8
+  initMoveSpeed: 1
   HPBonus: 0
   MoveSpeedBonus: 0
-  hp: 0
-  atk: 0
-  rotationSpeed: 0
+  hp: 2
+  atk: 1
+  rotationSpeed: 85
   attackSpeed: 0
   attackCoolTimebonus: 0
   initattackCoolTime: 1.5
