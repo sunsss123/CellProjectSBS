@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Portal : MonoBehaviour
+public class HPRecoverItem : MonoBehaviour
 {
-    public string SceneName;
+    public float HPRecoverPoint;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            //GameManager.instance.LoadingScene(SceneName);
-            GameManager.instance.LoadingSceneWithKariEffect(SceneName);
+            PlayerStat.instance.RecoverHP(HPRecoverPoint);
+            Destroy(gameObject);
         }
     }
 }
