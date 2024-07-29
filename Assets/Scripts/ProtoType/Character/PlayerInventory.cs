@@ -97,6 +97,13 @@ public class PlayerInventory : MonoBehaviour
             }
         }
     }
+    public bool checkessesntialitem(string itemcode)
+    {
+        if (EssentialItems.ContainsKey(itemcode))
+            return true;
+        else
+            return false;
+    }
     public List<string> returnitemkeys()
     {
         List<string> strings = new List<string>();

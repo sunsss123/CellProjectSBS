@@ -229,7 +229,8 @@ public class PlayerHandler : MonoBehaviour
             }            
         }
         
-        if (Input.GetKey(KeyCode.X) && !Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKey(KeyCode.X) && !Input.GetKey(KeyCode.UpArrow) &&
+                PlayerInventory.instance.checkessesntialitem("item01"))
         {
             //CurrentPlayer.Attack();
             CurrentPlayer.attackBufferTimer = CurrentPlayer.attackBufferTimeMax;

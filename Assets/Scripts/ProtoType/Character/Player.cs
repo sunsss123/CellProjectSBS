@@ -617,7 +617,8 @@ public class Player : Character
                 }
                 else if (jumpInputValue > 0 && canjumpInput && PlayerStat.instance.doubleJump)
                 {
-                    if (PlayerStat.instance.ableJump)
+                    if (
+                PlayerInventory.instance.checkessesntialitem("item02"))
                     {
                         PlayerStat.instance.doubleJump = false;
                         Jump();
