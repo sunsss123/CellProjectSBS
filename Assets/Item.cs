@@ -1,21 +1,23 @@
 
+using System;
 using UnityEngine;
 
 public enum UpgradeStatus{Energy,MoveSpeed }
-
+[Serializable]
 public class item : ScriptableObject
 {
 
     public string itemname;
     public string itemdescription;
 }
+[Serializable]
 [CreateAssetMenu(fileName = "New Essetial Intem", menuName = "Custom/new Essetial Item")]
 public class Essentialitem : item
 {
     public string itemcode;
 }
 
-//active를 이용해 effect가 적용된 상태인지 아닌지 체크하기
+[Serializable]
 [CreateAssetMenu(fileName = "New MUltiPly item", menuName = "Custom/new MUltiPly item")]
 public class MUltiPlyitem: item
 {

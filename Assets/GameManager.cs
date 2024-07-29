@@ -7,7 +7,9 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-
+    //1,인벤토리를 게임 메니저랑 같이 옮기기
+    //2.로딩할때마다 불려오기
+    //세이브 정리하기
     private void Awake()
     {
         if (instance == null)
@@ -19,13 +21,25 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-
+        if(LoadingEffect!=null)
+        LoadingEffect.gameObject.SetActive(false);
         // currentscenename을 로딩 전에 설정합니다.
         currentscenename = SceneManager.GetActiveScene().name;
     }
 
     public string loadingscenename = "LoadingTest";
     public string currentscenename;
+
+    public void SavePlayerStatus()
+    {
+        if (PlayerStat.instance != null && PlayerHandler.instance != null)
+        {
+            PlayerPrefs.SetFloat("PlayerHp", PlayerStat.instance.hp);
+            PlayerPrefs.SetInt("TransformType", (int)PlayerHandler.instance.CurrentType);
+        }
+    }
+    public float LoadPlayerHP() { if (PlayerPrefs.HasKey("PlayerHP")) return PlayerPrefs.GetFloat("PlayerHP"); else return 5; }
+    public int LOadPlayerTransformtype() { if (PlayerPrefs.HasKey("TransformType")) return PlayerPrefs.GetInt("TransformType"); else return 0; }
     public void saveCheckPointIndexKey(int index)
     {
         PlayerPrefs.SetInt("CheckPointIndex", index);
@@ -51,6 +65,7 @@ public class GameManager : MonoBehaviour
     public void ReLoadingScene()
     {
         currentscenename = LoadLastestStage();
+        
         StartCoroutine(RELoadingTest());
     }
     public void LoadingScene(string scenename)
@@ -59,7 +74,15 @@ public class GameManager : MonoBehaviour
         SaveCurrentStage(scenename);
         StartCoroutine(LoadingTest());
     }
+    public LoadingEffectKari LoadingEffect;
+    public void LoadingSceneWithKariEffect(string scenename)
+    {
+        PlayerHandler.instance.CurrentPlayer = null;
+        LoadingEffect.EffectEnd += LoadingScene;
+        LoadingEffect.LoadSceneName = scenename;
+        LoadingEffect.gameObject.SetActive(true);
 
+    }
     public IEnumerator LoadingTest()
     {
 
@@ -76,7 +99,8 @@ public class GameManager : MonoBehaviour
   
      
         syncoperation.allowSceneActivation = true;
-
+        LoadingEffect.LoadingComplete = true;
+        //if(SceneManager.GetActiveScene().name== LoadLastestStage())로딩 지금은 금방 끝나니 나중에 체크하기
         // 다음 씬에서 맞는 체크포인트 위치에 플레이어를 생성합니다.
         Debug.Log("로딩 끝");
         Debug.Log("연출 끝");
