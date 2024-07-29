@@ -35,7 +35,7 @@ public class PlayerStat : CharacterStat
 
     public float InteractDelay;
 
-
+    public bool Trans3D;
    
     public void RecoverHP(float hppoint)
     {

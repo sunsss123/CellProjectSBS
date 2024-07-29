@@ -364,17 +364,20 @@ public class Player : Character
         }
     }
     public float Decelatate = 2;
+
+
     public override void Move()
     {
 
         float hori = Input.GetAxisRaw("Horizontal");
-
-
+        float Vert=0;
+        if (PlayerStat.instance.Trans3D)
+           Vert = Input.GetAxisRaw("Vertical");
 
         this.hori = hori;
 
         rotate(hori);
-
+        //Vert 회전 추가
         //translateFix = new(hori, 0, 0);
 
         #region 움직임
@@ -382,8 +385,8 @@ public class Player : Character
 
 
         Vector3 Movevelocity = Vector3.zero;
-        Vector3 desiredVector = new Vector3(hori, 0, 0).normalized * PlayerStat.instance.moveSpeed + EnvironmentPower;
-        Movevelocity = desiredVector - playerRb.velocity.x * Vector3.right;
+        Vector3 desiredVector = new Vector3(hori, 0, Vert).normalized * PlayerStat.instance.moveSpeed + EnvironmentPower;
+        Movevelocity = desiredVector - playerRb.velocity.x * Vector3.right - playerRb.velocity.z * Vector3.forward;
 
 
         if (!wallcheck)
