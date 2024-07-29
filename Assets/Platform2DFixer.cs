@@ -8,9 +8,12 @@ public class Platform2DFixer : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            Debug.Log("플레이어와 닿음 2D");
-            Transform player = collision.transform.parent;
-            player.position = new Vector3(player.position.x, player.position.y, this.transform.position.z);
+
+            if (!PlayerStat.instance.Trans3D)
+            {
+                Transform player = collision.transform.parent;
+                player.position = new Vector3(player.position.x, player.position.y, this.transform.position.z);
+            }
         }
     }
 }
