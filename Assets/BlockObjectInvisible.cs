@@ -14,19 +14,36 @@ public class BlockObjectInvisible : MonoBehaviour
             target = PlayerHandler.instance.CurrentPlayer.transform;
         else
             target = null;
-        if (target != null)
+        if (target != null && PlayerStat.instance.Trans3D)
         {
             CheckRaycast();
         }
     }
+    private void Start()
+    {
+        PlayerHandler.instance.RegisterChange3DEvent(InitializeTransparent);
+    }
+    public void InitializeTransparent()
+    {
+        if (!PlayerStat.instance.Trans3D)
+        {
 
+            foreach (TransparentObj obj in transparentObjects)
+            {
+
+                obj.ChangeTransparency(false);
+
+            }
+            transparentObjects.Clear();
+        }
+    }
     void CheckRaycast()
     {
         Vector3 dir = (target.position - transform.position);
         RaycastHit[] hits = Physics.RaycastAll(transform.position, dir.normalized, dir.magnitude, platformLayer);
 
-        HashSet<TransparentObj> currentTransparentObjects = new HashSet<TransparentObj>();
 
+        HashSet<TransparentObj> currentTransparentObjects = new HashSet<TransparentObj>();
         foreach (RaycastHit hit in hits)
         {
             TransparentObj obj = null;
