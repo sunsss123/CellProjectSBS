@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 1869306106636050830}
   - component: {fileID: 8378474276457284038}
   - component: {fileID: 1027910493821895090}
+  - component: {fileID: 7790715344533101267}
   - component: {fileID: 2533755282826490515}
-  - component: {fileID: 5480375888639166455}
-  - component: {fileID: 8294268173819374831}
+  - component: {fileID: 5776626378361640116}
   m_Layer: 0
   m_Name: TvObjectKJS
   m_TagString: GameController
@@ -88,6 +88,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &7790715344533101267
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1838147635839018791}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3, y: 1, z: 2}
+  m_Center: {x: -0.000000007450581, y: 0.5, z: -0.04544082}
 --- !u!65 &2533755282826490515
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -109,7 +130,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.38662, y: 0.29717, z: 0.28384602}
   m_Center: {x: -0.000000007450581, y: 0.14210217, z: -0.04544082}
---- !u!114 &5480375888639166455
+--- !u!114 &5776626378361640116
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -118,39 +139,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1838147635839018791}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34cde9e09ef7a864bb9aa606f5ed0c1d, type: 3}
+  m_Script: {fileID: 11500000, guid: 559e4b7f34a5428418c9f396d467f5f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rType: 0
-  tvColor: 0
-  distanceToRemocon: 0
   onActive: 0
+  CanControl: 1
+  tvColor: 1
+  distanceToRemocon: 0
   tvMaterials: []
-  ActiveMaterial: {fileID: 2100000, guid: 16aebe7d34d5f6e4ca9d778acc20d47e, type: 2}
+  ActiveMaterial: {fileID: 2100000, guid: 09b9c3bf0166b844b9dd4be8608ffc6a, type: 2}
   DeactiveMaterial: {fileID: 2100000, guid: c205efe9c8690a04bbc315ca9f5cc592, type: 2}
   FrontOBj: {fileID: 0}
   tvLight: {fileID: 0}
---- !u!135 &8294268173819374831
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1838147635839018791}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Radius: 2
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3585367971531828060
 GameObject:
   m_ObjectHideFlags: 0

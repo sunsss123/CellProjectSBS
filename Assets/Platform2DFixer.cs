@@ -11,6 +11,7 @@ public class Platform2DFixer : MonoBehaviour
 
             if (!PlayerStat.instance.Trans3D)
             {
+         
                 Transform player = collision.transform.parent;
                 player.position = new Vector3(player.position.x, player.position.y, this.transform.position.z);
             }
