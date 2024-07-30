@@ -8,13 +8,9 @@ public class CranePlatform : MonoBehaviour
     {
         if (collision.collider.CompareTag("Player"))
         {
-     
 
-            PlayerScaler playerScaler;
-            if (collision.gameObject.TryGetComponent<PlayerScaler>(out playerScaler))
-            {
-                playerScaler.SetParentPlatform(this.transform);
-            }
+            collision.transform.SetParent(this.transform);
+            
         }
     }
 
@@ -23,11 +19,8 @@ public class CranePlatform : MonoBehaviour
         if (collision.collider.CompareTag("Player"))
         {
 
-            PlayerScaler playerScaler;
-            if (collision.gameObject.TryGetComponent<PlayerScaler>(out playerScaler))
-            {
-                playerScaler.ClearParentPlatform();
-            }
+            collision.transform.SetParent(null);
+
         }
     }
 }
