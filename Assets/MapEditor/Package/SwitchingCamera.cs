@@ -54,9 +54,20 @@ public class SwitchingCamera : MonoBehaviour
         PlayerStat.instance.Trans3D = !is2D;
         PlayerHandler.instance.RegisterChange3DEvent(StartChangeCameraCorutine);
     }
+    void calculateCameraVector()
+    {
+        CameraTrackingTime = ProjectSetting.instance.CameraTrackingTime;
+        float cameraVector = ((target.position + camPos) - ActiveCamera.transform.position).magnitude;
+        cameraspeed = cameraVector / CameraTrackingTime;
 
+        camPos = is2D ? camPos2D : camPos3D;
+
+        CalculateVector = !ZPin ? target.position + camPos : (Vector3)((Vector2)target.position + (Vector2)camPos) + Vector3.forward * ActiveCamera.transform.position.z;
+    }
     private void FixedUpdate()
     {
+        Apply2DSettings();
+        Apply3DSettings();
         if (PlayerHandler.instance.CurrentPlayer != null)
         {
             target = PlayerHandler.instance.CurrentPlayer.transform;
@@ -69,15 +80,10 @@ public class SwitchingCamera : MonoBehaviour
         {
             Camera3D.transform.position = Camera2D.transform.position;
         }
-        CameraTrackingTime = ProjectSetting.instance.CameraTrackingTime;
-        float cameraVector = ((target.position + camPos) - ActiveCamera.transform.position).magnitude;
-        cameraspeed = cameraVector / CameraTrackingTime;
-
-        camPos = is2D ? camPos2D : camPos3D;
-
-        CalculateVector = !ZPin ? target.position + camPos : (Vector3)((Vector2)target.position + (Vector2)camPos) + Vector3.forward * ActiveCamera.transform.position.z;
+        calculateCameraVector();
 
         ActiveCamera.transform.position = Vector3.Lerp(ActiveCamera.transform.position, CalculateVector, Time.deltaTime * cameraspeed);
+        //RotateCameraTowardsPlayerDirection();
     }
 
     public void ActiveZPin(float f)
@@ -101,6 +107,17 @@ public class SwitchingCamera : MonoBehaviour
 
     IEnumerator SwitchCameraMode()
     {
+        
+        calculateCameraVector();
+
+        ActiveCamera.transform.position = CalculateVector;
+
+        if (!is2D)
+            Camera2D.transform.position = Camera3D.transform.position;
+        else
+        {
+            Camera3D.transform.position = Camera2D.transform.position;
+        }
         isTransitioning = true;
         Time.timeScale = 0;
         is2D = !is2D;
@@ -110,11 +127,13 @@ public class SwitchingCamera : MonoBehaviour
         {
             // 3D에서 2D로 전환
             yield return StartCoroutine(TransitionCamera(camPos2D, camrot2D, true));
+           
         }
         else
         {
             // 2D에서 3D로 전환
             yield return StartCoroutine(TransitionCamera(camPos3D, camrot3D, false));
+        
         }
 
         Time.timeScale = 1.0f;
@@ -190,6 +209,33 @@ public class SwitchingCamera : MonoBehaviour
         Camera3D.nearClipPlane = nearClipPlane3D;
         Camera3D.farClipPlane = farClipPlane3D;
         Camera3D.orthographic = false;
+        if(!is2D)
+        Camera3D.transform.rotation = Quaternion.Euler(camrot3D);
+    }
+    private void RotateCameraTowardsPlayerDirection()
+    {
+        if (!is2D)
+        {
+            float hori = Input.GetAxis("Horizontal");
+            float vert = Input.GetAxis("Vertical");
 
+   
+            if (hori != 0 || vert != 0)
+            {
+               
+                Vector3 direction = new Vector3(hori, 0, vert);
+                Quaternion targetRotation = Quaternion.LookRotation(direction);
+
+                ActiveCamera.transform.rotation = Quaternion.Lerp(ActiveCamera.transform.rotation, targetRotation, Time.deltaTime * cameraspeed);
+            }
+            else
+            {
+
+                ActiveCamera.transform.rotation = Quaternion.Lerp(
+                    ActiveCamera.transform.rotation,
+                    Quaternion.Euler(camrot3D),
+                    Time.deltaTime * cameraspeed);
+            }
+        }
     }
 }

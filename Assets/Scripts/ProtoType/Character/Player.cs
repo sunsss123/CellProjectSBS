@@ -103,7 +103,7 @@ public class Player : Character
     // Start is called before the first frame update
     void Start()
     {
-        gameObject.AddComponent<PlayerScaler>();
+
         if (PlayerStat.instance.formInvincible)
         {
             StartCoroutine(FormInvincible());
@@ -160,14 +160,14 @@ public class Player : Character
     {
 
 
-        Debug.DrawRay(transform.position + Vector3.down * (sizeY - 1) * 0.01f, Vector3.down * 0.15f, Color.blue);
-
+     
+        //+Vector3.down * sizeY * 0.15f
         if (!onGround)
         {
             RaycastHit hit;
 
 
-            if (Physics.Raycast(this.transform.position + Vector3.down * (sizeY - 1) * 0.01f, Vector3.down, out hit, 0.15f))
+            if (Physics.Raycast(this.transform.position, Vector3.down, out hit, 0.3f*sizeY))
             {
 
                 if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy"))
@@ -267,6 +267,7 @@ public class Player : Character
 
     private void FixedUpdate()
     {
+        Debug.DrawRay(transform.position, Vector3.down * 0.3f * sizeY, Color.blue);
         InteractivePlatformrayCheck();
         InteractivePlatformrayCheck2();
 
@@ -916,12 +917,12 @@ public class Player : Character
         //if (playerRb.velocity.y <=0)
         //{
 
-        Debug.DrawRay(transform.position + sizeY * Vector3.up * 0.1f, Vector3.up * 0.1f, Color.green);
+        Debug.DrawRay(transform.position, Vector3.up * 0.2f*sizeY, Color.green);
         if (!CullingPlatform && playerRb.velocity.y > 0)
         {
-            Debug.DrawRay(transform.position + sizeY * Vector3.up * 0.1f, Vector3.up * 0.1f, Color.green);
+         
 
-            if (Physics.Raycast(this.transform.position + sizeY * Vector3.up * 0.1f, Vector3.up, out hit, 0.1f))
+            if (Physics.Raycast(this.transform.position , Vector3.up, out hit, 0.2f*sizeY))
             {
 
                 if (hit.collider.CompareTag("InteractivePlatform"))
@@ -952,7 +953,7 @@ public class Player : Character
     public void InteractivePlatformrayCheck()
     {
 
-        Debug.DrawRay(transform.position + sizeY * Vector3.up * 0.1f, Vector3.up * 0.1f, Color.green);
+        Debug.DrawRay(transform.position, Vector3.up * 0.2f, Color.green);
         RaycastHit hit;
         //if ()
         //{
@@ -960,7 +961,7 @@ public class Player : Character
         if (CullingPlatform && playerRb.velocity.y <= 0)
         {
 
-            if (Physics.Raycast(this.transform.position + sizeY * Vector3.up * 0.1f, Vector3.up, out hit, 0.1f))
+            if (Physics.Raycast(this.transform.position, Vector3.up, out hit, 0.2f*sizeY))
             {
 
                 if (hit.collider.CompareTag("InteractivePlatform"))
