@@ -22,7 +22,7 @@ public class Player : Character
 
     public direction direction = direction.Right;
 
-
+    public directionZ directionz = directionZ.none;
     [Header("근접 및 원거리 공격 관련")]
     public GameObject meleeCollider; // 근접 공격 콜라이더
     public GameObject flyCollider; // 공중 공격 콜라이더
@@ -103,6 +103,7 @@ public class Player : Character
     // Start is called before the first frame update
     void Start()
     {
+        gameObject.AddComponent<PlayerScaler>();
         if (PlayerStat.instance.formInvincible)
         {
             StartCoroutine(FormInvincible());
@@ -364,10 +365,17 @@ public class Player : Character
         // Check horizontal and vertical inputs and determine the direction
         if (hori == 1)
             direction = direction.Right;
+        else if (hori == -1)
+            direction = direction.Left;
         else
-        direction = direction.Left;
+            direction = direction.none;
+        if (vert == 1)
+            directionz = directionZ.back;
+        else if (vert == -1)
+            directionz = directionZ.forward;
+        else
+            directionz = directionZ.none;
 
-    
         if (hori == -1 && vert == 0) // Left
         {
             rotateVector = new Vector3(0, 180, 0);
@@ -418,7 +426,7 @@ public class Player : Character
         if (!PlayerStat.instance.Trans3D)
         {
             Vector3 rotateVector = Vector3.zero;
-            if (direction == direction.Right)
+            if (direction == direction.Right||direction==direction.none)
             {
                 rotateVector = new Vector3(0, 90, 0);
             }
