@@ -56,8 +56,9 @@ public class Enemy: Character
     {
         //eStat = gameObject.AddComponent<EnemyStat>();
         eStat = GetComponent<EnemyStat>();
-        //attackCollider.GetComponent<EnemyMeleeAttack>().SetDamage(eStat.atk);
-        attackCollider.SetActive(false);
+        //attackCollider.GetComponent<EnemyMeleeAttack>().SetDamage(eStat.atk);        
+        if(attackCollider !=null)
+            attackCollider.SetActive(false);
 
         enemyRb = GetComponent<Rigidbody>();
 
