@@ -679,7 +679,7 @@ Transform:
   m_GameObject: {fileID: 3781775065057465210}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.148, z: 0.1}
+  m_LocalPosition: {x: 0, y: 0.2, z: 0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1035,7 +1035,6 @@ MonoBehaviour:
   waitTime: 0.5
   formChange: 0
   changeEffect: {fileID: 7790902311302496447}
-  onTransform: 0
   onGround: 0
   downAttack: 0
   attackSky: 0
@@ -2975,17 +2974,17 @@ PrefabInstance:
     - target: {fileID: 4487069503533265886, guid: bc7393225b2a5e240bac27ac818d7f61,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4487069503533265886, guid: bc7393225b2a5e240bac27ac818d7f61,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.5000001
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4487069503533265886, guid: bc7393225b2a5e240bac27ac818d7f61,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.5000001
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4487069503533265886, guid: bc7393225b2a5e240bac27ac818d7f61,
         type: 3}
@@ -3036,6 +3035,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4487069503533265886, guid: bc7393225b2a5e240bac27ac818d7f61,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4487069503622211467, guid: bc7393225b2a5e240bac27ac818d7f61,
         type: 3}

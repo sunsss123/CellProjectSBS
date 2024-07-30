@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 430310908967786368}
   - component: {fileID: 5665433848786154673}
   - component: {fileID: 6111270389098948868}
-  - component: {fileID: 1110070943988958213}
   m_Layer: 0
   m_Name: 2D-Off
   m_TagString: Ground
@@ -106,16 +105,3 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1110070943988958213
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 766454059521408789}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ae6e8dbad9f7ef49b4ab3bd63fecdb7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Zmove: 1
