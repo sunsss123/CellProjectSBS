@@ -24065,7 +24065,6 @@ Transform:
   - {fileID: 920441939}
   - {fileID: 767728606}
   - {fileID: 1369141045}
-  - {fileID: 7509607917436927717}
   - {fileID: 2145440222}
   - {fileID: 2022549290}
   - {fileID: 1402890680}
@@ -26910,6 +26909,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4407750128176712723}
+  - component: {fileID: 4407750128176712724}
   m_Layer: 0
   m_Name: TVboss_L_Hand
   m_TagString: Untagged
@@ -27130,6 +27130,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3538338420065694615}
+  - component: {fileID: 4202250597171308846}
   m_Layer: 0
   m_Name: TVboss_R_Hand
   m_TagString: Untagged
@@ -27137,6 +27138,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &4202250597171308846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4202250597171308845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6307a1c280a38941811ecafa313348f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Bossawake: 0
+  SweaperStartTransform: {fileID: 0}
+  SweaperEndTransform: {fileID: 0}
+  SweaperStartMoveTime: 0
+  sweaperwaitTime: 0
+  SweaperEndMoveTime: 0
+  sweaperReturnTime: 0
 --- !u!33 &4210149230739319668
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -27249,7 +27269,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3918318386397288105}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.09229603, y: 0.7010574, z: 0.27059832, w: 0.6532814}
+  m_LocalRotation: {x: -0.04988651, y: 0.68210536, z: 0.31533664, w: 0.6578803}
   m_LocalPosition: {x: -3.3592925, y: -1.2, z: 0.04375744}
   m_LocalScale: {x: 50, y: 50, z: 50}
   m_ConstrainProportionsScale: 1
@@ -27257,7 +27277,26 @@ Transform:
   - {fileID: 9192315775373737702}
   - {fileID: 2739673359283569620}
   m_Father: {fileID: 7509607917436927717}
-  m_LocalEulerAnglesHint: {x: -30, y: 90, z: 15}
+  m_LocalEulerAnglesHint: {x: -29.724, y: 85.741, z: 23.541}
+--- !u!114 &4407750128176712724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3918318386397288105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6307a1c280a38941811ecafa313348f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Bossawake: 0
+  SweaperStartTransform: {fileID: 0}
+  SweaperEndTransform: {fileID: 0}
+  SweaperStartMoveTime: 0
+  sweaperwaitTime: 0
+  SweaperEndMoveTime: 0
+  sweaperReturnTime: 0
 --- !u!137 &4412234107726285522
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -32619,6 +32658,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7509607917436927717}
+  - component: {fileID: 7509607917436927718}
   m_Layer: 0
   m_Name: TV_Boss
   m_TagString: Untagged
@@ -33800,8 +33840,26 @@ Transform:
   - {fileID: 991548373491705041}
   - {fileID: 4407750128176712723}
   - {fileID: 3538338420065694615}
-  m_Father: {fileID: 2021320125}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &7509607917436927718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5490901268947167963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9750b3b57a078d9499fcca8efc2fc5d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Monitor: {fileID: 0}
+  LHand: {fileID: 0}
+  RHand: {fileID: 0}
+  Spotlight: {fileID: 0}
+  lifeCount: 0
+  lifeCountMax: 0
 --- !u!23 &7591832397553966814
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -34508,3 +34566,4 @@ SceneRoots:
   - {fileID: 6229036157885567420}
   - {fileID: 5846663706817642027}
   - {fileID: 8732951559272040881}
+  - {fileID: 7509607917436927717}
