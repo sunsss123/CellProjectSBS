@@ -1,12 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    
     //1,인벤토리를 게임 메니저랑 같이 옮기기
     //2.로딩할때마다 불려오기
     //세이브 정리하기
@@ -29,7 +31,20 @@ public class GameManager : MonoBehaviour
 
     public string loadingscenename = "LoadingTest";
     public string currentscenename;
+    public void DeleteSaveSetting()
+    {
+        PlayerPrefs.DeleteAll();
+        DeleteInventoryData();
+    }
+    public void DeleteInventoryData()
+    {
+        string filePath = Path.Combine(Application.persistentDataPath, "InventorySave.json");
+        if (File.Exists(filePath))
+        {
+            File.Delete(filePath);
+        }
 
+    }
     public void SavePlayerStatus()
     {
         if (PlayerStat.instance != null && PlayerHandler.instance != null)
@@ -38,7 +53,7 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("TransformType", (int)PlayerHandler.instance.CurrentType);
         }
     }
-    public float LoadPlayerHP() { if (PlayerPrefs.HasKey("PlayerHP")) return PlayerPrefs.GetFloat("PlayerHP"); else return 5; }
+    public float LoadPlayerHP() { if (PlayerPrefs.HasKey("PlayerHP")) return PlayerPrefs.GetFloat("PlayerHP"); else return 3; }
     public int LOadPlayerTransformtype() { if (PlayerPrefs.HasKey("TransformType")) return PlayerPrefs.GetInt("TransformType"); else return 0; }
     public void saveCheckPointIndexKey(int index)
     {
@@ -71,14 +86,22 @@ public class GameManager : MonoBehaviour
     public void LoadingScene(string scenename)
     {
         saveCheckPointIndexKey(0);
-        SaveCurrentStage(scenename);
+        if(scenename!="TitleTest")
+            SaveCurrentStage(scenename);
         StartCoroutine(LoadingTest());
     }
     public LoadingEffectKari LoadingEffect;
     public void LoadingSceneWithKariEffect(string scenename)
     {
-        PlayerHandler.instance.CurrentPlayer = null;
-        LoadingEffect.EffectEnd += LoadingScene;
+        if (PlayerHandler.instance != null)
+        {
+            PlayerHandler.instance.CurrentPlayer = null;
+            SavePlayerStatus();
+        }
+        if (        PlayerInventory.instance != null)
+             PlayerInventory.instance.SaveInventoryData();
+   
+            LoadingEffect.EffectEnd += LoadingScene;
         LoadingEffect.LoadSceneName = scenename;
         LoadingEffect.gameObject.SetActive(true);
 

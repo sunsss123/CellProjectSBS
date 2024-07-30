@@ -17,4 +17,14 @@ public class RemoteSkillCollider : MonoBehaviour
             remocon.remoteObj.Add(other.gameObject);
         }
     }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("GameController"))
+        {
+            Debug.Log($"{other.name}Ãß°¡");
+            if(remocon.remoteObj.Contains(other.gameObject))
+                remocon.remoteObj.Remove(other.gameObject);
+        }
+    }
 }
