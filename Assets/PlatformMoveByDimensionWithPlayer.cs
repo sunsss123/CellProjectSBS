@@ -8,15 +8,19 @@ public class PlatformMoveByDimensionWithPlayer : PlatformMoveByDimesion
 
     public override void PlatformChange2D()
     {
+        if(Player!=null)
         Player.transform.SetParent(transform);
         base.PlatformChange2D();
-        Player.transform.SetParent(null);
+        if (Player != null)
+            Player.transform.SetParent(null);
     }
     public override void PlatformChange3D()
     {
-        Player.transform.SetParent(transform);
+        if (Player != null)
+            Player.transform.SetParent(transform);
         base.PlatformChange3D();
-        Player.transform.SetParent(null);
+        if (Player != null)
+            Player.transform.SetParent(null);
     }
     private void OnCollisionEnter(Collision collision)
     {
