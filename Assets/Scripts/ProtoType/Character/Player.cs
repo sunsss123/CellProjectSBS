@@ -704,12 +704,14 @@ public class Player : Character
                 }
                 else if (jumpInputValue > 0 && canjumpInput && PlayerStat.instance.doubleJump)
                 {
-                    if (
+                    PlayerStat.instance.doubleJump = false;
+                    Jump();
+                    /*if (
                 PlayerInventory.instance.checkessesntialitem("item02"))
                     {
                         PlayerStat.instance.doubleJump = false;
                         Jump();
-                    }
+                    }*/
                 }
                 Debug.Log("누르는 중입니다만");
             }

@@ -1,9 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
-using TMPro;
-using UnityEditor.Experimental.GraphView;
-using UnityEditor.MemoryProfiler;
 using UnityEngine;
 
 public class HandleSpotlight : MonoBehaviour

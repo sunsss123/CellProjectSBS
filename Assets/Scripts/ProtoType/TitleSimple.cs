@@ -19,10 +19,20 @@ public class TitleTest : MonoBehaviour
         {
             GameStart();
         }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            QuitGame();
+        }
     }
 
     public void GameStart()
     {
         SceneManager.LoadScene(sceneName);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }

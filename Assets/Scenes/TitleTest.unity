@@ -453,6 +453,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 529944053728837660, guid: 2278a36b267132b40b5fdc6a9bc0606d,
+        type: 3}
+      propertyPath: m_text
+      value: "X\uD0A4 \uC785\uB825\uD574\uC11C \uAC8C\uC784 \uD654\uBA74 \uC774\uB3D9\n\nQ\uD0A4
+        \uC785\uB825\uD574\uC11C \uAC8C\uC784\uD0C8\uCD9C"
+      objectReference: {fileID: 0}
+    - target: {fileID: 4090853275884299422, guid: 2278a36b267132b40b5fdc6a9bc0606d,
+        type: 3}
+      propertyPath: sceneName
+      value: ldj_0-0
+      objectReference: {fileID: 0}
     - target: {fileID: 4232080837463732481, guid: 2278a36b267132b40b5fdc6a9bc0606d,
         type: 3}
       propertyPath: m_LocalPosition.x

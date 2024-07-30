@@ -5,7 +5,7 @@ using UnityEngine;
 public class BossTv : MonoBehaviour
 {
     public GameObject Monitor;
-    public Stage1Hand LHand;
+    public BossHandle LHand;
     public Stage1Hand RHand;
 
     public GameObject Spotlight;
