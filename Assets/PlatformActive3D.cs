@@ -6,31 +6,52 @@ public class PlatformActive3D : MonoBehaviour
 {
     BoxCollider Bcollider;
     public float Zmove = 1;
+    public bool BcolliderActive3D=true;
     private void Awake()
     {
         Bcollider = GetComponent<BoxCollider>();
     }
-    void ActivePlatform()
+    void PlatformChange3D()
     {
+        if (BcolliderActive3D) 
         Bcollider.enabled = true;
+        else
+            Bcollider.enabled = false;
         transform.Translate(Vector3.back * Zmove);
     }
-    void DeActivePlatform()
+    void PlatformChange2D()
     {
-        
-        Bcollider.enabled = false;
+        if (BcolliderActive3D)
+            Bcollider.enabled = false;
+        else
+            Bcollider.enabled = true;
         transform.Translate(Vector3.forward * Zmove);
     }
 
    
     void Update()
     {
-        if (!Bcollider.enabled && PlayerStat.instance.Trans3D)
+        if (BcolliderActive3D)
         {
-            ActivePlatform();
-        }else if (Bcollider.enabled && !PlayerStat.instance.Trans3D)
+            if (!Bcollider.enabled && PlayerStat.instance.Trans3D)
+            {
+                PlatformChange3D();
+            }
+            else if (Bcollider.enabled && !PlayerStat.instance.Trans3D)
+            {
+                PlatformChange2D();
+            }
+        }
+        else
         {
-            DeActivePlatform();
+            if (Bcollider.enabled && PlayerStat.instance.Trans3D)
+            {
+                PlatformChange3D();
+            }
+            else if (!Bcollider.enabled && !PlayerStat.instance.Trans3D)
+            {
+                PlatformChange2D();
+            }
         }
     }
 }
