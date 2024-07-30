@@ -51,6 +51,7 @@ public class SwitchingCamera : MonoBehaviour
         Apply3DSettings();
         Camera3D.transform.rotation=Camera2D.transform.rotation;
         SwapActiveCamera();
+        PlayerStat.instance.Trans3D = !is2D;
     }
 
     private void FixedUpdate()
