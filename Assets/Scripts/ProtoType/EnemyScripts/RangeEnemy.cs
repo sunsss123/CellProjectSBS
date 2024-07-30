@@ -9,6 +9,7 @@ public class RangeEnemy : Enemy
 
     public override void Attack()
     {
+        if(PoolingManager.instance != null)
         PoolingManager.instance.GetPoolObject("EnemyBullet", fire.transform);
 
         StartCoroutine(WaitNextBehavior());

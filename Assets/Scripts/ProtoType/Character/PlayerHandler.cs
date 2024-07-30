@@ -111,11 +111,16 @@ public class PlayerHandler : MonoBehaviour
         if(CurrentPlayer !=null)
             lastDirection = PlayerStat.instance.direction;        
         transformed(TransformType.Default);
-        LastTransformPlace.transform.position = Playerprefab.transform.position;
+        if (LastTransformPlace != null)
+        {
+            LastTransformPlace.transform.position = Playerprefab.transform.position;
+            LastTransformPlace.gameObject.SetActive(true);
+            LastTransformPlace = null;
+            CurrentPlayer.transform.Translate(Vector3.up * defromUpPosition);
+        }
         PlayerStat.instance.direction = lastDirection;
-        CurrentPlayer.transform.Translate(Vector3.up * defromUpPosition);
-        LastTransformPlace.gameObject.SetActive(true);
-        LastTransformPlace = null;        
+
+           
     }
     void CreateModelByCurrentType(Action eventhandler =null)
 {
@@ -219,7 +224,7 @@ public class PlayerHandler : MonoBehaviour
                     if (DeTransformtimer > DeTransformtime)
                     {
                         DeTransformtimer = 0;
-                        Deform();
+                        //Deform();
                     }
                     break;
                 default:
