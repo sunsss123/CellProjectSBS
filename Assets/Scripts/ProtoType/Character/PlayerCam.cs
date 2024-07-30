@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class PlayerCam : MonoBehaviour
@@ -56,7 +57,7 @@ public class PlayerCam : MonoBehaviour
         if (target == null)
             return;
         CameraTrakingTime = ProjectSetting.instance.CameraTrackingTime;
-        Cameramove();
+
         cameraVector = ((target.position + camPos) - transform.position).magnitude;
         cameraspeed = cameraVector / CameraTrakingTime;
         //transform.Translate(((target.position + camPos) - transform.position).normalized * cameraspeed * Time.deltaTime);
@@ -75,66 +76,7 @@ public class PlayerCam : MonoBehaviour
         transform.rotation = Quaternion.Euler(camrot);
       
     }
-   
-    public void Cameramove()
-    {
-    
-        if (Input.GetKey(KeyCode.KeypadMinus))
-        {
-            transform.position -= camPos;
-            camPos += Vector3.up * CameraMoveSpeed * Time.deltaTime;
-            transform.position += camPos;
-        }
-        else if (Input.GetKey(KeyCode.KeypadPlus))
-        {
-            transform.position -= camPos;
-            camPos += Vector3.down * CameraMoveSpeed * Time.deltaTime;
-            transform.position += camPos;
-        }
-        if (Input.GetKey(KeyCode.Keypad4))
-        {
-            transform.position -= camPos;
-            camPos += Vector3.left * CameraMoveSpeed * Time.deltaTime;
-            transform.position += camPos;
-        }
-        else if (Input.GetKey(KeyCode.Keypad6))
-        {
-            transform.position -= camPos;
-            camPos += Vector3.right * CameraMoveSpeed * Time.deltaTime;
-            transform.position += camPos;
-        }
-        if (Input.GetKey(KeyCode.Keypad8))
-        {
-            transform.position -= camPos;
-            camPos += Vector3.forward * CameraMoveSpeed * Time.deltaTime;
-            transform.position += camPos;
-        }
-        else if (Input.GetKey(KeyCode.Keypad5))
-        {
-            transform.position -= camPos;
-            camPos += Vector3.back * CameraMoveSpeed * Time.deltaTime;
-            transform.position += camPos;
-        }
-        //if (Input.GetKey(KeyCode.J))
-        //{
-        //    this.transform.Rotate(Vector3.up * rotationValue * Time.deltaTime);
-        //}
-        //else if (Input.GetKey(KeyCode.L))
-        //{
-        //    this.transform.Rotate(Vector3.down * rotationValue * Time.deltaTime);
-        //}
-        //if (Input.GetKey(KeyCode.K))
-        //{
-        //    this.transform.Rotate(Vector3.left * rotationValue * Time.deltaTime);
-        //}
-        //else if (Input.GetKey(KeyCode.I))
-        //{
-        //    this.transform.Rotate(Vector3.right * rotationValue * Time.deltaTime);
-        //}
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            initializecamtransform();
-        }
-        camrot = transform.rotation.eulerAngles;
-    }
+    bool istransitioning;
+    public bool is2D;
+  
 }

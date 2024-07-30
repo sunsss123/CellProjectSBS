@@ -7,11 +7,23 @@ using UnityEngine;
 [Serializable]
 public class InvetorySaveData
 {
-   public List<Essentialitem> essentialitems=new List<Essentialitem>();
+   public List<EssentialitemData> essentialitems=new List<EssentialitemData>();
     public List<UpgradeStatus> Upgradesstatus;
    public List<int> Multiplys =new List<int>();
 }
-
+[Serializable]
+public class EssentialitemData
+{
+    public EssentialitemData(Essentialitem e)
+    {
+        itemname = e.itemname;
+        itemdescription = e.itemdescription;
+        itemcode = e.itemcode;
+    }
+    public string itemname;
+    public string itemdescription;
+    public string itemcode;
+}
 
 public class PlayerInventory : MonoBehaviour
 {
@@ -28,7 +40,8 @@ public class PlayerInventory : MonoBehaviour
         InvetorySaveData saveData = new InvetorySaveData();
        foreach (KeyValuePair<string,Essentialitem> kvp in EssentialItems)
         {
-            saveData.essentialitems.Add(kvp.Value);
+            EssentialitemData e = new EssentialitemData(kvp.Value);
+            saveData.essentialitems.Add(e);
         }
         saveData.Upgradesstatus = new List<UpgradeStatus>();
         foreach (KeyValuePair<UpgradeStatus, int> item in MultiplyitemNumberDict)
@@ -49,14 +62,22 @@ public class PlayerInventory : MonoBehaviour
             InvetorySaveData savedata=JsonUtility.FromJson<InvetorySaveData>(a);
 
             EssentialItems.Clear();
-            foreach(Essentialitem e in savedata.essentialitems)
+            foreach(EssentialitemData e in savedata.essentialitems)
             {
-                EssentialItems.Add(e.itemcode, e);
+                Essentialitem Eitem= ScriptableObject.CreateInstance<Essentialitem>();
+               Eitem.itemcode = e.itemcode;
+                Eitem.itemdescription = e.itemdescription;
+                Eitem.itemcode=e.itemcode;
+                EssentialItems.Add(Eitem.itemcode, Eitem);
             }
             MultiplyitemNumberDict.Clear();
            for(int n = 0; n < savedata.Upgradesstatus.Count; n++)
             {
                 MultiplyitemNumberDict[savedata.Upgradesstatus[n]] = savedata.Multiplys[n];
+            }
+           foreach(MUltiPlyitem i in MultiplyItems)
+            {
+                i.GetItem(MultiplyitemNumberDict[i.upgradeStatus]);
             }
         }
         else
@@ -75,6 +96,13 @@ public class PlayerInventory : MonoBehaviour
                 MultiplyitemNumberDict.Add(MultiplyItems[n].upgradeStatus, 0);
             }
         }
+    }
+    public bool checkessesntialitem(string itemcode)
+    {
+        if (EssentialItems.ContainsKey(itemcode))
+            return true;
+        else
+            return false;
     }
     public List<string> returnitemkeys()
     {
@@ -95,17 +123,12 @@ public class PlayerInventory : MonoBehaviour
      
     //    return ints;
     //}
-    private void Update()
-    {
-        if (EssentialItems.ContainsKey("I00"))
-        {
-            Debug.Log("ø°ºæº» æ∆¿Ã≈€ √º≈©");
-        }
-    }
+   
     public void ADDEssentialItem(Essentialitem i)
     {
-        Debug.Log("æ∆¿Ã≈€ ≈âµÊ:" + i.itemcode);
-        EssentialItems.Add(i.itemcode, i);
+ 
+        if(!EssentialItems.ContainsKey(i.itemcode))
+            EssentialItems.Add(i.itemcode, i);
     }
     public void AddMultiplyItem(UpgradeStatus s)
     {

@@ -177,13 +177,24 @@ public class PlayerHandler : MonoBehaviour
     #region 플레이어 기본 조작
     public float DeTransformtime = 2;
     float DeTransformtimer = 0;
+    event Action Dimensionchangeevent;
+    public void RegisterChange3DEvent(Action a)
+    {
+        Dimensionchangeevent += a;
+    }
+
     void charactermove()
     {
         if (!CurrentPlayer.downAttack)
         {
             CurrentPlayer.Move();
         }
-
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            PlayerStat.instance.Trans3D = !PlayerStat.instance.Trans3D;
+            Dimensionchangeevent?.Invoke();
+           
+        }
         if (Input.GetKey(KeyCode.C))
         {
             Debug.Log("점프키 입력 중");
@@ -229,7 +240,8 @@ public class PlayerHandler : MonoBehaviour
             }            
         }
         
-        if (Input.GetKey(KeyCode.X) && !Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKey(KeyCode.X) && !Input.GetKey(KeyCode.UpArrow) &&
+                PlayerInventory.instance.checkessesntialitem("item01"))
         {
             //CurrentPlayer.Attack();
             CurrentPlayer.attackBufferTimer = CurrentPlayer.attackBufferTimeMax;

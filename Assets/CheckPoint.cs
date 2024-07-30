@@ -12,7 +12,7 @@ public class CheckPoint : MonoBehaviour
     public int index;
     public GameObject spawn(GameObject obj)
     {
-        Debug.Log("Player Spawn");
+    
        return Instantiate(obj, ChkPointTestPrefab.position, ChkPointTestPrefab.rotation);
     }
     private void OnTriggerEnter(Collider other)

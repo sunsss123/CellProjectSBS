@@ -30,7 +30,9 @@ public class PlayerStat : CharacterStat
 
 
 
+    public bool Trans3D;
 
+    
    
     public void RecoverHP(float hppoint)
     {

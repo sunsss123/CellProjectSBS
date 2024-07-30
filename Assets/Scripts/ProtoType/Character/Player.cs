@@ -6,8 +6,10 @@ using UnityEngine;
 using UnityEngine.PlayerLoop;
 using UnityEngine.Rendering;
 using UnityEngine.UIElements;
+using UnityEngine.Windows.Speech;
 
 public enum direction { Left = -1, none = 0, Right = 1 }
+public enum directionZ {back=-1,none=0,forward=1 }
 public class Player : Character
 {
 
@@ -20,6 +22,7 @@ public class Player : Character
 
     public direction direction = direction.Right;
 
+    public directionZ directionz = directionZ.none;
     [Header("근접 및 원거리 공격 관련")]
     public GameObject meleeCollider; // 근접 공격 콜라이더
     public GameObject flyCollider; // 공중 공격 콜라이더
@@ -33,7 +36,7 @@ public class Player : Character
     public Color color;
 
     //public float moveValue; // 움직임 유무를 결정하기 위한 변수
-    float hori, vert; // 플레이어의 움직임 변수
+   
 
     [Header("#점프 홀딩 조절")]
     public float jumpholdLevel = 0.85f;
@@ -100,6 +103,7 @@ public class Player : Character
     // Start is called before the first frame update
     void Start()
     {
+        gameObject.AddComponent<PlayerScaler>();
         if (PlayerStat.instance.formInvincible)
         {
             StartCoroutine(FormInvincible());
@@ -110,6 +114,7 @@ public class Player : Character
 
         canAttack = true;
         onDash = true;
+        PlayerHandler.instance.RegisterChange3DEvent(rotateBy3Dto2D);
     }
 
     void Update()
@@ -171,7 +176,7 @@ public class Player : Character
                     isJump = false;
                     downAttack = false;
                     PlayerStat.instance.doubleJump = true;
-                    Debug.Log("abcdefg");
+
                     if (LandingEffect != null)
                         LandingEffect.SetActive(true);
                 }
@@ -353,29 +358,111 @@ public class Player : Character
     #region 추상화 오버라이드 함수
 
     #region 이동
-    public void rotate(float f)
+    public void rotate(float hori,float vert)
     {
-        if ((f == -1 && direction == direction.Right) || (f == 1 && direction == direction.Left))
+        Vector3 rotateVector = Vector3.zero;
+
+        // Check horizontal and vertical inputs and determine the direction
+        if (hori == 1)
+            direction = direction.Right;
+        else if (hori == -1)
+            direction = direction.Left;
+        else
+            direction = direction.none;
+        if (vert == 1)
+            directionz = directionZ.back;
+        else if (vert == -1)
+            directionz = directionZ.forward;
+        else
+            directionz = directionZ.none;
+
+        if (hori == -1 && vert == 0) // Left
         {
-            this.transform.Rotate(new Vector3(0, 180, 0));
-            if (direction == direction.Right)
-                direction = direction.Left;
-            else
-                direction = direction.Right;
+            rotateVector = new Vector3(0, 180, 0);
+
+            
+        }
+        else if (hori == 1 && vert == 0) // Right
+        {
+            rotateVector = new Vector3(0, 0, 0);
+
+        }
+        else if (hori == 0 && vert == 1) // Up
+        {
+            rotateVector = new Vector3(0, -90, 0);
+
+        }
+        else if (hori == 0 && vert == -1) // Down
+        {
+            rotateVector = new Vector3(0, 90, 0);
+
+        }
+        else if (hori == -1 && vert == 1) // UpLeft
+        {
+            rotateVector = new Vector3(0, -135, 0);
+    
+        }
+        else if (hori == 1 && vert == 1) // UpRight
+        {
+            rotateVector = new Vector3(0, -45, 0);
+       
+        }
+        else if (hori == -1 && vert == -1) // DownLeft
+        {
+            rotateVector = new Vector3(0, 135, 0);
+      
+        }
+        else if (hori == 1 && vert == -1) // DownRight
+        {
+            rotateVector = new Vector3(0, 45, 0);
+        
+        }
+        rotateVector += new Vector3(0, 90, 0);
+
+        transform.rotation = Quaternion.Euler(rotateVector);
+    }
+    public void rotateBy3Dto2D()
+    {
+        if (!PlayerStat.instance.Trans3D)
+        {
+            Vector3 rotateVector = Vector3.zero;
+            if (direction == direction.Right||direction==direction.none)
+            {
+                rotateVector = new Vector3(0, 90, 0);
+            }
+            else if (direction == direction.Left)
+            {
+                rotateVector = new Vector3(0, -90, 0);
+            }
+            transform.rotation = Quaternion.Euler(rotateVector);
         }
     }
+
     public float Decelatate = 2;
+
+
     public override void Move()
     {
 
-        float hori = Input.GetAxisRaw("Horizontal");
+        float hori = 0;
+        float Vert=0;
+        if (PlayerStat.instance.Trans3D)
+        {
+            hori = Input.GetAxisRaw("Vertical");
+            Vert = -1* Input.GetAxisRaw("Horizontal");
+        }
+        else
+        {
+            hori = Input.GetAxisRaw("Horizontal");
+        }
 
-
-
-        this.hori = hori;
-
-        rotate(hori);
-
+   
+        Vector3 moveInput = new Vector3(hori, 0, Vert);
+        if (hori != 0 || Vert != 0)
+        {
+            rotate(moveInput.x, moveInput.z);
+        }
+        //Vert 회전 추가
         //translateFix = new(hori, 0, 0);
 
         #region 움직임
@@ -383,10 +470,10 @@ public class Player : Character
 
 
         Vector3 Movevelocity = Vector3.zero;
-        Vector3 desiredVector = new Vector3(hori, 0, 0).normalized * PlayerStat.instance.moveSpeed + EnvironmentPower;
-        Movevelocity = desiredVector - playerRb.velocity.x * Vector3.right;
+        Vector3 desiredVector = moveInput.normalized * PlayerStat.instance.moveSpeed + EnvironmentPower;
+        Movevelocity = desiredVector - playerRb.velocity.x * Vector3.right - playerRb.velocity.z * Vector3.forward;
 
-
+      
         if (!wallcheck)
             playerRb.AddForce(Movevelocity, ForceMode.VelocityChange);
         else
@@ -414,7 +501,7 @@ public class Player : Character
 
         if (!isJump)
         {
-            if (MoveCheck(hori, vert))
+            if (MoveCheck(hori, Vert))
             {
                 isRun = true;
             }
@@ -615,7 +702,8 @@ public class Player : Character
                 }
                 else if (jumpInputValue > 0 && canjumpInput && PlayerStat.instance.doubleJump)
                 {
-                    if (PlayerStat.instance.ableJump)
+                    if (
+                PlayerInventory.instance.checkessesntialitem("item02"))
                     {
                         PlayerStat.instance.doubleJump = false;
                         Jump();
