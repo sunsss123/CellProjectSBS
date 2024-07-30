@@ -28,7 +28,7 @@ public class PlayerSpawnManager : MonoBehaviour
         GameManager.instance.SaveCurrentStage(SceneManager.GetActiveScene().name);
         GameManager.instance.SavePlayerStatus();
         PlayerInventory.instance.SaveInventoryData();
-        Debug.Log($"Playerprefs chkpointindex{GameManager.instance.LoadCheckPointIndexKey()} LastestStage{GameManager.instance.LoadLastestStage()}");
+        //Debug.Log($"Playerprefs chkpointindex{GameManager.instance.LoadCheckPointIndexKey()} LastestStage{GameManager.instance.LoadLastestStage()}");
   
     }
     public void LoadCheckPoint()
