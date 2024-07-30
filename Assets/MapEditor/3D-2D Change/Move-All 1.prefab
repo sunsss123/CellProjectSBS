@@ -12,8 +12,7 @@ GameObject:
   - component: {fileID: 8118787540341794005}
   - component: {fileID: 7181147677064691867}
   - component: {fileID: 9098635757586947090}
-  - component: {fileID: 7517146262468400635}
-  - component: {fileID: 7152225676023893165}
+  - component: {fileID: 2127758375198676561}
   m_Layer: 0
   m_Name: Move-All 1
   m_TagString: Ground
@@ -108,7 +107,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7517146262468400635
+--- !u!114 &2127758375198676561
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -117,22 +116,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2799402019220616975}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb5af771a8861054fb280f54e2101b22, type: 3}
+  m_Script: {fileID: 11500000, guid: 2a2ad24bbd8772e43ac5574181ea14fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Zmove: 0
---- !u!114 &7152225676023893165
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2799402019220616975}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27f3ca42a2b707a40a9bd3508bcfe378, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  Zmove: 1
 --- !u!1001 &7477504680276904196
 PrefabInstance:
   m_ObjectHideFlags: 0
