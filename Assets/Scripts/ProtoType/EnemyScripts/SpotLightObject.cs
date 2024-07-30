@@ -17,7 +17,7 @@ public class SpotLightObject : MonoBehaviour
     {
         if (tracking)
         {
-            transform.LookAt(target);            
+            transform.LookAt(target);
         }
     }
 
