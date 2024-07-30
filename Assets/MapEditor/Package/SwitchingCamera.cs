@@ -37,6 +37,8 @@ public class SwitchingCamera : MonoBehaviour
     private Transform target;
     [Header("카메라 추격 시간")]
     public float CameraTrackingTime;
+    [Header("카메라 2D/3D 전환 시간")]
+    public float CameraChangeDuration = 1.0f;
 
     private bool ZPin;
 
@@ -141,7 +143,7 @@ public class SwitchingCamera : MonoBehaviour
     {
         if(!is2D)
             SwapActiveCamera();
-        float duration = 1.0f;
+
         float elapsed = 0.0f;
 
         Vector3 startingPos = ActiveCamera.transform.position;
@@ -149,10 +151,10 @@ public class SwitchingCamera : MonoBehaviour
 
         Vector3 targetPosition = target.position + newPos;
 
-        while (elapsed < duration)
+        while (elapsed < CameraChangeDuration)
         {
             elapsed += Time.unscaledDeltaTime;
-            float t = Mathf.Clamp01(elapsed / duration);
+            float t = Mathf.Clamp01(elapsed / CameraChangeDuration);
 
             ActiveCamera.transform.position = Vector3.Lerp(startingPos, targetPosition, t);
             ActiveCamera.transform.rotation = Quaternion.Lerp(startingRot, Quaternion.Euler(newRot), t);
