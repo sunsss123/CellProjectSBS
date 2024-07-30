@@ -57,6 +57,8 @@ public class SwitchingCamera : MonoBehaviour
 
     private void FixedUpdate()
     {
+        Apply2DSettings();
+        Apply3DSettings();
         if (PlayerHandler.instance.CurrentPlayer != null)
         {
             target = PlayerHandler.instance.CurrentPlayer.transform;
@@ -110,11 +112,13 @@ public class SwitchingCamera : MonoBehaviour
         {
             // 3D에서 2D로 전환
             yield return StartCoroutine(TransitionCamera(camPos2D, camrot2D, true));
+           
         }
         else
         {
             // 2D에서 3D로 전환
             yield return StartCoroutine(TransitionCamera(camPos3D, camrot3D, false));
+        
         }
 
         Time.timeScale = 1.0f;
