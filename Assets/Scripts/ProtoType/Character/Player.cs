@@ -40,6 +40,7 @@ public class Player : Character
     public float jumpBufferTimeMax;
     public float jumpBufferTimer;
     public bool canjumpInput;
+    public bool jumpLimitInput;
     [Header("#키 선입력 관련")]
     public float attackBufferTimeMax;
     public float attackBufferTimer;
@@ -114,14 +115,14 @@ public class Player : Character
     void Update()
     {
         if (jumpBufferTimer > 0)
-        {
+        {          
             jumpBufferTimer -= Time.deltaTime;
         }
 
         if (attackBufferTimer > 0)
-        {
+        {            
             attackBufferTimer -= Time.deltaTime;
-        }
+        }        
     }
 
     public void BaseBufferTimer()

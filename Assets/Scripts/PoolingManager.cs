@@ -83,7 +83,7 @@ public class PoolingManager : MonoBehaviour
             if (poolObjects[i].poolName == poolObj)
             {
                 Debug.Log($"{obj} 발사해야함");
-                GameObject[] poolPrefabs = poolObjects[i].poolPrefabs;
+                //GameObject[] poolPrefabs = poolObjects[i].poolPrefabs;
 
                 for (int j = 0; j < poolObjects[i].poolPrefabs.Length; j++)
                 {

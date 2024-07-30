@@ -8,8 +8,12 @@ public class Stage1Boss : MonoBehaviour
     public Stage1Hand LHand;
     public Stage1Hand RHand;
 
-    public GameObject Spotlight;
+    public GameObject Spotlight;    
 
+    private void Start()
+    {
+        //LSweaper();
+    }
     public void LSweaper()
     {
         StartCoroutine(LHand.Sweaper());

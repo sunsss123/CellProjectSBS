@@ -13,12 +13,6 @@ public class EnemySearchCollider : MonoBehaviour
         searchCollider = GetComponent<BoxCollider>();        
     }
 
-    private void Start()
-    {
-        enemy.searchColliderPos = searchCollider.center;
-        enemy.searchColliderRange = searchCollider.size;
-    }
-
     private void FixedUpdate()
     {
         searchCollider.center = enemy.searchColliderPos;

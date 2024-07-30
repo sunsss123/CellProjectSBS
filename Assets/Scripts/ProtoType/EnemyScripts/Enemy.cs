@@ -18,8 +18,8 @@ public class Enemy: Character
     public Vector3 searchCubePos; // Cube 위치 조정
     [Header("플레이어 탐색 범위 조정(콜라이더)")]
     public GameObject searchCollider; // 탐지 범위 콜라이더
+    public Vector3 searchColliderRange;
     public Vector3 searchColliderPos;
-    public Vector3 searchColliderRange;    
     public bool activeSearchMesh;
     [Header("공격 활성화 콜라이더 큐브 조정")]
     public GameObject rangeCollider; // 공격 범위 콜라이더 오브젝트
@@ -56,8 +56,9 @@ public class Enemy: Character
     {
         //eStat = gameObject.AddComponent<EnemyStat>();
         eStat = GetComponent<EnemyStat>();
-        //attackCollider.GetComponent<EnemyMeleeAttack>().SetDamage(eStat.atk);
-        attackCollider.SetActive(false);
+        //attackCollider.GetComponent<EnemyMeleeAttack>().SetDamage(eStat.atk);        
+        if(attackCollider !=null)
+            attackCollider.SetActive(false);
 
         enemyRb = GetComponent<Rigidbody>();
 
