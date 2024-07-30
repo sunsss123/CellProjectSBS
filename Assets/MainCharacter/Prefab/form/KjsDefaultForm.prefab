@@ -1576,7 +1576,7 @@ MonoBehaviour:
   ChrRenderer: {fileID: 1979360752492490871}
   chrmat: {fileID: 0}
   color: {r: 0, g: 0, b: 0, a: 0}
-  jumpholdLevel: 0.85
+  jumpholdLevel: 1
   jumpBufferTimeMax: 0.2
   jumpBufferTimer: 0
   canjumpInput: 0
