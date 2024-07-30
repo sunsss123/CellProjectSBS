@@ -189,7 +189,7 @@ public class PlayerHandler : MonoBehaviour
         {
             CurrentPlayer.Move();
         }
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space)&&CurrentPlayer.onGround)
         {
             PlayerStat.instance.Trans3D = !PlayerStat.instance.Trans3D;
             Dimensionchangeevent?.Invoke();
@@ -234,14 +234,14 @@ public class PlayerHandler : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.DownArrow))
         {
-            if (Input.GetKey(KeyCode.X) && !CurrentPlayer.onGround)
+            if (Input.GetKey(KeyCode.X) && !CurrentPlayer.onGround &&
+                PlayerInventory.instance.checkessesntialitem("item01"))
             {                         
                 CurrentPlayer.DownAttack();
             }            
         }
         
-        if (Input.GetKey(KeyCode.X) && !Input.GetKey(KeyCode.UpArrow) &&
-                PlayerInventory.instance.checkessesntialitem("item01"))
+        if (Input.GetKey(KeyCode.X) && !Input.GetKey(KeyCode.UpArrow))
         {
             //CurrentPlayer.Attack();
             CurrentPlayer.attackBufferTimer = CurrentPlayer.attackBufferTimeMax;

@@ -679,7 +679,7 @@ Transform:
   m_GameObject: {fileID: 3781775065057465210}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.2, z: 0.1}
+  m_LocalPosition: {x: 0, y: 0.15, z: 0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -933,8 +933,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 661293882350894433}
   - {fileID: 7565031403203138770}
@@ -1035,6 +1035,7 @@ MonoBehaviour:
   waitTime: 0.5
   formChange: 0
   changeEffect: {fileID: 7790902311302496447}
+  onTransform: 0
   onGround: 0
   downAttack: 0
   attackSky: 0
@@ -1048,7 +1049,7 @@ MonoBehaviour:
   inputCheck: 0
   velocityMove: {x: 0, y: 0, z: 0}
   rigidbodyPos: {x: 0, y: 0, z: 0}
-  sizeX: 2
+  sizeX: 1
   sizeY: 2
   sizeFir: 0
   sizeSec: 0
@@ -1718,8 +1719,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0.148, y: 0, z: -0}
-  m_LocalScale: {x: 5.5, y: 5.5, z: 5.5}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3103236764559981538}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
