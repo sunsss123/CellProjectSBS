@@ -4,15 +4,23 @@ using UnityEngine;
 
 public class CranePlatform : MonoBehaviour
 {
+    private Vector3 originalPlayerScale;
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.CompareTag("Player"))
         {
             Transform playerTransform = collision.transform;
-            Vector3 originalScale = playerTransform.localScale;
+            originalPlayerScale = playerTransform.localScale; // 원래 스케일 저장
+
+            Vector3 inversePlatformScale = new Vector3(
+                1f / transform.localScale.z,
+                1f / transform.localScale.y,
+                1f / transform.localScale.x
+            );
 
             playerTransform.SetParent(this.transform);
-            playerTransform.localScale = originalScale;
+            playerTransform.localScale = Vector3.Scale(originalPlayerScale, inversePlatformScale); // 스케일 조정
         }
     }
 
@@ -21,10 +29,8 @@ public class CranePlatform : MonoBehaviour
         if (collision.collider.CompareTag("Player"))
         {
             Transform playerTransform = collision.transform;
-            Vector3 originalScale = playerTransform.localScale;
-
             playerTransform.SetParent(null);
-            playerTransform.localScale = originalScale;
+            playerTransform.localScale = originalPlayerScale; // 원래 스케일 복원
         }
     }
 }
