@@ -29,7 +29,7 @@ public class MeleeCollider : MonoBehaviour
             if (!enemy.eStat.onInvincible)
             {
                 enemy.Damaged(damage);
-                saveEffect.transform.position = other.transform.position;
+                saveEffect.transform.position = new(other.transform.position.x, other.transform.position.y +.5f, other.transform.position.z);
                 saveEffect.Play();
                 gameObject.SetActive(false);
             }

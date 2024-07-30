@@ -10,7 +10,8 @@ public class Enemy: Character
 
     public Rigidbody enemyRb; // 적 리지드바디
     public GameObject attackCollider; // 적의 공격 콜라이더 오브젝트    
-
+    public ParticleSystem deadEffect;
+    
     bool posRetry;
 
     [Header("플레이어 탐색 큐브 조정(드로우 기즈모)")]
@@ -270,6 +271,7 @@ public class Enemy: Character
     {
         eStat.eState = EnemyState.dead;
         PlayerHandler.instance.CurrentPlayer.dmCollider.OtherCheck(this.gameObject);
+        Instantiate(deadEffect,transform.position, Quaternion.identity);
         gameObject.SetActive(false);
     }
     #endregion

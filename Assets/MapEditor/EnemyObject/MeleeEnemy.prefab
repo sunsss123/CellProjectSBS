@@ -103,11 +103,13 @@ MonoBehaviour:
   eStat: {fileID: 0}
   enemyRb: {fileID: 0}
   attackCollider: {fileID: 3003010046744970119}
+  deadEffect: {fileID: 253838525713540564, guid: b5ae662d1f8e88e43aa9d1b64a1aed16,
+    type: 3}
   searchCubeRange: {x: 2, y: 0.5, z: 0.5}
   searchCubePos: {x: 0, y: 0.5, z: 0}
   searchCollider: {fileID: 772453129297269744}
-  searchColliderPos: {x: 0, y: 0.1, z: 0.5}
   searchColliderRange: {x: 2, y: 1.5, z: 5}
+  searchColliderPos: {x: 0, y: 0.1, z: 0.5}
   activeSearchMesh: 0
   rangeCollider: {fileID: 7523205838727179985}
   rangePos: {x: 0, y: 0, z: 0}
