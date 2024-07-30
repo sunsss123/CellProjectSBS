@@ -2,35 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlatformActive3D : MonoBehaviour
+public class PlatformActive3D : PlatformMoveByDimesion
 {
     BoxCollider Bcollider;
-    public float Zmove = 1;
+   
+
     private void Awake()
     {
         Bcollider = GetComponent<BoxCollider>();
     }
-    void ActivePlatform()
+    public override void PlatformChange3D()
     {
+        base.PlatformChange3D();
         Bcollider.enabled = true;
-        transform.Translate(Vector3.back * Zmove);
     }
-    void DeActivePlatform()
+    public override void PlatformChange2D()
     {
-        
+        base.PlatformChange2D();
         Bcollider.enabled = false;
-        transform.Translate(Vector3.forward * Zmove);
     }
-
-   
-    void Update()
-    {
-        if (!Bcollider.enabled && PlayerStat.instance.Trans3D)
-        {
-            ActivePlatform();
-        }else if (Bcollider.enabled && !PlayerStat.instance.Trans3D)
-        {
-            DeActivePlatform();
-        }
-    }
+    
+       
+ 
+       
+    
 }

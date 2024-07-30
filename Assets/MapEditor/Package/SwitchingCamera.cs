@@ -52,6 +52,7 @@ public class SwitchingCamera : MonoBehaviour
         Camera3D.transform.rotation=Camera2D.transform.rotation;
         SwapActiveCamera();
         PlayerStat.instance.Trans3D = !is2D;
+        PlayerHandler.instance.RegisterChange3DEvent(StartChangeCameraCorutine);
     }
 
     private void FixedUpdate()
@@ -89,14 +90,14 @@ public class SwitchingCamera : MonoBehaviour
     {
         ZPin = false;
     }
-
-    private void Update()
+    public void StartChangeCameraCorutine()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !isTransitioning)
+        if ( !isTransitioning)
         {
             StartCoroutine(SwitchCameraMode());
         }
     }
+  
 
     IEnumerator SwitchCameraMode()
     {
