@@ -268,7 +268,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: edcb8e221e284e440a69990fc1a21c70, type: 2}
+  - {fileID: 2100000, guid: 104ee6672646e4d45a4c8cf2fc5459c3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -528,7 +528,7 @@ Transform:
   m_GameObject: {fileID: 2360938726155333477}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.33040646, y: 0.05274067, z: 0.11087195}
+  m_LocalPosition: {x: -0.33, y: 0.05274067, z: 0.169}
   m_LocalScale: {x: 0.1, y: 0.25, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1581,7 +1581,7 @@ MonoBehaviour:
   jumpBufferTimer: 0
   canjumpInput: 0
   jumpLimitInput: 0
-  attackBufferTimeMax: 0.1
+  attackBufferTimeMax: 0.2
   attackBufferTimer: 0
   isJump: 0
   jumpAnim: 0
@@ -1606,8 +1606,8 @@ MonoBehaviour:
   inputCheck: 0
   velocityMove: {x: 0, y: 0, z: 0}
   rigidbodyPos: {x: 0, y: 0, z: 0}
-  sizeX: 2
-  sizeY: 2
+  sizeX: 1
+  sizeY: 1
   sizeFir: 1
   sizeSec: 0.5
   raySize: 0
@@ -2307,7 +2307,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: edcb8e221e284e440a69990fc1a21c70, type: 2}
+  - {fileID: 2100000, guid: 104ee6672646e4d45a4c8cf2fc5459c3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -80,6 +80,7 @@ public class SwitchingCamera : MonoBehaviour
         CalculateVector = !ZPin ? target.position + camPos : (Vector3)((Vector2)target.position + (Vector2)camPos) + Vector3.forward * ActiveCamera.transform.position.z;
 
         ActiveCamera.transform.position = Vector3.Lerp(ActiveCamera.transform.position, CalculateVector, Time.deltaTime * cameraspeed);
+        //RotateCameraTowardsPlayerDirection();
     }
 
     public void ActiveZPin(float f)
@@ -194,6 +195,32 @@ public class SwitchingCamera : MonoBehaviour
         Camera3D.nearClipPlane = nearClipPlane3D;
         Camera3D.farClipPlane = farClipPlane3D;
         Camera3D.orthographic = false;
+        Camera3D.transform.rotation = Quaternion.Euler(camrot3D);
+    }
+    private void RotateCameraTowardsPlayerDirection()
+    {
+        if (!is2D)
+        {
+            float hori = Input.GetAxis("Horizontal");
+            float vert = Input.GetAxis("Vertical");
 
+   
+            if (hori != 0 || vert != 0)
+            {
+               
+                Vector3 direction = new Vector3(hori, 0, vert);
+                Quaternion targetRotation = Quaternion.LookRotation(direction);
+
+                ActiveCamera.transform.rotation = Quaternion.Lerp(ActiveCamera.transform.rotation, targetRotation, Time.deltaTime * cameraspeed);
+            }
+            else
+            {
+
+                ActiveCamera.transform.rotation = Quaternion.Lerp(
+                    ActiveCamera.transform.rotation,
+                    Quaternion.Euler(camrot3D),
+                    Time.deltaTime * cameraspeed);
+            }
+        }
     }
 }
