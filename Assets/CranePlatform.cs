@@ -8,14 +8,23 @@ public class CranePlatform : MonoBehaviour
     {
         if (collision.collider.CompareTag("Player"))
         {
-            collision.transform.SetParent(this.transform);
+            Transform playerTransform = collision.transform;
+            Vector3 originalScale = playerTransform.localScale;
+
+            playerTransform.SetParent(this.transform);
+            playerTransform.localScale = originalScale;
         }
     }
+
     private void OnCollisionExit(Collision collision)
     {
         if (collision.collider.CompareTag("Player"))
         {
-            collision.transform.SetParent(null);
+            Transform playerTransform = collision.transform;
+            Vector3 originalScale = playerTransform.localScale;
+
+            playerTransform.SetParent(null);
+            playerTransform.localScale = originalScale;
         }
     }
 }
