@@ -695,7 +695,7 @@ public class Player : Character
     {
         if (jumpBufferTimer > 0)
         {
-            if (!Input.GetKey(KeyCode.DownArrow) && !downAttack)
+            if (!downAttack)
             {
                 if (!isJump)
                 {

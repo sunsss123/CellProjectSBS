@@ -195,7 +195,7 @@ public class PlayerHandler : MonoBehaviour
             Dimensionchangeevent?.Invoke();
            
         }
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKey(KeyCode.C))
         {
             Debug.Log("점프키 입력 중");
             CurrentPlayer.jumpInputValue = 1;
