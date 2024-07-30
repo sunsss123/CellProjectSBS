@@ -4,7 +4,13 @@ using System.Net.Http.Headers;
 
 using UnityEngine;
 
-public class Enemy: Character
+public interface DamagedByPAttack
+{
+    public void Damaged(float f);
+}
+
+
+public class Enemy: Character,DamagedByPAttack
 {
     public EnemyStat eStat;
 
