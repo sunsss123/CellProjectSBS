@@ -59,6 +59,7 @@ public class Player : Character
     public float waitTime; // 코루틴 yield return 시간 조절
     public bool formChange; // 오브젝트 변신 중인지 체크    
     public GameObject changeEffect; // 변신 완료 이펙트
+    public bool onTransform; // 
 
     [Space(15f)]
     public bool onGround; // 지상 판정 유무
@@ -750,8 +751,8 @@ public class Player : Character
     {
         if (attackSky)
         {
-            flyCollider.SetActive(true);
-            flyCollider.GetComponent<SphereCollider>().enabled = true;
+            meleeCollider.SetActive(true);
+            meleeCollider.GetComponent<SphereCollider>().enabled = true;
         }
         else if (attackGround)
         {
@@ -768,8 +769,8 @@ public class Player : Character
 
         if (attackSky)
         {
-            flyCollider.SetActive(false);
-            flyCollider.GetComponent<SphereCollider>().enabled = false;
+            meleeCollider.SetActive(false);
+            meleeCollider.GetComponent<SphereCollider>().enabled = false;
             attackSky = false;
         }
         else if (attackGround)

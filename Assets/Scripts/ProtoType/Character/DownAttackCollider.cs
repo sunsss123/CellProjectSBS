@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Searcher;
 using UnityEngine;
 
 public class DownAttackCollider : MonoBehaviour
@@ -47,6 +48,13 @@ public class DownAttackCollider : MonoBehaviour
         
         if (other.CompareTag("Ground"))
         {
+            TransformPlace transformPlace;
+            if (other.TryGetComponent<TransformPlace>(out transformPlace))
+            {
+                Debug.Log("Æ®·£½ºÆû¿ÀºêÁ§Æ® Å½Áö");
+                PlayerHandler.instance.CurrentPlayer.onTransform = true;
+            }
+
             gameObject.SetActive(false);
         }        
     }

@@ -30,18 +30,43 @@ public class TransformPlace: MonoBehaviour
     private void OnTriggerStay(Collider other)
     { 
 
-        if (other.CompareTag("Player") && Input.GetKeyDown(KeyCode.F) || other.CompareTag("Player") && PlayerHandler.instance.CurrentPlayer.downAttack)
+        if (other.CompareTag("Player") && Input.GetKeyDown(KeyCode.F) || other.CompareTag("Player"))
         {
-            if (PlayerHandler.instance.CurrentPlayer.downAttack || Input.GetKey(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.X))
-                /*PlayerHandler.instance.CurrentPlayer.downAttack = false;
-                other.transform.position = this.transform.position;
-                PlayerHandler.instance.transformed(type);
-                PlayerHandler.instance.CurrentPower = PlayerHandler.instance.MaxPower;*/
-                if (!PlayerHandler.instance.OnDeformField)
-                {
-                    transformStart(other);
-                   
+            if (PlayerHandler.instance.CurrentPlayer.onTransform)
+            {
+                if (Input.GetKey(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.X))
+                {                   
+                    if (!PlayerHandler.instance.OnDeformField)
+                    {
+                        transformStart(other);
+
+                    }
                 }
+            }                
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            if (PlayerHandler.instance.CurrentPlayer.onTransform)
+            {
+                PlayerHandler.instance.CurrentPlayer.onTransform = false;
+                transformStart(other);
+            }
+            else
+            {
+                PlayerHandler.instance.CurrentPlayer.onTransform = true;
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            PlayerHandler.instance.CurrentPlayer.onTransform = false;
         }
     }
 }
