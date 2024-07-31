@@ -114,6 +114,10 @@ public class GameManager : MonoBehaviour
       
 
         AsyncOperation syncoperation = SceneManager.LoadSceneAsync(scenename);
+
+      
+            GameManager.instance.saveCheckPointIndexKey(0);
+    
         if (scenename != "TitleTest")
             SaveCurrentStage(scenename);
         syncoperation.allowSceneActivation = false;
