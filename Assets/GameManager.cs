@@ -53,6 +53,10 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("TransformType", (int)PlayerHandler.instance.CurrentType);
         }
     }
+    private void Update()
+    {
+        Debug.Log(LoadCheckPointIndexKey());
+    }
     public float LoadPlayerHP() { if (PlayerPrefs.HasKey("PlayerHP")) return PlayerPrefs.GetFloat("PlayerHP"); else return 3; }
     public int LOadPlayerTransformtype() { if (PlayerPrefs.HasKey("TransformType")) return PlayerPrefs.GetInt("TransformType"); else return 0; }
     public void saveCheckPointIndexKey(int index)
@@ -115,9 +119,12 @@ public class GameManager : MonoBehaviour
 
         AsyncOperation syncoperation = SceneManager.LoadSceneAsync(scenename);
 
-      
+        Debug.Log(LoadLastestStage() + scenename);
+        if (GameManager.instance.LoadLastestStage() != scenename&& scenename != "TitleTest")
+        {
+            Debug.Log("씬 변화가 감지됨(단 방향이니깐 체크포인트 인덱스를 0으로 강제 초기화)\n 만약에 왕복으로 만들고 싶으면 PD한테 문의");
             GameManager.instance.saveCheckPointIndexKey(0);
-    
+        }
         if (scenename != "TitleTest")
             SaveCurrentStage(scenename);
         syncoperation.allowSceneActivation = false;
