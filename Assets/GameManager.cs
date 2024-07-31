@@ -85,10 +85,9 @@ public class GameManager : MonoBehaviour
     }
     public void LoadingScene(string scenename)
     {
-        saveCheckPointIndexKey(0);
-        if(scenename!="TitleTest")
-            SaveCurrentStage(scenename);
-        StartCoroutine(LoadingTest());
+      
+
+        StartCoroutine(LoadingTest(scenename));
     }
     public LoadingEffectKari LoadingEffect;
     public void LoadingSceneWithKariEffect(string scenename)
@@ -106,7 +105,7 @@ public class GameManager : MonoBehaviour
         LoadingEffect.gameObject.SetActive(true);
 
     }
-    public IEnumerator LoadingTest()
+    public IEnumerator LoadingTest(string scenename)
     {
 
         AsyncOperation loadingSceneOperation = SceneManager.LoadSceneAsync(loadingscenename);
@@ -114,7 +113,9 @@ public class GameManager : MonoBehaviour
 
       
 
-        AsyncOperation syncoperation = SceneManager.LoadSceneAsync(LoadLastestStage());
+        AsyncOperation syncoperation = SceneManager.LoadSceneAsync(scenename);
+        if (scenename != "TitleTest")
+            SaveCurrentStage(scenename);
         syncoperation.allowSceneActivation = false;
 
         Debug.Log($"로딩 씬 연출(최소 {MinimumLoadingTime}초 소모....)");

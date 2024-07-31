@@ -200,7 +200,7 @@ public class PlayerHandler : MonoBehaviour
             Dimensionchangeevent?.Invoke();
            
         }
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKey(KeyCode.C))
         {
             Debug.Log("점프키 입력 중");
             CurrentPlayer.jumpInputValue = 1;
@@ -246,7 +246,8 @@ public class PlayerHandler : MonoBehaviour
             }            
         }
         
-        if (Input.GetKey(KeyCode.X) && !Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKey(KeyCode.X) && !Input.GetKey(KeyCode.UpArrow) &&
+                PlayerInventory.instance.checkessesntialitem("item01"))
         {
             //CurrentPlayer.Attack();
             CurrentPlayer.attackBufferTimer = CurrentPlayer.attackBufferTimeMax;
