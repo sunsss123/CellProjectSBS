@@ -196,10 +196,10 @@ public class SwitchingCamera : MonoBehaviour
 
     private void Apply2DSettings()
     {
-        //Camera2D.orthographicSize = orthographicSize2D;
-        //Camera2D.nearClipPlane = nearClipPlane2D;
-        //Camera2D.farClipPlane = farClipPlane2D;
-        //Camera2D.orthographic = true;
+        Camera2D.orthographicSize = orthographicSize2D;
+        Camera2D.nearClipPlane = nearClipPlane2D;
+        Camera2D.farClipPlane = farClipPlane2D;
+        Camera2D.orthographic = true;
         Camera2D.transform.rotation = Quaternion.Euler(camrot2D);
     }
 
