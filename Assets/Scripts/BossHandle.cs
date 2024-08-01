@@ -100,6 +100,11 @@ public class BossHandle : MonoBehaviour
     #endregion
 
     #region 스포트라이트패턴    
+    public void SpotLightSHow()
+    {
+        lightObj.HandleSpotLight(this);
+    }
+
     public IEnumerator SpotLightShow()
     {        
         //InvokeRepeating("MonsterSpawn", InvokeStartTime, InvokeRate);

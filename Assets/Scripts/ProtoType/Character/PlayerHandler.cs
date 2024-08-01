@@ -204,7 +204,14 @@ public class PlayerHandler : MonoBehaviour
         {
             Debug.Log("점프키 입력 중");
             CurrentPlayer.jumpInputValue = 1;
-            CurrentPlayer.jumpBufferTimer = CurrentPlayer.jumpBufferTimeMax;
+            if(!CurrentPlayer.jumpLimitInput)
+                CurrentPlayer.jumpBufferTimer = CurrentPlayer.jumpBufferTimeMax;
+        }
+        else
+        {
+            CurrentPlayer.jumpLimitInput = false;
+            /*if(CurrentPlayer.onGround || CurrentPlayer.isJump)
+                CurrentPlayer.jumpLimitInput = false;*/
         }
         if (!Input.GetKey(KeyCode.C))
         {

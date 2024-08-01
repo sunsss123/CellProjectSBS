@@ -674,6 +674,7 @@ public class Player : Character
         isJump = true;
         jumpBufferTimer = 0;
         canjumpInput = false;
+        jumpLimitInput = true;
 
         if (Humonoidanimator != null)
         {
@@ -720,7 +721,7 @@ public class Player : Character
 
     public void jumphold()
     {
-        
+        //jumpLimitInput = false;
         jumpInputValue = 0;
         canjumpInput = true;
         if (playerRb.velocity.y > 0)

@@ -9992,7 +9992,7 @@ MonoBehaviour:
   target: {fileID: 0}
   targetPlayer: {fileID: 852575419}
   spotLightTime: 100
-  lightSpeed: 10
+  lightSpeed: 5
   spotLight: {fileID: 0}
   originColor: {r: 1, g: 0.77254903, b: 0, a: 0.9843137}
   checkColor: {r: 1, g: 0, b: 0, a: 0}
@@ -10001,7 +10001,7 @@ MonoBehaviour:
   fallingObject: {fileID: 9190717355191805024, guid: cd2fa4d0223ac6d46aace0f7753eccda,
     type: 3}
   fallingTime: 3
-  blinkTime: 0.5
+  blinkTime: 1.5
 --- !u!135 &656012001
 SphereCollider:
   m_ObjectHideFlags: 0

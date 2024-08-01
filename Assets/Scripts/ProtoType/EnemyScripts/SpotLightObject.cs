@@ -27,6 +27,7 @@ public class SpotLightObject : MonoBehaviour
 
     [Header("낙하패턴에 대한 변수")]
     public GameObject fallingObject;
+    bool readyFalling;
     float fallingTimer;
     public float fallingTime;
     public float blinkTime;
@@ -42,6 +43,7 @@ public class SpotLightObject : MonoBehaviour
     private void Start()
     {
         //StartCoroutine(TrackingSpotLight());
+        spotLight.enabled = false;
     }
 
     private void Update()
@@ -74,9 +76,9 @@ public class SpotLightObject : MonoBehaviour
             //target.LookAt(target);
 
             var vector = (targetPlayer.position - target.transform.position);
+            vector.y = 0f;
             if (vector.magnitude > 0.5f)
             {
-                spotLight.color = originColor;
                 Debug.Log(vector.normalized);
                 var MoveVector = vector.normalized * lightSpeed;
                 //Debug.Log(MoveVector + "크기" + MoveVector.magnitude);
@@ -86,13 +88,14 @@ public class SpotLightObject : MonoBehaviour
                     MoveVector = MoveVector.normalized * 2;
                 }
 
-                target.Translate(MoveVector * Time.deltaTime, Space.World);
+                if(!readyFalling)
+                    target.Translate(MoveVector * Time.deltaTime, Space.World);
             }
             else
             {
-                if (fallingTimer <= 0)
+                if (fallingTimer <= 0 && !readyFalling)
                 {
-                    fallingTimer = fallingTime;
+                    readyFalling = true;
                     fallingPoint = new Vector3(target.position.x, transform.position.y, target.position.z);
                     StartCoroutine(FallingAttack());
                 }
@@ -111,10 +114,17 @@ public class SpotLightObject : MonoBehaviour
 
     IEnumerator FallingAttack()
     {
-        spotLight.color = checkColor;
-        Instantiate(fallingObject, fallingPoint, Quaternion.identity);
+        //spotLight.color = checkColor;        
+        spotLight.enabled = true;
+
         yield return new WaitForSeconds(blinkTime);
-        spotLight.color = originColor;
+
+        Instantiate(fallingObject, fallingPoint, Quaternion.identity);
+
+        //spotLight.color = originColor;
+        spotLight.enabled = false;
+        readyFalling = false;
+        fallingTimer = fallingTime;
     }
 
     public void HandleSpotLight(HandleSpotlight handle)

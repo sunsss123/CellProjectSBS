@@ -28,11 +28,13 @@ public class BossTv : MonoBehaviour
     }
     public void RSpotlight()
     {
-        StartCoroutine(RHand.SpotLightShow());
+        RHand.SpotLightSHow();
+        //StartCoroutine(RHand.SpotLightShow());
     }
     
     public void LSpotlight()
     {
-        StartCoroutine(LHand.SpotLightShow());
+        LHand.SpotLightSHow();
+        //StartCoroutine(LHand.SpotLightShow());
     }
 }
