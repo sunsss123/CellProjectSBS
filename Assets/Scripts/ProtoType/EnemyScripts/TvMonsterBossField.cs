@@ -6,6 +6,7 @@ using UnityEngine.Rendering;
 public class TvMonsterBossField : Enemy
 {
     public HandleSpotlight hsl;
+    public BossHandle bh;
     public float distance;
     public float distanceValue;
     public override void Attack()
@@ -33,9 +34,19 @@ public class TvMonsterBossField : Enemy
         }
     }
 
-    public void SetHandle(HandleSpotlight handle)
+    public void SetHandle(HandleSpotlight handleSpotLight)
     {
-        hsl = handle;
+        hsl = handleSpotLight;
+        target = hsl.moveTarget.transform;
+        if (target != null)
+        {
+            tracking = true;
+        }
+    }
+
+    public void SetHandle(BossHandle bossHandle)
+    {
+        bh = bossHandle;
         target = hsl.moveTarget.transform;
         if (target != null)
         {

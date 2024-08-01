@@ -6,7 +6,7 @@ public class BossTv : MonoBehaviour
 {
     public GameObject Monitor;
     public BossHandle LHand;
-    public Stage1Hand RHand;
+    public BossHandle RHand;
 
     public GameObject Spotlight;
 
@@ -16,6 +16,7 @@ public class BossTv : MonoBehaviour
     private void Start()
     {
         //LSweaper();
+        RSpotlight();
     }
     public void LSweaper()
     {
@@ -27,6 +28,11 @@ public class BossTv : MonoBehaviour
     }
     public void RSpotlight()
     {
-
+        StartCoroutine(RHand.SpotLightShow());
+    }
+    
+    public void LSpotlight()
+    {
+        StartCoroutine(LHand.SpotLightShow());
     }
 }

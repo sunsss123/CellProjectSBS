@@ -121,7 +121,7 @@ public class Player : Character
     void Update()
     {
         if (jumpBufferTimer > 0)
-        {          
+        {
             jumpBufferTimer -= Time.deltaTime;
         }
 
@@ -720,6 +720,7 @@ public class Player : Character
 
     public void jumphold()
     {
+        
         jumpInputValue = 0;
         canjumpInput = true;
         if (playerRb.velocity.y > 0)
