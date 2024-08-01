@@ -15,7 +15,7 @@ public class PlayerSpawnManager : MonoBehaviour
     public GameObject DefaultForm;
     public int LastestCheckPointID;//세이브용 나중에 따로 보내기
     public CheckPoint CurrentCheckPoint;
-
+    public GameObject SaveText;
     public GameObject CurrentPlayer;// 행동 작업
     public void ChangeCheckPoint(CheckPoint ChkPoint)
     {
@@ -23,7 +23,8 @@ public class PlayerSpawnManager : MonoBehaviour
             return;
         LastestCheckPointID = ChkPoint.index;
         CurrentCheckPoint = ChkPoint;
-
+        Debug.Log("세이브" +ChkPoint.index);
+        SaveText.gameObject.SetActive(true);
         GameManager.instance.saveCheckPointIndexKey(ChkPoint.index);
         GameManager.instance.SaveCurrentStage(SceneManager.GetActiveScene().name);
         GameManager.instance.SavePlayerStatus();
@@ -84,11 +85,7 @@ public class PlayerSpawnManager : MonoBehaviour
     }
     private void Start()
     {
-        if (GameManager.instance.LoadLastestStage() != SceneManager.GetActiveScene().name)
-        {
-            Debug.Log("씬 변화가 감지됨(단 방향이니깐 체크포인트 인덱스를 0으로 강제 초기화)\n 만약에 왕복으로 만들고 싶으면 PD한테 문의");
-            GameManager.instance.saveCheckPointIndexKey(0);
-        }
+       
         PlayerInventory.instance.LoadInventoryData();
         PlayerStat.instance.hp = GameManager.instance.LoadPlayerHP();
         PlayerHandler.instance.CurrentType = (TransformType)GameManager.instance.LOadPlayerTransformtype();

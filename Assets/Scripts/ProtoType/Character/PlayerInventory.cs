@@ -8,8 +8,10 @@ using UnityEngine;
 public class InvetorySaveData
 {
    public List<EssentialitemData> essentialitems=new List<EssentialitemData>();
-    public List<UpgradeStatus> Upgradesstatus;
+    public List<UpgradeStatus> Upgradesstatus=new List<UpgradeStatus>();
    public List<int> Multiplys =new List<int>();
+
+   
 }
 [Serializable]
 public class EssentialitemData
@@ -29,7 +31,7 @@ public class PlayerInventory : MonoBehaviour
 {
     public static PlayerInventory instance;
    Dictionary<string, Essentialitem> EssentialItems = new Dictionary<string, Essentialitem>();
-
+    public ItemUI itemui;
 
     public MUltiPlyitem[] MultiplyItems=new MUltiPlyitem[2];
 
@@ -43,7 +45,7 @@ public class PlayerInventory : MonoBehaviour
             EssentialitemData e = new EssentialitemData(kvp.Value);
             saveData.essentialitems.Add(e);
         }
-        saveData.Upgradesstatus = new List<UpgradeStatus>();
+ 
         foreach (KeyValuePair<UpgradeStatus, int> item in MultiplyitemNumberDict)
         {
            
@@ -52,16 +54,19 @@ public class PlayerInventory : MonoBehaviour
             saveData.Multiplys.Add(item.Value);
         }
         string json = JsonUtility.ToJson(saveData);
-        File.WriteAllText(Application.persistentDataPath+"\\InventroySave.json", json);
+        string filePath = Path.Combine(Application.persistentDataPath, "InventorySave.json");
+        File.WriteAllText(filePath, json);
     }
+   
     public void LoadInventoryData()
     {
-        if(File.Exists(Application.persistentDataPath + "\\InventroySave.json"))
+        string filePath = Path.Combine(Application.persistentDataPath, "InventorySave.json");
+        if (File.Exists(filePath))
         {
-            var a = File.ReadAllText(Application.persistentDataPath + "\\InventroySave.json");
+            var a = File.ReadAllText(filePath);
             InvetorySaveData savedata=JsonUtility.FromJson<InvetorySaveData>(a);
 
-            EssentialItems.Clear();
+     
             foreach(EssentialitemData e in savedata.essentialitems)
             {
                 Essentialitem Eitem= ScriptableObject.CreateInstance<Essentialitem>();
@@ -70,7 +75,7 @@ public class PlayerInventory : MonoBehaviour
                 Eitem.itemcode=e.itemcode;
                 EssentialItems.Add(Eitem.itemcode, Eitem);
             }
-            MultiplyitemNumberDict.Clear();
+     
            for(int n = 0; n < savedata.Upgradesstatus.Count; n++)
             {
                 MultiplyitemNumberDict[savedata.Upgradesstatus[n]] = savedata.Multiplys[n];
@@ -129,6 +134,9 @@ public class PlayerInventory : MonoBehaviour
  
         if(!EssentialItems.ContainsKey(i.itemcode))
             EssentialItems.Add(i.itemcode, i);
+        //SaveInventoryData();
+        itemui.activeUI(i);
+
     }
     public void AddMultiplyItem(UpgradeStatus s)
     {
@@ -136,7 +144,10 @@ public class PlayerInventory : MonoBehaviour
         {
             MultiplyitemNumberDict[s]++;
             MultiplyitemDict[s].GetItem(MultiplyitemNumberDict[s]);
-            Debug.Log("아이템 흭득:" +s+"최대 체력"+PlayerStat.instance.hpMax+"초기 값"+PlayerStat.instance.initMaxHP+"추가 값"+PlayerStat.instance.HPBonus);
+
+            //SaveInventoryData();
+
+            itemui.activeUI(MultiplyitemDict[s]);
         }
     }
  

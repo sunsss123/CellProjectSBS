@@ -33,7 +33,7 @@ public class RemoteTV : RemoteObject
 
     private void Update()
     {
-        if (onViewPort)
+        if (onViewPort && PlayerHandler.instance.CurrentPlayer!=null)
         {
              distanceToRemocon = Vector3.Distance(transform.position, PlayerHandler.instance.CurrentPlayer.transform.position);
         }

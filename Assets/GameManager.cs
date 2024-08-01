@@ -1,12 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    
     //1,인벤토리를 게임 메니저랑 같이 옮기기
     //2.로딩할때마다 불려오기
     //세이브 정리하기
@@ -29,7 +31,20 @@ public class GameManager : MonoBehaviour
 
     public string loadingscenename = "LoadingTest";
     public string currentscenename;
+    public void DeleteSaveSetting()
+    {
+        PlayerPrefs.DeleteAll();
+        DeleteInventoryData();
+    }
+    public void DeleteInventoryData()
+    {
+        string filePath = Path.Combine(Application.persistentDataPath, "InventorySave.json");
+        if (File.Exists(filePath))
+        {
+            File.Delete(filePath);
+        }
 
+    }
     public void SavePlayerStatus()
     {
         if (PlayerStat.instance != null && PlayerHandler.instance != null)
@@ -38,7 +53,11 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("TransformType", (int)PlayerHandler.instance.CurrentType);
         }
     }
-    public float LoadPlayerHP() { if (PlayerPrefs.HasKey("PlayerHP")) return PlayerPrefs.GetFloat("PlayerHP"); else return 5; }
+    private void Update()
+    {
+        Debug.Log(LoadCheckPointIndexKey());
+    }
+    public float LoadPlayerHP() { if (PlayerPrefs.HasKey("PlayerHP")) return PlayerPrefs.GetFloat("PlayerHP"); else return 3; }
     public int LOadPlayerTransformtype() { if (PlayerPrefs.HasKey("TransformType")) return PlayerPrefs.GetInt("TransformType"); else return 0; }
     public void saveCheckPointIndexKey(int index)
     {
@@ -70,20 +89,27 @@ public class GameManager : MonoBehaviour
     }
     public void LoadingScene(string scenename)
     {
-        saveCheckPointIndexKey(0);
-        SaveCurrentStage(scenename);
-        StartCoroutine(LoadingTest());
+      
+
+        StartCoroutine(LoadingTest(scenename));
     }
     public LoadingEffectKari LoadingEffect;
     public void LoadingSceneWithKariEffect(string scenename)
     {
-        PlayerHandler.instance.CurrentPlayer = null;
-        LoadingEffect.EffectEnd += LoadingScene;
+        if (PlayerHandler.instance != null)
+        {
+            PlayerHandler.instance.CurrentPlayer = null;
+            SavePlayerStatus();
+        }
+        if (        PlayerInventory.instance != null)
+             PlayerInventory.instance.SaveInventoryData();
+   
+            LoadingEffect.EffectEnd += LoadingScene;
         LoadingEffect.LoadSceneName = scenename;
         LoadingEffect.gameObject.SetActive(true);
 
     }
-    public IEnumerator LoadingTest()
+    public IEnumerator LoadingTest(string scenename)
     {
 
         AsyncOperation loadingSceneOperation = SceneManager.LoadSceneAsync(loadingscenename);
@@ -91,7 +117,16 @@ public class GameManager : MonoBehaviour
 
       
 
-        AsyncOperation syncoperation = SceneManager.LoadSceneAsync(LoadLastestStage());
+        AsyncOperation syncoperation = SceneManager.LoadSceneAsync(scenename);
+
+        Debug.Log(LoadLastestStage() + scenename);
+        if (GameManager.instance.LoadLastestStage() != scenename&& scenename != "TitleTest")
+        {
+            Debug.Log("씬 변화가 감지됨(단 방향이니깐 체크포인트 인덱스를 0으로 강제 초기화)\n 만약에 왕복으로 만들고 싶으면 PD한테 문의");
+            GameManager.instance.saveCheckPointIndexKey(0);
+        }
+        if (scenename != "TitleTest")
+            SaveCurrentStage(scenename);
         syncoperation.allowSceneActivation = false;
 
         Debug.Log($"로딩 씬 연출(최소 {MinimumLoadingTime}초 소모....)");

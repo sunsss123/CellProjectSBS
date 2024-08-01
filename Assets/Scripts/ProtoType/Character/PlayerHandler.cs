@@ -111,11 +111,16 @@ public class PlayerHandler : MonoBehaviour
         if(CurrentPlayer !=null)
             lastDirection = PlayerStat.instance.direction;        
         transformed(TransformType.Default);
-        LastTransformPlace.transform.position = Playerprefab.transform.position;
+        if (LastTransformPlace != null)
+        {
+            LastTransformPlace.transform.position = Playerprefab.transform.position;
+            LastTransformPlace.gameObject.SetActive(true);
+            LastTransformPlace = null;
+            CurrentPlayer.transform.Translate(Vector3.up * defromUpPosition);
+        }
         PlayerStat.instance.direction = lastDirection;
-        CurrentPlayer.transform.Translate(Vector3.up * defromUpPosition);
-        LastTransformPlace.gameObject.SetActive(true);
-        LastTransformPlace = null;        
+
+           
     }
     void CreateModelByCurrentType(Action eventhandler =null)
 {
@@ -189,7 +194,7 @@ public class PlayerHandler : MonoBehaviour
         {
             CurrentPlayer.Move();
         }
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space)&&CurrentPlayer.onGround)
         {
             PlayerStat.instance.Trans3D = !PlayerStat.instance.Trans3D;
             Dimensionchangeevent?.Invoke();
@@ -219,7 +224,7 @@ public class PlayerHandler : MonoBehaviour
                     if (DeTransformtimer > DeTransformtime)
                     {
                         DeTransformtimer = 0;
-                        Deform();
+                        //Deform();
                     }
                     break;
                 default:
@@ -234,7 +239,8 @@ public class PlayerHandler : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.DownArrow))
         {
-            if (Input.GetKey(KeyCode.X) && !CurrentPlayer.onGround)
+            if (Input.GetKey(KeyCode.X) && !CurrentPlayer.onGround &&
+                PlayerInventory.instance.checkessesntialitem("item01"))
             {                         
                 CurrentPlayer.DownAttack();
             }            

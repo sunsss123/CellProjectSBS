@@ -1,40 +1,72 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 public class TitleScreen : MonoBehaviour
 {
     public List<TItleText> titletexts;
     public int index;
-    public void StartGame()
+    public TextMeshProUGUI ResetText;
+    public void StartNewGame()
     {
-        SceneManager.LoadScene("Cell_002 1");
-        removeEvents();
+        GameManager.instance.DeleteSaveSetting();
+        GameManager.instance.LoadingSceneWithKariEffect("ldj_1-1");
+   
+    }
+    public void ContinueGame()
+    {
+
+        Debug.Log("작동 시도"+ GameManager.instance.LoadLastestStage());
+
+        GameManager.instance.LoadingSceneWithKariEffect(GameManager.instance.LoadLastestStage());
+
+      
+    }
+    public void ResetData()
+    {
+        GameManager.instance.DeleteSaveSetting();
+        ResetText.gameObject.SetActive(true);
     }
     public void removeEvents()
     {
-        foreach (TItleText t in titletexts)
-        {
-            t.removeevent();
-        }
+        //foreach (TItleText t in titletexts)
+        //{
+        //    t.removeevent();
+        //}
     }
     public void handletitle()
     {
+        int LastIndex;
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
+            LastIndex = index;
             index++;
+          
+            if (!PlayerPrefs.HasKey("LastestStageName") && index == 1)
+            {
+                index++;
+            }
             if (index >= titletexts.Count)
                 index = titletexts.Count - 1;
-            changehub(index - 1, index);
+            changehub(LastIndex, index);
+          
         }
         else if (Input.GetKeyDown(KeyCode.UpArrow))
         {
+            LastIndex = index;
             index--;
+            
+            if (!PlayerPrefs.HasKey("LastestStageName") && index == 1)
+            {
+                index--;
+            }
             if (index < 0)
                 index = 0;
-            changehub(index +1, index);
+            changehub(LastIndex, index);
+          
         }
-        else if (Input.GetKeyDown(KeyCode.X))
+        else if (Input.GetKeyDown(KeyCode.X)|| Input.GetKeyDown(KeyCode.C))
         {
             titletexts[index].ButtonActive();
         }
@@ -52,14 +84,26 @@ public class TitleScreen : MonoBehaviour
     }
     public void InitText()
     {
+        if (PlayerPrefs.HasKey("LastestStageName"))
+            index = 1;
+        else
         index = 0;
         titletexts[index].ActiveImageHub();
-        titletexts[0].ButtonEffect += StartGame;
+        titletexts[0].ButtonEffect += StartNewGame;
+        titletexts[1].ButtonEffect += ContinueGame;
+        titletexts[2].ButtonEffect += ResetData;
         titletexts[titletexts.Count - 1].ButtonEffect += quitgame;
+        ResetText.gameObject.SetActive(false);
+    }
+    private void Awake()
+    {
+        
     }
     private void Start()
     {
         InitText();
+        
+       
     }
     // Update is called once per frame
     void Update()

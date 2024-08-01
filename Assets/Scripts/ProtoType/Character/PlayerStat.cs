@@ -49,7 +49,7 @@ public class PlayerStat : CharacterStat
         {
             instance = this;
         }
-
+        Trans3D = false;
     }
     
   

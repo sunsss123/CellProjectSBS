@@ -956,7 +956,7 @@ public class Player : Character
     public void InteractivePlatformrayCheck()
     {
 
-        Debug.DrawRay(transform.position, Vector3.up * 0.2f, Color.green);
+        Debug.DrawRay(transform.position, Vector3.up * 0.2f * sizeY, Color.green);
         RaycastHit hit;
         //if ()
         //{

@@ -29,7 +29,7 @@ public class LoadingEffectKari : MonoBehaviour
 
         if (!FadeOff)
         {
-            alpha += Effectspeed * Time.deltaTime;
+            alpha += Effectspeed * Time.unscaledDeltaTime;
             image_.color = new Color(0, 0, 0, alpha);
             if (alpha >= 1)
             {
@@ -41,7 +41,7 @@ public class LoadingEffectKari : MonoBehaviour
         else if(LoadingComplete)
         {
             
-            alpha -= Effectspeed * Time.deltaTime;
+            alpha -= Effectspeed * Time.unscaledDeltaTime;
             image_.color = new Color(0, 0, 0, alpha);
             if (alpha <= 0)
             {
