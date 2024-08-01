@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Rendering;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 
 public class SpotLightObject : MonoBehaviour
 {
@@ -14,18 +15,26 @@ public class SpotLightObject : MonoBehaviour
     float spotLightTimer;
     public float spotLightTime;
     public float lightSpeed;
-  
+    public Light spotLight;
+    public Color originColor;
+    public Color checkColor;
 
     [Header("조건 거리값, 빛이 따라가기 전 대기시간")]
     public float targetDistance;
     float disValue;
     float readyTimer;
     public float timerMax;
-    
+
+    [Header("낙하패턴에 대한 변수")]
+    public GameObject fallingObject;
+    float fallingTimer;
+    public float fallingTime;
+    public float blinkTime;
+    Vector3 fallingPoint;
 
     private void Awake()
     {
-      
+        spotLight = GetComponentInChildren<Light>();
         lightRot = transform.rotation;
         readyTimer = timerMax;
     }
@@ -55,6 +64,10 @@ public class SpotLightObject : MonoBehaviour
 
         //while (true/*spotLightTimer < spotLightTime*/)
         //{
+        if (fallingTimer > 0)
+        {
+            fallingTimer -= Time.deltaTime;
+        }
 
         if (readyTimer < 0)
         {
@@ -63,6 +76,7 @@ public class SpotLightObject : MonoBehaviour
             var vector = (targetPlayer.position - target.transform.position);
             if (vector.magnitude > 0.5f)
             {
+                spotLight.color = originColor;
                 Debug.Log(vector.normalized);
                 var MoveVector = vector.normalized * lightSpeed;
                 //Debug.Log(MoveVector + "크기" + MoveVector.magnitude);
@@ -74,11 +88,16 @@ public class SpotLightObject : MonoBehaviour
 
                 target.Translate(MoveVector * Time.deltaTime, Space.World);
             }
-            //else
-            //{
-            //    if(vector.magnitude!=0)
-            //        Transform.
-            //}
+            else
+            {
+                if (fallingTimer <= 0)
+                {
+                    fallingTimer = fallingTime;
+                    fallingPoint = new Vector3(target.position.x, transform.position.y, target.position.z);
+                    StartCoroutine(FallingAttack());
+                }
+
+            }            
            
             spotLightTimer += Time.deltaTime;
             if (spotLightTimer > spotLightTime)
@@ -88,9 +107,14 @@ public class SpotLightObject : MonoBehaviour
         {
             readyTimer -= Time.deltaTime;
         }
-            //yield return null;
-        //}
-        //InitRotation();
+    }
+
+    IEnumerator FallingAttack()
+    {
+        spotLight.color = checkColor;
+        Instantiate(fallingObject, fallingPoint, Quaternion.identity);
+        yield return new WaitForSeconds(blinkTime);
+        spotLight.color = originColor;
     }
 
     public void HandleSpotLight(HandleSpotlight handle)
