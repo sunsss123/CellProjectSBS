@@ -12,15 +12,16 @@ public class TitleScreen : MonoBehaviour
     {
         GameManager.instance.DeleteSaveSetting();
         GameManager.instance.LoadingSceneWithKariEffect("ldj_1-1");
-        removeEvents();
+   
     }
     public void ContinueGame()
     {
-        if (PlayerPrefs.HasKey("LastestStageName"))
-        {
-            GameManager.instance.LoadingSceneWithKariEffect(GameManager.instance.LoadLastestStage());
-            removeEvents();
-        }
+
+        Debug.Log("작동 시도"+ GameManager.instance.LoadLastestStage());
+
+        GameManager.instance.LoadingSceneWithKariEffect(GameManager.instance.LoadLastestStage());
+
+      
     }
     public void ResetData()
     {
@@ -29,10 +30,10 @@ public class TitleScreen : MonoBehaviour
     }
     public void removeEvents()
     {
-        foreach (TItleText t in titletexts)
-        {
-            t.removeevent();
-        }
+        //foreach (TItleText t in titletexts)
+        //{
+        //    t.removeevent();
+        //}
     }
     public void handletitle()
     {

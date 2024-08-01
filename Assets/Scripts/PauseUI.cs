@@ -29,8 +29,11 @@ public class PauseUI : MonoBehaviour
 
     public void ReturnTitle()
     {
-        if(pauseActive)
-            SceneManager.LoadScene(TitleSceneName);
+        if (pauseActive)
+        {
+            GameManager.instance.LoadingSceneWithKariEffect("TitleTest");
+            PauseUiActive();
+        }
     }    
 
     public void PauseUiActive()
