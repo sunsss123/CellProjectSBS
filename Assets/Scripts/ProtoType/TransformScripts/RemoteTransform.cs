@@ -101,16 +101,19 @@ public class RemoteTransform : Player
             {
                 handlerange.radius = handlediameterrangemin;
             }*/
-        Charging = false;
-        chargingBufferTimer = chargingBufferTimeMax;
-        Humonoidanimator.SetBool("Charge", Charging);
-        if (timeScale < handlediameterrangemin)
+        if (!PlayerHandler.instance.doubleUpInput || !Input.GetKey(KeyCode.X))
         {
-            handlerange.transform.localScale = new Vector3(handlediameterrangemin, handlediameterrangemin, 0);
+            Charging = false;
+            chargingBufferTimer = chargingBufferTimeMax;
+            Humonoidanimator.SetBool("Charge", Charging);
+            if (timeScale < handlediameterrangemin)
+            {
+                handlerange.transform.localScale = new Vector3(handlediameterrangemin, handlediameterrangemin, 0);
+            }
+            //handlerange.gameObject.SetActive(true);
+            handlerange.gameObject.SetActive(Charging);
+            ActiveRemoteObject();
         }
-        //handlerange.gameObject.SetActive(true);
-        handlerange.gameObject.SetActive(Charging);
-        ActiveRemoteObject();
 
         /*if (!Input.GetKey(KeyCode.UpArrow) && Charging
             || !Input.GetKey(KeyCode.X) && Charging)
