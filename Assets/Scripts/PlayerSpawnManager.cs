@@ -32,6 +32,10 @@ public class PlayerSpawnManager : MonoBehaviour
         //Debug.Log($"Playerprefs chkpointindex{GameManager.instance.LoadCheckPointIndexKey()} LastestStage{GameManager.instance.LoadLastestStage()}");
   
     }
+    public CheckPoint GetCurrentCheckpoint()
+    {
+        return Checkpoints[GameManager.instance.LoadCheckPointIndexKey()];
+    }
     public void LoadCheckPoint()
     {
         CurrentCheckPoint = ChkPointsDic[GameManager.instance.LoadCheckPointIndexKey()];

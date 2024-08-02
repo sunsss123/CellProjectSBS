@@ -6195,135 +6195,20 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 863300926303725012, guid: ab13fa33b66015945bb5888f86a5cd69,
+    - target: {fileID: 2678509207607036577, guid: ab13fa33b66015945bb5888f86a5cd69,
         type: 3}
-      propertyPath: m_ClearFlags
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 863300926303725012, guid: ab13fa33b66015945bb5888f86a5cd69,
-        type: 3}
-      propertyPath: orthographic
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 863300926303725012, guid: ab13fa33b66015945bb5888f86a5cd69,
-        type: 3}
-      propertyPath: field of view
-      value: 60.000004
-      objectReference: {fileID: 0}
-    - target: {fileID: 863300926303725012, guid: ab13fa33b66015945bb5888f86a5cd69,
-        type: 3}
-      propertyPath: m_FocalLength
-      value: 20.78461
-      objectReference: {fileID: 0}
-    - target: {fileID: 863300926303725012, guid: ab13fa33b66015945bb5888f86a5cd69,
-        type: 3}
-      propertyPath: m_BackGroundColor.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 863300926303725012, guid: ab13fa33b66015945bb5888f86a5cd69,
-        type: 3}
-      propertyPath: m_BackGroundColor.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 863300926303725012, guid: ab13fa33b66015945bb5888f86a5cd69,
-        type: 3}
-      propertyPath: m_BackGroundColor.r
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 863300926303725012, guid: ab13fa33b66015945bb5888f86a5cd69,
-        type: 3}
-      propertyPath: m_projectionMatrixMode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1585972714968506649, guid: ab13fa33b66015945bb5888f86a5cd69,
-        type: 3}
-      propertyPath: m_CameraType
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1585972714968506649, guid: ab13fa33b66015945bb5888f86a5cd69,
-        type: 3}
-      propertyPath: m_VolumeLayerMask.m_Bits
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1585972714968506649, guid: ab13fa33b66015945bb5888f86a5cd69,
-        type: 3}
-      propertyPath: m_VolumeFrameworkUpdateModeOption
-      value: 2
+      propertyPath: CameraUPViewportPos
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 2678509207607036577, guid: ab13fa33b66015945bb5888f86a5cd69,
         type: 3}
-      propertyPath: ZPin
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2678509207607036577, guid: ab13fa33b66015945bb5888f86a5cd69,
-        type: 3}
-      propertyPath: camPos.x
-      value: 0.35
-      objectReference: {fileID: 0}
-    - target: {fileID: 2678509207607036577, guid: ab13fa33b66015945bb5888f86a5cd69,
-        type: 3}
-      propertyPath: camPos.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2678509207607036577, guid: ab13fa33b66015945bb5888f86a5cd69,
-        type: 3}
-      propertyPath: camPos.z
-      value: -3.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2678509207607036577, guid: ab13fa33b66015945bb5888f86a5cd69,
-        type: 3}
-      propertyPath: camrot.x
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 2678509207607036577, guid: ab13fa33b66015945bb5888f86a5cd69,
-        type: 3}
-      propertyPath: camrot.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2678509207607036577, guid: ab13fa33b66015945bb5888f86a5cd69,
-        type: 3}
-      propertyPath: InitCamPos.x
-      value: 0.35
-      objectReference: {fileID: 0}
-    - target: {fileID: 2678509207607036577, guid: ab13fa33b66015945bb5888f86a5cd69,
-        type: 3}
-      propertyPath: InitCamPos.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2678509207607036577, guid: ab13fa33b66015945bb5888f86a5cd69,
-        type: 3}
-      propertyPath: InitCamPos.z
-      value: -3.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2678509207607036577, guid: ab13fa33b66015945bb5888f86a5cd69,
-        type: 3}
-      propertyPath: InitCamrot.x
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 2678509207607036577, guid: ab13fa33b66015945bb5888f86a5cd69,
-        type: 3}
-      propertyPath: InitCamrot.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2678509207607036577, guid: ab13fa33b66015945bb5888f86a5cd69,
-        type: 3}
-      propertyPath: CameraMoveSpeed
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2678509207607036577, guid: ab13fa33b66015945bb5888f86a5cd69,
-        type: 3}
-      propertyPath: CameraTrakingTime
-      value: 0.15
+      propertyPath: CameraDownViewportPos
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 6756932567210679393, guid: ab13fa33b66015945bb5888f86a5cd69,
         type: 3}
       propertyPath: m_Name
       value: "\uAE30\uBCF8\uCE74\uBA54\uB77C"
-      objectReference: {fileID: 0}
-    - target: {fileID: 6756932567210679393, guid: ab13fa33b66015945bb5888f86a5cd69,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7960915414317975017, guid: ab13fa33b66015945bb5888f86a5cd69,
         type: 3}
