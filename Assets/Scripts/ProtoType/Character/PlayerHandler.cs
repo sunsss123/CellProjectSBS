@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using UnityEditor.Profiling.Memory.Experimental;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering;
 using UnityEngine.UIElements;
 
 
@@ -188,6 +189,28 @@ public class PlayerHandler : MonoBehaviour
         Dimensionchangeevent += a;
     }
 
+    private void Update()
+    {
+        if (inputTimer > 0)
+        {
+            inputTimer -= Time.deltaTime;
+        }
+
+        if (doubleUpInput || doubleDownInput)
+            onAttack = false;
+        else
+            onAttack = true;
+    }
+    [Header("키 두번 입력에 대한 처리")]
+    public bool firstUpInput;
+    public bool doubleUpInput;
+    float inputTimer;
+    public float inputTime;
+    public bool firstDownInput;
+    public bool doubleDownInput;
+    [Header("일반 or 스킬 체크")]
+    public bool onAttack;    
+
     void charactermove()
     {
         if (!CurrentPlayer.downAttack)
@@ -222,38 +245,75 @@ public class PlayerHandler : MonoBehaviour
         {
             CurrentPlayer. SwapAttackType();
         }
-        if (!Input.GetKey(KeyCode.X) && Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKey(KeyCode.UpArrow))
         {
-            switch (CurrentType)
+            if (!firstUpInput && !doubleUpInput && inputTimer<=0)
             {
-                case TransformType.remoteform:
-                    DeTransformtimer += Time.deltaTime;
-                    if (DeTransformtimer > DeTransformtime)
-                    {
-                        DeTransformtimer = 0;
-                        //Deform();
-                    }
-                    break;
-                default:
-                    break;
-
+                firstUpInput = true;
+                inputTimer = inputTime;                
             }
 
+            if (!doubleUpInput)
+            {
+                if (!firstUpInput && inputTimer > 0)
+                {
+                    doubleUpInput = true;
+                }
+            }
+
+            if (doubleUpInput)
+            {
+                switch (CurrentType)
+                {
+                    case TransformType.remoteform:
+                        DeTransformtimer += Time.deltaTime;
+                        if (DeTransformtimer > DeTransformtime)
+                        {
+                            DeTransformtimer = 0;
+                            //Deform();
+                        }
+                        break;
+                    default:
+                        break;
+
+                }
+            }
         }
         else
         {
+            firstUpInput = false;
+            doubleUpInput = false;
             DeTransformtimer = 0;
         }
         if (Input.GetKey(KeyCode.DownArrow))
         {
-            if (Input.GetKey(KeyCode.X) && !CurrentPlayer.onGround &&
-                PlayerInventory.instance.checkessesntialitem("item01"))
+            if (!firstDownInput && !doubleDownInput && inputTimer <= 0)
+            {
+                firstDownInput = true;
+                inputTimer = inputTime;
+            }
+
+            if (!doubleDownInput)
+            {
+                if (!firstDownInput && inputTimer > 0)
+                {
+                    doubleDownInput = true;
+                }
+            }
+
+            if (Input.GetKey(KeyCode.X) && !CurrentPlayer.onGround  && doubleDownInput/*&&
+                PlayerInventory.instance.checkessesntialitem("item01")*/)
             {                         
                 CurrentPlayer.DownAttack();
             }            
         }
+        else
+        {
+            firstDownInput = false;
+            doubleDownInput = false;
+        }
         
-        if (Input.GetKey(KeyCode.X) && !Input.GetKey(KeyCode.UpArrow)/* &&
+        if (Input.GetKey(KeyCode.X)/* &&
                 PlayerInventory.instance.checkessesntialitem("item01")*/)
         {
             //CurrentPlayer.Attack();
@@ -268,7 +328,8 @@ public class PlayerHandler : MonoBehaviour
         //    
         //}
 
-        CurrentPlayer.Skill1();
+        if(doubleUpInput && Input.GetKey(KeyCode.X))
+            CurrentPlayer.Skill1();
         //CurrentPlayer.Skill2();
 
     }

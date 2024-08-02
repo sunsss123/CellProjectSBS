@@ -24956,6 +24956,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2941687202988247702, guid: 498faebe0b50512469dec30511b4f85f,
+        type: 3}
+      propertyPath: inputTime
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2941687202988247702, guid: 498faebe0b50512469dec30511b4f85f,
+        type: 3}
+      propertyPath: upInputTime
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 3493046245006148624, guid: 498faebe0b50512469dec30511b4f85f,
         type: 3}
       propertyPath: CheckpointChkCamera
@@ -24980,6 +24990,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6175487160633950384, guid: 498faebe0b50512469dec30511b4f85f,
+        type: 3}
+      propertyPath: attackDelay
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8262377263790243442, guid: 498faebe0b50512469dec30511b4f85f,
         type: 3}

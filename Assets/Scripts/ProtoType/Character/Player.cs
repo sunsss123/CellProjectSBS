@@ -378,6 +378,8 @@ public class Player : Character
         else
             directionz = directionZ.none;
 
+        //PlayerStat.instance.Trans3D
+
         if (hori == -1 && vert == 0) // Left
         {
             rotateVector = new Vector3(0, 180, 0);
@@ -442,12 +444,13 @@ public class Player : Character
 
     public float Decelatate = 2;
 
+    public float hori;
+    public float Vert;
 
     public override void Move()
     {
-
-        float hori = 0;
-        float Vert=0;
+        hori = 0;
+        Vert=0;
         if (PlayerStat.instance.Trans3D)
         {
             hori = Input.GetAxisRaw("Vertical");
@@ -456,9 +459,14 @@ public class Player : Character
         else
         {
             hori = Input.GetAxisRaw("Horizontal");
+        }        
+   
+        if (!canAttack && onGround)
+        {
+            hori = 0;
+            Vert = 0;
         }
 
-   
         Vector3 moveInput = new Vector3(hori, 0, Vert);
         if (hori != 0 || Vert != 0)
         {
@@ -539,30 +547,50 @@ public class Player : Character
     #region 공격
     public override void Attack()
     {
-        if (attackBufferTimer > 0 && canAttack)
+        if (PlayerHandler.instance.onAttack)
         {
-            if (PlayerStat.instance.attackType == AttackType.melee && canAttack && !downAttack)
+            if (attackBufferTimer > 0 && canAttack)
             {
-                attackBufferTimer = 0;
-                canAttack = false;
-                if (!onGround)
+                Debug.Log("공격 입력중");
+                if (PlayerStat.instance.attackType == AttackType.melee && canAttack && !downAttack)
                 {
-                    attackSky = true;
-                }
-                else
-                {
-                    attackGround = true;
-                }
+                    attackBufferTimer = 0;
+                    canAttack = false;
+                    if (!onGround)
+                    {
+                        attackSky = true;
+                    }
+                    else
+                    {
+                        attackGround = true;
+                    }
 
-                if (Humonoidanimator != null)
-                    Humonoidanimator.Play("Attack");
+                    if (Humonoidanimator != null)
+                        Humonoidanimator.Play("Attack");
 
-                StartCoroutine(TestMeleeAttack());
+                    StartCoroutine(TestMeleeAttack());
+                }
             }
         }
     }
 
-
+    void AttackMove()
+    {
+        if (!wallcheck)
+        {
+            if (!PlayerStat.instance.Trans3D && directionz != directionZ.none && hori == 0)
+            {
+                playerRb.AddForce(transform.forward * 7, ForceMode.Impulse);
+            }
+            else if (PlayerStat.instance.Trans3D)
+            {
+                if (direction != direction.none && Vert != 0 || directionz != directionZ.none && hori != 0)
+                {
+                    playerRb.AddForce(transform.forward * 7, ForceMode.Impulse);
+                }                
+            }
+        }
+    }
 
 
 
@@ -749,10 +777,12 @@ public class Player : Character
         }
     }
 
-
+    bool onattack;
     //애니메이션 없이 근접 공격
     IEnumerator TestMeleeAttack()
     {
+        AttackMove();
+
         if (attackSky)
         {
             meleeCollider.SetActive(true);
@@ -763,8 +793,7 @@ public class Player : Character
 
             meleeCollider.SetActive(true);
             meleeCollider.GetComponent<SphereCollider>().enabled = true;
-            if (!wallcheck)
-                playerRb.AddForce(transform.forward * 3, ForceMode.Impulse);
+            
         }
         if (AttackEffect != null)
             AttackEffect.SetActive(true);
@@ -781,8 +810,7 @@ public class Player : Character
         {
             meleeCollider.SetActive(false);
             meleeCollider.GetComponent<SphereCollider>().enabled = false;
-            attackGround = false;
-            playerRb.velocity = Vector3.zero;
+            attackGround = false;            
         }
         canAttack = true;
     }

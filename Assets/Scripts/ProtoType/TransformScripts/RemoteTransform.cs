@@ -56,68 +56,66 @@ public class RemoteTransform : Player
     }
 
     public override void Skill1()
-    {
-        if (Input.GetKey(KeyCode.UpArrow) && Input.GetKey(KeyCode.X))
+    {        
+        Charging = true;
+        /*if (!handlerange.gameObject.activeSelf)
         {
-            Charging = true;
-            /*if (!handlerange.gameObject.activeSelf)
+            handlerange.gameObject.SetActive(true);
+        }*/
+        Humonoidanimator.SetBool("Charge", Charging);
+        if (!handlerange.gameObject.activeSelf)
+        {
+            //handlerange.gameObject.SetActive(Charging);
+            //handlerange.enabled = Charging;
+            Humonoidanimator.Play("Charge");
+        }
+
+        handletimer += Time.deltaTime;
+        if (handletimer >= handleMaxTime)
+        {
+            Debug.Log("충전량 최대치입니다");
+            handlerange.gameObject.SetActive(true);
+        }
+        else
+        {
+            /*if (handlerange.radius > handlediameterrangemax)
             {
-                handlerange.gameObject.SetActive(true);
-            }*/
-            Humonoidanimator.SetBool("Charge", Charging);
-            if (!handlerange.gameObject.activeSelf)
-            {
-                //handlerange.gameObject.SetActive(Charging);
-                //handlerange.enabled = Charging;
-                Humonoidanimator.Play("Charge");
-            }
-          
-            handletimer += Time.deltaTime;
-            if (handletimer >= handleMaxTime)
-            {
-                Debug.Log("충전량 최대치입니다");
-                handlerange.gameObject.SetActive(true);
+                handlerange.radius = handlediameterrangemax;
             }
             else
             {
-                /*if (handlerange.radius > handlediameterrangemax)
-                {
-                    handlerange.radius = handlediameterrangemax;
-                }
-                else
-                {
-                    handlerange.radius += Time.deltaTime;
-                }*/
-                /*if (timeScale > handlediameterrangemax)
-                {
-                    handlerange.transform.localScale = new Vector3(handlediameterrangemax, handlediameterrangemax, 0);
-                }
-                else
-                {
-                    timeScale += Time.deltaTime;
-                    handlerange.transform.localScale = new Vector3(chargeSpeed * timeScale, chargeSpeed * timeScale, 0);
-                }*/
+                handlerange.radius += Time.deltaTime;
+            }*/
+            /*if (timeScale > handlediameterrangemax)
+            {
+                handlerange.transform.localScale = new Vector3(handlediameterrangemax, handlediameterrangemax, 0);
             }
+            else
+            {
+                timeScale += Time.deltaTime;
+                handlerange.transform.localScale = new Vector3(chargeSpeed * timeScale, chargeSpeed * timeScale, 0);
+            }*/
         }
 
-        if (!Input.GetKey(KeyCode.UpArrow) && Charging
-            || !Input.GetKey(KeyCode.X) && Charging)
-        {
-            /*if (handlerange.radius < handlediameterrangemin)
+        /*if (handlerange.radius < handlediameterrangemin)
             {
                 handlerange.radius = handlediameterrangemin;
             }*/
-            Charging = false;
-            chargingBufferTimer = chargingBufferTimeMax;
-            Humonoidanimator.SetBool("Charge", Charging);
-            if (timeScale < handlediameterrangemin)
-            {
-                handlerange.transform.localScale = new Vector3(handlediameterrangemin, handlediameterrangemin, 0);
-            }
-            //handlerange.gameObject.SetActive(true);
-            handlerange.gameObject.SetActive(Charging);
-            ActiveRemoteObject();
+        Charging = false;
+        chargingBufferTimer = chargingBufferTimeMax;
+        Humonoidanimator.SetBool("Charge", Charging);
+        if (timeScale < handlediameterrangemin)
+        {
+            handlerange.transform.localScale = new Vector3(handlediameterrangemin, handlediameterrangemin, 0);
         }
+        //handlerange.gameObject.SetActive(true);
+        handlerange.gameObject.SetActive(Charging);
+        ActiveRemoteObject();
+
+        /*if (!Input.GetKey(KeyCode.UpArrow) && Charging
+            || !Input.GetKey(KeyCode.X) && Charging)
+        {            
+        }*/
     }
 
     public override void Attack()
