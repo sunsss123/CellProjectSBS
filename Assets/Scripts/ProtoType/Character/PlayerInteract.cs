@@ -8,7 +8,7 @@ public class PlayerInteract : MonoBehaviour
 {
     Player p;
     InteractiveObject CurrentInteract;
-
+    public GameObject InteractUI;
    float InteractTimer;
     void InteractrayCast()
     {

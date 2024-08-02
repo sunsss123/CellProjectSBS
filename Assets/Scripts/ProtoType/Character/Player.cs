@@ -870,6 +870,7 @@ public class Player : Character
             collision.gameObject.CompareTag("Enemy"))
         {
             onGround = false;
+     
         }
         #endregion
     }
@@ -880,6 +881,7 @@ public class Player : Character
             jumpRaycastCheck();
         }
     }
+
     private void OnCollisionStay(Collision collision)
     {
         //#region 바닥 상호작용
@@ -892,10 +894,11 @@ public class Player : Character
         if (collision.gameObject.CompareTag("InteractivePlatform"))
         {
             jumpRaycastCheck();
+           
 
-            if (Input.GetKey(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.C) && !CullingPlatform)
+            if (PlayerHandler.instance.doubleDownInput && !CullingPlatform)
             {
-
+                PlayerHandler.instance.doubleDownInput = false;
                 CullingPlatform = true;
                 Physics.IgnoreLayerCollision(6, 11, true);
             }
