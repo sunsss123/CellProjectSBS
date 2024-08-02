@@ -1035,7 +1035,6 @@ MonoBehaviour:
   waitTime: 0.5
   formChange: 0
   changeEffect: {fileID: 7790902311302496447}
-  onTransform: 0
   onGround: 0
   downAttack: 0
   attackSky: 0
@@ -1095,7 +1094,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5892187899129608376}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

@@ -53,10 +53,7 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("TransformType", (int)PlayerHandler.instance.CurrentType);
         }
     }
-    private void Update()
-    {
-        Debug.Log(LoadCheckPointIndexKey());
-    }
+   
     public float LoadPlayerHP() { if (PlayerPrefs.HasKey("PlayerHP")) return PlayerPrefs.GetFloat("PlayerHP"); else return 3; }
     public int LOadPlayerTransformtype() { if (PlayerPrefs.HasKey("TransformType")) return PlayerPrefs.GetInt("TransformType"); else return 0; }
     public void saveCheckPointIndexKey(int index)
