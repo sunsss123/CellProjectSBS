@@ -10001,7 +10001,8 @@ MonoBehaviour:
   fallingObject: {fileID: 9190717355191805024, guid: cd2fa4d0223ac6d46aace0f7753eccda,
     type: 3}
   fallingTime: 3
-  blinkTime: 1.5
+  blinkTime: 1
+  fallingwaitingtime: 0.5
 --- !u!135 &656012001
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -11989,7 +11990,7 @@ Transform:
   m_GameObject: {fileID: 852575415}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.76, y: -1.79, z: -6.71}
+  m_LocalPosition: {x: -19.13, y: -1.79, z: -6.71}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

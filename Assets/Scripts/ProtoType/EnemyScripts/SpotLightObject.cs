@@ -111,15 +111,16 @@ public class SpotLightObject : MonoBehaviour
             readyTimer -= Time.deltaTime;
         }
     }
-
+    public float fallingwaitingtime;
     IEnumerator FallingAttack()
     {
         //spotLight.color = checkColor;        
         spotLight.enabled = true;
-
+       var obj= Instantiate(fallingObject, fallingPoint, Quaternion.identity).GetComponent<FallingObject>();
+        obj.fallingwaitingtime = fallingwaitingtime;
         yield return new WaitForSeconds(blinkTime);
 
-        Instantiate(fallingObject, fallingPoint, Quaternion.identity);
+
 
         //spotLight.color = originColor;
         spotLight.enabled = false;
