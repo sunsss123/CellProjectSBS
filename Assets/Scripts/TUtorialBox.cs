@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class TUtorialBox : MonoBehaviour
 {
-    public TextMeshProUGUI TutorialText;
+    public Canvas Canvas;
 
 
 
@@ -13,8 +13,8 @@ public class TUtorialBox : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if(TutorialText!=null)
-                TutorialText.gameObject.SetActive(true);
+            if(Canvas != null)
+                Canvas.gameObject.SetActive(true);
         }
     }
     private void OnTriggerExit(Collider other)
@@ -22,7 +22,7 @@ public class TUtorialBox : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             //Destroy(TutorialText.transform.parent.gameObject);
-            TutorialText.gameObject.SetActive(false);
+            Canvas.gameObject.SetActive(false);
             //TutorialText.gameObject.SetActive(false);
         }
     }

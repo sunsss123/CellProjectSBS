@@ -35,7 +35,7 @@ public class MUltiPlyitem : item
     float ReturnItemPower(int number)
     {
         if (number <= 0) return 0;
-        Debug.Log("숫자" + number + "계산 값" + (InitItemPower + ItemPower * number)); return InitItemPower + ItemPower * number;
+       return InitItemPower + ItemPower * number;
     }
 
 }

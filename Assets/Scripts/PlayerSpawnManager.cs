@@ -15,7 +15,7 @@ public class PlayerSpawnManager : MonoBehaviour
     public GameObject DefaultForm;
     public int LastestCheckPointID;//세이브용 나중에 따로 보내기
     public CheckPoint CurrentCheckPoint;
-    public GameObject SaveText;
+    public GameObject SaveEffect;
     public GameObject CurrentPlayer;// 행동 작업
     public void ChangeCheckPoint(CheckPoint ChkPoint)
     {
@@ -24,13 +24,17 @@ public class PlayerSpawnManager : MonoBehaviour
         LastestCheckPointID = ChkPoint.index;
         CurrentCheckPoint = ChkPoint;
         Debug.Log("세이브" +ChkPoint.index);
-        SaveText.gameObject.SetActive(true);
+        SaveEffect.gameObject.SetActive(true);
         GameManager.instance.saveCheckPointIndexKey(ChkPoint.index);
         GameManager.instance.SaveCurrentStage(SceneManager.GetActiveScene().name);
         GameManager.instance.SavePlayerStatus();
         PlayerInventory.instance.SaveInventoryData();
         //Debug.Log($"Playerprefs chkpointindex{GameManager.instance.LoadCheckPointIndexKey()} LastestStage{GameManager.instance.LoadLastestStage()}");
   
+    }
+    public CheckPoint GetCurrentCheckpoint()
+    {
+        return Checkpoints[GameManager.instance.LoadCheckPointIndexKey()];
     }
     public void LoadCheckPoint()
     {

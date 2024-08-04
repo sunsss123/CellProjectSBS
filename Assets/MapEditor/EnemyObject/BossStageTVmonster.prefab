@@ -480,6 +480,8 @@ MonoBehaviour:
   reachCheck: 0
   rotLevel: 85
   hsl: {fileID: 0}
+  distance: 0
+  distanceValue: 0.5
 --- !u!114 &1129187309186932758
 MonoBehaviour:
   m_ObjectHideFlags: 0

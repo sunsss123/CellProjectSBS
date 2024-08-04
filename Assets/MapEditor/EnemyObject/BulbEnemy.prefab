@@ -1015,11 +1015,13 @@ MonoBehaviour:
   eStat: {fileID: 0}
   enemyRb: {fileID: 0}
   attackCollider: {fileID: 2823691437709896109}
+  deadEffect: {fileID: 253838525713540564, guid: b5ae662d1f8e88e43aa9d1b64a1aed16,
+    type: 3}
   searchCubeRange: {x: 3, y: 0.45, z: 0.7}
   searchCubePos: {x: 0, y: 0, z: 0}
   searchCollider: {fileID: 2268291284102243975}
-  searchColliderPos: {x: 0, y: 0, z: 0}
   searchColliderRange: {x: 2, y: 2, z: 3}
+  searchColliderPos: {x: 0, y: 0, z: 0}
   activeSearchMesh: 0
   rangeCollider: {fileID: 5768329292479333752}
   rangePos: {x: 0, y: 0, z: 0}

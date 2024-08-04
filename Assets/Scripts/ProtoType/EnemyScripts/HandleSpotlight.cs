@@ -1,8 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
-using TMPro;
-
 using UnityEngine;
 
 public class HandleSpotlight : MonoBehaviour
@@ -26,6 +22,9 @@ public class HandleSpotlight : MonoBehaviour
     [Header("몬스터, 몬스터 담아두게될 공간")]
     public GameObject tvMonster; // 몬스터 프리팹
     public Transform tvMonsterGroup; // 생성되는 몬스터 담는 공간
+    [Header("몬스터 스폰 쿨타임, 반복될 타이머")]
+    public float InvokeStartTime; // 스폰 시작 쿨타임
+    public float InvokeRate; // 반복 타이머
 
     private void Awake()
     {
@@ -56,7 +55,7 @@ public class HandleSpotlight : MonoBehaviour
     IEnumerator SpotLightMove()
     {
         targetSpot = DecideTargetSpot();
-        InvokeRepeating("MonsterSpawn", 2f, 2f);
+        InvokeRepeating("MonsterSpawn", InvokeStartTime, InvokeRate);
         lightObj.HandleSpotLight(this);
 
         //lightObj.target = moveTarget.transform;

@@ -2067,7 +2067,7 @@ GameObject:
   m_Component:
   - component: {fileID: 322856819}
   m_Layer: 0
-  m_Name: Box
+  m_Name: Map
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2790,8 +2790,18 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6756932567210679393, guid: ab13fa33b66015945bb5888f86a5cd69,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2124145646}
   m_SourcePrefab: {fileID: 100100000, guid: ab13fa33b66015945bb5888f86a5cd69, type: 3}
+--- !u!1 &394286486 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6756932567210679393, guid: ab13fa33b66015945bb5888f86a5cd69,
+    type: 3}
+  m_PrefabInstance: {fileID: 394286485}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &395281801
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14081,7 +14091,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tile 1 (21)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -2346376503629304374, guid: e23dee8ae2248e045b023b5febe39826, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -18982,6 +18993,20 @@ Camera:
     type: 3}
   m_PrefabInstance: {fileID: 394286485}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2124145646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 394286486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77444c65461a782468a539bb6321ecd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Center: {x: 48.4, y: 6.8, z: 0.87}
+  CubeSize: {x: 27.81, y: 10, z: 4.8}
 --- !u!4 &2125392453 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8678685299530391185, guid: 6ba99340daada9044a63a7e3046790e3,

@@ -7,22 +7,29 @@ public class ItemUI : MonoBehaviour
  public   TextMeshProUGUI Title;
     public TextMeshProUGUI Description;
     Animator ani;
-    float itemtimer;
+    public float itemUITime = 3f;
+   float itemtimer;
     private void Awake()
     {
         ani = GetComponent<Animator>();
     }
+    private void OnEnable()
+    {
+        itemtimer = itemUITime;
+    }
     private void Update()
     {
-        ani.SetFloat("itemtimer", itemtimer);
+        //ani.SetFloat("itemtimer", itemtimer);
         if (itemtimer >= 0)
             itemtimer -= Time.deltaTime;
+        else
+            gameObject.SetActive(false);
     }
     public void activeUI(item i)
     {
         Title.text = i.itemname;
         Description.text = i.itemdescription;
-        itemtimer = 1.5f;
-        ani.Play("Create");
+        this.gameObject.SetActive(true);
+        //ani.Play("Create");
     }
 }

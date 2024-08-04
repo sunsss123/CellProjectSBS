@@ -276,6 +276,8 @@ MonoBehaviour:
   eStat: {fileID: 0}
   enemyRb: {fileID: 0}
   attackCollider: {fileID: 5612431273405649048}
+  deadEffect: {fileID: 253838525713540564, guid: b5ae662d1f8e88e43aa9d1b64a1aed16,
+    type: 3}
   searchCubeRange: {x: 3, y: 0.63, z: 0.7}
   searchCubePos: {x: 0, y: 0.61, z: 0}
   searchCollider: {fileID: 0}

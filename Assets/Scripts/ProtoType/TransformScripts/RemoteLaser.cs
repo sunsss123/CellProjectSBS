@@ -35,6 +35,7 @@ public class RemoteLaser : MonoBehaviour
             if (!enemy.eStat.onInvincible)
             {
                 enemy.Damaged(damage);
+                Instantiate(saveEffect, new(enemy.transform.position.x + 0.1f, enemy.transform.position.y+0.25f, enemy.transform.position.z), Quaternion.identity);
                 /*saveEffect.transform.position = other.transform.position;
                 saveEffect.Play();*/
                 if (PoolingManager.instance != null)

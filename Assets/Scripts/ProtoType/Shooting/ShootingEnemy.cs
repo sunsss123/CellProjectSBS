@@ -9,7 +9,6 @@ public class ShootingEnemy : ShootingObject
 {
 
 
-    int direction = 1;
 
 
 
