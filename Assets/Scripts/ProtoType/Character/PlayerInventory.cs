@@ -7,11 +7,23 @@ using UnityEngine;
 [Serializable]
 public class InvetorySaveData
 {
-   public List<EssentialitemData> essentialitems=new List<EssentialitemData>();
-    public List<UpgradeStatus> Upgradesstatus=new List<UpgradeStatus>();
-   public List<int> Multiplys =new List<int>();
+    public List<EssentialitemData> essentialitems = new List<EssentialitemData>();
+    public List<UpgradeStatus> Upgradesstatus = new List<UpgradeStatus>();
+    public List<int> Multiplys = new List<int>();
+    public InvetorySaveData(){
+        essentialitems = new List<EssentialitemData>();
+        
+        Upgradesstatus = new List<UpgradeStatus>();
+     int n=   Enum.GetValues(typeof(UpgradeStatus)).Length;
+  
+        Multiplys = new List<int>();
+        for (int i = 0; i < n; i++)
+        {
+            Upgradesstatus.Add((UpgradeStatus)i);
+            Multiplys.Add(0);
+        }
+    }
 
-   
 }
 [Serializable]
 public class EssentialitemData
@@ -54,15 +66,23 @@ public class PlayerInventory : MonoBehaviour
     {
         return MultiplyitemNumberDict;
     }
+  public void SaveData(InvetorySaveData savedata)
+    {
+        string json = JsonUtility.ToJson(savedata);
+        string filePath = Path.Combine(Application.persistentDataPath, "InventorySave.json");
+        File.WriteAllText(filePath, json);
+    }
     public void SaveInventoryData()
     {
         InvetorySaveData saveData = new InvetorySaveData();
+        saveData.essentialitems.Clear();
        foreach (KeyValuePair<string,Essentialitem> kvp in EssentialItems)
         {
             EssentialitemData e = new EssentialitemData(kvp.Value);
             saveData.essentialitems.Add(e);
         }
- 
+        saveData.Upgradesstatus.Clear();
+        saveData.Multiplys.Clear();
         foreach (KeyValuePair<UpgradeStatus, int> item in MultiplyitemNumberDict)
         {
            
@@ -70,18 +90,31 @@ public class PlayerInventory : MonoBehaviour
             saveData.Upgradesstatus.Add(item.Key);
             saveData.Multiplys.Add(item.Value);
         }
-        string json = JsonUtility.ToJson(saveData);
-        string filePath = Path.Combine(Application.persistentDataPath, "InventorySave.json");
-        File.WriteAllText(filePath, json);
+        SaveData(saveData);
     }
-   
+   public InvetorySaveData LoadData()
+    {
+        string filePath = Path.Combine(Application.persistentDataPath, "InventorySave.json");
+        var a = File.ReadAllText(filePath);
+       return JsonUtility.FromJson<InvetorySaveData>(a);
+    }
     public void LoadInventoryData()
     {
         string filePath = Path.Combine(Application.persistentDataPath, "InventorySave.json");
+        EssentialItems.Clear();
+        MultiplyitemNumberDict.Clear();
+        for (int n = 0; n < MultiplyItems.Length; n++)
+        {
+            if (MultiplyItems[n] != null)
+            {
+                MultiplyitemNumberDict.Add(MultiplyItems[n].upgradeStatus, 0);
+            }
+        }
         if (File.Exists(filePath))
         {
-            var a = File.ReadAllText(filePath);
-            InvetorySaveData savedata=JsonUtility.FromJson<InvetorySaveData>(a);
+
+
+            InvetorySaveData savedata = LoadData();
 
      
             foreach(EssentialitemData e in savedata.essentialitems)
@@ -104,7 +137,7 @@ public class PlayerInventory : MonoBehaviour
         }
         else
         {
-            Debug.Log("로딩 실패");
+          
         }
     }
     private void Awake()

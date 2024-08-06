@@ -22,7 +22,7 @@ public class RemoteTransform : Player
 
     public List<GameObject> remoteObj; // 탐지 범위에 저장될 상호작용 오브젝트 정보
 
-    public GameObject RemoteObjectEffect;
+
 
     GameObject closestObject;
     GameObject activeEffectInstance;
@@ -49,16 +49,13 @@ public class RemoteTransform : Player
     {
         //handlerange.
         handlerange = transform.Find("SKillChargeRadius").GetComponent<SphereCollider>();
-        RemoteObjectEffect.SetActive(false);
+
     }
 
     private void Update()
     {
         BaseBufferTimer();
-        if (closestObject == null)
-            RemoteObjectEffect.SetActive(false);
-        else
-            RemoteObjectEffect.transform.position = closestObject.transform.position;
+   
         //for문 사용했으니 최적화 필요함
         UpdateClosestRemoteObjectEffect();
         /*if (chargingBufferTimer > 0 && !Charging)
@@ -83,13 +80,13 @@ public class RemoteTransform : Player
         if (closestdistance > minimumdistance)
         {
             closestObject = null;
-            RemoteObjectEffect.SetActive(false);
+
             return;
         }
         if (newclosestobject != closestObject)
         {
             closestObject = newclosestobject;
-            RemoteObjectEffect.SetActive(true);
+
 
         }
         RemoteObjectEvent?.Invoke(closestObject);
