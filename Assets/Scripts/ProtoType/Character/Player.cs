@@ -12,7 +12,7 @@ public enum direction { Left = -1, none = 0, Right = 1 }
 public enum directionZ {back=-1,none=0,forward=1 }
 public class Player : Character
 {
-
+    IngameUIManager gameuimanager;
     #region º¯¼ö
     public Rigidbody playerRb;
     public CapsuleCollider capsuleCollider;

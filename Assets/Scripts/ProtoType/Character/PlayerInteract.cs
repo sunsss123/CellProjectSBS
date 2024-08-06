@@ -7,9 +7,9 @@ using UnityEngine.PlayerLoop;
 public class PlayerInteract : MonoBehaviour
 {
     Player p;
-    InteractiveObject CurrentInteract;
-    public GameObject InteractUI;
-   float InteractTimer;
+
+
+  
     void InteractrayCast()
     {
 
@@ -20,15 +20,17 @@ public class PlayerInteract : MonoBehaviour
    
             if (hit.collider.CompareTag("InteractiveObject"))
             {
-                if (!hit.collider.TryGetComponent<InteractiveObject>(out CurrentInteract))
+                InteractiveObject interactobject;
+                if (!hit.collider.TryGetComponent<InteractiveObject>(out interactobject))
                 {
                    
                     Debug.Log("Fatal Error? Can't Find Script instance");
                 }
                 else
                 {
-                    if (CurrentInteract.InteractOption != InteractOption.ray)
-                        CurrentInteract = null;
+                    PlayerHandler.instance.GetInteratObject(interactobject);
+                    if (interactobject.InteractOption != InteractOption.ray)
+                        PlayerHandler.instance.GetInteratObject(interactobject);
                 }
             }
 
@@ -43,18 +45,6 @@ public class PlayerInteract : MonoBehaviour
         if (p != null)
             InteractrayCast();
 
-        if (InteractTimer > 0)
-            InteractTimer -= Time.deltaTime;
-        if (CurrentInteract != null )
-        {
-            if (Input.GetKeyDown(KeyCode.F) && InteractTimer <= 0)
-            {
-                CurrentInteract.Active(PlayerStat.instance.direction);
-                CurrentInteract = null;
-
-                InteractTimer = PlayerStat.instance. InteractDelay;
-            }
-        }
     }
     private void Awake()
     {
@@ -73,8 +63,9 @@ public class PlayerInteract : MonoBehaviour
             }
             else
             {
-                if (obj == CurrentInteract)
-                    CurrentInteract = null;
+                PlayerHandler.instance.GetInteratObject(obj);
+                if (obj == PlayerHandler.instance.ReturnInteractObject())
+                    PlayerHandler.instance.InitInteratObject();
             }
         }
     }
@@ -82,15 +73,17 @@ public class PlayerInteract : MonoBehaviour
     {
         if (other.CompareTag("InteractiveObject"))
         {
-            if (!other.TryGetComponent<InteractiveObject>(out CurrentInteract))
+            InteractiveObject i;
+            if (!other.TryGetComponent<InteractiveObject>(out i))
             {
                 
                 Debug.Log("Fatal Error? Can't Find Script instance");
             }
             else
             {
-                if (CurrentInteract.InteractOption != InteractOption.collider)
-                    CurrentInteract = null;
+                PlayerHandler.instance.GetInteratObject(i);
+                if (i.InteractOption != InteractOption.collider)
+                    PlayerHandler.instance.GetInteratObject(i);
             }
         }
     }

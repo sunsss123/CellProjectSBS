@@ -8,7 +8,7 @@ public class BasicCamera : MonoBehaviour
     public Transform target;
     protected Vector3 camPos;
     protected Vector3 camRot;
-    protected bool ZPin;
+    public bool ZPin;
 
     CameraMoveRange bindingcamera;
     [Range(0, 1), Header("카메라가 올라가는 플레이어 위치 기준")]
@@ -100,5 +100,7 @@ public class BasicCamera : MonoBehaviour
         if (target == null || CurrentCamera == null)
             return;
         CameraMove(CurrentCamera, CalculateCameraVector());
+        if(CurrentCamera!=null)
+        PlayerHandler.instance.CurrentCamera = CurrentCamera;
     }
 }

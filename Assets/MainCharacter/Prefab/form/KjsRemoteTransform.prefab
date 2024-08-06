@@ -1035,6 +1035,7 @@ MonoBehaviour:
   waitTime: 0.5
   formChange: 0
   changeEffect: {fileID: 7790902311302496447}
+  onTransform: 0
   onGround: 0
   downAttack: 0
   attackSky: 0
@@ -1063,29 +1064,23 @@ MonoBehaviour:
   LandingEffect: {fileID: 619247877868134136}
   JumpEffect: {fileID: 6963524531328094719}
   Decelatate: 2
+  hori: 0
+  Vert: 0
   DownAttackForce: 0
   CullingPlatform: 0
-  handleMaxTime: 2
   handlediameterrangemax: 5
   handlediameterrangemin: 3
   handlerange: {fileID: 1079836473686256018}
   chargingBufferTimer: 0
   chargingBufferTimeMax: 0
-  electricCharge: {fileID: 0}
-  holdSpeed: 1.5
   remoteObj: []
-  timeScale: 0
-  chargeSpeed: 1.5
+  RemoteObjectEffect: {fileID: 0}
+  minimumdistance: 0
   Charging: 0
   laserPrefab: {fileID: 8906621709063784198, guid: c95aa4697be2c7341959ffcec170d214,
     type: 3}
   laserEffect: {fileID: 0}
-  enemies: []
-  chain: {fileID: 2200097500776395386, guid: f7ef9a7cddd4f7045ae7e241544407d8, type: 3}
-  chainSearchRange: 0
-  searchCubeRange: {x: 0.3, y: 0.5, z: 3}
-  searchCubePos: {x: 0, y: 0, z: 3}
-  onChain: 0
+  ACtiveGameObject: {fileID: 0}
 --- !u!120 &7086418212037067646
 LineRenderer:
   serializedVersion: 2
@@ -1200,6 +1195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32177de85efdfc943b70253b78ba038e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InteractUI: {fileID: 0}
 --- !u!1 &6286116493072327673
 GameObject:
   m_ObjectHideFlags: 0
@@ -1707,7 +1703,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7565031403203138770
 Transform:
   m_ObjectHideFlags: 0
@@ -1738,7 +1734,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7790902311302496447}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

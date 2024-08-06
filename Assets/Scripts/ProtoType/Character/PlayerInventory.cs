@@ -21,6 +21,7 @@ public class EssentialitemData
         itemname = e.itemname;
         itemdescription = e.itemdescription;
         itemcode = e.itemcode;
+        Debug.Log("저장 아이템" + e.itemname + e.itemdescription);
     }
     public string itemname;
     public string itemdescription;
@@ -31,12 +32,28 @@ public class PlayerInventory : MonoBehaviour
 {
     public static PlayerInventory instance;
    Dictionary<string, Essentialitem> EssentialItems = new Dictionary<string, Essentialitem>();
+   
+    public List<Essentialitem> returnEssentialItems()
+    {
+        List<Essentialitem> list= new List<Essentialitem>();
+        foreach (KeyValuePair<string, Essentialitem> kvp in EssentialItems)
+        {
+            list.Add(kvp.Value);
+        }
+        return list;
+    }
     public ItemUI itemui;
 
     public MUltiPlyitem[] MultiplyItems=new MUltiPlyitem[2];
+   
+
 
     Dictionary<UpgradeStatus, MUltiPlyitem> MultiplyitemDict = new Dictionary<UpgradeStatus, MUltiPlyitem>();
     Dictionary<UpgradeStatus, int> MultiplyitemNumberDict = new Dictionary<UpgradeStatus, int>();
+    public Dictionary<UpgradeStatus, int> ReturnMultipluNumber()
+    {
+        return MultiplyitemNumberDict;
+    }
     public void SaveInventoryData()
     {
         InvetorySaveData saveData = new InvetorySaveData();
@@ -70,7 +87,7 @@ public class PlayerInventory : MonoBehaviour
             foreach(EssentialitemData e in savedata.essentialitems)
             {
                 Essentialitem Eitem= ScriptableObject.CreateInstance<Essentialitem>();
-               Eitem.itemcode = e.itemcode;
+               Eitem.itemname = e.itemname;
                 Eitem.itemdescription = e.itemdescription;
                 Eitem.itemcode=e.itemcode;
                 EssentialItems.Add(Eitem.itemcode, Eitem);
@@ -134,7 +151,7 @@ public class PlayerInventory : MonoBehaviour
  
         if(!EssentialItems.ContainsKey(i.itemcode))
             EssentialItems.Add(i.itemcode, i);
-        //SaveInventoryData();
+        SaveInventoryData();
         itemui.activeUI(i);
 
     }
