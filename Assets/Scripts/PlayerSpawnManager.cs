@@ -17,6 +17,7 @@ public class PlayerSpawnManager : MonoBehaviour
     public CheckPoint CurrentCheckPoint;
     public GameObject SaveEffect;
     public GameObject CurrentPlayer;// 행동 작업
+    public bool DontSave;
     public void ChangeCheckPoint(CheckPoint ChkPoint)
     {
         if (LastestCheckPointID >= ChkPoint.index)
@@ -24,17 +25,24 @@ public class PlayerSpawnManager : MonoBehaviour
         LastestCheckPointID = ChkPoint.index;
         CurrentCheckPoint = ChkPoint;
         Debug.Log("세이브" +ChkPoint.index);
-        SaveEffect.gameObject.SetActive(true);
-        GameManager.instance.saveCheckPointIndexKey(ChkPoint.index);
-        GameManager.instance.SaveCurrentStage(SceneManager.GetActiveScene().name);
-        GameManager.instance.SavePlayerStatus();
-        PlayerInventory.instance.SaveInventoryData();
+        if (!DontSave)
+        {
+            SaveEffect.gameObject.SetActive(true);
+
+            GameManager.instance.saveCheckPointIndexKey(ChkPoint.index);
+            GameManager.instance.SaveCurrentStage(SceneManager.GetActiveScene().name);
+            GameManager.instance.SavePlayerStatus();
+            PlayerInventory.instance.SaveInventoryData();
+        }
         //Debug.Log($"Playerprefs chkpointindex{GameManager.instance.LoadCheckPointIndexKey()} LastestStage{GameManager.instance.LoadLastestStage()}");
-  
+
     }
     public CheckPoint GetCurrentCheckpoint()
     {
-        return Checkpoints[GameManager.instance.LoadCheckPointIndexKey()];
+        if (!DontSave)
+            return Checkpoints[GameManager.instance.LoadCheckPointIndexKey()];
+        else
+            return Checkpoints[0];
     }
     public void LoadCheckPoint()
     {
@@ -61,10 +69,22 @@ public class PlayerSpawnManager : MonoBehaviour
     }
     public void FindCheckpoint(int n)
     {
-        
-        if (ChkPointsDic.ContainsKey(n))
+        if (DontSave)
+        {
+            CurrentCheckPoint = ChkPointsDic[0];
+        }
+        else if (ChkPointsDic.ContainsKey(n))
         {
             CurrentCheckPoint = ChkPointsDic[n];
+        }
+        else if(ChkPointsDic.Count>0)
+        {
+            CurrentCheckPoint = ChkPointsDic[0];
+            Debug.Log("체크포인트 사이즈 에러");
+        }
+        else
+        {
+            Debug.Log("체크포인트 Null 에러");
         }
     }
 
@@ -89,10 +109,19 @@ public class PlayerSpawnManager : MonoBehaviour
     }
     private void Start()
     {
-       
-        PlayerInventory.instance.LoadInventoryData();
-        PlayerStat.instance.hp = GameManager.instance.LoadPlayerHP();
-        PlayerHandler.instance.CurrentType = (TransformType)GameManager.instance.LOadPlayerTransformtype();
+
+        if (DevelopmentManager.instance != null)
+            DontSave = DevelopmentManager.instance.dontsave;
+        if (!DontSave)
+        {
+            PlayerInventory.instance.LoadInventoryData();
+            PlayerStat.instance.hp = GameManager.instance.LoadPlayerHP();
+            PlayerHandler.instance.CurrentType = (TransformType)GameManager.instance.LOadPlayerTransformtype();
+        }else
+        {
+            PlayerHandler.instance.CurrentType = TransformType.Default;
+            PlayerStat.instance.hp = PlayerStat.instance.hpMax;
+        }
         FindCheckpoint(GameManager.instance.LoadCheckPointIndexKey());
         Spawn();
     }

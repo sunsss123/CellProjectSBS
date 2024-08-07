@@ -16,7 +16,25 @@ public class PlayerHandler : MonoBehaviour
     public bool OnDeformField;
     public TransformType retoretype=TransformType.Default;
     public TransformPlace LastTransformPlace;
+
+    public IngameUIManager ingameUIManger;
+
+    public Camera CurrentCamera;
     #endregion
+    InteractiveObject interactobject;
+    float InteractTimer;
+    public void GetInteratObject(InteractiveObject i)
+    {
+        interactobject = i;
+    }
+    public void InitInteratObject()
+    {
+        interactobject = null;
+    }
+    public InteractiveObject ReturnInteractObject()
+    {
+        return interactobject;
+    }
     #region 플레이어 현재 위치,상태
 
     GameObject Playerprefab;
@@ -91,7 +109,7 @@ public class PlayerHandler : MonoBehaviour
 
     public void transformed(TransformType type,Action eventhandler=null)
 {
-       
+        interactobject = null;
         #region Type 변경
         if (CurrentType == type)
         return;
@@ -173,7 +191,10 @@ public class PlayerHandler : MonoBehaviour
                
                 Ehandler.GetEvent(eventhandler);
             }
-           
+            if (CurrentType == TransformType.remoteform)
+            {
+                CurrentPlayer.GetComponent<RemoteTransform>().RemoteObjectEvent += ingameUIManger.UpdateRemoteTargetUI;
+            }
             #endregion
         }
         else
@@ -200,6 +221,13 @@ public class PlayerHandler : MonoBehaviour
             onAttack = false;
         else
             onAttack = true;
+
+        if (interactobject != null)
+            ingameUIManger.UpdateInteractUI(interactobject.gameObject);
+        else
+        {
+            ingameUIManger. InteractTargetUI.SetActive(false);
+        }
     }
     [Header("키 두번 입력에 대한 처리")]
     public bool firstUpInput;
@@ -222,6 +250,21 @@ public class PlayerHandler : MonoBehaviour
             PlayerStat.instance.Trans3D = !PlayerStat.instance.Trans3D;
             Dimensionchangeevent?.Invoke();
            
+        }
+
+        if (InteractTimer > 0)
+            InteractTimer -= Time.deltaTime;
+
+
+        if (interactobject != null)
+        {
+            if (Input.GetKeyDown(KeyCode.F) && InteractTimer <= 0)
+            {
+                interactobject.Active(PlayerStat.instance.direction);
+                interactobject = null;
+
+                InteractTimer = PlayerStat.instance.InteractDelay;
+            }
         }
         if (Input.GetKey(KeyCode.C))
         {
