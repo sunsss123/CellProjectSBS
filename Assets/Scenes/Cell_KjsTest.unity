@@ -4667,9 +4667,11 @@ MonoBehaviour:
   patrolGroup: []
   targetPatrol: {x: 0, y: 0, z: 0}
   patrolWaitTime: 0
-  testPatrolRange: 0
+  leftPatrolRange: 0
+  rightPatrolRange: 0
   patrolDistance: 0
   onPatrol: 0
+  patrolPos: {fileID: 0}
   rangeCollider: {fileID: 0}
   rangePos: {x: 0, y: 0, z: 0}
   rangeSize: {x: 0, y: 0, z: 0}
@@ -11622,13 +11624,28 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 879045053675682833, guid: 182321a561f69434e8780d30419bdeb2,
         type: 3}
+      propertyPath: patrolPos
+      value: 
+      objectReference: {fileID: 1062930791}
+    - target: {fileID: 879045053675682833, guid: 182321a561f69434e8780d30419bdeb2,
+        type: 3}
       propertyPath: patrolDistance
       value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 879045053675682833, guid: 182321a561f69434e8780d30419bdeb2,
         type: 3}
+      propertyPath: leftPatrolRange
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 879045053675682833, guid: 182321a561f69434e8780d30419bdeb2,
+        type: 3}
       propertyPath: testPatrolRange
-      value: 0.8
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 879045053675682833, guid: 182321a561f69434e8780d30419bdeb2,
+        type: 3}
+      propertyPath: rightPatrolRange
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 1876247488755515892, guid: 182321a561f69434e8780d30419bdeb2,
         type: 3}
@@ -13333,6 +13350,37 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1505403793}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1062930790
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1062930791}
+  m_Layer: 0
+  m_Name: PatrolPointTest
+  m_TagString: Untagged
+  m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1062930791
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062930790}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.099514, y: -0.60455346, z: -3.5116642}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1076682117 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3036237421213796777, guid: c85de1e2fa61f044093a9cbd2897d63b,
@@ -24244,7 +24292,7 @@ PrefabInstance:
     - target: {fileID: 1436342978272507966, guid: ada8eda3f7b2e5a47b560895f2ea72e1,
         type: 3}
       propertyPath: patrolType
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1436342978272507966, guid: ada8eda3f7b2e5a47b560895f2ea72e1,
         type: 3}
@@ -33214,7 +33262,7 @@ PrefabInstance:
     - target: {fileID: 1436342978272507966, guid: ada8eda3f7b2e5a47b560895f2ea72e1,
         type: 3}
       propertyPath: patrolType
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4439787244619641238, guid: ada8eda3f7b2e5a47b560895f2ea72e1,
         type: 3}
@@ -33457,3 +33505,4 @@ SceneRoots:
   - {fileID: 953037531}
   - {fileID: 852575419}
   - {fileID: 7989342266764325457}
+  - {fileID: 1062930791}

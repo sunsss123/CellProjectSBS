@@ -857,9 +857,6 @@ public class Player : Character
         PlayerHandler.instance.transformed(type, event_);        
         if (PlayerHandler.instance.CurrentPlayer != null)
             PlayerHandler.instance.CurrentPlayer.direction = direction;
-        //Humonoidanimator.Play("TransformEnd");
-        /*formChange = false;
-        Time.timeScale = 1f;*/
     }
     #endregion
 
