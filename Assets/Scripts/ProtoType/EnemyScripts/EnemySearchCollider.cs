@@ -23,6 +23,7 @@ public class EnemySearchCollider : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            enemy.onPatrol = false;
             enemy.target = other.transform;
             enemy.tracking = true;
         }
@@ -33,7 +34,8 @@ public class EnemySearchCollider : MonoBehaviour
      
         if (other.CompareTag("Player"))
         {
-            enemy.tracking = false;
+            //enemy.tracking = false;
+            enemy.onPatrol = true;
         }
     }
 }

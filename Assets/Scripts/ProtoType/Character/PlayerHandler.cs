@@ -10,6 +10,7 @@ using UnityEngine.UIElements;
 
 public class PlayerHandler : MonoBehaviour
 {
+    public bool formChange;
     #region 플레이어 변신관련 스탯
     public float CurrentPower;
     public float MaxPower=60;
@@ -94,7 +95,7 @@ public class PlayerHandler : MonoBehaviour
         PlayerFallOut();
 
         #region 캐릭터 조작
-        if(CurrentPlayer != null && !CurrentPlayer.formChange)
+        if(CurrentPlayer != null && !formChange)
         charactermove();
         #endregion
     }
@@ -197,6 +198,8 @@ public class PlayerHandler : MonoBehaviour
                 CurrentPlayer.GetComponent<RemoteTransform>().RemoteObjectEvent += ingameUIManger.UpdateRemoteTargetUI;
             }
             #endregion
+            if(formChange)
+                CurrentPlayer.Humonoidanimator.Play("TransformEnd");
         }
         else
         Debug.Log("ListOutofRangeError");
@@ -317,7 +320,7 @@ public class PlayerHandler : MonoBehaviour
                         if (DeTransformtimer > DeTransformtime)
                         {
                             DeTransformtimer = 0;
-                            //Deform();
+                            Deform();
                         }
                         break;
                     default:

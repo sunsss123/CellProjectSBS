@@ -5,7 +5,7 @@ public enum AttackType { melee, range}
 
 public enum PlayerState { idle, hitted, dead, attack }
 public enum EnemyState { idle, patrol, tracking, hitted, attack, dead }
-
+public enum PatrolType { none, movePatrol }
 public enum State { none, wet}
 
 public class CharacterStat : MonoBehaviour

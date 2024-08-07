@@ -631,6 +631,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eStat: {fileID: 0}
+  patrolType: 1
   enemyRb: {fileID: 0}
   attackCollider: {fileID: 7760997083194175977}
   deadEffect: {fileID: 253838525713540564, guid: b5ae662d1f8e88e43aa9d1b64a1aed16,
@@ -638,9 +639,16 @@ MonoBehaviour:
   searchCubeRange: {x: 3.5, y: 0.63, z: 0.7}
   searchCubePos: {x: 0, y: 0.61, z: 0}
   searchCollider: {fileID: 5917569411468154374}
-  searchColliderRange: {x: 0, y: 0, z: 0}
+  searchColliderRange: {x: 2, y: 2, z: 2}
   searchColliderPos: {x: 0, y: 0, z: 0}
   activeSearchMesh: 0
+  patrolGroup:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  targetPatrol: {x: 0, y: 0, z: 0}
+  patrolWaitTime: 0.5
+  testPatrolRange: 1
+  onPatrol: 0
   rangeCollider: {fileID: 2202126381614901408}
   rangePos: {x: 0, y: 0, z: 0}
   rangeSize: {x: 1, y: 1, z: 1}
