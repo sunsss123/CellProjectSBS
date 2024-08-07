@@ -6315,6 +6315,41 @@ PrefabInstance:
       propertyPath: CameraTrakingTime
       value: 0.15
       objectReference: {fileID: 0}
+    - target: {fileID: 2678509207607036577, guid: ab13fa33b66015945bb5888f86a5cd69,
+        type: 3}
+      propertyPath: CameraUPViewportPos
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2678509207607036577, guid: ab13fa33b66015945bb5888f86a5cd69,
+        type: 3}
+      propertyPath: CameraDownViewportPos
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4055619493530406939, guid: ab13fa33b66015945bb5888f86a5cd69,
+        type: 3}
+      propertyPath: Range.x
+      value: 37.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4055619493530406939, guid: ab13fa33b66015945bb5888f86a5cd69,
+        type: 3}
+      propertyPath: Range.y
+      value: 11.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4055619493530406939, guid: ab13fa33b66015945bb5888f86a5cd69,
+        type: 3}
+      propertyPath: Range.z
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4055619493530406939, guid: ab13fa33b66015945bb5888f86a5cd69,
+        type: 3}
+      propertyPath: Center.x
+      value: 13.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4055619493530406939, guid: ab13fa33b66015945bb5888f86a5cd69,
+        type: 3}
+      propertyPath: Center.y
+      value: 6.81
+      objectReference: {fileID: 0}
     - target: {fileID: 6756932567210679393, guid: ab13fa33b66015945bb5888f86a5cd69,
         type: 3}
       propertyPath: m_Name
@@ -23747,7 +23782,8 @@ PrefabInstance:
       propertyPath: GravityY
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8765526764128613502, guid: 498faebe0b50512469dec30511b4f85f, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
