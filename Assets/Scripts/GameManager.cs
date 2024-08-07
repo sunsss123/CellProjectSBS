@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -31,6 +32,37 @@ public class GameManager : MonoBehaviour
 
     public string loadingscenename = "LoadingTest";
     public string currentscenename;
+
+
+    public bool TimerTest=true;
+    public float GameTimer;
+    public TextMeshProUGUI TimerText;
+    public bool pauseActive;
+    string GetTimerText(float f)
+    {
+        int hour = (int)f / 3600;
+        int min= ((int)f%3600) / 60;
+        int sec = (int)f % 60;
+        return $"{hour:00}:{min:00}:{sec:00}";
+    }
+    private void LateUpdate()
+    {
+        if (TimerTest)
+        {
+            if (SceneManager.GetActiveScene().name == "TitleTest" || pauseActive || SceneManager.GetActiveScene().name == loadingscenename)
+            {
+                TimerText.gameObject.SetActive(false);
+            }
+            else
+            {
+                TimerText.gameObject.SetActive(true);
+                GameTimer += Time.unscaledDeltaTime;
+                TimerText.text ="Time: "+ GetTimerText(GameTimer);
+            }
+        }
+    
+    }
+
     public void DeleteSaveSetting()
     {
         PlayerPrefs.DeleteAll();

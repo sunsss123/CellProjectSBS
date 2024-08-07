@@ -131,7 +131,7 @@ public class PauseUI : MonoBehaviour
     {
         //initializeUI();
         pauseActive = !pauseActive;
-   
+        GameManager.instance.pauseActive = pauseActive;
         if (pauseActive)
         {
             Time.timeScale = 0f;

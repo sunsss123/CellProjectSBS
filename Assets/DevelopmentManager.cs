@@ -52,7 +52,10 @@ public class DevelopmentManager : MonoBehaviour
     private void Start()
     {
         CurrentObjectName.text ="현재 오브젝트:"+ Object[index].name;
+        if(Object.Count>1)
         NextObjectName.text = "다음 오브젝트:" + Object[index + 1].name;
+        else
+            NextObjectName.text = "다음 오브젝트: 없음" ;
         invicibleText.text = "무적 상태 비활성화";
         NextTransformName.text = "변신 전환" + getNextTransformName(PlayerHandler.instance.CurrentType);
     }
@@ -137,7 +140,7 @@ public class DevelopmentManager : MonoBehaviour
         if (Object.Count == 0)
             return;
         DestroyObject();
-        CreateObject = Instantiate(Object[index], CreateObject.transform.position,CreateObject.transform.rotation);
+        CreateObject = Instantiate(Object[index], ObjectSpawnPoint.transform.position, ObjectSpawnPoint.transform.rotation);
        
         CreateObject.name = "생성된 게임 오브젝트";
     }
@@ -151,7 +154,10 @@ public class DevelopmentManager : MonoBehaviour
         if (index >= Object.Count)
             index = 0;
         CurrentObjectName.text = "현재 오브젝트:" + Object[index].name;
-        NextObjectName.text = "다음 오브젝트:" + Object[index + 1].name;
+        if (Object.Count > 1)
+            NextObjectName.text = "다음 오브젝트:" + Object[index + 1].name;
+        else
+            NextObjectName.text = "다음 오브젝트: 없음";
     }
     public void Changecam()
     {
