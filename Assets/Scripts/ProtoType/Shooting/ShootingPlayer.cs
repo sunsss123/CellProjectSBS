@@ -12,7 +12,7 @@ public class ShootingPlayer : ShootingObject
     public static ShootingPlayer instance;
     public TextMeshProUGUI LifeUI;
     public Transform ShootPos;
-    ShootingDirection direction;
+    //ShootingDirection direction;
     public Transform Sprite;
     public float untouchableTime;
     float untouchableTimer;
@@ -46,49 +46,49 @@ public class ShootingPlayer : ShootingObject
         if (vec.x == 1)
         {
             Sprite.localRotation = Quaternion.Euler(0, 0, -90);
-            direction = ShootingDirection.right;
+            //direction = ShootingDirection.right;
             TargetVector = Vector2.right;
         }
         else if (vec.x == -1)
         {
             Sprite.localRotation = Quaternion.Euler(0, 0, 90);
-            direction = ShootingDirection.left;
+            //direction = ShootingDirection.left;
             TargetVector= Vector2.left;
         }
         else if (vec.y == -1)
         {
             Sprite.localRotation = Quaternion.Euler(0, 0, 180);
-            direction = ShootingDirection.Down;
+            //direction = ShootingDirection.Down;
             TargetVector=Vector2.down;
         }
         else if (vec.x > 0 && vec.y > 0)
         {
             Sprite.localRotation = Quaternion.Euler(0, 0, -45);
-            direction = ShootingDirection.right_up;
+            //direction = ShootingDirection.right_up;
             TargetVector = (Vector2.right + Vector2.up) * 0.5f;
         }
         else if (vec.x > 0 && vec.y < 0)
         {
             Sprite.localRotation = Quaternion.Euler(0, 0, -135);
-            direction = ShootingDirection.right_down;
+            //direction = ShootingDirection.right_down;
             TargetVector = (Vector2.right + Vector2.down) * 0.5f;
         }
         else if (vec.x < 0 && vec.y > 0)
         {
             Sprite.localRotation = Quaternion.Euler(0, 0, 45);
-            direction = ShootingDirection.Left_up;
+            //direction = ShootingDirection.Left_up;
             TargetVector = (Vector2.left + Vector2.up) * 0.5f;
         }
         else if (vec.x < 0 && vec.y < 0)
         {
             Sprite.localRotation = Quaternion.Euler(0, 0, 135);
-            direction = ShootingDirection.Left_down;
+            //direction = ShootingDirection.Left_down;
             TargetVector = (Vector2.left + Vector2.down) * 0.5f;
         }
         else if (vec.y == 1)
         {
             Sprite.localRotation = Quaternion.Euler(0, 0, 0);
-            direction = ShootingDirection.Down;
+            //direction = ShootingDirection.Down;
             TargetVector = Vector2.up;
         }
         

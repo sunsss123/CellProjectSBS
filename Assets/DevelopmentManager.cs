@@ -56,13 +56,13 @@ public class DevelopmentManager : MonoBehaviour
         NextObjectName.text = "다음 오브젝트:" + Object[index + 1].name;
         else
             NextObjectName.text = "다음 오브젝트: 없음" ;
-        invicibleText.text = "무적 상태 비활성화";
+        invicibleText.text = "무적 상태 활성화";
         NextTransformName.text = "변신 전환" + getNextTransformName(PlayerHandler.instance.CurrentType);
     }
     public string getNextTransformName(TransformType t)
     {
         t++;
-        if (t >= TransformType.remoteform)
+        if (t > TransformType.remoteform)
            t= TransformType.Default;
 
         switch (t)

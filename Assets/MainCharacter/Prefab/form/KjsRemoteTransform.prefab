@@ -991,7 +991,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 120
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &2166734876067594961
 MonoBehaviour:
@@ -1074,7 +1074,6 @@ MonoBehaviour:
   chargingBufferTimer: 0
   chargingBufferTimeMax: 0
   remoteObj: []
-  RemoteObjectEffect: {fileID: 0}
   minimumdistance: 0
   Charging: 0
   laserPrefab: {fileID: 8906621709063784198, guid: c95aa4697be2c7341959ffcec170d214,
@@ -1195,7 +1194,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32177de85efdfc943b70253b78ba038e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InteractUI: {fileID: 0}
 --- !u!1 &6286116493072327673
 GameObject:
   m_ObjectHideFlags: 0

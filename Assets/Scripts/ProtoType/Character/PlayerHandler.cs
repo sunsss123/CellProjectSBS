@@ -100,7 +100,7 @@ public class PlayerHandler : MonoBehaviour
     }
     #region 변신 시스템
     #region 변수
-   public TransformType CurrentType = 0;
+   public TransformType CurrentType =0;
     Dictionary<TransformType, GameObject> PlayerTransformList = new Dictionary<TransformType, GameObject>();
 
     Dictionary<TransformType, GameObject> CreatedTransformlist = new Dictionary<TransformType, GameObject>();
@@ -109,6 +109,7 @@ public class PlayerHandler : MonoBehaviour
 
     public void transformed(TransformType type,Action eventhandler=null)
 {
+     
         interactobject = null;
         #region Type 변경
         if (CurrentType == type)
@@ -247,7 +248,7 @@ public class PlayerHandler : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Space)&&CurrentPlayer.onGround)
         {
-            PlayerStat.instance.Trans3D = !PlayerStat.instance.Trans3D;
+            //PlayerStat.instance.Trans3D = !PlayerStat.instance.Trans3D;
             Dimensionchangeevent?.Invoke();
            
         }

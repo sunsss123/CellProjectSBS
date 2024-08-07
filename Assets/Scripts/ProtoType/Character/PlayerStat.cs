@@ -31,7 +31,7 @@ public class PlayerStat : CharacterStat
     [HideInInspector]
     public bool formInvincible; // 변신 무적
     [Header("상호작용 딜레이")]
-    public float InteractDelay;    
+    public float InteractDelay;
 
     //public float rotationValue; // 방향키 입력 시 받을 방향 변수
     //public float dashForce; // 대쉬 가중치

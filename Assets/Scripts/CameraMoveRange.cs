@@ -72,8 +72,7 @@ public class CameraMoveRange : MonoBehaviour
             float lx = Range.x * 0.5f - width * 0.5f;
             clampX = Mathf.Clamp(transform.position.x, -lx + Center.x,
                lx + Center.x);
-            if (clampX == lx + Center.x|| clampX == -lx + Center.x)
-                Debug.Log("X좌표가 한계에 걸림");
+ 
         }
         float clampY = Center.y;
         if (!YPin)
