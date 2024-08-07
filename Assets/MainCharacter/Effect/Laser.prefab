@@ -241,4 +241,5 @@ MonoBehaviour:
   rangeSpeed: 5
   hitEffect: {fileID: 5024009746357069194, guid: ebcff9b8eb2eb8a4783c8ca85314ccad,
     type: 3}
-  saveEffect: {fileID: 0}
+  saveEffect: {fileID: 7471978574171802351, guid: 6cae3c6bcfef1234aa8098b1226d219f,
+    type: 3}

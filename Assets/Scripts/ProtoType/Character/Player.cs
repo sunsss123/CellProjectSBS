@@ -273,6 +273,7 @@ public class Player : Character
         InteractivePlatformrayCheck2();
 
         JumpKeyInput();
+        if(!downAttack)
         Attack();
 
         /* chrmat.SetColor("_Emissive_Color", color);*///emission °Çµé±â
@@ -843,7 +844,7 @@ public class Player : Character
 
         PlayerStat.instance.formInvincible = true;
         PlayerHandler.instance.lastDirection = direction;
-        formChange = true;
+        PlayerHandler.instance.formChange = true;
         onInvincible = true;
         Time.timeScale = 0.2f;
         ModelAnimator.SetTrigger("FormChange");
@@ -853,11 +854,12 @@ public class Player : Character
 
         PlayerHandler.instance.CurrentPower = PlayerHandler.instance.MaxPower;
         Instantiate(changeEffect, transform.position, Quaternion.identity);
-        PlayerHandler.instance.transformed(type, event_);
+        PlayerHandler.instance.transformed(type, event_);        
         if (PlayerHandler.instance.CurrentPlayer != null)
             PlayerHandler.instance.CurrentPlayer.direction = direction;
-        formChange = false;
-        Time.timeScale = 1f;
+        //Humonoidanimator.Play("TransformEnd");
+        /*formChange = false;
+        Time.timeScale = 1f;*/
     }
     #endregion
 

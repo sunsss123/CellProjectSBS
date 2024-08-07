@@ -8,14 +8,21 @@ public class EnemyInstantiateObject : MonoBehaviour
     public bool checkPlayer;
 
     public Vector3 spawnPos;
-
+    public Animator boxAnim;
+    public GameObject deadEffect;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && !checkPlayer)
         {
-            GameObject obj = Instantiate(enemyPrefab, transform.position, Quaternion.identity);
-            obj.transform.position = new(transform.position.x, transform.position.y, PlayerHandler.instance.CurrentPlayer.transform.localPosition.z);
             checkPlayer = true;
+            boxAnim.SetTrigger("Open");
         }
+    }
+
+    public void SpawnBoxEnemy()
+    {
+        Instantiate(deadEffect, transform.position, Quaternion.identity);
+        Instantiate(enemyPrefab, transform.position, Quaternion.identity);
+        /*obj.transform.position = new(transform.position.x, transform.position.y, PlayerHandler.instance.CurrentPlayer.transform.localPosition.z);*/
     }
 }

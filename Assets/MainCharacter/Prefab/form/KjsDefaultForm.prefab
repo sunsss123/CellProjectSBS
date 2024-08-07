@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 94381748056349935}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.33040646, y: -0.005, z: 0.08087195}
+  m_LocalPosition: {x: -0.33040646, y: -0.014, z: 0.08087195}
   m_LocalScale: {x: 0.2, y: 0.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1623,6 +1623,8 @@ MonoBehaviour:
   LandingEffect: {fileID: 7281951006512747657}
   JumpEffect: {fileID: 2803013037455162963}
   Decelatate: 2
+  hori: 0
+  Vert: 0
   DownAttackForce: 0
   CullingPlatform: 0
 --- !u!136 &2012848794722345922
@@ -1828,6 +1830,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32177de85efdfc943b70253b78ba038e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InteractUI: {fileID: 0}
 --- !u!1 &7687757393293647033
 GameObject:
   m_ObjectHideFlags: 0
